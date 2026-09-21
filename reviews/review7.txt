@@ -1,0 +1,3031 @@
+# Bottom line
+
+This is **substantially more defensible than the prior version**, but the better documentation is now exposing the real scientific weaknesses instead of hiding them.
+
+The manuscript is currently a **good development/audit document and an incomplete scientific paper**. I would not submit this version. The problem is no longer that the manuscript is vague about what it did; the problem is that several things it now clearly says it did are scientifically weak, unfinished, or internally awkward.
+
+The most important new concerns I found are these:
+
+| Severity     | Issue                                                                                                                                                                                                                                     |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Critical** | V3-SUP is only epoch **12 of 24 planned epochs**. You are characterizing a halfway checkpoint before establishing convergence.                                                                                                            |
+| **Critical** | The reference distribution is still not reproducible because Geant4 physics list, production cuts, material/upstream configuration, etc. are missing.                                                                                     |
+| **Critical** | There is still no pristine final evaluation bank, and the nominal test set is explicitly contaminated.                                                                                                                                    |
+| **Critical** | Your claimed conditional generator is not actually evaluated at fixed conditions; you have one G4 and one generated shower per condition.                                                                                                 |
+| **Critical** | The principal C2ST was correctly removed, but that means you currently have **no multivariate conditional fidelity test at all**.                                                                                                         |
+| **Major**    | The independent-Bernoulli activity factorization almost mechanically explains the huge gap failure. The model's biggest failure is arguably built into its factorization.                                                                 |
+| **Major**    | Your response loss is **not the likelihood of your actual sampling distribution**, because generation adds clipping and a hard cap absent from the trained density.                                                                       |
+| **Major**    | The response cap is extremely under-audited: its activation rate is unknown, its derivation is unstated, and you do not establish that Geant4 never exceeds the cap.                                                                      |
+| **Major**    | The CLR flow deliberately maps full-dimensional Gaussian noise toward a codimension-one target and then discards the gauge with softmax. It works as a sampler, but it is mathematically inelegant and wastes modeling capacity.          |
+| **Major**    | Gumbel-Top-\(k\) stochasticity depends on score scale, yet the score is trained with BCE + ranking and has no calibrated temperature.                                                                                                     |
+| **Major**    | 37.56% of HCAL readout channels are ganged, so centroid geometry is not a side caveat—it materially affects the GNN and your topology metric.                                                                                             |
+| **Major**    | The nine loss weights have six-digit precision but essentially no scientific explanation. This is especially bad because loss misalignment is one of your central results.                                                                |
+| **Major**    | Your methods section still outsources too much of the graph and flow architecture to a source commit.                                                                                                                                     |
+| **Moderate** | There are several manuscript-level contradictions/regressions: nonexistent “plotted error bars,” undefined Figure 3 formulas, ambiguous “separate” development sets whose overlap is unknown, and unclear component-fraction definitions. |
+| **Moderate** | Figure 6 uses bars on a logarithmic axis, which is visually awkward because a log axis has no meaningful zero baseline.                                                                                                                   |
+| **Moderate** | B0 versus V3-SUP is fundamentally uncontrolled because both training-data exposure and optimization lineage changed.                                                                                                                      |
+
+The manuscript itself now acknowledges many of the broad limitations, which is good. But acknowledgement is not remediation. 
+
+---
+
+# Audit iteration 1: the biggest problem may simply be that V3-SUP is half-trained
+
+This jumps out much more strongly now.
+
+You write that V3-SUP is **epoch 12 of a planned 24** after being continued on the full 551,234-event generator role. Your optimization table likewise says 24 planned epochs and identifies the epoch-12 checkpoint.  
+
+That seriously constrains what you can conclude from its failures.
+
+You cannot simultaneously say:
+
+> this architecture has severe longitudinal/topological failure
+
+and leave open the obvious alternative:
+
+> this is an intermediate checkpoint halfway through the scheduled training trajectory.
+
+Perhaps the metrics plateaued by epoch 6. Perhaps they are actively worsening. Perhaps activity structure improves dramatically between epochs 12 and 24. We have no idea.
+
+### Revision
+
+For the current development manuscript, put **“epoch 12/24”** somewhere impossible to miss when introducing V3-SUP.
+
+Do not call it merely “the current checkpoint” without that qualification.
+
+More importantly, plot versus epoch:
+
+training total loss;
+
+development component losses;
+
+mean active layers;
+
+gap fraction;
+
+gap count;
+
+channel count;
+
+component count;
+
+ECAL fraction;
+
+zero rate.
+
+If the structural errors plateau early while scalar loss continues improving, **that becomes a genuinely interesting result**.
+
+If they improve through epoch 24, then this paper currently overstates an intermediate failure.
+
+### Something else odd
+
+Table 1 says:
+
+> planned 24 epochs; stopping patience 24.
+
+Unless “patience” is counted at some sub-epoch frequency, early stopping literally cannot meaningfully terminate before the planned training is over.
+
+Clarify what one patience unit means.
+
+---
+
+# Audit iteration 2: your 80/10/10 split is not numerically 80/10/10
+
+You say:
+
+> “The canonical event split is 80/10/10.”
+
+Then give 612,482 training events from 764,940 total. 
+
+Those proportions are approximately:
+
+* training: **80.069%**
+* validation: **9.956%**
+* nominal test: **9.975%**
+
+This is completely fine if you used deterministic hash thresholds designed to produce approximately 80/10/10.
+
+But then say **“approximately 80/10/10”** or explain the deterministic rule.
+
+A hostile reproducibility reviewer can easily perform this division and wonder whether the split description is wrong.
+
+---
+
+# Audit iteration 3: your three-way training partition needs much more justification
+
+The 612,482 training events are split into:
+
+551,234 generator;
+
+30,624 critic-real;
+
+30,624 critic-monitor. 
+
+But V3-SUP has **no optional v3 feature block enabled**, and the manuscript describes it as supervised joint training. 
+
+So why are 61,248 training events withheld for critics in this particular experiment?
+
+Questions this opens:
+
+Were those roles created for planned adversarial critics that are not active in V3-SUP?
+
+Has V3-SUP literally never seen them?
+
+Has any model-selection process inspected critic-monitor?
+
+Could critic-monitor now serve as an additional untouched diagnostic population?
+
+Why not train the final supervised model on all 612,482 training events once the critic experiment is frozen?
+
+If those partitions are a governance choice for future experiments, explain that.
+
+Right now the reader sees “full 551,234-event generator role,” but that still means **10% of the nominal training set was deliberately unavailable to the generator**.
+
+---
+
+# Audit iteration 4: the fixed-vertex statement still does not fully establish the condition
+
+You now correctly state that the production record has a fixed generator vertex and appropriately weaken the geometric interpretation because upstream-material metadata is incomplete. 
+
+This is better.
+
+But conceptually you need to decide what the actual condition means.
+
+If \(p^\mu\) is the **generator-level primary neutron** and there is nontrivial upstream material, then at a fixed generator-level \(p^\mu\) the particle state at the calorimeter can vary stochastically.
+
+Then you are learning something like
+
+\(p(Y\mid p^\mu_{\mathrm{generator}},\mathcal S)\),
+
+where \(\mathcal S\) includes the whole upstream simulation configuration.
+
+You are **not** necessarily learning
+
+\(p(Y\mid p^\mu_{\mathrm{entry}},x_{\mathrm{entry}},G)\).
+
+This distinction should become explicit once the production metadata arrives.
+
+### Revision
+
+Define whether the four-vector is:
+
+generator truth;
+
+calorimeter-entry truth;
+
+or some other truth record.
+
+If it is generator truth, say that the surrogate implicitly includes any fixed upstream transport contained in the reference production.
+
+---
+
+# Audit iteration 5: the angle dependence is almost totally unevaluated
+
+Your encoder explicitly takes \(u_x,u_y,u_z\). 
+
+Yet all your primary conditional plots are essentially functions of kinetic energy.
+
+That means three of the most important conditioning features barely appear in evaluation.
+
+A model can reproduce the pooled energy distribution while completely failing angle-dependent acceptance or shower location.
+
+Your own limitations section acknowledges that angular interpolation is unestablished. 
+
+This deserves more prominence.
+
+### You eventually need
+
+Response bias versus polar angle.
+
+Response bias versus azimuth.
+
+ECAL start probability versus angle.
+
+Layer centroid/depth versus angle.
+
+Transverse centroid versus predicted geometric intercept.
+
+Channel occupancy versus angle.
+
+Gap fraction versus angle.
+
+Topology versus angle.
+
+And ideally 2D \(K\)-versus-\(\theta\) maps.
+
+If the angular range is actually tiny, show the angular distribution and say so. If it is broad, this is one of the largest missing pieces of the paper.
+
+---
+
+# Audit iteration 6: your near-zero-energy handling is weird
+
+You report a minimum audited training kinetic energy of
+
+\(5.39\times10^{-5}\) GeV,
+
+and explain that exact zero remains outside the verified encoder domain because direction requires division by \(\|\mathbf p\|\). 
+
+But then your sampling equation explicitly has
+
+\(\mathbf 1[K_{\rm inc}>0]\). 
+
+Questions:
+
+Are there actually any \(K=0\) events anywhere?
+
+If no, why put zero-energy behavior into the probabilistic model at all?
+
+If yes, what truth direction is stored for them?
+
+Does a neutron at effectively zero kinetic energy always have zero deposited energy in the Geant4 production?
+
+Do capture/other nuclear processes make that assumption invalid?
+
+This does not affect your declared 50–250 GeV claim domain, but the manuscript currently spends mathematical machinery on an input regime it simultaneously says is unverified.
+
+I would simplify.
+
+---
+
+# Audit iteration 7: the hard response cap is now one of the most suspicious pieces of the model
+
+You finally expose the cap:
+
+\(C(K)=\min[0.630110\max(K,1\text{ GeV}),61.2338\text{ GeV}]\). 
+
+That cap becomes constant at approximately
+
+\(61.2338/0.630110\approx97.18\) GeV.
+
+So over **most of your 50–250 GeV scientific domain**, generated total response is hard-limited to 61.2338 GeV.
+
+Why?
+
+This number looks data-derived.
+
+### This requires an explicit provenance audit
+
+Was it derived from training data?
+
+A maximum?
+
+A quantile?
+
+A linear fit?
+
+A safety factor?
+
+Was any validation or test information involved?
+
+How many Geant4 training events violate \(T>C(K)\)?
+
+How many Dbat reference events violate it?
+
+What is the maximum value of \(T/C(K)\) in Geant4?
+
+If **any** reference event legitimately exceeds the cap, your model has a structural support mismatch and can never reproduce that tail.
+
+That needs to be reported.
+
+Even if no generated sample currently reaches it, the question is not only “does the model activate the cap?” It is also:
+
+> **Does the true target distribution have support beyond the cap?**
+
+The manuscript currently only says the battery did not record how often generation hit the cap. 
+
+That is not enough.
+
+---
+
+# Audit iteration 8: your training density is not the probability law you actually sample
+
+This is important.
+
+The positive-response loss models
+
+\(z=\log(1+T/10\,\mathrm{GeV})\)
+
+with a Gaussian mixture and uses the Jacobian-corrected density. 
+
+But inference then applies:
+
+negative-tail clamping;
+
+the deterministic \(C(K)\) cap;
+
+and the Bernoulli hurdle.
+
+Therefore the density whose NLL you optimize is **not the density of the final \(T\) produced by the generator**.
+
+The generated law has:
+
+an atom at zero;
+
+a continuous interior;
+
+potentially an atom or pile-up at \(C(K)\) if clipping activates.
+
+Your Eq. (7) only describes the uncapped continuous positive branch.
+
+### Revision
+
+Say this explicitly.
+
+Something like:
+
+> The response NLL is a surrogate objective for the latent positive branch rather than a normalized likelihood of the complete postprocessed response law.
+
+That distinction becomes especially relevant because your paper contains a section about **scalar objective versus generation behavior**.
+
+---
+
+# Audit iteration 9: Eq. (7) has slightly misleading probability notation
+
+You write
+
+\(-\log p_t(t\mid c)\). 
+
+But the total response distribution conditional on \(c\) contains a discrete zero atom.
+
+So \(p_t(t\mid c)\) cannot globally mean an ordinary continuous density over the whole response variable.
+
+What you actually mean is something like
+
+\(p_t(t\mid V_{\rm ref}=1,c)\)
+
+or
+
+\(p_t^+(t\mid c)\).
+
+Use notation that makes the hurdle structure explicit.
+
+That will prevent mathematically literate readers from objecting to mixing a density and a mass function under one symbol.
+
+---
+
+# Audit iteration 10: the positive-branch zero atom should eventually be removed, not merely documented
+
+You now clearly distinguish \(B\) from realized \(V\), which fixes a major semantic problem from the earlier draft. 
+
+But the design is still unnecessarily ugly.
+
+You already have a Bernoulli branch whose entire purpose is to model exact zero response.
+
+Then the “positive” branch also has probability mass mapping to zero because a Gaussian can produce \(z<0\).
+
+You report that the extra atom happened to produce zero observed events in Dbat, so it is not currently driving the discrepancy. 
+
+Still: why keep it?
+
+For a future architecture, model positive response as
+
+\(z=\log(T/s)\)
+
+and decode
+
+\(T=s\exp z>0\).
+
+Then there is exactly one zero mechanism.
+
+Cleaner generative semantics.
+
+Cleaner likelihood.
+
+Cleaner debugging.
+
+Cleaner paper.
+
+---
+
+# Audit iteration 11: the activity model almost invites the failure you observe
+
+This may be the central architectural criticism.
+
+You explicitly state:
+
+> subsequent layer activity is modeled as conditionally independent Bernoulli variables given \((c,T,L_{\rm first})\).
+
+
+
+Then you find:
+
+mean active layers: 54.08 truth versus 53.53 model — within about **1%**;
+
+interior-gap events: 52.43% versus **93.56%**;
+
+mean gaps: 2.10 versus **6.25**. 
+
+This is almost a textbook failure of matching marginals while missing dependence.
+
+The model gets roughly the right number of active bits but places them with the wrong joint structure.
+
+That is much more interesting than merely saying “there are too many gaps.”
+
+### What you should measure
+
+Adjacent-layer transition probabilities.
+
+\(P(A_{\ell+1}=1\mid A_\ell=1)\).
+
+\(P(A_{\ell+1}=0\mid A_\ell=1)\).
+
+Binary autocorrelation versus lag.
+
+Number of active runs.
+
+Longest active run.
+
+Longest inactive interior run.
+
+Gap-length distribution.
+
+Shower termination probability versus depth.
+
+Start-to-last-active span.
+
+These would directly test the dependence structure the independent Bernoulli model cannot express.
+
+### Architecture revision
+
+An autoregressive binary sequence over 65 layers is tiny.
+
+There is almost no reason not to use
+
+\(p(A\mid\cdots)=\prod_\ell p(A_\ell\mid A_{<\ell},c,T,L_0)\).
+
+Do not force contiguity—Geant4 itself has gaps—but **learn dependence**.
+
+---
+
+# Audit iteration 12: your CLR flow is mathematically acknowledged, but still unnecessarily malformed
+
+The manuscript now openly states that independent Gaussian source noise contains an additive CLR-gauge component while the target sums to zero, and that terminal softmax removes the gauge. 
+
+That transparency is good.
+
+But the design is still strange.
+
+Your target lives in
+
+\(\{x:\sum_i x_i=0\}\),
+
+while the Gaussian source does not.
+
+So one component of the learned velocity is dedicated to contracting an irrelevant direction that softmax later discards anyway.
+
+### Better options
+
+Center the Gaussian source:
+
+\(x_0=\epsilon-\bar\epsilon\mathbf1\).
+
+Or project every vector-field output onto the zero-sum subspace.
+
+Or use an ILR basis with exactly \(d-1\) independent coordinates.
+
+Any of those makes the geometry of source and target match.
+
+### Also audit \(K=1\)
+
+For a one-channel layer, the share is deterministically 1.
+
+The CLR is identically zero.
+
+Do not integrate an ODE for that case.
+
+Just return share \(1\).
+
+---
+
+# Audit iteration 13: the \(10^{-8}\) clipping is an unmeasured data transformation
+
+Both active-layer fractions and within-layer shares use clipped CLR coordinates.  
+
+You explicitly admit that the clipping incidence was not recorded.
+
+This needs to be fixed.
+
+For layer shares and cell shares separately, report:
+
+fraction clipped;
+
+fraction of events with any clipping;
+
+total energy fraction affected;
+
+largest energy distortion in any event;
+
+distribution versus incident energy;
+
+distribution versus layer depth.
+
+If clipping affects 0.00001% of coordinates at negligible energy, great.
+
+If it affects 20% of tiny hits, then your raw zero-threshold target and your transformed training target are philosophically inconsistent.
+
+---
+
+# Audit iteration 14: “eight fixed midpoint Euler steps” is suspicious terminology
+
+You use that phrase in the methods/configuration.  
+
+“Euler” and “midpoint” normally refer to different numerical schemes.
+
+If the implementation is the explicit midpoint Runge–Kutta method, call it:
+
+> eight fixed-step explicit midpoint (RK2) integration steps.
+
+If it is Euler with vector-field evaluation at a midpoint-like time, specify the update equation.
+
+This is the kind of tiny wording issue that makes a numerics reviewer wonder whether the implementation was actually understood.
+
+---
+
+# Audit iteration 15: eight ODE steps need a convergence study
+
+Even if the flow architecture were perfect, you are evaluating the learned continuous dynamics with exactly eight solver steps.
+
+How do you know eight is enough?
+
+Run generation with:
+
+4;
+
+8;
+
+16;
+
+32;
+
+possibly 64 steps.
+
+Measure response/profile/share statistics and runtime.
+
+If 8 and 32 are indistinguishable within sampling variability, great.
+
+If topology or energy-share statistics move, some “model error” is actually numerical integration error.
+
+This is an extremely cheap and important experiment compared with retraining.
+
+---
+
+# Audit iteration 16: the count model description is internally confusing
+
+You say:
+
+> “Each active layer receives a categorical channel-count distribution; inactive-layer zero classes have training weight 0.2.”
+
+
+
+If the count distribution is only for **active** layers, why are inactive zero classes included at all?
+
+The architecture section later says the count head includes the activity flag and has 401 output classes masked to physical cardinality. 
+
+I need an exact inference definition.
+
+Is:
+
+\(A_\ell=0\Rightarrow K_\ell=0\) deterministically,
+
+and for \(A_\ell=1\), the categorical is restricted to \(1,\ldots,N_\ell\)?
+
+Or can an active layer sample zero?
+
+If zero is disallowed during inference but trained as a class on inactive examples, then the loss is partly redundant with the activity model.
+
+That is okay, but explain why.
+
+---
+
+# Audit iteration 17: 401 output classes are wasteful and potentially awkward
+
+The count head has 401 output classes because ECAL can have 400 hits, then masks down to 100/90 for HCAL. 
+
+That is legitimate.
+
+But ask whether one shared 401-way head is statistically ideal.
+
+For a 100-channel HCAL layer, 300 logits are permanently invalid.
+
+Possible alternatives:
+
+separate ECAL/HCAL heads;
+
+normalized count fraction + discretization;
+
+binomial/beta-binomial style count distribution;
+
+ordinal count model;
+
+autoregressive occupancy count if overdispersion matters.
+
+I would not change this automatically, but I would examine whether HCAL count calibration is worse because the output space was designed around the one 400-channel layer.
+
+---
+
+# Audit iteration 18: your Gumbel-Top-\(k\) score scale remains unidentified
+
+You now correctly say support BCE + ranking is a surrogate and not the likelihood of the exact-size Gumbel sampler. 
+
+There is a deeper issue:
+
+Gumbel-Top-\(k\) stochasticity depends on the **scale of the scores relative to the Gumbel noise**.
+
+A ranking loss only cares about order.
+
+Class-balanced BCE induces some scale, but that scale is distorted by class weighting.
+
+So even if rank quality is excellent, support diversity may be much too deterministic or much too random.
+
+This could directly contribute to topology problems.
+
+### Minimal revision
+
+Introduce a support temperature \(\tau\):
+
+\(s_i\rightarrow s_i/\tau\).
+
+Calibrate \(\tau\) on development data using support-level diagnostics.
+
+### Diagnostics
+
+Pairwise support inclusion frequencies.
+
+Per-channel occupancy calibration.
+
+Jaccard distribution between independent model draws.
+
+Nearest-neighbor spacing.
+
+Radial occupancy.
+
+Connected-component distribution conditional on \(K\).
+
+Support entropy/diversity at fixed condition.
+
+---
+
+# Audit iteration 19: your ranking-loss sampling needs much more description
+
+You use at most 256 positive-negative pairs per event. 
+
+That immediately creates questions.
+
+Across the whole event?
+
+Per layer?
+
+Uniformly sampled?
+
+Hard-negative sampled?
+
+Weighted by layer?
+
+What happens in ECAL where hundreds of positive/negative pairs exist?
+
+What happens in layers with one hit?
+
+Do high-occupancy layers contribute disproportionally less ranking information than low-occupancy layers?
+
+Is the ranking loss averaged per pair, per layer, or per event?
+
+This matters because the support stage is one of your most visibly failing components.
+
+---
+
+# Audit iteration 20: you need to explain how variable-size cell-share flows are represented
+
+The positive-share flow gets selected support and produces shares. 
+
+But the paper does not tell me:
+
+how variable \(k_\ell\) is represented;
+
+whether selected nodes are padded;
+
+whether ordering is by channel ID;
+
+whether the share model is permutation equivariant;
+
+what geometric/node features it receives;
+
+whether shares in different layers communicate;
+
+whether share logits are tied to support-network embeddings.
+
+This is not an implementation footnote.
+
+If a selected set is fed to a dense network in arbitrary channel-ID order, the model has an artificial ordering dependence.
+
+That needs to be ruled out.
+
+---
+
+# Audit iteration 21: the graph is not just “irregular”; it may contain physically nonsensical edges
+
+Your graph guarantees eight transverse neighbors per node and four neighbors into each adjacent layer using centroid kNN. 
+
+A fixed-\(k\) graph always connects something.
+
+Even if the nearest neighbor is physically far away.
+
+You need the edge-length distribution.
+
+Especially for:
+
+ganged centroids;
+
+boundary channels;
+
+the 90-channel final layer;
+
+transitions between ECAL and HCAL;
+
+any irregular geometry.
+
+Audit:
+
+median edge length;
+
+95th percentile;
+
+maximum;
+
+same-layer versus cross-layer;
+
+edge length divided by typical physical cell pitch.
+
+A radius cap might be more physically meaningful than unconditional kNN.
+
+---
+
+# Audit iteration 22: the ganged-channel issue affects the **model**, not only interpretation of the metric
+
+You correctly report that 2,400/6,390 HCAL channels are ganged and cannot be spatially disentangled. 
+
+Then later you mainly frame this as a limitation on interpreting connected components. 
+
+But the GNN itself uses those centroid coordinates.
+
+So centroid ganging can distort the inductive bias used for generation.
+
+A channel representing physical locations A and B gets one artificial point halfway between them.
+
+That can create:
+
+fake neighbors;
+
+missing true neighbors;
+
+fake distances;
+
+incorrect shower-position context.
+
+### Stronger architecture idea
+
+Use physical positions as latent geometry nodes and aggregate them into readout IDs.
+
+Even if the output remains one ganged readout value, the graph can encode all constituent positions.
+
+A simpler compromise is a readout graph where two readout IDs connect whenever **any pair of constituent physical positions** are physical neighbors.
+
+That is far better grounded than centroid kNN.
+
+---
+
+# Audit iteration 23: Figure 1 needs the exact representative HCAL layer
+
+The geometry figure is genuinely useful visually.
+
+But the middle panel says “Representative HCAL layer.” Which one?
+
+Layer 1?
+
+Layer 32?
+
+Layer 64?
+
+Are the ganging patterns identical across layers?
+
+If not, the figure could unintentionally show an unusually tidy or unusual layer.
+
+Put the layer ID directly in the panel title or caption.
+
+Also explain the coordinate origin. The ECAL appears at substantially negative \(x\) coordinates, which is perfectly possible, but without a detector coordinate convention the plot feels arbitrary.
+
+---
+
+# Audit iteration 24: the model and topology diagnostic use the same graph
+
+This is disclosed. 
+
+That is okay as a **readout-graph diagnostic**.
+
+But do not let “graph fragmentation” silently become “physical shower fragmentation.”
+
+Your proposed independent physical-neighbor graph in the limitations is exactly the right future experiment. 
+
+I would actually elevate it above several less urgent items.
+
+---
+
+# Audit iteration 25: define “largest-component fraction”
+
+Table 2 reports:
+
+> Mean largest-component fraction (%)
+
+but never says fraction of **what**. 
+
+Possibilities:
+
+fraction of active channels;
+
+fraction of deposited energy;
+
+fraction of graph nodes.
+
+I assume active channels, but the reader should not assume.
+
+Put the definition in Section 5.1.
+
+---
+
+# Audit iteration 26: largest-component fraction should probably exclude empty events
+
+Your conventions explicitly say empty events contribute zero largest-component fraction. 
+
+That mixes two phenomena:
+
+zero-response probability;
+
+connectedness conditional on there being a shower.
+
+You already separately report zero-response rate.
+
+For topology, I would report:
+
+largest-component fraction conditional on nonempty;
+
+and optionally all-event value.
+
+Same for number of components.
+
+Otherwise S2 would appear absurdly disconnected simply because half the events contain nothing.
+
+---
+
+# Audit iteration 27: normalize component count for occupancy
+
+V3-SUP has fewer active channels:
+
+1602.5 → 1519.8,
+
+yet substantially more components:
+
+23.20 → 58.99. 
+
+That is already damning.
+
+But a reviewer will still ask whether component count is partly an occupancy artifact.
+
+The simple descriptive ratios are approximately:
+
+Geant4: 23.20 / 1602.5 = **1.45 components per 100 active channels**.
+
+V3-SUP: 58.99 / 1519.8 = **3.88 components per 100 active channels**.
+
+So even a crude occupancy normalization suggests roughly a **2.7× fragmentation increase**.
+
+That is stronger than the raw count alone.
+
+Add a proper eventwise occupancy-normalized metric rather than my ratio-of-means approximation.
+
+---
+
+# Audit iteration 28: the “largest component” result is actually valuable and underused
+
+The weak-component mean is sensitive to many tiny islands.
+
+But largest-component fraction drops only from 94.02% to 88.33%. 
+
+That tells a more nuanced story:
+
+the model still has one dominant shower cluster;
+
+but it sheds many extra small disconnected islands.
+
+That is much more physically interpretable than simply saying “fragmented.”
+
+You should investigate:
+
+number of singleton components;
+
+fraction of support in singleton components;
+
+second-largest component size;
+
+energy contained outside the largest component.
+
+That could tell you exactly what the support model is doing wrong.
+
+---
+
+# Audit iteration 29: “strict positive stored energy” can make topology hypersensitive to numerical dust
+
+You correctly make the definition explicit. 
+
+But this now becomes an obvious attack surface.
+
+If Geant4 stores a \(10^{-12}\) GeV deposit, the layer is active.
+
+If the generator has exact zeros, the layer is inactive.
+
+You are therefore partly comparing:
+
+Geant4's hit-storage behavior;
+
+against a deliberately sparse generator.
+
+That may exaggerate apparent gaps and connectivity mismatch.
+
+Your planned threshold sweep is mandatory, not optional.
+
+I would evaluate all primary occupancy/topology observables versus threshold over several orders of magnitude.
+
+If the discrepancy survives, this becomes a strong result.
+
+---
+
+# Audit iteration 30: the exact-zero target and exact-sparsity model may be semantically mismatched
+
+This deserves a larger conceptual point.
+
+You advertise exact sparsity as an engineering feature. 
+
+But “zero” in the Geant4 target means:
+
+> no stored non-sentinel deposited-energy record after the production's own storage behavior.
+
+
+
+That is not necessarily a fundamental physical zero.
+
+So before making exact sparsity a major inductive bias, establish that stored-zero semantics are stable and meaningful.
+
+Otherwise you may be fitting details of the production's hit-writing threshold.
+
+---
+
+# Audit iteration 31: your flow/share model may guarantee that any sampled active layer is **strictly** active
+
+Softmax returns strictly positive shares.
+
+So once \(A_\ell=1\), that layer gets \(D_\ell>0\), absent underflow.
+
+That means under the strict \(>0\) metric, longitudinal gap structure is almost entirely determined by the binary activity model.
+
+This is useful because it makes the source of the gap failure much less ambiguous than the prose suggests.
+
+The paper currently says the direction of the errors is “consistent with” the independent activity model but avoids causal attribution because the oracle cascade has not been run. 
+
+That caution is correct.
+
+But mathematically, for **gap locations specifically**, if layer-budget decoding guarantees positive energy on every active layer, then the activity sequence directly determines whether each layer is zero.
+
+The oracle cascade is still needed to establish why the activity head predicts the wrong sequence, but the immediate stage attribution may actually be stronger than you presently state.
+
+Check this carefully in code.
+
+---
+
+# Audit iteration 32: the loss weights are one of the most underexplained pieces of the whole paper
+
+Your loss is
+
+\(2.574417L_{\rm visible}+0.160901L_{\rm response}+\cdots+1.477591L_{\rm rank}+0.444960L_{\rm share}\). 
+
+Those six-digit coefficients scream:
+
+> There is a specific algorithm that produced these.
+
+But the paper only says:
+
+> “The weights were calibrated before the frozen run.”
+
+That is nowhere near enough.
+
+This is especially problematic because one of the manuscript's core findings is that a lower scalar objective can coexist with terrible generation behavior.
+
+### You need
+
+How weights were calibrated.
+
+On what data.
+
+At what checkpoint.
+
+Whether gradient norms were used.
+
+Whether losses were normalized before weighting.
+
+Whether coefficients were ever altered after inspecting Dbat.
+
+Why response/profile/count all happen to equal `0.160901`.
+
+Why support BCE and ranking receive much larger coefficients.
+
+How sensitive results are to these weights.
+
+What component contributions are at V3-SUP, M0, and S2.
+
+What component **gradient norms** are at those checkpoints.
+
+This section could uncover the mechanism behind S2.
+
+---
+
+# Audit iteration 33: reduction conventions matter as much as the weights
+
+Saying “BCE,” “cross entropy,” and “MSE” is insufficient. 
+
+For example:
+
+Is activity BCE averaged over 65 layers per event?
+
+Support BCE averaged over all 6,790 nodes?
+
+Only active-layer nodes?
+
+Per event then averaged?
+
+Globally over every valid element?
+
+Is flow MSE divided by the number of active dimensions?
+
+Do high-\(K\) layers get more share-flow weight?
+
+Is count CE averaged over all layers including inactive ones?
+
+These choices determine the **effective objective**.
+
+Given S2, you absolutely need to specify them.
+
+---
+
+# Audit iteration 34: S2 is still not evidence of “objective failure” until you rule out implementation pathology
+
+The wording is improved from the previous version:
+
+> “an unacceptable generation anomaly”
+
+and you explicitly refuse to identify the cause. 
+
+Good.
+
+But the abstract is stronger:
+
+> scalar objective alone was not an adequate promotion criterion. 
+
+That operational conclusion is probably fair, but I would still weaken “improved” to:
+
+> “had a slightly lower matched scalar loss.”
+
+Why?
+
+Because \(-0.0143\) is from one screen and you provide no replicate variability here.
+
+A numerically lower single-run loss is not necessarily a reproducible improvement.
+
+### Before making S2 scientifically interesting, audit
+
+visibility-head checkpoint loading;
+
+optimizer parameter membership;
+
+encoder reset/state transfer;
+
+Bernoulli target convention;
+
+sign of hurdle logits;
+
+configuration inheritance;
+
+learning rate;
+
+response-head initialization;
+
+loss-weight changes;
+
+random seed;
+
+state-dict warnings;
+
+number of missing/unexpected keys.
+
+The fact that a **response-head** experiment changes the Bernoulli zero rate from 1.64% to 50.41% deserves an implementation postmortem.
+
+---
+
+# Audit iteration 35: Dloss and Dbat are not known to be independent, so stop calling one “separate”
+
+The manuscript explicitly says the released aggregates **do not establish whether Dloss and Dbat overlap**. 
+
+Then Section 6.3 says:
+
+> “On the separate Dbat bank…”
+
+
+
+“Separate” is ambiguous enough to imply statistical independence.
+
+Use:
+
+> “on the distinct Dbat manifest, whose overlap with Dloss has not been reconstructed.”
+
+Better yet, reconstruct the overlap.
+
+This should not remain mysterious in a serious final artifact.
+
+---
+
+# Audit iteration 36: why on earth can you not reconstruct Dloss/Dbat overlap?
+
+You have deterministic splits, frozen manifests, aggregate reports, source commits, and extensive hashing.
+
+Yet a basic development-set membership question remains unknown. 
+
+That undermines the impression of very strong provenance elsewhere.
+
+If event IDs exist, hash the two lists and compute their intersection.
+
+If event IDs have been discarded, document that as a provenance failure.
+
+Do not let this persist into a final paper.
+
+---
+
+# Audit iteration 37: Figure 3 lost its mathematical definition
+
+The prior draft defined relative mean bias and width difference mathematically.
+
+This version says only that Figure 3 shows “relative differences” in within-bin mean and standard deviation.  
+
+I infer you mean
+
+\((\mu_g-\mu_t)/|\mu_t|\)
+
+and
+
+\((\sigma_g-\sigma_t)/|\sigma_t|\),
+
+but the paper no longer states it.
+
+Restore the equations.
+
+This is a reproducibility regression.
+
+---
+
+# Audit iteration 38: Section 5.1 claims there are plotted error bars that do not appear to exist
+
+The text says:
+
+> “The plotted error bars are within-bin sample standard deviations, not uncertainties on the mean.”
+
+
+
+But on rendered page 7, Figure 3 contains points with **no visible error bars**, and its caption instead says these are moment comparisons rather than confidence intervals. 
+
+This looks like stale text from an earlier figure implementation.
+
+Delete or fix it.
+
+This is exactly the sort of small inconsistency that makes reviewers wonder what else is stale.
+
+---
+
+# Audit iteration 39: one shower per condition does **not** prevent all confidence intervals
+
+Section 5 says:
+
+> “All intervals and condition-resampling studies therefore remain future work.”
+
+because there is one truth and one generated draw per condition. 
+
+That is too strong.
+
+One draw per condition prevents you from estimating the **conditional shower distribution at fixed \(c\)**.
+
+It does **not** prevent a paired bootstrap over your 10,000 sampled conditions for aggregate quantities like:
+
+mean total-response difference;
+
+zero-rate difference;
+
+mean active-channel difference;
+
+gap-rate difference.
+
+Those intervals would represent uncertainty under resampling of the empirical condition population plus shower draws; they would not solve fixed-condition stochasticity.
+
+Make that distinction.
+
+You can and should have uncertainty on several current aggregate comparisons.
+
+---
+
+# Audit iteration 40: your within-bin standard deviation is not “resolution”
+
+You have actually improved this language by calling it a **width** rather than response resolution. Good.
+
+Keep it that way.
+
+One sample per varying condition inside a 25 GeV bin means the variance includes:
+
+conditional shower stochasticity;
+
+energy variation within the bin;
+
+angle variation;
+
+possibly other condition heterogeneity.
+
+It is a mixture width, not a detector resolution at fixed condition.
+
+Do not let “resolution” creep back into figures or discussion.
+
+---
+
+# Audit iteration 41: 25 GeV bins are still quite broad
+
+The conditional bias flips sign substantially across bins. 
+
+That raises the possibility that even 25 GeV bins average over more detailed structure.
+
+For final evaluation, either:
+
+use finer bins if statistics permit;
+
+or fit smooth conditional mean/width curves;
+
+or evaluate residuals against \(K_{\rm inc}\) continuously.
+
+Also report counts per bin.
+
+A 6% discrepancy in a sparsely populated bin and 6% discrepancy in a densely populated bin have very different evidentiary weight.
+
+---
+
+# Audit iteration 42: pooled Wasserstein-1 = 0.092 GeV is almost uninterpretable by itself
+
+You report it but provide no reference scale. 
+
+Questions:
+
+Is this pooled across all 10,000 conditions?
+
+Does it include zero events?
+
+What is G4-vs-G4 sampling variability?
+
+What is it per energy bin?
+
+What is it normalized by typical response?
+
+A raw \(0.092\) GeV number has no obvious meaning without a floor or comparator.
+
+Eventually use:
+
+reference–reference W1;
+
+generator–reference W1;
+
+perhaps normalized W1.
+
+---
+
+# Audit iteration 43: Figure 4 mixes total-energy bias with longitudinal-shape bias
+
+You report relative \(L^1=0.110\) on absolute mean layer deposits, along with an 11.1% ECAL excess. 
+
+But your architecture separately models:
+
+total \(T\);
+
+layer fractions.
+
+Your diagnostics should mirror that factorization.
+
+Report both:
+
+absolute mean layer-energy disagreement;
+
+normalized longitudinal-fraction disagreement.
+
+For example, compare
+
+\(\bar D_\ell\)
+
+and
+
+\(\bar q_\ell\) or event-normalized profiles.
+
+Then you can identify whether the profile head is wrong even after removing total-response error.
+
+---
+
+# Audit iteration 44: ECAL is clearly wrong enough to deserve its own subsection
+
+Truth mean ECAL deposit: 2.100 GeV.
+
+V3-SUP: 2.334 GeV.
+
+That's an **11.1% excess**.
+
+ECAL-start prevalence simultaneously falls from 93.81% to 91.95%. 
+
+That is interesting.
+
+The generator starts in ECAL slightly less often but, when considering all events, puts more mean energy there.
+
+Investigate:
+
+conditional ECAL energy given ECAL start;
+
+ECAL fraction;
+
+ECAL/HCAL covariance;
+
+zero ECAL with nonzero HCAL;
+
+ECAL start versus kinetic energy;
+
+ECAL start versus angle.
+
+Do not leave that as one sentence.
+
+---
+
+# Audit iteration 45: the absolute total deposit looks deceptively okay
+
+V3-SUP mean:
+
+4.454 GeV.
+
+Reference:
+
+4.365 GeV. 
+
+That's only about a **2.0% aggregate excess**.
+
+Yet ECAL is +11.1%, topology is awful, gaps triple, and channel occupancy is lower.
+
+This is actually a strong demonstration of why aggregate response alone is insufficient.
+
+Make that contrast explicit.
+
+It is one of the clearest narratives in the data.
+
+---
+
+# Audit iteration 46: B0 versus V3-SUP should not look like an ablation
+
+You are now transparent that B0 uses the 26,624-event pilot while V3-SUP is continued on 551,234 events and that the comparison mixes training exposure, lineage, and optimization. 
+
+Good.
+
+But the plots still show them side by side like conventional model variants.
+
+Rename them in plots:
+
+**pilot baseline**
+
+and
+
+**full-data continuation**
+
+rather than B0/V3-SUP alone.
+
+Keep repository IDs in parentheses.
+
+That will reduce accidental overinterpretation.
+
+---
+
+# Audit iteration 47: V3-SUP's lack of improvement in topology despite ~20× more training data is intriguing—but not controlled
+
+Pilot B0:
+
+26,624 events.
+
+V3-SUP:
+
+551,234 generator-role events. 
+
+Yet gap fraction barely moves:
+
+93.53 → 93.56%.
+
+Components:
+
+58.55 → 58.99.
+
+This suggests the problem may be structural rather than just data scale. 
+
+But because this is a continuation lineage, epoch differences and other training history are confounded.
+
+A controlled data-scale experiment could be extremely valuable:
+
+same initialization/protocol;
+
+26k;
+
+100k;
+
+300k;
+
+551k.
+
+If gap metrics saturate around 94% immediately, you have strong evidence against the independent-Bernoulli factorization.
+
+---
+
+# Audit iteration 48: your teacher-forcing mismatch may be larger than the paper currently emphasizes
+
+Every downstream component receives reference upstream states during training, while inference is fully ancestral. 
+
+This is a classic exposure problem.
+
+Consider:
+
+slightly wrong total \(T\);
+
+then wrong first layer;
+
+then wrong activity;
+
+then wrong layer budgets;
+
+then wrong counts;
+
+then support;
+
+then shares.
+
+Each downstream model was trained on **clean truth context**, not the noisy contexts it sees at inference.
+
+This could explain why isolated component losses look reasonable while final samples are poor.
+
+The oracle cascade is therefore not just a nice future diagnostic. It may be the **single highest-value next experiment**.
+
+---
+
+# Audit iteration 49: do the oracle cascade in both directions
+
+Do not merely substitute one truth variable at a time.
+
+Run a cumulative cascade.
+
+For example:
+
+fully generated;
+
+truth \(T\);
+
+truth \(T,L_0\);
+
+truth \(T,L_0,A\);
+
+truth \(T,L_0,A,D\);
+
+truth through \(K\);
+
+truth through \(H\);
+
+fully truth-supported share generation.
+
+Then also run isolated substitutions where practical.
+
+That tells you:
+
+where error first explodes;
+
+whether downstream modules can recover from upstream error;
+
+whether share/support components are independently bad.
+
+This is likely far more informative than another architecture screen.
+
+---
+
+# Audit iteration 50: the active-layer failure can probably be isolated without an expensive new Geant4 run
+
+You already have the truth activity sequence for each Dbat reference event and model outputs.
+
+A truth-activity oracle run should be cheap.
+
+If using truth \(A\) collapses component count from ~59 toward 23, the activity model is the major culprit.
+
+If component count stays high, support sampling is independently wrong.
+
+That one experiment directly adjudicates the two main hypotheses in your Discussion.
+
+Do it before inventing more architecture.
+
+---
+
+# Audit iteration 51: support geometry needs conditional diagnostics, not only final component count
+
+The paper tells us the output support is bad.
+
+It does not tell us **how**.
+
+Add:
+
+mean nearest-neighbor distance among active cells;
+
+radial spread;
+
+fraction of isolated active cells;
+
+support distance from shower axis;
+
+layerwise occupancy maps;
+
+support overlap with geometric neighborhoods;
+
+connected-component count conditional on \(K_\ell\);
+
+largest-component fraction by layer;
+
+number of singletons.
+
+These will tell you whether Gumbel support is too diffuse, too random, or simply centered incorrectly.
+
+---
+
+# Audit iteration 52: your current support scorer may lack cross-layer sampled-support dependence
+
+The architecture says there are bidirectional context layers, but it does not clearly state whether the sampled support in one layer influences support sampling in another. 
+
+If support draws are effectively independent across layers given deterministic context, longitudinally aligned showers are hard to reproduce.
+
+A stronger factorization is:
+
+\(p(H)=\prod_\ell p(H_\ell\mid H_{<\ell},K,D,c,G)\).
+
+This deserves serious consideration if the oracle cascade shows activity correction alone does not fix components.
+
+---
+
+# Audit iteration 53: the “exact support” language needs to remain carefully scoped
+
+Your decoder exactly realizes the **sampled** channel count and puts zero elsewhere. 
+
+Excellent.
+
+But this guarantees consistency with the model's own discrete decision, not correctness relative to Geant4.
+
+You mostly state that correctly.
+
+Keep phrases like:
+
+“exact-size generated support”
+
+rather than simply:
+
+“exact support.”
+
+The latter can sound like truth support.
+
+---
+
+# Audit iteration 54: structural validation needs pass counts, not just maxima
+
+You say every plotted artifact passed checks and report maximum closure errors. 
+
+Good.
+
+Make it even stronger:
+
+`10,000 / 10,000 passed finite checks`
+
+`10,000 / 10,000 passed count checks`
+
+etc.
+
+If checks operate per event, report event counts.
+
+If they operate per artifact, state the artifact count.
+
+A maximum alone does not tell the reader whether one event was close to tolerance or thousands were.
+
+---
+
+# Audit iteration 55: define the closure tolerance formula
+
+Table 1 gives:
+
+absolute tolerance \(2\times10^{-5}\) GeV;
+
+relative tolerance \(10^{-5}\). 
+
+You later say a layer error of \(4.20\times10^{-5}\) is below the effective combined tolerance. 
+
+Explicitly define:
+
+$$
+|\Delta| \le \text{atol}+\text{rtol}\times(\text{what scale?})
+$$
+
+Is the scale:
+
+truth budget?
+
+generated budget?
+
+maximum of the two?
+
+total event energy?
+
+Without that formula the reported tolerances cannot be reproduced.
+
+---
+
+# Audit iteration 56: “all generated artifacts passed” and “failed artifact excluded” need one more sentence
+
+Section 4.3 says if an invariant fails, the complete generated artifact is excluded from analysis pending diagnosis; events are never silently dropped. 
+
+Later you say all plotted artifacts passed. 
+
+Good.
+
+But explicitly state that no failed artifact was regenerated until one passed.
+
+Otherwise a skeptical reader may wonder whether whole-run rejection is a hidden selection mechanism.
+
+---
+
+# Audit iteration 57: parameter count needs an “active parameter” sanity check
+
+You report exactly 2,082,507 trainable parameters.  
+
+But optional v3 blocks are disabled.
+
+Make sure the reported count excludes:
+
+instantiated but unused modules;
+
+critics;
+
+screen-specific heads;
+
+parameters with `requires_grad=True` that do not participate in the forward graph.
+
+A useful audit is to report:
+
+total parameter count;
+
+trainable parameter count;
+
+parameters receiving non-None gradients in one representative training step.
+
+Those should be consistent.
+
+---
+
+# Audit iteration 58: “frozen source commit defines it exactly” does not substitute for a methods section
+
+You give a good amount of architecture detail, then say the config and commit define graph and flow modules exactly. 
+
+For reproducibility, code is excellent.
+
+For scientific communication, it is not enough.
+
+The paper still needs to explain:
+
+graph block equations;
+
+node features;
+
+edge features;
+
+attention operation;
+
+bidirectional context architecture;
+
+flow-network conditioning;
+
+time embedding;
+
+share-network permutation handling;
+
+activity masking;
+
+count masking.
+
+A reader should understand the algorithm without reverse engineering GitHub.
+
+---
+
+# Audit iteration 59: hardware and software environment are missing
+
+Table 1 gets down to number of dataloader workers but omits:
+
+GPU;
+
+CUDA;
+
+PyTorch;
+
+PyTorch Geometric if applicable;
+
+Python;
+
+OS;
+
+precision backend;
+
+determinism settings.
+
+
+
+Four dataloader workers are less scientifically important than the framework version.
+
+Add an environment table or repository environment lock.
+
+---
+
+# Audit iteration 60: “FP32” needs clarification under modern GPU backends
+
+Does FP32 mean:
+
+all parameters FP32;
+
+no AMP;
+
+no TF32 matrix multiplication;
+
+or TF32 allowed on Ampere hardware?
+
+If you care enough to state FP32, state whether TensorFloat-32 is enabled.
+
+This can matter for deterministic reproducibility.
+
+---
+
+# Audit iteration 61: why report epoch 12 rather than best epoch or final epoch?
+
+This is a basic unanswered provenance question.
+
+Was epoch 12:
+
+the latest available when the snapshot was created?
+
+chosen because scalar loss was lowest?
+
+chosen because Dbat looked best?
+
+chosen before Dbat evaluation?
+
+chosen because later epochs crashed?
+
+If Dbat was used to select epoch 12, that creates additional development adaptivity.
+
+State the checkpoint-selection rule.
+
+---
+
+# Audit iteration 62: “stopping patience 24” raises checkpoint-selection ambiguity
+
+If validation loss is checked each epoch and max training is 24 epochs, patience 24 means early stopping effectively cannot happen.
+
+If it is checked multiple times per epoch, explain.
+
+Otherwise delete “stopping” and simply say no early stopping before epoch 24.
+
+---
+
+# Audit iteration 63: your development bank is heavily adaptive
+
+Dbat is explicitly repeatedly inspected during successive architecture work. 
+
+Therefore every number on Dbat is **descriptive development evidence**, not a clean estimate of out-of-sample performance.
+
+You state this.
+
+Good.
+
+But that also means the paper should avoid pseudo-formal precision when discussing small differences there.
+
+For example, V3-SUP zero response 1.61% versus B0 1.42% is not interesting unless the difference has uncertainty and was not selected adaptively.
+
+Focus on the huge effects.
+
+---
+
+# Audit iteration 64: freeze the untouched validation remainder now
+
+You started with 76,158 validation events.
+
+Dbat uses 10,000.
+
+Dloss uses 4,096 with unknown overlap. 
+
+Unless other work has touched the rest, you may still have **more than 60,000 pristine validation events**.
+
+Why wait for a completely new test bank?
+
+Immediately identify every validation event ever exposed, then hash-freeze the remainder.
+
+Do not inspect it.
+
+That can become your locked model-selection confirmation bank before any ultimate test.
+
+This is likely far easier than new Geant4 production.
+
+---
+
+# Audit iteration 65: the contaminated nominal test set should probably be retired entirely
+
+You now plainly say it cannot serve as pristine final evaluation. 
+
+Good.
+
+Stop calling it “test” except historically.
+
+Call it:
+
+> historically exposed nominal-test partition.
+
+Then define a new locked evaluation holdout.
+
+That avoids years of caveats around a set whose methodological role is already dead.
+
+---
+
+# Audit iteration 66: your conditional C2ST plan is much better, but specify the statistical unit
+
+You correctly require:
+
+pair grouping;
+
+condition inputs;
+
+no internal sample-level validation;
+
+null calibration. 
+
+Good.
+
+For the final design, the fold/group unit must be the **incident condition ID**.
+
+If you later generate multiple model showers and reference showers per condition, every sample for one condition belongs in the same classifier fold.
+
+Otherwise you leak the condition again.
+
+---
+
+# Audit iteration 67: the conditional C2ST should report both \(Y\) and \((c,Y)\)
+
+Do not replace the historical shower-only C2ST with only one joint classifier.
+
+Use both:
+
+marginal classifier: \(Y\rightarrow\) real/generated;
+
+conditional classifier: \((c,Y)\rightarrow\) real/generated.
+
+The first says whether the overall shower mixture differs.
+
+The second can detect condition-response interactions.
+
+Given your sign-changing energy bias, that difference is important.
+
+---
+
+# Audit iteration 68: C2ST needs power calibration, not only permutation nulls
+
+A classifier AUC near 0.5 does not prove equality.
+
+Your future protocol should include synthetic perturbations.
+
+For example, deliberately:
+
+shift response by 1%, 2%, 5%;
+
+remove 5% of channels;
+
+shift layer activity;
+
+broaden transverse support.
+
+Then see what effect size the chosen C2ST reliably detects.
+
+That gives meaning to a near-chance result.
+
+---
+
+# Audit iteration 69: reference-reference nulls require additional truth statistics
+
+Your planned reference–reference null is scientifically excellent. 
+
+But with exactly one stored Geant4 event per condition, you cannot create a true same-condition G4-vs-G4 null.
+
+This needs repeated reference simulation.
+
+Flag the cost explicitly.
+
+Generated-generated is cheap.
+
+Reference-reference is not.
+
+---
+
+# Audit iteration 70: multiple generator sampling seeds are cheap and should happen now
+
+You do not need multiple training runs to estimate variability due to ancestral sampling.
+
+Run the same frozen V3-SUP checkpoint with, say, 10 generation seeds over Dbat.
+
+Then report variability of:
+
+mean response;
+
+zero rate;
+
+gap fraction;
+
+component count;
+
+active channels.
+
+If these are extremely stable, you know current gigantic discrepancies are not random draw accidents.
+
+This is cheap evidence.
+
+---
+
+# Audit iteration 71: Figure 6 should use points, not bars, on a log scale
+
+Rendered page 8 is much cleaner than the old split-scale version.
+
+But bar charts conceptually imply a baseline.
+
+On a log scale there is no zero baseline.
+
+The bottom of each bar is just the plotting lower bound.
+
+Use points with vertical confidence intervals, or lollipop markers.
+
+The 0.93%, 1.42%, 1.64%, 1.61%, 50.41% labels already carry the message. 
+
+---
+
+# Audit iteration 72: Figure 5 is information-dense but actually quite good
+
+Rendered page 7 is one of the strongest visual pages.
+
+The six panels show something important immediately:
+
+active-layer count is almost right;
+
+active-channel count is somewhat low;
+
+but gaps/components are wildly wrong.
+
+That is exactly the kind of diagnostic juxtaposition the paper needs. 
+
+I would add uncertainty eventually, but I would **keep the basic figure concept**.
+
+The biggest improvement would be to replace or supplement largest-component fraction with:
+
+singleton fraction;
+
+or components per 100 active channels.
+
+---
+
+# Audit iteration 73: Table 2 and Figure 5 partly duplicate each other
+
+Table 2 is useful because it gives exact numbers and includes zero rate, ECAL start, and first layer.
+
+Figure 5 makes the main structural story visible.
+
+Both can stay, but in a tighter paper you could:
+
+move full Table 2 to supplementary material;
+
+retain a compact primary table with only metrics not already visible in Figure 5.
+
+Right now this is not a major problem because the paper is only 11 pages.
+
+---
+
+# Audit iteration 74: Figure 2's snake-like reading direction is slightly awkward
+
+The hierarchy runs left-to-right across the top, drops down at the right, then runs right-to-left across the bottom.
+
+It is understandable, but not instantly.
+
+Number the stages or use a consistent left-to-right two-row flow.
+
+The architecture is complicated enough that readers should not spend cognitive effort following arrows.
+
+---
+
+# Audit iteration 75: “Bernoulli response branch” is not the clearest term
+
+You now distinguish \(B\) and \(V\), which is mathematically correct. 
+
+I would call \(B\):
+
+**hurdle branch**
+
+or
+
+**positive-response hurdle**.
+
+“Response branch” can sound like \(B\) itself represents final response visibility, which it does not because of the positive-branch clamp.
+
+---
+
+# Audit iteration 76: raw “shower” language should remain cautious
+
+The title now says **energy deposits** rather than showers.
+
+That was a good change.
+
+Because there is:
+
+no digitization;
+
+no SiPM;
+
+no electronics;
+
+no reconstruction;
+
+no calibration.
+
+
+
+Maintain that precision.
+
+“Shower generation” in related work is fine as field terminology.
+
+Your own target is specifically channelized Geant4 deposits.
+
+---
+
+# Audit iteration 77: the Geant4 metadata gap remains a submission blocker
+
+Your current limitations say the final experiment needs complete:
+
+version;
+
+physics list;
+
+production cuts;
+
+geometry;
+
+field;
+
+vertex;
+
+upstream material;
+
+random-seed provenance. 
+
+Correct.
+
+Until those exist, the reference distribution itself is not reproducible.
+
+That matters more than almost any neural-network hyperparameter.
+
+Do not submit a paper claiming reproducible surrogate simulation while \(p_{\rm G4}\) cannot itself be reconstructed.
+
+---
+
+# Audit iteration 78: include the detector material specification in the main method, not only provenance
+
+Even if the full geometry file is archived, readers need basic detector facts.
+
+ECAL material.
+
+HCAL absorber/scintillator materials.
+
+Physical depths.
+
+Cell sizes.
+
+Longitudinal spacing.
+
+Any dead material.
+
+Upstream material relevant to this simulation.
+
+Magnetic field if relevant.
+
+This lets HEP readers understand what sort of shower behavior they should expect.
+
+---
+
+# Audit iteration 79: the response cap probably needs removal in the final model
+
+Even if the current cap never fires, a hard handcrafted ceiling is awkward in a learned conditional generative simulator.
+
+If it exists purely as a runaway-sample guard, handle it as a **failure detector**, not as part of the normal law.
+
+For example:
+
+generate;
+
+if \(T\) exceeds a physically impossible bound, flag the model run as invalid.
+
+Silently saturating at the cap changes the distribution.
+
+---
+
+# Audit iteration 80: scalar loss should not be called a “promotion criterion” in the final scientific paper
+
+This is internal engineering vocabulary.
+
+Likewise:
+
+development bank;
+
+screen;
+
+promotion;
+
+artifact;
+
+frozen role;
+
+monitor role.
+
+Some are fine in a reproducibility report.
+
+A journal paper should translate them into conventional language:
+
+model selection criterion;
+
+development set;
+
+controlled variant;
+
+training subset;
+
+held-out monitoring subset.
+
+You can retain repository IDs separately.
+
+---
+
+# Audit iteration 81: the abstract is still too much of a project-status report
+
+The abstract currently contains:
+
+parameter count;
+
+training-role count;
+
+development-bank status;
+
+excluded historical classifier;
+
+versioned artifact.
+
+
+
+For a working audit manuscript, that is fine.
+
+For a final scientific abstract, it is too operational.
+
+Once the study is complete, the abstract should prioritize:
+
+method;
+
+validation protocol;
+
+principal fidelity result;
+
+baseline comparison;
+
+timing;
+
+scientific conclusion.
+
+Do not polish that now, because the result is still moving.
+
+---
+
+# Audit iteration 82: the current conclusion is logically safe but scientifically weak
+
+You conclude:
+
+> structural invariants do not guarantee agreement with the conditional Geant4 distribution.
+
+
+
+True.
+
+But almost tautological.
+
+No generative-model researcher expects positivity and energy bookkeeping to guarantee distributional accuracy.
+
+For a publishable contribution you need a sharper result, such as:
+
+the particular hierarchical factorization fails to reproduce longitudinal dependence;
+
+teacher-forced component optimization masks ancestral failure;
+
+support ranking + exact-size sampling produces miscalibrated spatial structure;
+
+or a structured replacement materially fixes those issues.
+
+The current conclusion is a safe **development conclusion**, not yet a strong paper conclusion.
+
+---
+
+# Audit iteration 83: you are very close to an interesting dependence-vs-marginals story
+
+This is the strongest conceptual result hiding in the manuscript.
+
+The model gets:
+
+mean active layers almost exactly right;
+
+total mean response within ~2%;
+
+yet:
+
+gap count nearly 3×;
+
+weak components ~2.5×;
+
+ECAL energy +11%.
+
+That is a nice case study in why matching low-dimensional marginals is insufficient.
+
+If an autoregressive activity/support architecture repairs those joint metrics without destroying the marginals, the paper gains a much clearer scientific contribution.
+
+---
+
+# Audit iteration 84: complete training before doing too many new architecture screens
+
+Do not launch ten new architectures from an unfinished epoch-12 checkpoint.
+
+First:
+
+finish V3-SUP to the planned 24 epochs;
+
+measure the metric trajectories;
+
+run cheap oracle substitutions;
+
+audit cap/CLR/support counters.
+
+Then decide what architectural mechanism actually needs replacement.
+
+Otherwise you can waste weeks treating optimization artifacts as structural flaws.
+
+---
+
+# Audit iteration 85: your code availability statement is accurate but means the experiment is not independently reproducible
+
+You release source/configuration/aggregates/geometry/audit records, but not the event data or checkpoints. 
+
+Therefore outsiders can:
+
+rebuild figures;
+
+inspect code;
+
+inspect geometry.
+
+They cannot:
+
+retrain;
+
+regenerate the reported shower bank;
+
+recompute event-level diagnostics.
+
+That is okay if collaboration restrictions require it.
+
+Use precise language:
+
+**reproducible aggregate analysis artifact**
+
+rather than broadly:
+
+**reproducible experiment**.
+
+---
+
+# Audit iteration 86: archive more than GitHub before submission
+
+For final publication, create a DOI-backed archive containing at least:
+
+tagged source release;
+
+environment lock;
+
+portable configs;
+
+geometry file;
+
+split hashes/manifests where legally possible;
+
+aggregate results;
+
+figure-generation pipeline;
+
+checkpoint hashes even if checkpoint bytes cannot be public;
+
+exact reference-production provenance.
+
+GitHub branches and repositories can change.
+
+A DOI snapshot is better scientific provenance.
+
+---
+
+# Audit iteration 87: authorship/data ownership needs explicit resolution before submission
+
+The underlying production file is collaboration-owned, while the manuscript currently has one author and acknowledges mentorship. 
+
+Questions to settle before a real submission:
+
+Who generated the Geant4 sample?
+
+Who owns the detector geometry?
+
+Does the collaboration permit publication of the geometry?
+
+Does use of the production require coauthorship or formal approval?
+
+Who supplied detector/physics-list metadata?
+
+Does the eventual venue require a collaboration statement?
+
+Do not let this become a last-week submission problem.
+
+---
+
+# Audit iteration 88: the author-contribution statement may need CRediT-style detail
+
+“Conceived the study, developed software and model, performed analysis, wrote manuscript” is concise. 
+
+Eventually consider standard categories:
+
+Conceptualization;
+
+Methodology;
+
+Software;
+
+Formal analysis;
+
+Visualization;
+
+Writing – original draft;
+
+Writing – review & editing.
+
+And make sure mentorship/data-generation contributions are represented according to actual contributions and venue policy.
+
+---
+
+# Audit iteration 89: AI-use disclosure is absent
+
+Given how much adversarial editing/auditing and technical reasoning has occurred through ChatGPT in this project, check the target venue's current disclosure policy before submission.
+
+Do not necessarily add anything yet without choosing the venue.
+
+But this should not be forgotten.
+
+---
+
+# Audit iteration 90: the reference list is much better
+
+The related-work section is now materially more complete: CaloFlow, iCaloFlow, L2LFlows, score/diffusion approaches, CaloGraph, point-cloud approaches, CaloDREAM, and the ZDC flow-matching paper are all represented. 
+
+The remaining literature task is no longer “add obvious missing foundational papers.”
+
+It is now:
+
+**establish precise novelty.**
+
+You need a method-comparison table eventually:
+
+representation;
+
+conditioning;
+
+exact zero support?;
+
+explicit counts?;
+
+energy conservation?;
+
+irregular geometry?;
+
+autoregressive layers?;
+
+flow matching?;
+
+timing?;
+
+detector.
+
+That will show whether your claimed combination is actually distinctive.
+
+---
+
+# QA pass: specific statements I would revise right now
+
+These are changes you can make **without running anything**.
+
+In the abstract, change **“improved its matched scalar loss”** to **“had a slightly lower matched scalar loss in a single matched screen.”**
+
+Change **“demonstrating that the scalar objective alone was not an adequate promotion criterion”** to something like **“while simultaneously producing an unacceptable zero-deposit distribution, showing that scalar loss alone was insufficient for model selection in this screen.”** This avoids implying a causal explanation. 
+
+Change **“The canonical event split is 80/10/10”** to **“The canonical deterministic split is approximately 80/10/10”**, unless the nonexact counts have another explanation. 
+
+Where you say Dbat is “separate,” use **“distinct”** and immediately remind readers that overlap with Dloss is unresolved.  
+
+Fix Section 5.1's statement about **“plotted error bars”**, because rendered Figure 3 has no visible error bars. 
+
+Restore exact equations defining the Figure 3 relative mean and width differences. 
+
+Define “largest-component fraction.”
+
+Define the combined closure-tolerance equation.
+
+Replace “eight midpoint Euler steps” with the exact numerical scheme.
+
+State whether \(B\)-BCE is trained against \(\mathbf1[T_{\rm ref}>0]\).
+
+State explicitly that the positive-response density is conditioned on positive reference events.
+
+Explain how the cap was derived.
+
+Add “epoch 12/24” whenever V3-SUP is first introduced in Results.
+
+Specify the representative HCAL layer in Figure 1.
+
+Rename B0/V3-SUP in figures to descriptive names, with internal IDs in parentheses.
+
+Use points rather than log-scale bars in Figure 6.
+
+---
+
+# Experimental priority order
+
+If I were trying to extract the maximum scientific information for minimum compute, I would **not** immediately start the three-seed full program.
+
+First finish the existing epoch-24 run and log metric trajectories. Then run cheap inference-only audits: multiple generation seeds, 4/8/16/32 flow steps, cap counters, CLR-clipping counters, threshold sweeps if event outputs exist, and support/calibration diagnostics. Then do the oracle cascade, which is probably your highest-value causal experiment. After that, implement the structured activity replacement if the oracle confirms it. Only once the architecture stops obviously failing would I spend compute on three full training seeds, locked evaluation, matched learned baselines, reconstruction, repeated Geant4 fixed-condition samples, and timing.
+
+That sequencing minimizes the chance of spending three expensive seeds reproducing a failure you already understand.
+
+---
+
+# Massive question bank for the next audit
+
+1. What exact rule produced the nominal “80/10/10” counts?
+2. Was it hash-threshold assignment rather than exact-count permutation?
+3. Is the event assignment deterministic across code versions?
+4. What identifier is hashed?
+5. Can the split manifest be recreated from raw event metadata alone?
+6. Why are 30,624 events reserved for critic-real in V3-SUP if no critic is active?
+7. Why are another 30,624 reserved for critic-monitor?
+8. Has V3-SUP ever accessed either critic role in any way?
+9. Has the human researcher inspected results calculated on critic-monitor?
+10. Could critic-monitor still count as untouched data?
+11. Are critic-real and critic-monitor stratified by \(K_{\rm inc}\)?
+12. By angle?
+13. By zero/nonzero response?
+14. Was the 551,234 generator role sampled randomly from canonical training?
+15. Did the earlier pilot checkpoint see any event outside that generator role?
+16. Was the pilot checkpoint selected using Dbat?
+17. If yes, does initializing V3-SUP from it carry Dbat-adaptive model selection into the full-data run?
+18. Why is epoch 12 shown instead of epoch 24?
+19. Had epoch 24 not completed?
+20. Did later checkpoints exist but perform worse?
+21. Was epoch 12 chosen before inspecting Dbat?
+22. Was it chosen by Dloss?
+23. Was it merely the latest checkpoint when the paper snapshot was frozen?
+24. What is one “epoch” exactly?
+25. Does every generator-role event appear once per epoch?
+26. Is `drop_last` enabled?
+27. How many optimizer steps are in an epoch?
+28. How many total optimizer steps had epoch 12 completed?
+29. Is the cosine schedule defined over 24 epochs?
+30. What was the learning rate at epoch 12?
+31. What is “stopping patience 24” counted in?
+32. Could early stopping have triggered before epoch 24?
+33. Was the stopping metric teacher-forced scalar loss?
+34. Which dataset supplied that metric?
+35. What is the complete checkpoint-selection rule?
+36. What exact event field supplies \(p^\mu\)?
+37. Is it primary-generator truth or calorimeter-entry truth?
+38. Can upstream interactions alter the neutron before it reaches the ZDC?
+39. Can secondaries generated upstream contribute to \(Y\)?
+40. If yes, is the surrogate intentionally modeling them too?
+41. Is the generator vertex identical to floating-point precision across every event?
+42. What tolerance was used to verify fixed vertex?
+43. What is the angular range in the generator role?
+44. What is the angular range in Dbat?
+45. What are the \(\theta\) and \(\phi\) distributions?
+46. Are they uniform?
+47. Is the beam approximately pencil-like?
+48. How large are \(p_x,p_y\) relative to \(p_z\)?
+49. What fraction of Dbat occupies each angular region?
+50. Does detector entry position vary substantially as angle changes?
+51. Can you compute the expected straight-line impact coordinate from fixed vertex and direction?
+52. Does generated transverse shower centroid track that expected intersection?
+53. Why include both \(\log(1+K/100)\) and \(\log E_{\rm tot}\) when they are deterministically related by neutron mass?
+54. Did you test removing the redundant feature?
+55. Does the redundancy improve optimization?
+56. Are encoder inputs standardized beyond the logarithms?
+57. What is the exact numerical range of all five inputs?
+58. Are the direction cosines ever numerically unstable near the minimum training energy?
+59. Are there exact \(K=0\) events anywhere in corpus?
+60. If no, why retain the \(K>0\) indicator in Eq. (5)?
+61. If yes, how is their direction defined?
+62. Do those events have zero truth deposit?
+63. What is the minimum \(K\) inside the 50–250 GeV diagnostic bank?
+64. What is the precise source of the cap coefficients 0.630110 and 61.2338?
+65. Which dataset was used to derive them?
+66. Were validation or test events involved?
+67. Is 61.2338 the maximum observed response?
+68. A quantile?
+69. A safety factor?
+70. A fitted envelope?
+71. How many generator-role reference events satisfy \(T>C(K)\)?
+72. How many Dbat reference events satisfy it?
+73. What is the maximum reference \(T\)?
+74. What is the maximum \(T/C(K)\)?
+75. What is the 99.9th percentile?
+76. How many V3-SUP draws hit the cap?
+77. How many B0 draws?
+78. M0?
+79. S2?
+80. Can you regenerate those counters without retraining?
+81. If the cap never activates, why not replace it with an assertion rather than saturation?
+82. If it does activate, does the generated distribution have an atom at the cap?
+83. Is cap application included in reported inference timing later?
+84. Does the positive-response Gaussian mixture output 4 logits, 4 means, and 4 scales?
+85. How are the scales made positive?
+86. Softplus?
+87. Exponential?
+88. Is there a minimum variance?
+89. Are mixture weights numerically stabilized?
+90. Is response NLL trained only on truth-positive events?
+91. Is \(B\)'s target exactly \(\mathbf1[T_{\rm ref}>0]\)?
+92. Are zero events excluded from mixture training?
+93. Are positive events weighted equally regardless of energy?
+94. Does the response loss use the capped or uncapped likelihood?
+95. Does the response head know the cap during training?
+96. How much Gaussian mass lies at \(z<0\) for each condition?
+97. Can you analytically compute expected positive-branch zero probability from the mixture?
+98. Why was \(z=\log(1+T/s)\) chosen instead of \(\log T\)?
+99. Have you tested a positive-support response transform?
+100. What exactly does S2 use instead?
+101. Is S2's support strictly positive?
+102. Does S2 still apply the same cap?
+103. Does S2 share the same Bernoulli head?
+104. Was the Bernoulli head copied from M0?
+105. Were its weights updated during S2?
+106. Was the condition encoder updated during S2?
+107. What fraction of S2's scalar-loss improvement comes from the response component?
+108. What happened to S2's visibility BCE?
+109. What happened to every other weighted loss term?
+110. What happened to their unweighted values?
+111. What happened to gradient norms?
+112. What is the distribution of S2 Bernoulli probabilities?
+113. Does it cluster near 0.5?
+114. Was there any sign inversion in the S2 hurdle convention?
+115. Did `load_state_dict` report missing keys?
+116. Unexpected keys?
+117. Was strict loading enabled?
+118. Was the hurdle included in the optimizer?
+119. Was any module accidentally reinitialized?
+120. Does a fresh rerun of S2 reproduce ~50% zeros?
+121. Over multiple seeds?
+122. How large is normal M0 run-to-run variation in zero rate?
+123. What exactly does “joint training” mean when downstream variables are teacher-forced?
+124. Are all nine losses optimized simultaneously each batch?
+125. Are any stages frozen?
+126. Does every event contribute every loss?
+127. Which losses are undefined for zero-response events?
+128. How are those handled?
+129. Is each component averaged over events first?
+130. Over layers?
+131. Over channels?
+132. What is the denominator for activity BCE?
+133. For support BCE?
+134. For profile MSE?
+135. For share MSE?
+136. For ranking?
+137. Why are the response/profile/count weights all exactly 0.160901?
+138. What algorithm generated all nine weights?
+139. Were they based on gradient norms?
+140. Initial loss magnitudes?
+141. Validation sensitivity?
+142. Hand tuning?
+143. Which dataset was used?
+144. Were weights frozen before Dbat was ever viewed?
+145. Why report six decimal places?
+146. Are all six digits materially meaningful?
+147. What are average weighted contributions of all nine terms?
+148. Which term dominates the scalar value?
+149. Which dominates gradients?
+150. Does the loss correlate with your physical diagnostics across checkpoints?
+151. Could you produce scatterplots of loss versus gap fraction across saved epochs?
+152. Loss versus zero rate?
+153. Loss versus component count?
+154. Does scalar loss monotonically improve while topology stalls?
+155. How is first active layer defined for truth?
+156. Strict first \(D_\ell>0\)?
+157. Does ECAL count as layer 0?
+158. Are layers before sampled \(L_{\rm first}\) deterministically forced inactive?
+159. Is sampled \(L_{\rm first}\) itself forced active?
+160. Is activity BCE computed for layers before truth \(L_{\rm first}\)?
+161. Or only subsequent layers?
+162. Are subsequent Bernoulli logits sampled independently given the same context?
+163. Are they conditionally independent even during training?
+164. Is there any common latent variable inducing dependence?
+165. What are per-layer truth activity rates?
+166. Generated rates?
+167. Could the model be matching those marginals individually despite wrong correlations?
+168. What is truth adjacent-layer correlation?
+169. Generated adjacent-layer correlation?
+170. Truth number of active runs?
+171. Generated?
+172. Longest truth inactive gap?
+173. Generated?
+174. How does gap length vary with energy?
+175. Angle?
+176. ECAL start?
+177. Could an autoregressive activity head be implemented without retraining the rest?
+178. Would you teacher-force previous activity during training?
+179. How would you address exposure bias in an autoregressive activity model?
+180. What is the exact CLR clipping operation before centering?
+181. Are clipped shares renormalized before taking logs?
+182. Or only implicitly after terminal softmax?
+183. How many layer shares are below \(10^{-8}\)?
+184. How many cell shares?
+185. What energy fraction do they represent?
+186. Could clipping affect many strict-positive channels while carrying negligible energy?
+187. Does that clash with the strict zero support target?
+188. Is Gaussian source noise drawn independently on every active dimension?
+189. Are inactive dimensions exactly zero?
+190. Is source noise centered before the flow?
+191. The manuscript says no; has that implementation now been verified?
+192. Does the vector field output preserve the zero-sum subspace?
+193. Does it learn a gauge component?
+194. What is the terminal mean of CLR coordinates before softmax?
+195. How large is that irrelevant gauge numerically?
+196. Could projecting it out improve optimization?
+197. Have you considered ILR coordinates?
+198. For \(K=1\), do you still run the share ODE?
+199. Why?
+200. What exactly is “midpoint Euler” in code?
+201. Can you write the numerical update equation?
+202. Is it explicit midpoint/RK2?
+203. What time grid is used?
+204. \(t=0\) to \(1\) uniformly?
+205. Does the vector field see continuous time embedding?
+206. What embedding?
+207. How many solver function evaluations per flow?
+208. Does eight “steps” mean eight or sixteen NN evaluations?
+209. Have you tested 4/8/16/32 steps?
+210. What metric changes?
+211. What runtime changes?
+212. Is solver error currently negligible compared with model error?
+213. How are active-layer count targets produced?
+214. Is count \(K_\ell\) exactly number of \(Y_i>0\) channels?
+215. For inactive layers, is \(K_\ell=0\) deterministic?
+216. During inference can an active layer sample count zero?
+217. If no, is zero masked from the categorical?
+218. During training, why include inactive zero examples with weight 0.2?
+219. What does that 0.2 mean exactly?
+220. Is it class weight?
+221. Event weight?
+222. Loss multiplier?
+223. How was 0.2 chosen?
+224. Does the count head model ECAL and HCAL with the same 401 logits?
+225. Are invalid logits set to \(-\infty\)?
+226. Before or after softmax?
+227. Does the final 90-channel HCAL layer get a separate mask?
+228. Are count probabilities calibrated?
+229. Plot predicted count CDF versus truth?
+230. By layer?
+231. By energy?
+232. How much of the active-channel deficit comes from count-head bias?
+233. What is the truth mean \(K_\ell\) by layer?
+234. Generated?
+235. Is support BCE class balancing computed per event?
+236. Per layer?
+237. Globally?
+238. What is the exact positive-weight formula?
+239. How often does it hit the cap of 100?
+240. Why is that cap 100?
+241. How are the 256 ranking pairs sampled?
+242. Per event or per layer?
+243. Uniformly?
+244. Hard negatives?
+245. Do repeated epochs resample the pairs?
+246. Is the same RNG stream used?
+247. What if an event contains fewer than 256 valid positive-negative combinations?
+248. What if a layer has all channels active?
+249. What exactly is \(s_i\) in the ranking loss?
+250. Raw pre-BCE support logit?
+251. Does Gumbel-Top-\(k\) use the exact same \(s_i\)?
+252. What Gumbel scale is used?
+253. Is there a temperature?
+254. If not, why is BCE logit scale assumed appropriate for Plackett-Luce sampling?
+255. Have you rescaled logits post hoc and measured topology?
+256. Does a lower temperature reduce components?
+257. Does it collapse diversity?
+258. What is per-channel inclusion calibration?
+259. How does generated channel occupancy compare with truth channel occupancy?
+260. Does support failure concentrate at detector boundaries?
+261. Ganged channels?
+262. ECAL?
+263. Late HCAL?
+264. How is bidirectional layer context computed?
+265. Transformer?
+266. GRU?
+267. Attention across 65 layer summaries?
+268. Does it see sampled support from other layers or only deterministic embeddings?
+269. Does support in layer \(\ell\) know actual sampled support at \(\ell-1\)?
+270. If not, how can stochastic shower alignment propagate across layers?
+271. Are graph blocks message-passing on all 6,790 nodes every event?
+272. Hence the statement that computation remains dense?
+273. What are node features?
+274. Absolute \(x,y,z\)?
+275. Layer ID?
+276. ECAL/HCAL type?
+277. Ganging multiplicity?
+278. Cell size?
+279. Count?
+280. Layer budget?
+281. Condition embedding?
+282. What are edge features?
+283. Coordinate differences?
+284. Distance?
+285. Edge type?
+286. Are they standardized?
+287. From training geometry only?
+288. What is the same-layer edge-length distribution?
+289. Maximum?
+290. Adjacent-layer?
+291. Do ganged centroids create unusually long edges?
+292. Are duplicate centroid coordinates possible?
+293. How are kNN ties broken?
+294. Is the graph deterministic across library versions?
+295. Is nearest-neighbor construction stored rather than regenerated?
+296. Is weak-component analysis performed on the induced subgraph of active nodes?
+297. State that explicitly?
+298. Is largest-component fraction number of active channels in the largest component divided by total active channels?
+299. Or energy?
+300. Why do empty events contribute zero instead of being excluded?
+301. What are the topology values conditioned on nonempty?
+302. What are components per 100 active channels eventwise?
+303. What are singleton components?
+304. What energy fraction sits in singleton components?
+305. What is second-largest component size?
+306. Can the extra ~36 components in V3-SUP mostly be singletons?
+307. Does the support error remain if activity is replaced by truth?
+308. Does the activity error remain if support is ignored?
+309. Can the oracle cascade be run now with existing saved truth intermediates?
+310. Which stage is technically hardest to oracle?
+311. Does the model already log every intermediate generated variable?
+312. If not, add it?
+313. What is Dbat's exact manifest hash?
+314. What is Dloss's exact manifest hash?
+315. Why can their overlap not be computed?
+316. Are event IDs absent from aggregate JSON?
+317. Do the original manifests still exist privately?
+318. Can the production owner recover them?
+319. What is the intersection size?
+320. If Dloss overlaps Dbat heavily, should S2's two diagnostics be called independent?
+321. If they do not overlap, state that explicitly?
+322. How many canonical validation events have ever been looked at?
+323. Can every exposed ID be enumerated?
+324. How many remain pristine?
+325. Can you freeze them now?
+326. Can the hash be committed publicly before evaluation?
+327. Who controls access to the locked bank?
+328. Can the evaluation script enforce a one-time release?
+329. Is the nominal test set fully retired?
+330. Exactly what historical test analyses exposed it?
+331. Is every exposed test event ID recoverable?
+332. Would any untouched subset still be defensible?
+333. Is creating a new validation holdout from untouched canonical validation easier?
+334. Do you actually need new Geant4 simulation for final holdout?
+335. Figure 3: what exact formula is “relative mean difference”?
+336. Is denominator truth mean?
+337. Absolute truth mean?
+338. Percentage multiplied by 100?
+339. Same for width?
+340. Are zero events included?
+341. How are exact bin boundaries handled?
+342. Is 50 included?
+343. Is 250 included?
+344. Event counts in every bin?
+345. Energy distribution within every bin?
+346. Angle distribution within every bin?
+347. Why does Section 5.1 refer to plotted error bars when Figure 3 has none?
+348. Is that stale text?
+349. Can paired-bootstrap CIs be computed from internal event-level outputs?
+350. If yes, why not do it now?
+351. For gap fraction?
+352. Zero rate?
+353. Mean channels?
+354. ECAL deposit?
+355. Total deposit?
+356. What uncertainty notion do you want the final paper to report?
+357. Bootstrap over conditions?
+358. Generator seeds?
+359. Training seeds?
+360. All three separately?
+361. Is aggregate W1 calculated over all 10,000 \(T\) values?
+362. Does it include zeros?
+363. Why no W1 by energy bin?
+364. Why no normalization?
+365. Can you construct a reference-reference floor?
+366. Does that require new G4?
+367. Could approximate sampling floor be obtained by bootstrap splitting Dbat, acknowledging condition mismatch?
+368. What exact formula gives relative longitudinal \(L^1=0.110\)?
+369. Is it absolute mean profile?
+370. Does it include ECAL?
+371. Add normalized layer-share \(L^1\)?
+372. What is ECAL mean conditional on ECAL start?
+373. What is ECAL fraction?
+374. Its distribution?
+375. ECAL/HCAL correlation?
+376. Does V3 put too much energy in ECAL because it starts there less frequently but deposits more when it does?
+377. Is first-layer head biased later by ~0.266 layers?
+378. How does \(L_{\rm first}\) distribution look, not just mean?
+379. What is its cross entropy?
+380. Is the ECAL-start discrepancy statistically meaningful?
+381. Figure 5: can every panel get CIs?
+382. What is gap-count distribution?
+383. Is mean 6.25 caused by broad moderate shifts or a long tail?
+384. Median?
+385. 90th percentile?
+386. Fraction with >10 gaps?
+387. Does component count have a giant tail?
+388. Median?
+389. Why report mean only?
+390. Can event-level distributions be recovered privately even if not in public aggregates?
+391. If yes, add histograms or CDFs?
+392. If no, why were only means archived?
+393. Should future aggregate reports retain quantiles/histograms?
+394. What thresholds should the strict-zero sweep use?
+395. Are there known Geant4 storage precision thresholds?
+396. Could you use \(10^{-9},10^{-8},10^{-7},\ldots\) GeV?
+397. Should thresholds instead be tied to detector sensitivity?
+398. How does active-channel count change with threshold?
+399. Truth vs generation?
+400. Does the 94%-vs-52% gap discrepancy survive?
+401. Does component discrepancy survive?
+402. What independent physical-neighbor graph will you use?
+403. Based on physical volumes?
+404. Constituent-location union adjacency?
+405. Radius?
+406. Face-sharing?
+407. Will ganged readout IDs inherit all constituent adjacencies?
+408. Does that drastically change truth components?
+409. Generated components?
+410. How many physical positions exist before ganging?
+411. Could the model itself operate on them as latent graph nodes?
+412. How would energy be aggregated back to readout?
+413. Would that increase model size materially?
+414. Does readout-level ambiguity fundamentally prevent learning physical shower position within ganged cells?
+415. If yes, should transverse-centroid observables also be labeled readout-centroid observables?
+416. What exact hardware trained V3-SUP?
+417. GPU model?
+418. Number of GPUs?
+419. Wall-clock time through epoch 12?
+420. Estimated epoch 24 completion?
+421. PyTorch version?
+422. CUDA?
+423. cuDNN?
+424. PyG/DGL?
+425. Python?
+426. TF32?
+427. AMP disabled?
+428. Deterministic algorithms enabled?
+429. What nondeterministic kernels remain?
+430. Can seed 20260723 reproduce identical checkpoints bitwise?
+431. If not, what variability exists?
+432. Is the 2,082,507 count independently verified by the released commit?
+433. Does it include disabled blocks?
+434. Critics?
+435. Any parameter receives no gradient?
+436. Can you log gradient coverage?
+437. How are graph/context modules exactly parameterized?
+438. What does “four heads” attend over?
+439. What are the two bidirectional context layers?
+440. What time embedding does the flow use?
+441. Is the flow architecture shared between profile and cell shares?
+442. How is variable support size handled?
+443. Is selected-channel order arbitrary?
+444. By channel ID?
+445. Is the share model permutation equivariant?
+446. If not, has channel-order sensitivity been tested?
+447. Can permuting selected support order change generated shares?
+448. Does cell-share flow use geometry?
+449. Graph embeddings?
+450. Raw coordinates?
+451. Is there cross-layer coupling in cell shares?
+452. What is output dimensionality for ECAL \(K=400\)?
+453. How is padding masked?
+454. Does padding affect normalization?
+455. What fraction of runtime is profile flow?
+456. Share flow?
+457. Graph support?
+458. Gumbel sampling?
+459. Decoder?
+460. Even before final speed claims, can you profile component latency?
+461. What inference batch sizes are supported?
+462. Does dense graph computation dominate?
+463. Is a nominally “sparse” output architecture actually slower than a dense baseline?
+464. Is that why you explicitly disclaim computational sparsity?
+465. Could support scoring be restricted to candidate neighborhoods?
+466. Would that improve actual speed?
+467. What simplest empirical baseline can you implement first?
+468. Conditional nearest-neighbor shower resampling?
+469. How much memory would it require?
+470. How fast would it be?
+471. Could it immediately provide a fidelity sanity baseline?
+472. What simple dense learned baseline will you use?
+473. What graph baseline?
+474. Point-cloud baseline?
+475. Flow-matching baseline?
+476. How will training compute be matched?
+477. Parameter count?
+478. Number of training examples?
+479. Checkpoint selection?
+480. Condition inputs?
+481. Output threshold semantics?
+482. Will all baselines use the same newly locked bank?
+483. Are there downstream reconstruction algorithms available?
+484. Neutron energy?
+485. Position?
+486. Angle?
+487. What analysis-level observable actually matters for the intended ZDC use?
+488. How much simulator mismatch is tolerable there?
+489. What would constitute “physics fidelity” prospectively?
+490. Can you freeze those acceptance gates before final evaluation?
+491. What zero-rate tolerance?
+492. What response-bias tolerance?
+493. Topology tolerance?
+494. C2ST criterion?
+495. Reconstruction degradation tolerance?
+496. Timing target?
+497. Does the paper need to beat Geant4 by 200×, or is that no longer a requirement?
+498. What fixed conditions will receive repeated G4 simulation?
+499. How many energy points?
+500. How many angles?
+501. How many showers per condition?
+502. Enough to estimate tails?
+503. How will repeated-condition G4 random seeds be managed?
+504. Will model repeated draws use matched conditions but independent randomness?
+505. Will fixed-condition distributions include zero-response probability?
+506. Counts?
+507. Profile?
+508. Support?
+509. Tails?
+510. How will you distinguish conditional mean error from conditional variance error?
+511. Will you report energy distance/MMD/Wasserstein at fixed conditions?
+512. Can repeated conditions also calibrate conditional C2ST power?
+513. When will you finish the 24-epoch baseline before modifying architecture?
+514. If epoch 24 is still terrible, will you freeze it as the baseline?
+515. If it improves dramatically, will the development narrative change?
+516. Which experiment would falsify the claim that independent activity is the main problem?
+517. If truth activity does not fix topology, what is the next hypothesis?
+518. If truth support fixes everything, does Gumbel sampling become the main target?
+519. If truth \(T\) fixes later failures, is response error propagating unexpectedly strongly?
+520. If every oracle stage is individually okay but ancestral output is bad, is exposure mismatch the central contribution?
+521. Would scheduled sampling or noisy-context training help?
+522. Have you considered training downstream stages on a mixture of truth and generated upstream variables?
+523. Could that reduce exposure mismatch without changing architecture?
+524. Would joint end-to-end gradients through discrete stages be possible with relaxations?
+525. Is it worth the complexity?
+526. What exact scientific claim do you want the final paper to make if the improved model succeeds?
+527. What claim if it still fails?
+528. Are you prepared to report that a simpler baseline beats the hierarchical model?
+529. Would the paper then become an analysis of failure modes rather than a simulator proposal?
+530. What result, written down **before** looking at the final locked bank, would make you say: “this model is good enough to claim useful ZDC fast-simulation fidelity”?
+
+That last question is still the one I would force the project to answer before spending serious compute. The current manuscript is now strong enough at documenting failure that the next bottleneck is **not writing**. It is deciding exactly what experiment would convert this from a meticulous development log into an actual scientific result.

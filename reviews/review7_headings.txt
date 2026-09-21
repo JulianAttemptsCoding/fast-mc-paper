@@ -1,0 +1,94 @@
+1:# Bottom line
+32:# Audit iteration 1: the biggest problem may simply be that V3-SUP is half-trained
+92:# Audit iteration 2: your 80/10/10 split is not numerically 80/10/10
+114:# Audit iteration 3: your three-way training partition needs much more justification
+146:# Audit iteration 4: the fixed-vertex statement still does not fully establish the condition
+182:# Audit iteration 5: the angle dependence is almost totally unevaluated
+220:# Audit iteration 6: your near-zero-energy handling is weird
+250:# Audit iteration 7: the hard response cap is now one of the most suspicious pieces of the model
+300:# Audit iteration 8: your training density is not the probability law you actually sample
+342:# Audit iteration 9: Eq. (7) has slightly misleading probability notation
+366:# Audit iteration 10: the positive-branch zero atom should eventually be removed, not merely documented
+400:# Audit iteration 11: the activity model almost invites the failure you observe
+460:# Audit iteration 12: your CLR flow is mathematically acknowledged, but still unnecessarily malformed
+500:# Audit iteration 13: the \(10^{-8}\) clipping is an unmeasured data transformation
+528:# Audit iteration 14: “eight fixed midpoint Euler steps” is suspicious terminology
+544:# Audit iteration 15: eight ODE steps need a convergence study
+572:# Audit iteration 16: the count model description is internally confusing
+600:# Audit iteration 17: 401 output classes are wasteful and potentially awkward
+626:# Audit iteration 18: your Gumbel-Top-\(k\) score scale remains unidentified
+668:# Audit iteration 19: your ranking-loss sampling needs much more description
+696:# Audit iteration 20: you need to explain how variable-size cell-share flows are represented
+724:# Audit iteration 21: the graph is not just “irregular”; it may contain physically nonsensical edges
+762:# Audit iteration 22: the ganged-channel issue affects the **model**, not only interpretation of the metric
+796:# Audit iteration 23: Figure 1 needs the exact representative HCAL layer
+818:# Audit iteration 24: the model and topology diagnostic use the same graph
+832:# Audit iteration 25: define “largest-component fraction”
+854:# Audit iteration 26: largest-component fraction should probably exclude empty events
+878:# Audit iteration 27: normalize component count for occupancy
+906:# Audit iteration 28: the “largest component” result is actually valuable and underused
+934:# Audit iteration 29: “strict positive stored energy” can make topology hypersensitive to numerical dust
+960:# Audit iteration 30: the exact-zero target and exact-sparsity model may be semantically mismatched
+980:# Audit iteration 31: your flow/share model may guarantee that any sampled active layer is **strictly** active
+1002:# Audit iteration 32: the loss weights are one of the most underexplained pieces of the whole paper
+1048:# Audit iteration 33: reduction conventions matter as much as the weights
+1076:# Audit iteration 34: S2 is still not evidence of “objective failure” until you rule out implementation pathology
+1130:# Audit iteration 35: Dloss and Dbat are not known to be independent, so stop calling one “separate”
+1152:# Audit iteration 36: why on earth can you not reconstruct Dloss/Dbat overlap?
+1168:# Audit iteration 37: Figure 3 lost its mathematical definition
+1190:# Audit iteration 38: Section 5.1 claims there are plotted error bars that do not appear to exist
+1208:# Audit iteration 39: one shower per condition does **not** prevent all confidence intervals
+1238:# Audit iteration 40: your within-bin standard deviation is not “resolution”
+1260:# Audit iteration 41: 25 GeV bins are still quite broad
+1280:# Audit iteration 42: pooled Wasserstein-1 = 0.092 GeV is almost uninterpretable by itself
+1308:# Audit iteration 43: Figure 4 mixes total-energy bias with longitudinal-shape bias
+1338:# Audit iteration 44: ECAL is clearly wrong enough to deserve its own subsection
+1370:# Audit iteration 45: the absolute total deposit looks deceptively okay
+1392:# Audit iteration 46: B0 versus V3-SUP should not look like an ablation
+1416:# Audit iteration 47: V3-SUP's lack of improvement in topology despite ~20× more training data is intriguing—but not controlled
+1454:# Audit iteration 48: your teacher-forcing mismatch may be larger than the paper currently emphasizes
+1484:# Audit iteration 49: do the oracle cascade in both directions
+1522:# Audit iteration 50: the active-layer failure can probably be isolated without an expensive new Geant4 run
+1538:# Audit iteration 51: support geometry needs conditional diagnostics, not only final component count
+1568:# Audit iteration 52: your current support scorer may lack cross-layer sampled-support dependence
+1582:# Audit iteration 53: the “exact support” language needs to remain carefully scoped
+1604:# Audit iteration 54: structural validation needs pass counts, not just maxima
+1626:# Audit iteration 55: define the closure tolerance formula
+1656:# Audit iteration 56: “all generated artifacts passed” and “failed artifact excluded” need one more sentence
+1670:# Audit iteration 57: parameter count needs an “active parameter” sanity check
+1698:# Audit iteration 58: “frozen source commit defines it exactly” does not substitute for a methods section
+1732:# Audit iteration 59: hardware and software environment are missing
+1760:# Audit iteration 60: “FP32” needs clarification under modern GPU backends
+1778:# Audit iteration 61: why report epoch 12 rather than best epoch or final epoch?
+1800:# Audit iteration 62: “stopping patience 24” raises checkpoint-selection ambiguity
+1810:# Audit iteration 63: your development bank is heavily adaptive
+1828:# Audit iteration 64: freeze the untouched validation remainder now
+1850:# Audit iteration 65: the contaminated nominal test set should probably be retired entirely
+1868:# Audit iteration 66: your conditional C2ST plan is much better, but specify the statistical unit
+1890:# Audit iteration 67: the conditional C2ST should report both \(Y\) and \((c,Y)\)
+1908:# Audit iteration 68: C2ST needs power calibration, not only permutation nulls
+1930:# Audit iteration 69: reference-reference nulls require additional truth statistics
+1946:# Audit iteration 70: multiple generator sampling seeds are cheap and should happen now
+1970:# Audit iteration 71: Figure 6 should use points, not bars, on a log scale
+1986:# Audit iteration 72: Figure 5 is information-dense but actually quite good
+2010:# Audit iteration 73: Table 2 and Figure 5 partly duplicate each other
+2026:# Audit iteration 74: Figure 2's snake-like reading direction is slightly awkward
+2038:# Audit iteration 75: “Bernoulli response branch” is not the clearest term
+2054:# Audit iteration 76: raw “shower” language should remain cautious
+2082:# Audit iteration 77: the Geant4 metadata gap remains a submission blocker
+2112:# Audit iteration 78: include the detector material specification in the main method, not only provenance
+2136:# Audit iteration 79: the response cap probably needs removal in the final model
+2152:# Audit iteration 80: scalar loss should not be called a “promotion criterion” in the final scientific paper
+2188:# Audit iteration 81: the abstract is still too much of a project-status report
+2226:# Audit iteration 82: the current conclusion is logically safe but scientifically weak
+2254:# Audit iteration 83: you are very close to an interesting dependence-vs-marginals story
+2278:# Audit iteration 84: complete training before doing too many new architecture screens
+2298:# Audit iteration 85: your code availability statement is accurate but means the experiment is not independently reproducible
+2330:# Audit iteration 86: archive more than GitHub before submission
+2358:# Audit iteration 87: authorship/data ownership needs explicit resolution before submission
+2380:# Audit iteration 88: the author-contribution statement may need CRediT-style detail
+2404:# Audit iteration 89: AI-use disclosure is absent
+2414:# Audit iteration 90: the reference list is much better
+2450:# QA pass: specific statements I would revise right now
+2488:# Experimental priority order
+2498:# Massive question bank for the next audit

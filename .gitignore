@@ -20,3 +20,4 @@ __pycache__/
 rendered/
 qa_render/
 /audit/render*/
+/audit/qa_runs/

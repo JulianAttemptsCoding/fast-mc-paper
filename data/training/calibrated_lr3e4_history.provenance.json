@@ -1,0 +1,13 @@
+{
+  "kind": "accepted-family-training-history-extract",
+  "source": "Fast MC CBSC/exhibition/data/continuation_history.csv",
+  "selection": "variant == calibrated_lr3e4",
+  "rows": 104,
+  "epoch_min": 11,
+  "epoch_max": 114,
+  "selected_epoch": 90,
+  "selected_validation_loss": 4.483767619419238,
+  "sha256": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+  "test_events_used": 0,
+  "scientific_status": "training and validation-objective history; not final fidelity evidence"
+}

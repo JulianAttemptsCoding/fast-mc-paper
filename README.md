@@ -1,60 +1,58 @@
-# Sparse conditional generation for a Zero Degree Calorimeter
+# Auditing a hierarchical generator for sparse calorimeter readout deposits
 
-This repository contains the English LaTeX manuscript, frozen model configuration, aggregate development reports, event-independent geometry, figure builder, review record, and build audit for Julian Juan's Fast MC project.
+This repository contains Julian Juan's English LaTeX manuscript and its complete public build package. The paper studies a hierarchical Fast MC generator for raw Geant4 neutron energy deposits in a fixed 6,790-channel Zero Degree Calorimeter readout.
 
-The manuscript is a development-bank study of a raw deposited-energy surrogate. It reports decoder guarantees and observed discrepancies without claiming final physics fidelity or measured acceleration. The fixed 10,000-condition sample has been inspected repeatedly and is therefore treated as development data. The nominal test set is retired and is not used for the reported figures.
+The paper is a diagnostic case study. It shows that exact sampled counts and numerical energy-budget closure can coexist with incorrect longitudinal and graph dependence. It does not claim physics fidelity, acceleration, or performance on an untouched test set.
+
+## Accepted artifact
+
+- Run: `dicos-f-02`
+- Checkpoint: epoch 90, selected by the minimum teacher-forced validation objective over the recorded lineage through epoch 114
+- Generator training seed: `20260723`
+- Checkpoint SHA-256: `491284c7423f365230d34b0443f95aa4888ec770bdc673c4c979897bad8acbce`
+- Frozen configuration SHA-256: `116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5`
+- Evaluation: repeatedly inspected 10,000-condition validation bank over 50--250 GeV; zero nominal-test events
+
+The old epoch-12 snapshot and the B0, M0, and S2 screens are not part of the scientific comparison. Their training states or controls do not support a clean manuscript claim. Shower-aware C2ST outputs from the existing evaluator are also excluded. The retained condition-only AUROC of 0.500 is a pipeline sanity control with no shower information.
 
 ## Build
 
-Requirements:
-
-- Python 3 with `matplotlib` and `numpy`
-- `pdflatex`
-- `biber`
-- Poppler tools for the optional PDF checks
-
-On Windows PowerShell:
+Requirements are Python 3 with `matplotlib`, `numpy`, and Pillow; `pdflatex`; `biber`; and Poppler. On Windows PowerShell:
 
 ```powershell
 .\build.ps1
 ```
 
-The script regenerates every figure from the pinned aggregate reports, compiles the bibliography and manuscript, checks the PDF text, and writes:
+The command regenerates all six figures, compiles the bibliography and manuscript, scans the LaTeX log and PDF text, and writes:
 
 ```text
 output/fast_mc_zdc_manuscript.pdf
 ```
 
-The equivalent manual sequence is:
+Run one complete adversarial QA pass with:
 
-```text
-python scripts/build_figures.py
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
-biber main
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
+```powershell
+python scripts/full_manuscript_qa.py --iteration 1 --focus "scope and claims" --disposition "reviewed"
 ```
+
+Each pass rebuilds the full paper, checks all headline values against the epoch-90 aggregate, verifies hashes and split arithmetic, resolves citations and labels, scans excluded terms, validates every generated figure, rasterizes every PDF page, checks page ink and clipping margins, and records JSON and Markdown evidence under `audit/iterations/`.
 
 ## Repository map
 
 - `main.tex`: manuscript source
-- `references.bib`: bibliography
-- `scripts/build_figures.py`: deterministic figure generator
-- `data/configs/`: frozen portable V3-SUP configuration
-- `data/reports/`: aggregate source reports used by the figure generator
-- `data/geometry/`: event-independent frozen readout geometry
-- `figures/`: generated manuscript figures and provenance manifest
-- `reviews/`: all six supplied referee and reproducibility audits, preserved verbatim
-- `audit/reviewer_response.md`: first-round disposition
-- `audit/reviewer_response_round2.md`: second-round consolidated disposition
-- `audit/final_build_audit.*`: hashes and final QA record
-- `archive/`: earlier paper and specification artifacts retained for provenance
-- `STATUS.md`: unresolved experiments and claim boundary
+- `references.bib`: primary-source bibliography
+- `scripts/build_figures.py`: deterministic generator for all manuscript figures
+- `scripts/full_manuscript_qa.py`: full manuscript and rendered-PDF audit
+- `data/reports/dicos-f-02_epoch90.json`: aggregate development-bank report
+- `data/reports/dicos-f-02_epoch90.provenance.json`: checkpoint and report provenance
+- `data/training/`: accepted-family training history and provenance
+- `data/geometry/`: event-independent readout geometry
+- `figures/`: six generated figures and hash manifest
+- `reviews/`: all nine supplied audits, preserved verbatim
+- `audit/reviewer_response_round3.md`: consolidated disposition of the latest audits
+- `audit/literature_benchmark.md`: comparison with recent HEP calorimeter-surrogate work
+- `audit/iterations/`: 20 complete QA records
+- `audit/final_build_audit.*`: final release hashes and QA summary
+- `STATUS.md`: supported claims and missing experiments
 
-## Scientific status
-
-The current evidence supports a narrow conclusion: exact-size sparse decoding and generated-budget closure can coexist with substantial distributional error. The full-data V3-SUP continuation used 551,234 generator-role events; 26,624 events applies only to the pilot baseline and short component screens. Longitudinal gaps, readout-graph fragmentation, reduced channel occupancy, and the S2 zero-deposit anomaly are development-bank results. The historical shower-only C2ST is excluded because it used random pair splitting and omitted the condition.
-
-Final claims require a locked evaluation bank, pair-grouped condition-aware tests, three independent training seeds per frozen condition, complete Geant4 and detector provenance, fixed-condition repeated showers, matched baselines, reconstruction studies, and end-to-end timing. See `STATUS.md` for the full list.
-
-The underlying collaboration-owned Geant4 event file and model checkpoints are not redistributed here. The aggregate JSON reports are sufficient to rebuild the paper figures, but not to retrain the model or reproduce the original simulation.
+The collaboration-owned Geant4 event file and model checkpoint are not redistributed. The public aggregates reproduce the figures and quoted battery statistics, but cannot retrain the model or reconstruct event-level tests.

@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "iteration": 1,
+  "created_utc": "2026-09-21T15:24:04.161851+00:00",
+  "focus": "scope, title, abstract, and central scientific claim",
+  "disposition": "Recast the manuscript around the observed marginal-versus-dependence failure and the accepted epoch-90 checkpoint; removed undercontrolled model screens; corrected the nominal-test split percentage to 9.974%.",
+  "result": "pass",
+  "full_suite": true,
+  "checks": [
+    "Clean end-to-end figure, bibliography, and LaTeX rebuild",
+    "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
+    "All 1,250 invariant reports and numerical closure tolerances",
+    "Corpus and role arithmetic, including exact 80.069/9.956/9.974 percentages",
+    "Readout geometry, ganging arithmetic, layer count, and directed-edge count",
+    "Nonempty-event denominators and every headline activity/topology statistic",
+    "Response moments, energy-bin counts/ranges, bootstrap interval, and reference-half floor",
+    "ECAL/HCAL cancellation and longitudinal-profile discrepancy",
+    "Complete 104-row recorded training lineage and epoch-90 validation selection",
+    "Claim language, author/mentor metadata, scope statements, and stale-model exclusion",
+    "13 citation keys and 13 LaTeX labels/references",
+    "Six deterministic figures, source hashes, dimensions, and nonblank raster content",
+    "11 JSON files, nine supplied audits, Python compilation, and git whitespace check",
+    "11-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
+  ],
+  "pdf": {
+    "sha256": "4c1eec4df61ecd8fe98a8ba769992f323f5a18d4d74330b16e8ee291b34bbffc",
+    "bytes": 1378749,
+    "pages": 11,
+    "page_size": "612 x 792 pts (letter)",
+    "contact_sheet": "audit/qa_runs/iteration_01/contact.png"
+  },
+  "page_metrics": [
+    {
+      "page": 1,
+      "sha256": "def51fcda59a122b83140b9d1d6b1e8dcc918428070212e5bb5ad7d6d5b29620",
+      "ink_fraction": 0.09939541256021567,
+      "ink_margins_px": {
+        "left": 90,
+        "right": 88,
+        "top": 154,
+        "bottom": 45
+      },
+      "text_characters": 3420
+    },
+    {
+      "page": 2,
+      "sha256": "b58808124a2ac3107085a3f09e8bf492744b7c75a0c82bf06e6f487c2c5b0e07",
+      "ink_fraction": 0.10626596543951916,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 45
+      },
+      "text_characters": 3466
+    },
+    {
+      "page": 3,
+      "sha256": "7e129604be1bc8f57966f4dffb7ca1b0cb85536916b04392be4b6fe3ba5d9ba7",
+      "ink_fraction": 0.1593255844787201,
+      "ink_margins_px": {
+        "left": 90,
+        "right": 89,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 1148
+    },
+    {
+      "page": 4,
+      "sha256": "ede3ea12d249924f6c1d0ae100ef0af3e4821c71a9bc014d42924afde8900f07",
+      "ink_fraction": 0.09609139523578027,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 94,
+        "bottom": 45
+      },
+      "text_characters": 3242
+    },
+    {
+      "page": 5,
+      "sha256": "ed55a3b06030167efa9a21891a279f2f94e7cfca6acdb0b444710f2857fde5ca",
+      "ink_fraction": 0.11142528837229858,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 2236
+    },
+    {
+      "page": 6,
+      "sha256": "7f7bbeab67da47194e73784a9205ec384b1d7620552ea671e6eb4eb892b5379a",
+      "ink_fraction": 0.09409289786538207,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 2530
+    },
+    {
+      "page": 7,
+      "sha256": "afe096bed3f7586544994478e0ab28685b68e663dec78771955cdafe61fc63b6",
+      "ink_fraction": 0.10090864895920802,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 89,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 2334
+    },
+    {
+      "page": 8,
+      "sha256": "f63327d74a9ee01b8bb1f749346c975e34f4f6648e6a516bb8f5278da097aae7",
+      "ink_fraction": 0.08012462986697308,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 91,
+        "bottom": 44
+      },
+      "text_characters": 2214
+    },
+    {
+      "page": 9,
+      "sha256": "05ca5c25164f81fd177d46a4c91c407d06672f6f0dd75e8306f0115f7c25d27e",
+      "ink_fraction": 0.11756927564414195,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 3680
+    },
+    {
+      "page": 10,
+      "sha256": "cc62ca4a8b2c112089fe708625cba681fe0e29674cc631388361eb492bac9392",
+      "ink_fraction": 0.08923498475272904,
+      "ink_margins_px": {
+        "left": 90,
+        "right": 87,
+        "top": 94,
+        "bottom": 44
+      },
+      "text_characters": 2774
+    },
+    {
+      "page": 11,
+      "sha256": "861a00a59afa8809ec3a5422cb2631f45f376547abe4cda7b2467a857f0d812c",
+      "ink_fraction": 0.0740310248817784,
+      "ink_margins_px": {
+        "left": 91,
+        "right": 87,
+        "top": 93,
+        "bottom": 45
+      },
+      "text_characters": 2323
+    }
+  ],
+  "source_sha256": {
+    "main.tex": "a433e75085f204718ea8382d1a25918377d2c703b4933e7a6485753ed4949fd3",
+    "references.bib": "1affdd5846edfc283d195bc0f349b403ce8931a251417e5a7b3654d929082c86",
+    "scripts/build_figures.py": "b66fbb350ab73cd5a76e6dca4f903bf3ca2d249c15abeb30d066333ebd6ca2be"
+  },
+  "commands": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1",
+    "python -m py_compile scripts/build_figures.py scripts/full_manuscript_qa.py scripts/write_build_audit.py",
+    "git diff --check",
+    "pdftoppm -png -r 110 output/fast_mc_zdc_manuscript.pdf audit/qa_runs/iteration_01/page",
+    "pdftotext output/fast_mc_zdc_manuscript.pdf -"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "kind": "condition-only-pipeline-control",
+  "run_tag": "dicos-f-02",
+  "epoch": 90,
+  "source_split": "validation",
+  "condition_only_auroc": 0.5,
+  "interpretation": "pairing-pipeline sanity control only; contains no shower information",
+  "test_events_used": 0
+}

@@ -1,0 +1,151 @@
+20:# Pass 51 — There is a hard arithmetic contradiction in Section 3.3
+68:# Pass 52 — Your response cap introduces another artificial atom that the paper completely misses
+128:# Pass 53 — Why does the cap exist at all?
+152:# Pass 54 — You fixed the lower-support atom but not the upper-support mismatch
+180:# Pass 55 — The S2 lesson still does not have a properly matched evidentiary basis
+218:# Pass 56 — You still need the M0/S2 loss decomposition
+253:# Pass 57 — Stop calling it “joint loss” unless you really mean joint likelihood
+283:# Pass 58 — This is perhaps the deepest explanation of your S2 result
+315:# Pass 59 — Your activity failure is even cleaner than your current table suggests
+357:# Pass 60 — And that points directly at your independent-Bernoulli assumption
+387:# Pass 61 — Section 4.2 currently slightly overstates causality
+409:# Pass 62 — Your first-layer statistics hide another useful discrepancy
+445:# Pass 63 — Your total-energy agreement is partly cancellation between opposite ECAL/HCAL errors
+489:# Pass 64 — The ECAL mismatch is even bigger conditional on ECAL activity
+528:# Pass 65 — You can already localize part of the channel-count failure
+562:# Pass 66 — The graph fragmentation survives the occupancy objection even from crude aggregate arithmetic
+594:# Pass 67 — Largest-component fraction tells a very specific story that you are missing
+626:# Pass 68 — Your definition of largest-component fraction is incomplete and arguably wrong for empty events
+650:# Pass 69 — Table 2's dagger footnote is internally broken
+675:# Pass 70 — “Mean number of interior gaps” is ambiguous
+709:# Pass 71 — Your topology conclusion is still threshold-fragile
+742:# Pass 72 — The graph itself may be manufacturing or suppressing components
+774:# Pass 73 — The ganged-channel problem is not a minor caveat
+803:# Pass 74 — Figure 1 itself reveals the HCAL-count bug
+819:# Pass 75 — Your data partition terminology introduces unused “critics” with no model role
+847:# Pass 76 — The 551,234-event claim needs an exposure count, not just dataset size
+875:# Pass 77 — Why is epoch 12 the manuscript checkpoint?
+899:# Pass 78 — “Stopping patience 24” with “24 planned epochs” looks pointless
+914:# Pass 79 — The full conditional flow-matching training definition disappeared
+938:# Pass 80 — “Midpoint Euler” is ambiguous numerical terminology
+958:# Pass 81 — Your CLR source and target dimensions are still mathematically awkward
+980:# Pass 82 — You don't know how often your \(10^{-8}\) clipping changes the truth target
+1002:# Pass 83 — The support ranking pairs need a precise sampling definition
+1027:# Pass 84 — The support positive-weight calculation is missing
+1052:# Pass 85 — Your count head semantics are murky
+1077:# Pass 86 — You may have a redundant “activity classifier twice” design
+1099:# Pass 87 — The count mismatch is a likely major failure and gets almost no analysis
+1124:# Pass 88 — You need a component-by-component teacher-forced evaluation table
+1171:# Pass 89 — The oracle cascade remains the highest-value missing experiment
+1202:# Pass 90 — The cell-share flow is underdescribed
+1228:# Pass 91 — The decoder equation should come back
+1250:# Pass 92 — The target conditional distribution should also come back
+1270:# Pass 93 — “Claim domain” is too strong/odd given that the paper explicitly makes no performance claim
+1292:# Pass 94 — Why train 0–300 GeV if all reported evaluation is 50–250?
+1319:# Pass 95 — Show the actual training energy distribution
+1344:# Pass 96 — The “minimum audited training energy” solves one bug but exposes another question
+1366:# Pass 97 — Your five encoder features remain redundantly parameterized
+1394:# Pass 98 — Angular conditioning remains almost entirely unvalidated
+1414:# Pass 99 — “Fixed vertex” is not enough to establish detector-entry state
+1434:# Pass 100 — The data conversion contract still lacks several critical QA numbers
+1458:# Pass 101 — The canonical split itself is not reproducible from the paper
+1477:# Pass 102 — \(D_{\rm loss}\)'s provenance remains underspecified
+1495:# Pass 103 — You should not tolerate “we don't know whether the development banks overlap” for long
+1515:# Pass 104 — Where exactly will the “newly locked bank” come from?
+1532:# Pass 105 — Figure 3's error bars need an immediate forensic check
+1565:# Pass 106 — The pooled Wasserstein number is of limited scientific value
+1585:# Pass 107 — The L1 longitudinal discrepancy is also condition-marginal
+1604:# Pass 108 — B0 versus V3-SUP is still easy to misread as an improvement comparison
+1626:# Pass 109 — M0 is insufficiently defined
+1648:# Pass 110 — S2 is also no longer technically defined
+1670:# Pass 111 — The conclusion inaccurately calls the S2 change a “response loss” improvement
+1688:# Pass 112 — The loss-weight provenance is still too vague
+1710:# Pass 113 — Check whether loss-weight calibration itself used development data
+1727:# Pass 114 — “Exact instantiated configuration” overstates what Table 1 contains
+1755:# Pass 115 — Give parameter counts by module
+1775:# Pass 116 — Hardware is still missing
+1791:# Pass 117 — Training seed alone does not guarantee determinism
+1811:# Pass 118 — The sparse title remains somewhat provocative at 22–24% occupancy
+1827:# Pass 119 — Your active-channel fraction row is redundant
+1846:# Pass 120 — Better denominator conventions would make Table 2 much cleaner
+1877:# Pass 121 — The abstract mixes denominator conventions without warning
+1893:# Pass 122 — The abstract should probably mention the ECAL/HCAL cancellation instead of active-channel count
+1905:# Pass 123 — Your figure package still needs a condition-distribution figure
+1920:# Pass 124 — Figure 1's “Representative HCAL layer” needs the actual layer index
+1940:# Pass 125 — Figure 1's coordinate origin is visually confusing
+1952:# Pass 126 — The model graph and validation graph being identical weakens the topology test
+1966:# Pass 127 — Exact support size is not the same as correct support statistics
+1988:# Pass 128 — The model's negative finding should be framed around “structural correctness ≠ probabilistic correctness”
+2007:# Pass 129 — But don't oversell that principle as novel
+2022:# Pass 130 — The current manuscript is still caught between “paper” and “audit report”
+2042:# Pass 131 — The repository is doing too much epistemic work
+2064:# Pass 132 — Archive the eventual release somewhere immutable
+2082:# Pass 133 — Checkpoint hashes would improve provenance even if checkpoints cannot be shared
+2099:# Pass 134 — The historical classifier exclusion is scientifically good, but maybe overemphasized in the conclusion
+2111:# Pass 135 — Your condition-aware C2ST specification is good but should include an explicit mathematical rationale
+2123:# Pass 136 — Be careful with the null controls
+2141:# Pass 137 — One generated sample per condition also limits all conditional variance claims
+2166:# Pass 138 — That means your Figure 3 right panel title should be reconsidered
+2180:# Pass 139 — The absolute mean response scale is surprisingly small and deserves context
+2194:# Pass 140 — The detector-material omission makes that small scale impossible to contextualize physically
+2204:# Pass 141 — Your limitations list has another wording bug
+2220:# Pass 142 — Baseline categories are too vague
+2242:# Pass 143 — Add a trivial baseline before fancy published models
+2256:# Pass 144 — Your current architecture has not earned the graph yet
+2270:# Pass 145 — The support sampler also needs a non-Gumbel baseline
+2285:# Pass 146 — Generated diversity itself is essentially unmeasured
+2303:# Pass 147 — Your negative result is currently a snapshot of one seed, not a property of the model class
+2323:# Pass 148 — V3-SUP naming is still not reader-friendly
+2345:# Pass 149 — “V3-SUP retains v2.2 feature behavior” is internal-development language
+2357:# Pass 150 — Page 7 is visually overloaded
+2390:# Pass 151 — Figure 5 and Table 2 duplicate each other heavily
+2408:# Pass 152 — Means alone are especially weak for component counts
+2424:# Pass 153 — Same problem for active-channel count
+2436:# Pass 154 — Condition-response correlations should be a whole results block
+2453:# Pass 155 — The current paper barely validates the transverse coordinates
+2478:# Pass 156 — Incident-direction alignment could be one of the model's most important tests
+2494:# Pass 157 — The fixed generator vertex plus varying direction implies entry geometry could be deterministically derived
+2510:# Pass 158 — The paper needs an explicit detector-coordinate diagram eventually
+2524:# Pass 159 — Your introduction's current “contribution” remains very defensive
+2540:# Pass 160 — The current title is honest but generic
+2554:# Pass 161 — Your abstract says “trained on 551,234-event generator role,” but the checkpoint is halfway through planned training
+2568:# Pass 162 — “Current checkpoint” should be named in the abstract
+2584:# Pass 163 — The abstract's S2 sentence should expose the two-bank issue
+2596:# Pass 164 — “Auditable” is a good word only if every major number has provenance
+2615:# Pass 165 — There is a potential contradiction between “exact-size support” and active zero counts that you need to close
+2637:# Pass 166 — Same for positive layer budgets
+2657:# Pass 167 — Runtime invariant success can become a proper table
+2678:# Pass 168 — Explain the “effective tolerance after relative term” mathematically
+2700:# Pass 169 — Be careful calling closure “exact” while simultaneously using numerical tolerance
+2716:# Pass 170 — You need to distinguish “channel support” from “physical hit support”
+2732:# Pass 171 — Same issue with “channelized energy deposits”
+2742:# Pass 172 — The paper should define whether channel energies are sums across multiple Geant4 steps and physical positions
+2754:# Pass 173 — The graph message-passing representation loses physical multi-location structure by design
+2766:# Pass 174 — An alternative representation could preserve multi-position geometry without changing output dimensionality
+2780:# Pass 175 — The support network may be punished for a geometry ambiguity it cannot solve
+2792:# Pass 176 — The eventual baseline suite should share the same lossy readout semantics
+2802:# Pass 177 — The Related Work section still needs a sentence about why ordinary voxel models are awkward here
+2815:# Pass 178 — Consider citing compositional-data methodology for CLR
+2825:# Pass 179 — The manuscript contains no real calibration analysis
+2842:# Pass 180 — Activity calibration versus sequence fidelity would be a fantastic result
+2858:# Pass 181 — Same idea for support
+2877:# Pass 182 — You might actually have a deeper unifying story here
+2911:# Pass 183 — The current Conclusion is close to this story but not fully exploiting it
+2921:# Pass 184 — Yet the current negative finding is still too weak for a final paper because it remains one incomplete checkpoint
+2942:# Pass 185 — You should probably finish the planned 24 epochs before investing further in manuscript prose
+2952:# Pass 186 — QA: numerical checks I would script immediately
+2972:# Pass 187 — Another numerical QA: your partition counts are internally consistent
+2988:# Pass 188 — Graph edge count is also internally consistent with the stated construction
+3003:# Pass 189 — But the KNN construction creates fixed outgoing degree, not fixed undirected degree
+3015:# Pass 190 — The largest-component fraction and weak-component count should use an independent graph in the final paper
+3033:# Pass 191 — The phrase “weak readout-graph components” is good and should be used everywhere
+3043:# Pass 192 — Your “zero deposit” term is now much better than “zero response”
+3053:# Pass 193 — Similarly, “response branch” might be better “deposit branch”
+3067:# Pass 194 — There are actually three special boundaries to discuss
+3081:# Pass 195 — Check whether the cap can distort the S2 comparison differently across heads
+3093:# Pass 196 — Check whether S2's 50% Bernoulli zeros occur because shared encoder updates moved \(h_B\)
+3111:# Pass 197 — Plot predicted visibility probability versus energy for S2 and M0
+3123:# Pass 198 — The S2 result may indicate catastrophic interference through the shared encoder
+3140:# Pass 199 — Your response-head cap may also obscure whether the spline was actually better
+3150:# Pass 200 — Big-picture QA after another 150 passes
+3217:# Another batch of questions I would now force the project to answer

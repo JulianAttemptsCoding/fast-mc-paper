@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "iteration": 7,
+  "created_utc": "2026-09-21T15:31:57.249145+00:00",
+  "focus": "composite objective, loss-weight provenance, and reduction conventions",
+  "disposition": "Verified all nine weights, train-only encoder-gradient calibration, masking and class weighting, ranking reductions, and the target-only Jacobian correction.",
+  "result": "pass",
+  "full_suite": true,
+  "checks": [
+    "Clean end-to-end figure, bibliography, and LaTeX rebuild",
+    "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
+    "All 1,250 invariant reports and numerical closure tolerances",
+    "Corpus and role arithmetic, including exact 80.069/9.956/9.974 percentages",
+    "Readout geometry, ganging arithmetic, layer count, and directed-edge count",
+    "Nonempty-event denominators and every headline activity/topology statistic",
+    "Response moments, energy-bin counts/ranges, bootstrap interval, and reference-half floor",
+    "ECAL/HCAL cancellation and longitudinal-profile discrepancy",
+    "Complete 104-row recorded training lineage and epoch-90 validation selection",
+    "Claim language, author/mentor metadata, scope statements, and stale-model exclusion",
+    "13 citation keys and 13 LaTeX labels/references",
+    "Six deterministic figures, source hashes, dimensions, and nonblank raster content",
+    "11 JSON files, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check",
+    "11-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
+  ],
+  "pdf": {
+    "sha256": "67179f39df6043674434723341ebb36c36f709bad33f99c6a0f7b33f7d1cb9e9",
+    "bytes": 1378743,
+    "pages": 11,
+    "page_size": "612 x 792 pts (letter)",
+    "contact_sheet": "audit/qa_runs/iteration_07/contact.png"
+  },
+  "page_metrics": [
+    {
+      "page": 1,
+      "sha256": "def51fcda59a122b83140b9d1d6b1e8dcc918428070212e5bb5ad7d6d5b29620",
+      "ink_fraction": 0.09939541256021567,
+      "ink_margins_px": {
+        "left": 90,
+        "right": 88,
+        "top": 154,
+        "bottom": 45
+      },
+      "text_characters": 3420
+    },
+    {
+      "page": 2,
+      "sha256": "b58808124a2ac3107085a3f09e8bf492744b7c75a0c82bf06e6f487c2c5b0e07",
+      "ink_fraction": 0.10626596543951916,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 45
+      },
+      "text_characters": 3466
+    },
+    {
+      "page": 3,
+      "sha256": "7e129604be1bc8f57966f4dffb7ca1b0cb85536916b04392be4b6fe3ba5d9ba7",
+      "ink_fraction": 0.1593255844787201,
+      "ink_margins_px": {
+        "left": 90,
+        "right": 89,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 1148
+    },
+    {
+      "page": 4,
+      "sha256": "62777fda87fae01a5254e7cb679fabd6024215e334b8192ef0a44be4b2e094f0",
+      "ink_fraction": 0.09615503601891545,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 94,
+        "bottom": 45
+      },
+      "text_characters": 3241
+    },
+    {
+      "page": 5,
+      "sha256": "4a28c0c8006691fb60ff6b8d5a5ef9e91af24b047b014ce9da7a537e901dac72",
+      "ink_fraction": 0.1103805188491625,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 2203
+    },
+    {
+      "page": 6,
+      "sha256": "7f7bbeab67da47194e73784a9205ec384b1d7620552ea671e6eb4eb892b5379a",
+      "ink_fraction": 0.09409289786538207,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 2530
+    },
+    {
+      "page": 7,
+      "sha256": "afe096bed3f7586544994478e0ab28685b68e663dec78771955cdafe61fc63b6",
+      "ink_fraction": 0.10090864895920802,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 89,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 2334
+    },
+    {
+      "page": 8,
+      "sha256": "f63327d74a9ee01b8bb1f749346c975e34f4f6648e6a516bb8f5278da097aae7",
+      "ink_fraction": 0.08012462986697308,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 91,
+        "bottom": 44
+      },
+      "text_characters": 2214
+    },
+    {
+      "page": 9,
+      "sha256": "c5721d2857cce773a5dd693e1aa18fc9682858e222be3c5870f199b94c61cbb0",
+      "ink_fraction": 0.11832854554293543,
+      "ink_margins_px": {
+        "left": 89,
+        "right": 88,
+        "top": 93,
+        "bottom": 44
+      },
+      "text_characters": 3695
+    },
+    {
+      "page": 10,
+      "sha256": "cc62ca4a8b2c112089fe708625cba681fe0e29674cc631388361eb492bac9392",
+      "ink_fraction": 0.08923498475272904,
+      "ink_margins_px": {
+        "left": 90,
+        "right": 87,
+        "top": 94,
+        "bottom": 44
+      },
+      "text_characters": 2774
+    },
+    {
+      "page": 11,
+      "sha256": "861a00a59afa8809ec3a5422cb2631f45f376547abe4cda7b2467a857f0d812c",
+      "ink_fraction": 0.0740310248817784,
+      "ink_margins_px": {
+        "left": 91,
+        "right": 87,
+        "top": 93,
+        "bottom": 45
+      },
+      "text_characters": 2323
+    }
+  ],
+  "source_sha256": {
+    "main.tex": "6c740b465d63914ab4a20797b73f44adf2f87248e705937eaf18485b2ef3fe4f",
+    "references.bib": "1affdd5846edfc283d195bc0f349b403ce8931a251417e5a7b3654d929082c86",
+    "scripts/build_figures.py": "b66fbb350ab73cd5a76e6dca4f903bf3ca2d249c15abeb30d066333ebd6ca2be"
+  },
+  "commands": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1",
+    "python -m py_compile scripts/build_figures.py scripts/full_manuscript_qa.py scripts/write_build_audit.py",
+    "git diff --check",
+    "pdftoppm -png -r 110 output/fast_mc_zdc_manuscript.pdf audit/qa_runs/iteration_07/page",
+    "pdftotext output/fast_mc_zdc_manuscript.pdf -"
+  ]
+}

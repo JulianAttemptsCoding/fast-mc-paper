@@ -1,0 +1,81 @@
+28:# Audit pass 1 — there is a concrete arithmetic error on page 3
+73:# Audit pass 2 — the response sampler has **three** support components, not the two you describe
+128:# Audit pass 3 — the upper cap may cause a **hard support mismatch with Geant4**
+163:# Audit pass 4 — the current negative conclusion is too strong for an epoch-12-of-24 checkpoint
+197:# Audit pass 5 — pilot initialization means “trained on 551,234 events” needs another qualification
+217:# Audit pass 6 — why are 61,248 training events reserved for critics in a manuscript with no critic?
+241:# Audit pass 7 — \(D_{\rm loss}\) is still a provenance hole
+279:# Audit pass 8 — Fig. 3's error bars currently do not make statistical sense as described
+312:# Audit pass 9 — the 25-GeV-bin “width” is not intrinsic response resolution
+331:# Audit pass 10 — the activity model is not merely imperfect; it is structurally unable to represent residual activity correlations
+369:# Audit pass 11 — your present gap statistics almost scream “independence problem”
+401:# Audit pass 12 — improve the longitudinal model before throwing more compute at this lineage
+428:# Audit pass 13 — the support model has an analogous structural limitation
+446:# Audit pass 14 — you may also be missing **cross-layer spatial stochastic coherence**
+473:# Audit pass 15 — run the **oracle cascade** before another architecture campaign
+503:# Audit pass 16 — the current topology aggregate suggests lots of **tiny satellite components**
+536:# Audit pass 17 — topology metrics need to be conditioned on nonempty events
+563:# Audit pass 18 — “largest-component fraction” needs a formula
+583:# Audit pass 19 — threshold stability is still mandatory, not optional
+601:# Audit pass 20 — your graph representation is still a major modeling approximation
+628:# Audit pass 21 — the graph edge count is internally consistent, which is good
+654:# Audit pass 22 — Fig. 1 is better, but it still doesn't show the geometry feature that matters most longitudinally
+679:# Audit pass 23 — the count model needs much more scrutiny
+720:# Audit pass 24 — “inactive-layer zero classes have training weight 0.2” raises several unresolved questions
+740:# Audit pass 25 — support BCE positive-weight clipping needs an audit
+754:# Audit pass 26 — 256 ranking pairs per event may be far too little, depending on how they are selected
+785:# Audit pass 27 — your support loss and support sampler optimize different objects
+815:# Audit pass 28 — the CLR clipping issue remains unresolved
+836:# Audit pass 29 — the CLR source gauge is a real inefficiency, not just a mathematical curiosity
+852:# Audit pass 30 — what exactly is “eight fixed midpoint Euler steps”?
+871:# Audit pass 31 — your flow modules remain underdescribed despite the source commit
+896:# Audit pass 32 — handle \(|A|=1\) and \(k_\ell=1\) explicitly
+912:# Audit pass 33 — Eq. (9) still does **not** fully specify the loss
+937:# Audit pass 34 — tell me **how the nine weights were calibrated**
+965:# Audit pass 35 — S2's 50% zero collapse is still suspicious enough that I would not treat it mainly as a conceptual lesson yet
+997:# Audit pass 36 — the S2 loss decomposition could reveal something deeply wrong
+1027:# Audit pass 37 — define M0 and S2 properly or remove the screen from the main paper
+1057:# Audit pass 38 — B0 versus V3-SUP remains descriptive, not an ablation
+1075:# Audit pass 39 — I want training curves, badly
+1096:# Audit pass 40 — one training seed is no longer enough for the headline numbers
+1116:# Audit pass 41 — the “training seed” does not prove reproducibility
+1136:# Audit pass 42 — gradient accumulation equivalence should be checked
+1150:# Audit pass 43 — the condition encoder still contains deterministic redundancy
+1174:# Audit pass 44 — there is a small inconsistency in the stated training-energy range
+1196:# Audit pass 45 — near-zero training conditions may have meaningless directional information
+1216:# Audit pass 46 — angular conditioning remains almost entirely unevaluated
+1235:# Audit pass 47 — fixed generator vertex does not guarantee fixed detector entry state
+1253:# Audit pass 48 — the ECAL result is actually worse than the simple 11.1% number suggests
+1276:# Audit pass 49 — the first-layer result contains another hidden diagnostic
+1298:# Audit pass 50 — aggregate W1 = 0.092 GeV is not very meaningful yet
+1322:# Audit pass 51 — Fig. 3 needs bin counts
+1338:# Audit pass 52 — “one reference and one generated shower per condition” fundamentally limits the paper
+1361:# Audit pass 53 — the new C2ST policy is correct, but don't overcomplicate it
+1389:# Audit pass 54 — condition-only AUROC = 0.500 is a sanity check, not an evaluation result
+1399:# Audit pass 55 — the conclusion still overstates “conditional distribution” agreement
+1422:# Audit pass 56 — “constrained negative finding” is still too paper-like for the evidence state
+1440:# Audit pass 57 — the conclusion accidentally changes “scalar loss” into “response loss”
+1462:# Audit pass 58 — the abstract should also make the epoch-12 status explicit
+1478:# Audit pass 59 — “reproducibility” is not the right keyword yet
+1500:# Audit pass 60 — the code/data statement is much better, but freeze it harder
+1519:# Audit pass 61 — public aggregate reproducibility needs one command
+1538:# Audit pass 62 — authorship/data provenance needs one more sentence
+1553:# Audit pass 63 — Related Work still needs CaloClouds II
+1567:# Audit pass 64 — the novelty sentence is appropriately cautious; keep it that way
+1587:# Audit pass 65 — Figure 5 is carrying too much information
+1605:# Audit pass 66 — Figure 6 is improved
+1617:# Audit pass 67 — Figure 2's flowchart is good but can map more directly to the notation
+1634:# Audit pass 68 — Table 1 is becoming useful, but “Stopping patience 24” is confusing
+1650:# Audit pass 69 — closure tolerances need their exact formula
+1666:# Audit pass 70 — report how many samples the structural guarantee actually covered
+1687:# Audit pass 71 — “complete artifact excluded” could create survivorship bias if failures ever occur
+1701:# Audit pass 72 — topology versus energy should be shown
+1718:# Audit pass 73 — topology versus angle is equally important
+1728:# Audit pass 74 — inspect count and support errors per layer
+1744:# Audit pass 75 — analyze graph distance between active cells
+1764:# Audit pass 76 — analyze energy, not just support, across components
+1779:# Audit pass 77 — the first-layer model deserves its own accuracy plot
+1793:# Audit pass 78 — every named generative stage should have its own direct diagnostic
+1813:# Audit pass 79 — if this remains a negative paper, the model needs a competent simple baseline
+1833:# Audit pass 80 — final paper story depends on what happens next
+1856:# Questions I would demand answers to before the next serious draft
