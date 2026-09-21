@@ -1,0 +1,168 @@
+project:
+  name: cbsc-zdc-v2-2-viability-calibrated_lr3e4-continuation-compute-extension-r1-dicos-r2-dicos-p6-dicos-p7-dicos-f-02
+  run_dir: runs/calibrated_lr3e4_dicos_f_02
+  pilot: false
+data:
+  manifest: prep/data/dataset_manifest.json
+  splits: prep/splits.json
+  target_mode: raw_deposit
+  threshold_gev: 0.0
+  train_kinetic_gev:
+  - 0.0
+  - 300.0
+  evaluation_kinetic_gev:
+  - 50.0
+  - 250.0
+  split_fraction:
+  - 0.8
+  - 0.1
+  - 0.1
+  response_cap_ratio: 0.6301101273502666
+  response_cap_absolute_gev: 61.23382753262882
+  audit: prep/train_data_audit.json
+  role_partition_manifest: prep/role_partition.json
+  role_partition_sha256: 8b392f2550d7b1c921419ab1d39f924dab5feba28f234957d61ba2a2469d3cbb
+  training_role: generator_train
+geometry:
+  path: prep/geometry_frozen
+  n_nodes: 6790
+  n_layers: 65
+  geometry_hash: e22d4cfb1e9293a33dd13151587910268ba64cd8efbcdb7a835a7442f2edcb4b
+model:
+  condition_dim: 128
+  hidden_dim: 96
+  response_hidden: 192
+  response_components: 4
+  response_scale_gev: 10.0
+  profile_hidden: 128
+  count_hidden: 192
+  graph_blocks: 3
+  attention_heads: 4
+  attention_layers: 2
+  layer_context: bidirectional
+  dropout: 0.0
+  architecture_version: cbsc-zdc-v3
+training:
+  stage: joint
+  seed: 20260723
+  device: cuda
+  batch_size: 6
+  gradient_accumulation: 4
+  num_workers: 4
+  epochs: 24
+  learning_rate: 0.0003
+  min_learning_rate: 1.0e-06
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  weight_decay: 0.01
+  gradient_clip_norm: 1.0
+  amp: false
+  deterministic_debug: false
+  early_stopping_patience: 24
+  checkpoint_interval_updates: 50
+  train_condition_encoder: true
+  restart_scheduler_on_resume: false
+  initialize_from_relative: checkpoints/v3-sup_init.pt
+  initialize_from_sha256: 8c3f32b5cc89b74dfd07ce6480a702fcbcd987d2c9e2559877ca497c0646819e
+loss_weights:
+  active: 0.5367704371463009
+  count: 0.16090104449935363
+  first_layer: 2.159450729859089
+  profile_flow: 0.16090104449935363
+  response: 0.16090104449935363
+  share_flow: 0.44496024094966563
+  support_bce: 1.3241075363035668
+  support_rank: 1.4775912102536604
+  visible: 2.574416711989658
+evaluation:
+  energy_bin_edges_gev:
+  - 50
+  - 75
+  - 100
+  - 125
+  - 150
+  - 175
+  - 200
+  - 225
+  - 250.0001
+  profile_steps: 8
+  share_steps: 8
+  closure_tolerance_gev: 2.0e-05
+  visualization:
+    enabled: true
+    split: validation
+    sample_count: 50
+    draws_per_condition: 5
+    selection_seed: 20260725
+    generation_seed: 20260725
+    required: true
+  closure_tolerance_relative: 1.0e-05
+provenance:
+  parent_config: calibrated_lr3e4_dicos-p7.yaml
+  parent_config_sha256: c63acd03055647219076b23f4260596b3c4a09865821fd02862f8d064f834037
+  parent_project_name: cbsc-zdc-v2-2-viability-calibrated_lr3e4-continuation-compute-extension-r1-dicos-r2-dicos-p6-dicos-p7
+  parent_last_epoch: 70
+  selected_by: best epoch 70 (4.497629) is 1 epochs behind the latest epoch 71, within
+    the 12-epoch window, so this family is still improving
+  epochs_available: 24
+  early_stopping_patience: 24
+  early_stopping_can_fire: false
+  restart_scheduler_on_resume: true
+  closure_tolerance_gev: 2.0e-05
+  closure_tolerance_relative: 1.0e-05
+  parent_closure_tolerance_relative: 0.0
+  closure_tolerance_relative_changed: true
+  template_sha256: fc56faf334436d8ffd4d537af30b06237d52eaea4bb75c0a02726959fe7d7856
+  audit_sha256: 1e445867ac4bff2b6cc0ab402ed17d63fd251ecee5b591a7ce5748aae349405a
+  geometry_manifest_sha256: 616b14bd006fb00acb963dc2b8b21fa0bc80d041a890b580d80ff31a11daa5d2
+  dataset_manifest_sha256: 688b440cbeaa4205c7617625ac366b7ac3fe25563e277ee4f66faec231fd3572
+  split_manifest_sha256: dd4fd48fd010402d91899b42338bd5b37c723a595e8d00e784b8b5a2513c911b
+  dataset_geometry_hash: e22d4cfb1e9293a33dd13151587910268ba64cd8efbcdb7a835a7442f2edcb4b
+  split_assignment_sha256: f71003e07eb16baf4029387fd8e54b2e22b98981bbd6ee519a6d363167b4c8c8
+  v3_screening_row: V3-SUP
+  v3_declared_change: retained_supervised_composite
+  v3_scientific_question: What is the validation result of the composite containing
+    only promoted S changes?
+  v3_features_enabled: {}
+  v3_phase_row: V3-SUP
+  role_partition_sha256: 8b392f2550d7b1c921419ab1d39f924dab5feba28f234957d61ba2a2469d3cbb
+  role_partition_manifest_sha256: 4a2bb8cf5296b9edb52da13e21ad746326933b7fc208e48b19c5e794df69e01a
+  test_events_used: 0
+  portability_rewrite:
+    kind: backend_move_path_only_rewrite
+    source_config: frozen_v3-sup.yaml (DiCOS, _autonomous/v3_full_pipeline_v26)
+    source_config_sha256: dabdeca36f594706b54832253e1a4c218e2de7810d05415d4acfe8833ea21652
+    rewritten_fields:
+      data.manifest: /dicos_ui_home/julianjuan/sharedfs/work/IOP/julian/Fast MC CBSC/prep/data/dataset_manifest.json
+      data.splits: /dicos_ui_home/julianjuan/sharedfs/work/IOP/julian/Fast MC CBSC/prep/splits.json
+      data.audit: /dicos_ui_home/julianjuan/sharedfs/work/IOP/julian/Fast MC CBSC/prep/train_data_audit.json
+      data.role_partition_manifest: /dicos_ui_home/julianjuan/sharedfs/work/IOP/julian/Fast
+        MC CBSC/_autonomous/v3_full_pipeline_v26/role_partition.json
+      geometry.path: /dicos_ui_home/julianjuan/sharedfs/work/IOP/julian/Fast MC CBSC/prep/geometry_frozen
+      training.initialize_from_relative: _autonomous/v3_full_pipeline_v26/checkpoints/v3-sup_init.pt
+    note: 'Only runtime filesystem paths were rewritten to be relative to this repo''s
+      root, per CLAUDE.md''s backend-portability rule: source commit, frozen config
+      contents (hyperparameters/seeds/loss weights), and every dataset/split/geometry/checkpoint
+      hash are unchanged. No hyperparameter, seed, loss weight, gate, or threshold
+      was touched.'
+viability:
+  screening_only: true
+  selection_split: validation
+  test_events_used: 0
+  weight_source: calibrated
+  baseline_calibration_report_sha256: 280e1b7f08bdc3bf3d8b8d075ce21379123a8ba16c7bc852f9290107537d6ac3
+  baseline_checkpoint_sha256: 03c7960861d6f6f3012a8e4469421d51e33d1a8dad7fc8ec8c8406d547f1adb7
+  successive_halving_wave: 2
+  max_parallel_jobs: 5
+  continuation_epochs: 2
+  parent_result_sha256: e53c741e3152a0d893677801b28f6f69d0b34f26099290f8f51262a1064469e2
+  selection_analysis_sha256: fefd010227a213f3a8419d5b665097863c1b77eb6d1fec36f9dbcfbbc0898efa
+  scheduler_contract: preserve model/optimizer/scaler/RNG and paired historical best;
+    restart exhausted cosine over exactly two new epochs
+  compute_extension_round: compute-extension-r1
+  parent_epoch: 2
+  parent_output_uri: gs://asiop-zdc-1-zdc-reco-us-central1/cbsc-v2-2/viability-20260727-wave2-r1-calibrated-lr3e4-output
+  parent_template_sha256: 6f551d976ee58152cadcce316573034250a57baf3da8ddfded3057380c2cc16c
+  frozen_a100_decision_unchanged: true

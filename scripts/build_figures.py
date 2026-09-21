@@ -1,4 +1,4 @@
-"""Render validation-only manuscript figures from frozen local battery reports."""
+"""Render manuscript figures from frozen aggregate development artifacts."""
 
 from __future__ import annotations
 
@@ -18,14 +18,23 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "data/reports"
 SCREENING = SOURCE_DIR / "screening_summary.json"
 CONDITION_CONTROL = SOURCE_DIR / "verified_condition_control.json"
+GEOMETRY_DATA = ROOT / "data/geometry/readout_geometry.npz"
+GEOMETRY_SUMMARY = ROOT / "data/geometry/geometry_summary.json"
 OUTPUT_DIR = ROOT / "figures"
 
 REPORT_FILES = {
     "B0": SOURCE_DIR / "dicos-f-02_epoch90.json",
+    "M0": SOURCE_DIR / "v3-m0-fresh_epoch19.json",
     "V3-SUP": SOURCE_DIR / "v3-sup_epoch12.json",
     "S2": SOURCE_DIR / "v3-s2-response_epoch19.json",
 }
-COLORS = {"Geant4": "#222222", "B0": "#27659c", "V3-SUP": "#d17c24", "S2": "#9e3e79"}
+COLORS = {
+    "Geant4": "#222222",
+    "B0": "#27659c",
+    "M0": "#5b8f5a",
+    "V3-SUP": "#d17c24",
+    "S2": "#9e3e79",
+}
 
 
 def load() -> tuple[dict, dict]:
@@ -69,17 +78,19 @@ def save(fig: plt.Figure, filename: str) -> None:
 
 
 def plot_architecture() -> None:
-    fig, ax = plt.subplots(figsize=(10.8, 3.05), layout="constrained")
-    ax.set_xlim(0, 11.1)
+    fig, ax = plt.subplots(figsize=(10.8, 3.35), layout="constrained")
+    ax.set_xlim(0, 12.2)
     ax.set_ylim(0, 3.1)
     ax.axis("off")
     rows = [
-        [(0.15, "Incident neutron\nfour-vector"), (2.9, "Shared condition\nencoder"),
-         (5.65, "Visibility and\nresponse total"), (8.4, "Start layer and\nactivity mask")],
-        [(8.4, "Layer budgets\nand hit counts"), (5.65, "Graph-based\nchannel support"),
-         (2.9, "Positive energy\nshares"), (0.15, "Sparse calorimeter\nreadout")],
+        [(0.05, "Incident neutron\nfour-vector"), (2.5, "Condition\nencoder"),
+         (4.95, "Hurdle branch B\nand total draw"), (7.4, "Realized V and T"),
+         (9.85, "First layer and\nindependent activity")],
+        [(9.85, "Layer budgets\nand channel counts"), (7.4, "Graph support\nscores and top-k"),
+         (4.95, "Energy-share\nflow logits"), (2.5, "Exact budget\ndecoder"),
+         (0.05, "Sparse deposited-\nenergy vector")],
     ]
-    widths, height = 2.35, 0.85
+    widths, height = 2.15, 0.85
     y_positions = [1.9, 0.35]
     for row_index, row in enumerate(rows):
         y = y_positions[row_index]
@@ -94,50 +105,63 @@ def plot_architecture() -> None:
     def arrow(start: tuple[float, float], end: tuple[float, float]) -> None:
         ax.add_patch(FancyArrowPatch(start, end, arrowstyle="-|>", mutation_scale=13,
                                      linewidth=1.4, color="#344c65"))
-    for i in range(3):
+    for i in range(4):
         arrow((rows[0][i][0] + widths + 0.08, 2.325), (rows[0][i + 1][0] - 0.08, 2.325))
         arrow((rows[1][i][0] - 0.08, 0.775), (rows[1][i + 1][0] + widths + 0.08, 0.775))
-    arrow((9.575, 1.82), (9.575, 1.30))
-    ax.text(5.55, 1.52, "Conditional generation with exact sparse decoding", ha="center",
+    arrow((10.925, 1.82), (10.925, 1.30))
+    ax.text(6.1, 1.52, "Teacher-forced component training; ancestral generation", ha="center",
             va="center", fontsize=10, color="#344c65", style="italic")
     save(fig, "generator_schematic.png")
 
 
-def plot_c2st(reports: dict) -> None:
-    families = [("high_level", "High-level"), ("low_level", "Low-level"), ("profile_aware", "Profile-aware")]
-    names = list(reports)
-    fig, axes = plt.subplots(1, 3, figsize=(10.8, 3.15), sharey=True, layout="constrained")
-    for ax, (key, label) in zip(axes, families, strict=True):
-        for i, name in enumerate(names):
-            data = reports[name]["c2st"][key]
-            val = data["auroc_mean"]
-            ax.errorbar(i, val, yerr=data["auroc_std"], color=COLORS[name], marker="o",
-                        markersize=7, capsize=3, lw=1.5)
-            ax.text(i, val + 0.016, f"{val:.3f}", ha="center", va="bottom", fontsize=8)
-        ax.axhline(0.5, color="#777777", ls=":", lw=1)
-        if key == "high_level":
-            ax.axhline(0.65, color="#a23b3b", ls="--", lw=1.1)
-        ax.set_title(label)
-        ax.set_xticks(range(len(names)), names)
-        ax.set_ylim(0.48, 1.015)
+def plot_geometry() -> None:
+    geometry = np.load(GEOMETRY_DATA)
+    summary = json.loads(GEOMETRY_SUMMARY.read_text(encoding="utf-8"))
+    positions = geometry["positions_mm"]
+    layers = geometry["layer_index"]
+    multiplicity = geometry["physical_position_count"]
+    fig, axes = plt.subplots(1, 3, figsize=(10.8, 3.55), layout="constrained")
+
+    for ax, layer, title in [(axes[0], 0, "ECAL readout centroids"), (axes[1], 1, "Representative HCAL layer")]:
+        select = layers == layer
+        scatter = ax.scatter(
+            positions[select, 0], positions[select, 1], c=multiplicity[select],
+            cmap="viridis", vmin=1, vmax=4, s=18 if layer == 0 else 34,
+            edgecolors="none",
+        )
+        ax.set_aspect("equal", adjustable="box")
+        ax.set_xlabel("x (mm)")
+        ax.set_ylabel("y (mm)")
+        ax.set_title(title)
         ax.set_axisbelow(True)
-    axes[0].set_ylabel("Classifier two-sample AUROC")
-    control = json.loads(CONDITION_CONTROL.read_text(encoding="utf-8"))["current"]["condition_only_auroc"]
-    if control != 0.5:
-        raise ValueError("verified condition-only control is not exactly chance")
-    fig.suptitle("Development-bank classifier separation; condition-only control = 0.500", fontsize=12)
-    save(fig, "c2st_validation.png")
+    colorbar = fig.colorbar(scatter, ax=axes[:2], shrink=0.82, pad=0.02)
+    colorbar.set_label("Physical positions per readout ID")
+
+    histogram = {int(k): int(v) for k, v in summary["physical_position_count_histogram"].items()}
+    x = np.array(sorted(histogram))
+    y = np.array([histogram[k] for k in x])
+    axes[2].bar(x, y, color="#4c78a8", width=0.65)
+    for xi, yi in zip(x, y, strict=True):
+        axes[2].text(xi, yi + 70, f"{yi:,}", ha="center", fontsize=9)
+    axes[2].set_xticks(x)
+    axes[2].set_xlabel("Physical positions represented")
+    axes[2].set_ylabel("Readout channels")
+    axes[2].set_title("Readout ganging")
+    axes[2].set_ylim(0, max(y) * 1.14)
+    axes[2].set_axisbelow(True)
+    fig.suptitle("Frozen 6,790-channel geometry; plotted locations are readout centroids", fontsize=12)
+    save(fig, "detector_geometry.png")
 
 
 def plot_response_bins(reports: dict) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(10.8, 3.1), sharex=True, layout="constrained")
+    fig, axes = plt.subplots(1, 2, figsize=(10.8, 3.75), sharex=True, layout="constrained")
     for name in ["B0", "V3-SUP"]:
         bins = reports[name]["positive_response"]["response_bins"]
         x = [(b["low"] + b["high"]) / 2 for b in bins]
         for ax, field in zip(axes, ["mean_bias_fraction", "resolution_difference_fraction"], strict=True):
             ax.plot(x, [100 * b[field] for b in bins], marker="o", ms=5, lw=0,
                     label=name, color=COLORS[name])
-    for ax, title in zip(axes, ["Mean response bias", "Response-width difference"], strict=True):
+    for ax, title in zip(axes, ["Mean total-deposit bias", "Total-deposit width difference"], strict=True):
         ax.axhline(0, color="#333333", lw=0.9)
         ax.set_title(title)
         ax.set_xlabel("Incident neutron kinetic energy (GeV)")
@@ -146,7 +170,7 @@ def plot_response_bins(reports: dict) -> None:
         ax.set_axisbelow(True)
     axes[0].set_ylabel("Difference from Geant4 (%)")
     axes[0].legend(frameon=False, fontsize=9)
-    fig.suptitle("Deposited-response moments vary across the primary range", fontsize=12)
+    fig.suptitle("Exploratory total-deposit moments across the 50--250 GeV range", fontsize=12)
     save(fig, "response_energy_bins.png")
 
 
@@ -177,7 +201,7 @@ def plot_longitudinal(reports: dict) -> None:
     axes[2].set_yscale("log")
     axes[2].set_title("HCAL tail (log scale)")
     axes[2].legend(frameon=False, fontsize=8)
-    fig.suptitle("Mean longitudinal response on the same validation bank", fontsize=12)
+    fig.suptitle("Mean deposited energy by layer on the same development bank", fontsize=12)
     save(fig, "longitudinal_profile.png")
 
 
@@ -187,42 +211,45 @@ def plot_topology(reports: dict) -> None:
     metrics = [
         ("Interior-gap fraction", lambda p, t: p["activity"][t]["gap_fraction"] * 100, "%", (0, 105)),
         ("Mean interior gaps", lambda p, t: p["activity"][t]["mean_gaps"], "gaps / event", (0, 8)),
-        ("Connected components", lambda p, t: p["topology"][t]["connected_components_mean"], "components / event", (0, 67)),
+        ("Mean active layers", lambda p, t: p["activity"][t]["mean_active_layers"], "layers / event", (0, 65)),
+        ("Mean active channels", lambda p, t: p["counts"][t]["mean_hit_count"], "channels / event", (0, 1800)),
+        ("Weak components", lambda p, t: p["topology"][t]["connected_components_mean"], "components / event", (0, 67)),
+        ("Largest-component fraction", lambda p, t: p["topology"][t]["largest_component_fraction_mean"] * 100, "%", (0, 105)),
     ]
-    fig, axes = plt.subplots(1, 3, figsize=(10.8, 3.2), layout="constrained")
+    fig, axes = plt.subplots(2, 3, figsize=(10.8, 6.15), layout="constrained")
+    axes = axes.ravel()
     for ax, (title, getter, unit, ylim) in zip(axes, metrics, strict=True):
         values = [getter(sup_truth, "truth"), getter(reports["B0"], "generated"), getter(sup_truth, "generated")]
         ax.bar(range(3), values, color=[COLORS[n] for n in names], width=0.68)
         for i, val in enumerate(values):
-            ax.text(i, val + 0.035 * ylim[1], f"{val:.1f}", ha="center", fontsize=8)
+            ax.text(i, val + 0.035 * ylim[1], f"{val:.1f}", ha="center", fontsize=9)
         ax.set_xticks(range(3), names)
         ax.set_ylim(*ylim)
         ax.set_title(title)
         ax.set_ylabel(unit)
         ax.set_axisbelow(True)
-    fig.suptitle("Longitudinal gaps and spatial fragmentation persist", fontsize=12)
+    fig.suptitle("Occupancy and readout-graph fragmentation on the development bank", fontsize=12)
     save(fig, "topology_validation.png")
 
 
 def plot_zero_response(reports: dict) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(10.8, 3.05), layout="constrained")
-    panels = [["Geant4", "B0", "V3-SUP"], ["Geant4", "S2"]]
-    for ax, panel, ylim in zip(axes, panels, [(0, 2.1), (0, 55)], strict=True):
-        values = []
-        for name in panel:
-            p = reports["V3-SUP"] if name == "Geant4" else reports[name]
-            role = "truth" if name == "Geant4" else "generated"
-            values.append(100 * p["visibility_and_zero_response"][role]["zero_fraction"])
-        ax.bar(range(len(panel)), values, color=[COLORS[n] for n in panel], width=0.62)
-        for i, val in enumerate(values):
-            ax.text(i, val + 0.04 * ylim[1], f"{val:.2f}%", ha="center", fontsize=9)
-        ax.set_xticks(range(len(panel)), panel)
-        ax.set_ylim(*ylim)
-        ax.set_ylabel("Zero-response events (%)")
-        ax.set_axisbelow(True)
-    axes[0].set_title("Baseline and supervised continuation")
-    axes[1].set_title("S2 response-spline regression")
-    fig.suptitle("The visible-response hurdle remains a separate fidelity problem", fontsize=12)
+    fig, ax = plt.subplots(figsize=(10.8, 4.05), layout="constrained")
+    names = ["Geant4", "B0", "M0", "V3-SUP", "S2"]
+    values = []
+    for name in names:
+        p = reports["V3-SUP"] if name == "Geant4" else reports[name]
+        role = "truth" if name == "Geant4" else "generated"
+        values.append(100 * p["visibility_and_zero_response"][role]["zero_fraction"])
+    ax.bar(range(len(names)), values, color=[COLORS[n] for n in names], width=0.64)
+    for i, val in enumerate(values):
+        ax.text(i, val * 1.13, f"{val:.2f}%", ha="center", fontsize=10)
+    ax.set_xticks(range(len(names)), ["Geant4", "baseline\n(B0)", "fresh control\n(M0)",
+                                        "full-data continuation\n(V3-SUP)", "spline screen\n(S2)"])
+    ax.set_yscale("log")
+    ax.set_ylim(0.55, 85)
+    ax.set_ylabel("Zero-deposit events (%)")
+    ax.set_axisbelow(True)
+    fig.suptitle("S2's zero-deposit anomaly is carried by the Bernoulli hurdle", fontsize=12)
     save(fig, "zero_response_validation.png")
 
 
@@ -234,7 +261,11 @@ def write_manifest() -> None:
         "kind": "zdc-manuscript-development-bank-figures",
         "scientific_status": "development-bank diagnostics only; physics validation not established",
         "test_events_used": 0,
-        "sources_sha256": {str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in [*REPORT_FILES.values(), SCREENING, CONDITION_CONTROL]},
+        "excluded_from_claims": {
+            "legacy_random_fold_c2st": "not plotted or quoted; pair-grouped joint condition+shower evaluation is required",
+        },
+        "verified_condition_control_auroc": json.loads(CONDITION_CONTROL.read_text(encoding="utf-8"))["current"]["condition_only_auroc"],
+        "sources_sha256": {str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in [*REPORT_FILES.values(), SCREENING, CONDITION_CONTROL, GEOMETRY_DATA, GEOMETRY_SUMMARY]},
         "figures_sha256": {p.name: sha(p) for p in sorted(OUTPUT_DIR.glob("*.png"))},
     }
     (OUTPUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -244,7 +275,7 @@ def main() -> None:
     reports, _screening = load()
     style()
     plot_architecture()
-    plot_c2st(reports)
+    plot_geometry()
     plot_response_bins(reports)
     plot_longitudinal(reports)
     plot_topology(reports)

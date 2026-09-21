@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this manuscript artifact, please cite it using the metadata below."
+title: "Hierarchical Sparse Conditional Generation of Neutron Energy Deposits in a Zero Degree Calorimeter"
+type: article
+authors:
+  - family-names: Juan
+    given-names: Julian
+version: 0.2.0
+date-released: 2026-09-20
+repository-code: "https://github.com/JulianAttemptsCoding/fast-mc-paper"

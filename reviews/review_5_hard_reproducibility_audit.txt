@@ -1,0 +1,2027 @@
+Yes. This version fixed a lot of the first-round problems, but another hard audit exposes several deeper issues. **I still would not submit this manuscript.** More importantly, I would not spend much time polishing prose yet, because a few remaining problems can change the scientific results and the paper's central story.
+
+The nastiest issues are now: **(1)** Fig. 2 still uses the C2ST results from the malformed random-fold evaluator even after the manuscript acknowledges that evaluator is malformed; **(2)** none of the C2ST feature sets includes the incident condition, so the advertised C2ST does not directly test the conditional distribution you claim to model; **(3)** the paper's central “scalar objective can fail” result is presented without actually defining the full scalar training objective or its weights; **(4)** the zero-response model described by Eq. (4) is not actually the stochastic process implemented in §4.1; **(5)** the CLR/share flow has a hidden clipping approximation and a redundant gauge direction; **(6)** the activity and count heads—the components most directly implicated by your main failure—are barely specified; and **(7)** 2,400 ganged HCAL channels means the centroid graph is not a minor geometry caveat but a major representational approximation. 
+
+## Audit iteration 1 — Fig. 2 is still not scientifically clean
+
+You correctly discovered that the original condition-only C2ST was malformed because matched Geant4/generated condition pairs were not assigned to the same fold. You then built a pair-grouped evaluator and obtained the expected condition-only AUROC of exactly 0.500. Good.
+
+But then you **kept all the actual C2ST numbers from the malformed evaluator**:
+
+> “The remaining C2ST values are retained as diagnostics, with the random-fold limitation stated explicitly.”
+
+That does not solve the problem. 
+
+This is now arguably worse rhetorically because you have demonstrated that the splitting scheme is capable of producing a bogus condition-only result and then continue using the same splitting scheme for the headline C2ST results.
+
+There are two separate failure mechanisms.
+
+First, random splitting breaks the exact condition matching. If condition \(c_i\) has one Geant4 event and one generated event, one member of the pair can enter classifier training while the other enters evaluation. That is precisely what grouped splitting is supposed to prevent.
+
+Second, shower observables are strongly correlated with incident energy and direction. Therefore even if the classifier never explicitly receives the four-vector, finite class-specific differences in the evaluation-fold condition distribution can leak through the shower observables.
+
+### Revision
+
+**Rerun every C2ST in Fig. 2 with pair-grouped folds. Do not keep the old values in the main text.**
+
+If you want historical provenance, put the original numbers in an audit appendix:
+
+> “An earlier evaluator used sample-level random folds. Because matched condition pairs were not grouped, those values are retained only as historical development artifacts and are not used scientifically.”
+
+Until this is done, I would actually remove the 0.7748/0.7785/0.9330 numbers from the abstract and conclusions.
+
+The C2ST literature assumes a legitimate held-out classification problem; it is the classifier's held-out discrimination that acts as the two-sample statistic. ([arXiv][1])
+
+---
+
+# Audit iteration 2 — deeper C2ST problem: you are not testing the conditional distribution
+
+This one is more fundamental.
+
+Your scientific target is explicitly
+
+\(p_\theta(Y\mid p^\mu,G)\approx p_{\mathrm{G4}}(Y\mid p^\mu,G)\). 
+
+But your C2ST inputs are:
+
+* high level: nine **shower** variables;
+* low level: the 6,790 deposited energies;
+* profile aware: 65 layer energies.
+
+There are **no incident-condition variables in any of them.** 
+
+Therefore these classifiers principally test the bank-marginalized distribution
+
+\(p(Y)=\int p(Y\mid c)p_{\mathrm{bank}}(c)\,dc\),
+
+not the full conditional law.
+
+This matters because conditional errors can cancel. Your own Figure 3 demonstrates exactly that: V3-SUP goes from roughly \(-6.4\%\) bias in one energy bin to \(+6.4\%\) immediately in the next.  A marginal test can partially wash out such errors.
+
+### Much better C2ST
+
+Give the classifier **both condition and shower observables**:
+
+\(X=(c,Y_{\rm features})\).
+
+Then you compare
+
+\(P_{\rm G4}(c,Y)=P(c)P_{\rm G4}(Y\mid c)\)
+
+against
+
+\(P_{\rm gen}(c,Y)=P(c)P_{\rm gen}(Y\mid c)\).
+
+Because the exact same condition distribution appears in both classes, any separation beyond condition-only discrimination comes from the conditional relationship.
+
+That produces a beautifully coherent evaluation:
+
+**Condition only:** AUROC = 0.5 sanity check.
+**Condition + high-level shower:** conditional high-level discrepancy.
+**Condition + layer profile:** conditional longitudinal discrepancy.
+**Condition + channel vector:** conditional low-level discrepancy.
+
+And all four use **pair-grouped folds**.
+
+That should replace the current Fig. 2.
+
+---
+
+# Audit iteration 3 — your central loss result is missing the actual loss
+
+Section 6.4 is making one of the paper's most interesting claims:
+
+> “this weighted scalar objective can prefer a physically unusable generative distribution.” 
+
+But nowhere in this version do you actually state the complete weighted scalar objective.
+
+That is a major omission.
+
+You tell me:
+
+* support uses balanced BCE + ranking;
+* response has a density objective;
+* profile/share use flow matching;
+* a response-loss weight equals 0.160901.
+
+But I cannot reconstruct the complete objective.
+
+This is particularly bad because the whole S2 observation could be explained by the relative weights. If response NLL improves enough to compensate for visibility BCE deterioration, I need to **see that decomposition**.
+
+### Add an explicit objective
+
+Something like:
+
+\( \mathcal L =
+\lambda_V\mathcal L_V+
+\lambda_T\mathcal L_T+
+\lambda_{L_0}\mathcal L_{L_0}+
+\lambda_A\mathcal L_A+
+\lambda_D\mathcal L_D+
+\lambda_K\mathcal L_K+
+\lambda_{\rm BCE}\mathcal L_H+
+\lambda_{\rm rank}\mathcal L_{\rm rank}+
+\lambda_r\mathcal L_r.\)
+
+Then give a compact table containing:
+
+| component    | target         | normalization  | weight   |
+| ------------ | -------------- | -------------- | -------- |
+| visibility   | zero/nonzero   | per event      | ...      |
+| response     | positive \(T\) | positive event | 0.160901 |
+| start layer  | \(L_0\)        | visible event  | ...      |
+| activity     | \(A_\ell\)     | layer/event    | ...      |
+| profile flow | shares         | active layer   | ...      |
+| count        | \(K_\ell\)     | active layer   | ...      |
+| support BCE  | \(H\)          | channel/layer  | ...      |
+| support rank | ...            | ...            | ...      |
+| share flow   | ...            | ...            | ...      |
+
+For M0 and S2, report **every component validation loss**.
+
+If S2's visibility BCE gets massively worse while the response component gets sufficiently better to decrease the sum, your central point becomes much stronger.
+
+Right now the reader is being asked to believe a conclusion about an objective they cannot inspect.
+
+---
+
+# Audit iteration 4 — teacher forcing makes the scalar-loss failure less surprising than the manuscript admits
+
+You now disclose something extremely important:
+
+> “Component training is teacher-forced: profile, count, support, and share losses receive truth upstream quantities and truth masks. Inference samples them ancestrally.” 
+
+This should be much more central.
+
+Your scalar objective is not merely “imperfectly weighted.” A large portion of it evaluates components under **oracle upstream states that the model never receives during ancestral generation**.
+
+So you can have:
+
+* better profile loss given the true activity pattern;
+* better count loss given the true layer energies;
+* better support loss given the true counts;
+* better share loss given the true support;
+
+while the actual ancestral joint generator gets worse.
+
+That is almost textbook exposure mismatch.
+
+### Revise the scientific interpretation
+
+Instead of framing §6.4 mainly as:
+
+> scalar loss ≠ physics fidelity,
+
+I would make the more precise claim:
+
+> **Teacher-forced component objectives need not track the quality of the ancestral joint distribution.**
+
+That is more interesting and more mechanistically grounded.
+
+### Cheapest decisive experiment
+
+For every stage, evaluate two modes:
+
+**Oracle mode:** truth upstream inputs.
+**Ancestral mode:** generated upstream inputs.
+
+Then report the deterioration:
+
+response → activity → profile → count → support → share.
+
+You might discover, for example:
+
+* activity already fails under oracle response → actual activity-model problem;
+* count looks fine under oracle \(D,A\) but collapses under generated \(D,A\) → propagation problem;
+* support is reasonable with true \(K,A,D\) but fragmented ancestrally → upstream exposure;
+* support remains fragmented even with oracle upstream inputs → support sampler itself is deficient.
+
+That single experiment could localize your failure much more convincingly than the current narrative.
+
+---
+
+# Audit iteration 5 — Eq. (4) is not the model you actually sample
+
+This is a real mathematical inconsistency.
+
+Eq. (4) says:
+
+\(V\sim p(V\mid c)\)
+
+then
+
+\(T\sim p(T\mid V,c)\),
+
+with \(V\) representing nonzero deposited response. 
+
+But §4.1 says that when \(V=1\), you sample Gaussian-mixture \(z\), and if \(z<0\),
+
+\(T=s_T\operatorname{expm1}(z)<0\),
+
+so you clamp \(T\) to zero **and then reset \(V=0\)**. 
+
+Thus \(V\) is not simply the variable first sampled from the Bernoulli factor. Its final value also depends on the response-head draw.
+
+The actual effective zero probability is approximately
+
+\(P(T=0\mid c)=P(B=0\mid c)+P(B=1\mid c)P(z\le0\mid B=1,c)\),
+
+where \(B\) is the original hurdle draw.
+
+So either:
+
+### Revision A — fix the notation
+
+Call the first variable \(B\), the hurdle indicator.
+
+Then define the final visibility indicator
+
+\(V=B\,\mathbf 1[T_{\rm raw}>0]\).
+
+But that makes explicit that you have **two zero mechanisms**, which probably isn't what you want.
+
+### Revision B — much better model fix
+
+Make the positive branch strictly positive by construction.
+
+For example:
+
+\(T=s_T\exp z\),
+
+or another invertible positive-support transform.
+
+Then the hurdle is the **only zero atom**.
+
+That makes the factorization truthful and gives much cleaner diagnostics.
+
+A Gaussian fitted to positive \(z=\log(1+T/s_T)\) data necessarily having a negative tail is an avoidable structural flaw. I would fix this even if its empirical zero-mass contribution is small.
+
+---
+
+# Audit iteration 6 — the response safety cap is a giant unanswered question
+
+You now say the response branch:
+
+> “applies a training-audit safety cap” 
+
+What cap?
+
+Where?
+
+Why?
+
+How often does it activate?
+
+What happens to capped events?
+
+This can alter the model distribution.
+
+You need at minimum:
+
+* cap value;
+* physical/statistical justification;
+* activation frequency on B0/V3/S2;
+* whether the event is clipped, rejected, or resampled.
+
+Same problem with:
+
+> “Runtime checks quarantine nonfinite values, negative output, count mismatches, and closure failures.” 
+
+**What does “quarantine” mean?**
+
+Drop the event? Resample it? Raise an exception? Replace with zero?
+
+Any rejection/resampling changes the effective generator distribution.
+
+If failure rate is literally zero over every evaluated sample, just say:
+
+> “No runtime-contract violation occurred among N generated development events.”
+
+That is much stronger and much cleaner.
+
+If it is nonzero, the rate belongs in the results.
+
+---
+
+# Audit iteration 7 — the share transform quietly modifies the training targets
+
+Equation (5) uses
+
+\(\log\max(q_\ell,10^{-8})\). 
+
+That makes the transform numerically convenient, but it is **not exactly the CLR of the original composition** whenever any active share is below \(10^{-8}\).
+
+If a true active share satisfies \(q_i<10^{-8}\), then an ideal model that perfectly reproduces your transformed target and applies softmax recovers a normalized version of
+
+\(\max(q_i,10^{-8})\),
+
+not the original \(q_i\).
+
+So your coordinate transform introduces a hard approximation in the exact quantity you later claim to distribute.
+
+This could be completely irrelevant—or surprisingly important in the cell-share tail. You don't know until you measure it.
+
+### Immediate QA
+
+Report:
+
+* fraction of active layer shares below \(10^{-8}\);
+* fraction of positive cell shares below \(10^{-8}\);
+* total deposited-energy mass represented by those clipped shares;
+* sensitivity to \(10^{-6},10^{-8},10^{-10},10^{-12}\).
+
+If effectively zero mass is affected, document it and move on.
+
+If not, redesign the transform.
+
+---
+
+# Audit iteration 8 — your CLR flow has a redundant degree of freedom
+
+There is another mathematical issue with §4.2.
+
+A centered log-ratio vector satisfies
+
+\(\sum_{i\in A}x_i=0\).
+
+So the target occupies a \((|A|-1)\)-dimensional subspace.
+
+But you say the source is **masked Gaussian noise**, apparently not centered. 
+
+That means the flow unnecessarily models the additive “all-ones” direction even though softmax later annihilates that direction because
+
+\(\operatorname{softmax}(x+a\mathbf 1)=\operatorname{softmax}(x)\).
+
+Nothing is necessarily mathematically invalid, but it is redundant and potentially badly conditioned.
+
+### Better
+
+Center the source too:
+
+\(x_0=\epsilon-\bar\epsilon_A\mathbf1\),
+
+on the active coordinates.
+
+Or use an **ILR basis**, giving an actual \(|A|-1\)-dimensional unconstrained Euclidean representation.
+
+The CLR/softmax relationship itself is standard compositional-data machinery. ([OUP Academic][2])
+
+I would at least run centered-source Gaussian vs current source as a cheap ablation.
+
+---
+
+# Audit iteration 9 — you barely describe the component that is failing hardest
+
+The largest glaring empirical problem is the longitudinal activity:
+
+93.56% of V3-SUP events contain interior inactive layers versus 52.43% of Geant4. 
+
+Yet what exactly is \(p(L_0,A\mid T,c)\)?
+
+I don't know.
+
+Are the post-start layer activities conditionally independent Bernoulli variables?
+
+Autoregressive?
+
+Transformer output?
+
+One multilabel MLP?
+
+Does one layer know whether the preceding layer was active?
+
+Can the head represent long-range correlation?
+
+How is the final active layer modeled?
+
+What is its loss normalization?
+
+This is missing from the Methods.
+
+Likewise the count head \(p(K\mid D,A,c)\) is essentially unspecified.
+
+This is not a cosmetic omission. **The activity head is implicated by your strongest failure, so the reader needs more detail about it than about the condition encoder's hidden width.**
+
+### Add a stage table
+
+For every stage give:
+
+**Random variable → support → model → inputs → training target → loss → inference sampler.**
+
+That table would probably replace 2–3 paragraphs and make the architecture much easier to audit.
+
+---
+
+# Audit iteration 10 — maybe the activity architecture itself invites the gap failure
+
+If \(A_\ell\) is generated with independent or weakly coupled Bernoulli decisions across layers, your 93.6% interior-gap result may not be surprising at all.
+
+You should **not** simply force activity to be contiguous because Geant4 itself has gaps in 52.4% of events. The reference law clearly permits gaps.
+
+But you need a model that learns the *sequence structure*.
+
+Possible revisions, from smallest to largest:
+
+* autoregressive binary activity \(p(A_\ell\mid A_{<\ell},L_0,T,c)\);
+* Markov/CRF-style activity process;
+* predict start/end span plus a learned hole process;
+* transformer over the 65-layer binary sequence;
+* model active/inactive run lengths;
+* discrete diffusion over layer masks.
+
+The best diagnostic before changing anything is the **run-length distribution**:
+
+* active segment lengths;
+* inactive gap lengths;
+* number of gaps;
+* first active layer;
+* last active layer;
+* pairwise \(P(A_\ell,A_{\ell+k})\);
+* 65×65 activity correlation matrix.
+
+Figure 5 currently compresses a potentially very rich failure into three numbers.
+
+---
+
+# Audit iteration 11 — Gumbel-Top-k may be structurally bad at generating clustered support
+
+Your support model produces node scores and then selects exactly \(K_\ell\) channels with one Gumbel-Top-k draw. 
+
+This gives an exact-size random subset, which is elegant.
+
+But think about the generative structure: the \(K\) selected cells are not chosen through a process in which selecting cell \(i\) changes the probabilities of its neighbors because it has become part of the shower. They primarily compete through static/event-conditioned scores plus without-replacement sampling.
+
+That is a potentially weak mechanism for a spatially correlated shower.
+
+Your support scorer can learn a contiguous high-score region, so it is not hopeless. But the sampled set has no explicit **selection-dependent topology**.
+
+That could contribute directly to the huge connected-component count.
+
+### Strong diagnostic
+
+Evaluate support using **oracle**:
+
+* true active layers;
+* true per-layer energy;
+* true per-layer \(K_\ell\).
+
+Then sample only \(H_\ell\).
+
+If connected components remain terrible, you have isolated the support mechanism.
+
+If they become reasonable, the fragmentation is mainly propagated from upstream variables.
+
+### Architectural alternatives if support really is the problem
+
+A graph-autoregressive growth process is particularly natural:
+
+1. sample one or several shower seeds;
+2. repeatedly add nodes conditioned on the currently selected support;
+3. stop at exactly \(K_\ell\).
+
+That directly encodes local clustering while retaining exact cardinality.
+
+Other possibilities include correlated subset models, latent shower-core models, or cluster-then-sample approaches.
+
+---
+
+# Audit iteration 12 — the support loss and sampling law don't match
+
+You openly say:
+
+> “This is a surrogate score objective; it is not the likelihood of the Plackett–Luce law induced by Gumbel-Top-k.” 
+
+Good disclosure.
+
+But this could be more than a theoretical nicety.
+
+You train node scores with:
+
+* class-balanced BCE;
+* positive-negative ranking.
+
+Then at inference those same scores parameterize a random top-\(K\) subset law.
+
+There is no guarantee that a score function good for independent binary classification produces the right **joint subset distribution** when fed into Gumbel-Top-k.
+
+This is another plausible reason you can get marginal occupancy roughly right but joint topology wrong.
+
+At minimum, add:
+
+* oracle-support sampling validation;
+* calibration of inclusion probabilities;
+* pairwise hit-correlation comparison;
+* neighborhood co-hit probabilities.
+
+A support BCE can look excellent while pairwise spatial co-occurrence is completely wrong.
+
+---
+
+# Audit iteration 13 — 2,400 ganged channels is not a footnote-sized geometry issue
+
+This number shocked me more on the second reading.
+
+You have 6,390 HCAL channels, and **2,400 are ganged**. Each can represent as many as four physical positions. 
+
+Yet each one becomes one node at the unweighted centroid of those physical locations.
+
+That means this is not an edge-case approximation. A substantial fraction of HCAL readout IDs have geometry that is not faithfully represented by a single point.
+
+A centroid may even lie somewhere with **no physical sensitive element**.
+
+That affects:
+
+* nearest-neighbor graph construction;
+* message passing;
+* distance edge features;
+* transverse shower centroids;
+* radial widths;
+* support topology;
+* connected-component counts.
+
+The paper correctly calls this a limitation, but I would elevate it.
+
+### Better wording
+
+Stop calling \(G\) simply “the detector geometry” in contexts where precision matters.
+
+Call it something like:
+
+> **the frozen readout-centroid graph representation of the detector geometry.**
+
+### Better modeling options
+
+A future version could:
+
+* represent every stable physical location as a virtual node and aggregate virtual-node energy back into the ganged readout ID;
+* represent each readout ID by a set of physical positions rather than one centroid;
+* connect a ganged channel using the union of neighbor relationships from all constituent positions;
+* encode number/spread/covariance of constituent locations;
+* construct a separate physical-site graph for evaluation.
+
+This might materially change the architecture.
+
+---
+
+# Audit iteration 14 — Figure 5 has an ambiguity that could invalidate the component count
+
+You explicitly say the graph has **107,920 directed edges**. 
+
+Then you say:
+
+> “Connected components are counted on the frozen readout graph.” 
+
+What does “connected component” mean for a directed graph?
+
+* strongly connected?
+* weakly connected?
+* graph symmetrized first?
+* direction ignored?
+
+This must be specified.
+
+And I would verify the implementation immediately.
+
+Because your graph has within-layer kNN edges that need not be reciprocal, **strong versus weak connectivity can produce substantially different component counts.**
+
+Until that is checked, I would not fully trust the 23.20 versus 58.99 result.
+
+---
+
+# Audit iteration 15 — the graph diagnostic is not independent of the model graph
+
+You also use the **same graph** for:
+
+* message passing in the support model;
+* topology evaluation. 
+
+That is acceptable as a readout-graph diagnostic, but not ideal as independent evidence of physical shower topology.
+
+In fact, the metric may be slightly favorable to your model because the model itself sees precisely that adjacency structure.
+
+You already acknowledge the need for a physical-adjacency graph. Good. I would prioritize it because topology is one of the headline failures.
+
+---
+
+# Audit iteration 16 — the condition section contains a potentially false inference
+
+The manuscript says:
+
+> “The production contract records a fixed generator vertex. Entry position is therefore not an independent event condition.” 
+
+Not necessarily.
+
+A fixed generator vertex plus initial momentum determines a nominal straight-line detector intercept **only if propagation between the vertex and calorimeter is deterministic enough for that statement**.
+
+But two pages later you explicitly say you do not currently know the upstream material configuration. 
+
+If there is upstream material in which the neutron can interact/scatter before reaching the detector, initial \(p^\mu\) plus generator vertex does not uniquely determine the actual state/position at calorimeter entry.
+
+### Revise now
+
+Either establish from production metadata that:
+
+* the provided four-vector is at the ZDC entrance, or
+* propagation from the fixed vertex to the ZDC is appropriately deterministic,
+
+or weaken this sentence.
+
+For example:
+
+> “The generator vertex is fixed. Under the production geometry, the nominal front-face intercept is therefore a deterministic function of the incident direction; this assumption will be reverified once complete upstream-material provenance is restored.”
+
+But don't assert actual entry position from fixed vertex alone while simultaneously saying upstream geometry is unknown.
+
+---
+
+# Audit iteration 17 — you don't actually evaluate the angular conditioning
+
+Your encoder receives direction \(u_x,u_y,u_z\). 
+
+Where is the result versus angle?
+
+Nowhere.
+
+Nearly all the conditional physics in the paper is shown versus \(K_{\rm inc}\).
+
+If arbitrary incident direction is part of the scientific motivation, you need at least:
+
+* sample coverage in \(\theta,\phi\);
+* response bias versus \(\theta\);
+* response bias versus \(\phi\) if geometry breaks azimuthal symmetry;
+* hit count / active-layer count versus angle;
+* centroid residual relative to incident axis;
+* topology versus angle;
+* ideally edge/central intercept regions.
+
+Otherwise your five-input condition encoder is largely unvalidated.
+
+I would also show the joint training/development distribution in \(K,\theta,\phi\).
+
+---
+
+# Audit iteration 18 — your five condition features actually contain redundant information
+
+You feed:
+
+\([\log(1+K/100),u_x,u_y,u_z,\log(E_{\rm tot})]\). 
+
+For a neutron of fixed mass,
+
+\(E_{\rm tot}=K+m_n\).
+
+So your first and fifth features are deterministically redundant.
+
+Likewise \(u_x,u_y,u_z\) have the unit-sphere constraint.
+
+This is not a serious error; neural networks tolerate redundant features.
+
+But why have both \(K\) and \(E_{\rm tot}\)?
+
+If this was empirically useful, say so.
+
+If not, simplify to something like:
+
+\(K,u_x,u_y,u_z\),
+
+or one energy scalar plus direction.
+
+The manuscript currently presents the five inputs as if each contributes independent information.
+
+---
+
+# Audit iteration 19 — S1 may have been discarded for the wrong reason
+
+Table 2 says S1 “axis coordinates” changes the loss by only +0.0005 and was not promoted. 
+
+But if S1 explicitly represents detector coordinates relative to the incident neutron axis, that is precisely the kind of inductive bias I would expect to matter for **angular generalization**, even if it barely changes a teacher-forced aggregate scalar objective.
+
+You have already shown that aggregate loss is not reliable.
+
+So why are you using aggregate loss to kill S1?
+
+Before abandoning it, compare S1 on:
+
+* centroid/angular residuals;
+* response versus angle;
+* support versus detector-axis distance;
+* edge-entry conditions;
+* grouped conditional C2ST.
+
+S1 could be scientifically useful despite neutral scalar loss.
+
+The table currently risks contradicting your own lesson from S2.
+
+---
+
+# Audit iteration 20 — M0-fresh is still missing the diagnostics you need
+
+This problem survived from the previous draft.
+
+You compare S2's loss with M0-fresh:
+
+4.9212 versus 4.9355. 
+
+But where are M0-fresh:
+
+* zero rate;
+* C2ST;
+* active layers;
+* gaps;
+* components;
+* response-bin biases?
+
+Without them, you cannot tell whether the fresh-optimizer control itself underwent substantial distributional degradation.
+
+You've softened the causal wording appropriately—S2 is now called a “configuration screen,” not a clean response-head ablation.  But the control is still scientifically incomplete.
+
+For the main S2 story, I want a table like:
+
+| metric                      | M0-fresh |     S2 |     Geant4 |
+| --------------------------- | -------: | -----: | ---------: |
+| scalar loss                 |      ... |    ... |          — |
+| zero fraction               |      ... | 50.41% |      0.93% |
+| high-level conditional C2ST |      ... |    ... | 0.5 target |
+| active layers               |      ... |  25.50 |      54.08 |
+| gaps                        |      ... |    ... |        ... |
+
+That would actually prove the point.
+
+---
+
+# Audit iteration 21 — “A scalar objective selects a catastrophic screen” is still rhetorically off
+
+The section title is catchy but scientifically sloppy.
+
+The scalar objective didn't “select” S2 in your workflow because you explicitly **did not promote** S2.
+
+And “catastrophic” is evaluative prose.
+
+I would rename it:
+
+> **6.4 Lower scalar loss accompanies severe zero-response failure**
+
+or:
+
+> **6.4 Development loss does not track ancestral distribution quality**
+
+The second is stronger scientifically.
+
+---
+
+# Audit iteration 22 — the 4,096-event loss bank suddenly appears from nowhere
+
+Section 5.4 says the Jacobian offset was computed on:
+
+> “4,096 development events, 4,046 positive” 
+
+But the manuscript's named development bank is 10,000 conditions.
+
+So what exactly is this 4,096-event dataset?
+
+Is Table 2 loss evaluated on it?
+
+Is it:
+
+* a subset of the 10,000?
+* pilot validation?
+* another fixed screen bank?
+* randomly chosen?
+* reused during tuning?
+
+This needs a name and provenance.
+
+You now have at least:
+
+* canonical train;
+* canonical validation;
+* nominal test;
+* pilot train;
+* pilot validation;
+* 10k development bank;
+* apparently a 4,096-event loss bank.
+
+The manuscript desperately needs a **data-governance table**.
+
+Include set size, parent split, purpose, whether repeatedly inspected, and exposure status.
+
+---
+
+# Audit iteration 23 — split overlap is still not nailed down
+
+You improved this by explicitly saying pilot training represents 4.35% of canonical training. 
+
+But I still want the mechanical assertions:
+
+* `pilot_train ⊂ canonical_train`;
+* `pilot_val ⊂ canonical_validation`;
+* `development_10k ⊂ canonical_validation`;
+* `pilot_train ∩ development_10k = ∅`;
+* size of `pilot_val ∩ development_10k`;
+* duplicate-event-hash intersections across sets = 0 where required.
+
+The text **implies** some of this. It does not state that an event-ID/hash audit verified it.
+
+Given the history of the nominal test split, this is exactly the sort of thing that should be machine checked and written into the build audit.
+
+---
+
+# Audit iteration 24 — lock a validation set now, not later
+
+The draft says:
+
+> “A separate locked validation subset is required before final test evaluation.” 
+
+Do this **before the next architecture screen**.
+
+Otherwise you will keep optimizing against the 10k development bank and eventually have nothing between development and final test.
+
+Use a deterministic hash rule on untouched canonical-validation events and freeze:
+
+* development;
+* locked validation.
+
+Then do not query locked validation until the model family/hyperparameters/gates are frozen.
+
+The nominal test problem can be resolved separately.
+
+---
+
+# Audit iteration 25 — the pilot-scale caveat almost destroys publication significance
+
+This is the existential reviewer comment:
+
+> “You trained on 4.35% of your available training data. Why should I care that the model currently fails?”
+
+You correctly acknowledge that the failures cannot be interpreted as an architectural ceiling. 
+
+But that also means the current paper cannot make a compelling **negative-result** claim.
+
+A publishable negative result needs enough scale and optimization that “you undertrained it” is not the obvious explanation.
+
+Your Discussion understands this:
+
+> “A negative result is scientifically useful only after credible scale, optimization, and comparator effort exclude a merely undertrained pilot.” 
+
+Exactly.
+
+So current status:
+
+**excellent internal/preliminary technical report; weak final research paper.**
+
+Don't try to solve that with prose. It requires the full experiment.
+
+---
+
+# Audit iteration 26 — “reproducible preliminary study” is too strong
+
+The abstract calls this:
+
+> “a reproducible preliminary study” 
+
+But the Data and code availability section says:
+
+* model code is not complete/public;
+* checkpoints are not available;
+* detector materials missing;
+* complete Geant4 provenance missing;
+* underlying production cannot be reproduced. 
+
+Those statements conflict.
+
+What is reproducible is the **figure-generation package from aggregate reports**.
+
+Use exactly that language.
+
+### Replace
+
+> “reproducible preliminary study”
+
+with
+
+> “auditable preliminary study with a reproducible figure-generation package”
+
+or just
+
+> “transparent preliminary study”.
+
+Your conclusion already uses the narrower and better wording “reproducible figure package.” 
+
+---
+
+# Audit iteration 27 — “failure localization” is also too strong
+
+Abstract:
+
+> “structural validity and failure localization.” 
+
+Discussion:
+
+> “these are diagnostic hypotheses rather than proven causes.” 
+
+Those aren't fully consistent.
+
+You have **failure characterization** and **candidate localization hypotheses**.
+
+I would use:
+
+> “structural validity and failure characterization.”
+
+Then the Discussion can explain the hypothesized attribution to stages.
+
+---
+
+# Audit iteration 28 — stop calling Geant4 “truth”
+
+You have improved this overall, but “truth” still appears in places such as:
+
+* “truth shares”;
+* “truth masks”;
+* superscript \(t\);
+* truth/reference language around metrics. 
+
+Geant4 is your **reference simulation**, not experimental truth.
+
+For this paper:
+
+* use superscript `ref` or `G4`;
+* “reference shares”;
+* “Geant4 masks”;
+* “reference zero-response rate.”
+
+This matters especially because the exact Geant4 production setup itself is incompletely documented.
+
+---
+
+# Audit iteration 29 — Eq. (9) takes the logarithm of a dimensional quantity
+
+You write:
+
+\(-\log p_T(T)=-\log p_z(z)+\log(s_T+T)\). 
+
+The Jacobian logic is right if \(T\) is represented numerically in GeV, but written literally, \(\log(s_T+T)\) is the logarithm of a dimensionful number.
+
+Write either:
+
+\(\log[(s_T+T)/(1\,\mathrm{GeV})]\),
+
+or state explicitly that \(T\) and \(s_T\) denote their numerical values in GeV for density bookkeeping.
+
+This matters because continuous-density NLLs shift under unit changes.
+
+Your warning that the 0.421936 offset is not universal is therefore very appropriate; make the unit dependence explicit too.
+
+---
+
+# Audit iteration 30 — Figure 3 still isn't good enough for final evidence
+
+The revision from lines to unconnected points is better. 
+
+But a final paper cannot say:
+
+> “the aggregate reports do not provide binwise uncertainty intervals”
+
+as the reason there are none.
+
+Regenerate the underlying reports.
+
+You control the pipeline.
+
+Each point needs at least finite-bank uncertainty, and then the final experiment needs training-seed variability.
+
+Also put \(N_b\) somewhere—caption, supplementary table, or plot.
+
+The alternating bias pattern is interesting enough that readers will immediately ask whether some bins simply have low event count.
+
+---
+
+# Audit iteration 31 — your pooled Wasserstein number is underdefined and not very informative
+
+You report:
+
+> “The response Wasserstein distance has bootstrap mean 0.125 GeV...” 
+
+Questions:
+
+What exact distribution?
+
+All 10k unconditional \(T\)'s?
+
+Positive \(T\)'s only?
+
+One-dimensional first Wasserstein?
+
+Paired bootstrap by condition?
+
+Energy-stratified weighting preserved?
+
+More importantly, a pooled \(W_1\) can hide exactly the sign-changing conditional errors Fig. 3 reveals.
+
+I'd either define it precisely and keep it as a secondary aggregate metric, or report \(W_1\) in the eight energy bins and at repeated fixed conditions.
+
+Also give a Geant4-vs-Geant4 sampling floor later.
+
+---
+
+# Audit iteration 32 — your near-zero paired mean is still a distraction
+
+You spend significant prose on:
+
+mean normalized residual \(7.8\times10^{-5}\), with a CI crossing zero. 
+
+But the generated shower and Geant4 shower are not two noisy measurements of the same physical event. They're independent stochastic realizations under a common condition.
+
+You explain this correctly.
+
+I would therefore **demote this metric**.
+
+It risks creating a superficial “wow, mean error almost zero” interpretation even though your next sentence shows ±6.4% conditional bias.
+
+The binwise moment comparison is much more scientifically meaningful.
+
+---
+
+# Audit iteration 33 — Figure 4's \(L^1\) metric can hide where the error comes from
+
+You now show ECAL explicitly, which fixes a major old problem. 
+
+But \(L^1_{\rm rel}=0.1098\) combines ECAL and all HCAL layers.
+
+Report separately:
+
+* ECAL relative mean error;
+* HCAL-only \(L^1_{\rm rel}\);
+* combined \(L^1_{\rm rel}\).
+
+Otherwise the large ECAL denominator can alter the interpretation of HCAL profile quality.
+
+Also add the ECAL/HCAL fraction distribution, not merely mean values.
+
+---
+
+# Audit iteration 34 — strict-zero topology absolutely needs a threshold sweep
+
+You now explicitly admit this. Good. 
+
+But because the gap/component result is one of your **headline findings**, threshold stability is not a “nice future robustness test.”
+
+It is a requirement before submission.
+
+Recompute Fig. 5 at several diagnostic thresholds—without changing the declared target.
+
+For example, thresholds spanning tiny stored-energy tails.
+
+If 93.6% collapses toward 52% after eliminating negligible deposits, your model has mainly a tiny-support-tail problem.
+
+If it stays near 90%, you have a genuine macroscopic structural failure.
+
+Either outcome is much more informative than the present number.
+
+---
+
+# Audit iteration 35 — component count needs normalization by occupancy
+
+V3-SUP has 58.99 connected components versus 23.20 in Geant4. 
+
+But connected-component count depends mechanically on the number of nonzero cells.
+
+You should also report:
+
+* component count conditional on hit count;
+* components / hit count;
+* largest-component hit fraction;
+* largest-component energy fraction;
+* mean component size.
+
+Otherwise “more components” partly conflates occupancy and topology.
+
+---
+
+# Audit iteration 36 — high-level C2ST zero-event feature handling is unspecified
+
+Your high-level features include:
+
+* depth centroid;
+* transverse centroids;
+* radial RMS;
+* fractions. 
+
+What are these for an all-zero event?
+
+Undefined.
+
+How do you encode them?
+
+0? NaN? sentinel? imputed mean?
+
+For S2, **half of all events are zero**, so this choice can dominate its high-level C2ST.
+
+This must be documented.
+
+And you should report **two C2STs**:
+
+1. unconditional, including the hurdle;
+2. positive-response-only, conditional on nonzero response.
+
+Then S2's 0.933 won't merely tell you “the classifier noticed half the events are empty.”
+
+---
+
+# Audit iteration 37 — evaluate the hurdle as a hurdle model
+
+The model explicitly separates the zero atom. Treat it that way.
+
+Current evaluation mainly reports the aggregate zero fraction.
+
+You should eventually evaluate zero-response probability versus:
+
+* energy;
+* angle;
+* predicted intercept region.
+
+For repeated conditions, evaluate:
+
+* calibration;
+* Brier score;
+* reliability.
+
+The positive branch should then be evaluated separately conditional on \(V=1\).
+
+This decomposition maps exactly onto your architecture and would make failure diagnosis much cleaner.
+
+---
+
+# Audit iteration 38 — Figure 5 shows means where distributions matter
+
+“Mean gaps = 6.25” hides whether the model produces:
+
+* six one-layer holes;
+* one six-layer hole;
+* some huge pathological subset.
+
+Those are physically very different.
+
+Add distributions of:
+
+* number of gaps;
+* maximum gap length;
+* total inactive layers inside shower span;
+* active-run lengths.
+
+The activity correlation matrix would be especially diagnostic.
+
+---
+
+# Audit iteration 39 — the Methods section is still nowhere near reproducible enough
+
+Current model details tell me hidden widths and attention heads. 
+
+But I still don't know:
+
+* optimizer;
+* learning rate;
+* schedule;
+* batch size;
+* epochs/steps per stage;
+* precision;
+* gradient clipping;
+* weight decay;
+* initialization;
+* checkpoint-selection criterion;
+* loss weights;
+* training hardware;
+* training time;
+* ODE solver;
+* ODE steps/NFE;
+* solver tolerances;
+* PyTorch/package versions;
+* generator RNG handling.
+
+These aren't final-timing details.
+
+They are needed to reproduce **the samples in your current figures**.
+
+Add §4.4 “Training and sampling implementation.”
+
+---
+
+# Audit iteration 40 — the flow-matching implementation is now underexplained
+
+The previous draft actually explained the interpolation.
+
+This one says:
+
+> “Conditional flow matching interpolates between masked Gaussian noise and these targets.” 
+
+That's too compressed for a reproducibility-oriented manuscript.
+
+At minimum state:
+
+* path \(x_t\);
+* distribution of \(t\);
+* velocity target;
+* masking operation;
+* flow-network architecture;
+* sampling solver.
+
+Reference [12] gives the general method, but the exact choices define your implementation.
+
+---
+
+# Audit iteration 41 — “realizes sampled hit counts” needs a precise definition
+
+Abstract:
+
+> “realizes sampled hit counts.” 
+
+But Eq. (6) guarantees selected support size \(K_\ell\), mathematically.
+
+In finite precision, a softmax share could theoretically underflow to zero.
+
+And “hit” in the Geant4 target means presumably a channel with stored positive deposited energy.
+
+Define whether:
+
+\(K_\ell=|\{i:Y_i>0\}|\),
+
+or merely
+
+\(K_\ell=|H_\ell|\).
+
+Your runtime “count mismatch” check suggests you may enforce the former. If so, state it and report violation rate.
+
+Also use stable softmax/log-sum-exp rather than literal exponentiation if that isn't already implemented.
+
+---
+
+# Audit iteration 42 — “hit” itself is slightly misleading
+
+You carefully say no digitization, SiPM response, thresholding, etc. 
+
+So these are not detector hits in the ordinary digitized sense.
+
+I'd preferentially use:
+
+> **nonzero-channel count**
+
+instead of “hit count,” at least when defining the target.
+
+Then you can say “hit count” colloquially afterward if needed.
+
+---
+
+# Audit iteration 43 — the paper still needs an actual detector/geometry figure
+
+Your model's novelty is deeply geometry-dependent, yet the first figure is the architecture flowchart.
+
+I cannot visually see:
+
+* ECAL layout;
+* HCAL layout;
+* per-layer channel geometry;
+* longitudinal arrangement;
+* what a ganged readout looks like;
+* how the graph connects adjacent layers.
+
+Add a detector/readout schematic before the model diagram.
+
+Even a clean 3-panel geometry figure would dramatically improve comprehension.
+
+---
+
+# Audit iteration 44 — you should visualize the actual fragmentation failure
+
+Figure 5 gives statistics, which is good.
+
+But one non-cherry-picked visualization could make the pathology obvious:
+
+* activity mask versus layer for matched events;
+* aggregate layer-activity correlation maps;
+* readout support projected by layer;
+* Geant4/model difference in pairwise activation probability.
+
+I prefer aggregate heatmaps over hand-selected “pretty showers.”
+
+The goal is not visual plausibility; it is exposing *what 93.6% fragmentation actually looks like*.
+
+---
+
+# Audit iteration 45 — the Related Work is improved, but CaloClouds is an important omission
+
+Your novelty sentence says the potentially distinctive combination includes explicit layer hit counts and energy-budget closure. 
+
+CaloClouds is particularly relevant here.
+
+Its Shower Flow generates total visible energy and point counts, including counts per calorimeter layer; it then performs post-generation calibration of layer counts/energies. ([ResearchGate][3]) CaloClouds II further generates relative per-layer point counts and energies and uses them for post-diffusion calibration. ([ResearchGate][4])
+
+So “layer-count hierarchy” by itself is not distinctive.
+
+Your sharper distinction is something closer to:
+
+> **exact-cardinality stochastic support on a fixed irregular readout graph combined with hierarchical energy-budget closure.**
+
+That may genuinely be distinctive, but it needs a wider literature check before claiming novelty.
+
+Add CaloClouds/CaloClouds II.
+
+---
+
+# Audit iteration 46 — the directly relevant ZDC comparator makes eventual timing unavoidable
+
+Your Wojnar citation is current: the paper is now in *Computer Physics Communications* 319 (2026), article 109936, and reports explicit inference times. ([ScienceDirect][5])
+
+Your decision to remove “fast” from the title is correct.
+
+But eventually, reviewers will absolutely compare you against that work. You'll need to explain why your much more elaborate graph + hierarchical + ODE pipeline buys something that justifies its likely computational overhead.
+
+The fact that your **output is sparse does not mean your computation is sparse**.
+
+You still run message passing over a 6,790-node, 107,920-edge graph. 
+
+That may be expensive.
+
+---
+
+# Audit iteration 47 — “sparse generator” may overstate computational sparsity
+
+Related to that: the output representation is sparse, but the support network apparently scores the full detector graph.
+
+So distinguish:
+
+* **sparse output semantics**;
+* **sparse computation**.
+
+You have definitely established the former.
+
+You have not established the latter.
+
+“Hierarchical sparse generation” is still defensible because the generated readout is sparse, but don't imply computational complexity benefits without timings.
+
+---
+
+# Audit iteration 48 — the detector target is narrower than “detector simulator”
+
+The Methods correctly say you simulate:
+
+> stored channelized Geant4 deposited energy,
+
+with no digitization, SiPM response, noise, calibration, or threshold. 
+
+But the conclusion says:
+
+> “It does not yet establish a faithful or faster detector simulator.” 
+
+I'd be more precise:
+
+> “It does not yet establish a faithful or faster surrogate for the channelized deposited-energy simulation.”
+
+You are not currently replacing the entire detector simulation chain.
+
+---
+
+# Audit iteration 49 — this manuscript is becoming an audit log instead of a paper
+
+This version is scientifically much safer, but it now contains a lot of internal-project language:
+
+* “available paper snapshot”;
+* “source reports retain the field name validation”;
+* “project offset”;
+* “stored report”;
+* “internal operational gate”;
+* “screen bookkeeping”;
+* “promotion criterion”;
+* “not promoted”;
+* “single-lineage run-to-run reference.”
+
+This is useful **right now** because this is a working manuscript.
+
+It will make a final journal paper feel like a lab notebook.
+
+### Eventually split the two functions
+
+**Main scientific manuscript:** methods, experiments, results, limitations.
+
+**Reproducibility/audit supplement:** hashes, provenance, historical evaluator defects, screen decisions, obsolete runs, governance history.
+
+Do not do this cleanup prematurely. The audit language is protecting you right now. But once experiments freeze, move process archaeology out of the narrative.
+
+---
+
+# Audit iteration 50 — one meta sentence should simply disappear
+
+Introduction:
+
+> “We do not use fast in the title because no matched end-to-end timing result exists.” 
+
+That's reviewer-response language.
+
+The fact that the title doesn't say “fast” is self-evident.
+
+Delete it from the eventual paper.
+
+Put the absence of timing in Limitations.
+
+---
+
+# Audit iteration 51 — Table 2 currently undermines your own methodological point
+
+You tell us scalar loss is insufficient.
+
+Then Table 2 makes project decisions primarily visible through scalar loss.
+
+S1:
+
+> +0.0005 → not promoted.
+
+S3:
+
+> +0.5308 → not promoted. 
+
+What if S3 substantially improved topology while increasing teacher-forced loss?
+
+Your entire S2 argument says that is possible in the opposite direction.
+
+Either add physics columns or move this table to an audit appendix.
+
+A final screening decision should be multi-criterion.
+
+---
+
+# Audit iteration 52 — “run-to-run reference 0.0013” is opaque
+
+What produced 0.0013?
+
+Two repeated trainings?
+
+Same model reevaluated twice?
+
+Different minibatch ordering?
+
+Optimizer restart?
+
+Different generator seed?
+
+Without a definition, this number does no scientific work.
+
+Either formally define its estimator and \(N\), or remove the comparison.
+
+---
+
+# Audit iteration 53 — the S2 explanation still needs a component-loss autopsy
+
+Fifty percent zeros versus 0.93% is not a normal small tradeoff. 
+
+Before treating this mainly as a profound lesson about objectives, I would exhaust the boring possibilities:
+
+* visibility-label bug;
+* head-loading bug;
+* encoder drift;
+* wrong checkpoint;
+* threshold/sample logic;
+* frozen/unfrozen parameter mistake;
+* response-head replacement accidentally altering shared state;
+* loss weight scaling issue.
+
+Do a literal before/after unit test:
+
+1. load M0/B0 parent;
+2. replace only the positive-response module;
+3. **before any optimization**, verify visibility logits are bitwise/numerically identical;
+4. train S2;
+5. plot visibility logits over epochs;
+6. plot visibility BCE over epochs;
+7. plot each weighted loss contribution.
+
+That can tell you when collapse begins.
+
+---
+
+# Audit iteration 54 — shared parameters make your architecture screens weak causal experiments
+
+You correctly admit:
+
+> “shared parameters and the visibility behavior can also move.” 
+
+So if your scientific question is “does a positive response spline help?”, a much cleaner experiment is:
+
+* freeze condition encoder;
+* freeze visibility head;
+* replace only positive-response head;
+* train only that head;
+* compare.
+
+Then separately test joint fine-tuning.
+
+That gives you:
+
+**mechanism ablation** versus **end-to-end configuration change**.
+
+Right now S2 is mostly the latter.
+
+---
+
+# Audit iteration 55 — Figure 6 needs M0-fresh
+
+The left panel shows Geant4/B0/V3.
+
+The right shows Geant4/S2.
+
+Where is M0-fresh, the actual control for S2?
+
+This is a simple visual omission with major experimental consequences.
+
+Add it.
+
+---
+
+# Audit iteration 56 — your final experiment wording has a small but important error
+
+You write:
+
+> “three independent training seeds per frozen condition” 
+
+Training seeds aren't “per condition.”
+
+Use:
+
+> “three independent generator-training runs for each frozen model configuration”
+
+or
+
+> “three independently seeded trainings per configuration.”
+
+---
+
+# Audit iteration 57 — separate sampling uncertainty from training uncertainty
+
+Your bootstrap intervals are useful conditional summaries, but they do not address the dominant model-development uncertainty.
+
+You need three levels:
+
+**Finite-bank uncertainty:** bootstrap events/condition pairs.
+
+**Generator-sampling uncertainty:** rerun the *same checkpoint* with several generation seeds.
+
+**Training uncertainty:** independently train the model several times.
+
+The second one is cheap. Do it now.
+
+Before spending on three full training runs, generate the 10k bank using, say, several generator seeds from V3-SUP and measure variance in Fig. 3–6.
+
+That tells you whether one generator draw is already stable.
+
+---
+
+# Audit iteration 58 — condition-only 0.500 may be correct but is almost tautological
+
+If the grouped evaluation fold contains both copies of every matched condition, a deterministic condition-only classifier assigns the same score to both class members of each pair.
+
+Then AUROC = 0.5 exactly.
+
+That is a good pipeline check.
+
+But it is not evidence that the **shower** evaluator is calibrated.
+
+You still need:
+
+* Geant4-half vs Geant4-half;
+* generated-half vs generated-half;
+* label permutation;
+* known-corruption positive control.
+
+Especially if you eventually want to interpret values near 0.5.
+
+---
+
+# Audit iteration 59 — AUROC is a diagnostic, not yet a formal C2ST significance test
+
+Your wording mostly gets this right.
+
+Keep calling it a **classifier two-sample diagnostic** unless you actually calibrate a null distribution/permutation test.
+
+The original C2ST framework provides a held-out classification-based test framework, but simply reporting three AUROCs and their optimizer-seed standard deviation is not itself a calibrated significance procedure. ([arXiv][1])
+
+Your current text correctly says a future value near 0.5 would not establish equivalence. Keep that sentence. 
+
+---
+
+# Audit iteration 60 — C2ST evaluator-seed error bars are visually overprivileged
+
+Figure 2's error bars are just variation over three evaluator random seeds. 
+
+They look like scientific uncertainty intervals.
+
+They are not.
+
+For the working paper, your caption says so.
+
+For the final paper, I'd either:
+
+* show each evaluator run explicitly;
+* use grouped repeated CV;
+* add bootstrap/permutation intervals;
+* or omit those tiny bars.
+
+Training-seed uncertainty later matters much more.
+
+---
+
+# Audit iteration 61 — the manuscript needs per-stage support definitions
+
+You introduce \(L_0,A,D,K,H,r\), but the support of each random variable is not collected anywhere. 
+
+For example:
+
+* \(L_0\in\{0,\dots,64\}\);
+* \(A_\ell\in\{0,1\}\);
+* \(K_\ell\in\{1,\dots,N_\ell\}\) if active;
+* \(H_\ell\subseteq\mathcal V_\ell\), \(|H_\ell|=K_\ell\);
+* \(D_\ell>0\) for active layers;
+* etc.
+
+A compact formal definition would prevent many ambiguities.
+
+---
+
+# Audit iteration 62 — what is the actual per-layer channel cardinality?
+
+You give:
+
+* 400 ECAL;
+* 6,390 HCAL;
+* 64 HCAL layers. 
+
+But not the layer-by-layer channel counts.
+
+For exact-\(K\) support, this matters.
+
+Add either a geometry table or vector of layer cardinalities.
+
+Irregular layer sizes are part of why your method exists.
+
+---
+
+# Audit iteration 63 — you need a training-energy distribution
+
+Corpus:
+
+> 0–300 GeV.
+
+Scientific target:
+
+> 50–250 GeV. 
+
+What energies did the 26,624 pilot-training events contain?
+
+All 0–300?
+
+Only 50–250?
+
+Uniform?
+
+Discrete energy grid?
+
+Natural spectrum?
+
+This is basic experimental design and currently absent.
+
+Show train/dev counts versus energy and angle.
+
+---
+
+# Audit iteration 64 — “deterministic canonical assignment” is underdefined
+
+How was the 612,482/76,158/76,300 partition generated? 
+
+Hash of immutable event ID?
+
+Seeded permutation?
+
+Shard order?
+
+If deterministic reproducibility is a selling point, give the rule.
+
+“Deterministic” without algorithm is not reproducible.
+
+---
+
+# Audit iteration 65 — your graph edge construction needs one more line
+
+You say every node connects to:
+
+* 8 nearest transverse nodes same layer;
+* 4 nearest nodes in each adjacent layer;
+* both longitudinal directions stored. 
+
+Questions remaining:
+
+* Does “eight nearest” include all distances regardless of gaps?
+* Are within-layer kNN edges symmetrized?
+* How is ECAL-to-HCAL distance treated?
+* Are edge distances computed from ganged centroids?
+* Are nearest neighbors allowed across detector segmentation discontinuities?
+
+These matter.
+
+A simple graph-construction pseudocode block or appendix would resolve them.
+
+---
+
+# Audit iteration 66 — model graph and physical geometry should be conceptually separated
+
+This would improve the entire paper.
+
+Define:
+
+\(G_{\rm model}\): frozen readout-centroid graph used by the network.
+
+\(G_{\rm phys}\): independent physical-site adjacency used for robustness evaluation.
+
+Right now \(G\) does too much conceptual work.
+
+---
+
+# Audit iteration 67 — the current “novelty” sentence is appropriately cautious, but still needs proof
+
+This sentence is actually much improved:
+
+> “The potentially distinctive combination studied here is...” 
+
+“Potentially distinctive” is good.
+
+Keep that cautious language until you've done a systematic related-work novelty matrix.
+
+Eventually make a table:
+
+| model | irregular geometry | explicit occupancy | layer budgets | exact support size | graph support | exact budget closure |
+| ----- | ------------------ | ------------------ | ------------- | ------------------ | ------------- | -------------------- |
+
+Include your model, CaloGraph, CaloPointFlow, CaloClouds/II, L2LFlows, Wojnar ZDC.
+
+Then the novelty becomes evidence rather than prose.
+
+---
+
+# Audit iteration 68 — acknowledgement wording may be misleading
+
+You thank:
+
+> “the reviewers whose adversarial scientific and reproducibility audits motivated the revisions...” 
+
+If these are not external human reviewers, don't call them simply “reviewers.”
+
+If some or all were AI-assisted audits, disclose that appropriately according to the target journal's policy.
+
+Otherwise this can sound like the manuscript has already undergone human peer review.
+
+Something like “internal and AI-assisted manuscript audits” would be more transparent if accurate.
+
+---
+
+# Audit iteration 69 — author contributions may need provenance correction
+
+You write:
+
+> “Julian Juan developed the project, performed the analysis, generated the figures, and wrote the manuscript.” 
+
+But the same manuscript says the underlying Geant4 production is collaboration-owned. 
+
+Who:
+
+* designed the detector simulation?
+* generated the Geant4 corpus?
+* provided geometry?
+* wrote the original production?
+* supervised the project?
+
+“Developed the project” is broad enough that it could accidentally imply ownership of those pieces.
+
+Use a proper CRediT-style contribution statement eventually.
+
+---
+
+# Audit iteration 70 — the linked repository works, but versioning needs improvement
+
+I checked the repository linked in the paper. It is currently public and contains the manuscript, aggregate reports, figure script, audits, and review material. Its README itself correctly describes the work as a preliminary development-bank study and says the underlying model checkpoints are not redistributed. ([GitHub][6])
+
+At present it shows one commit and no release. ([GitHub][6])
+
+For a submission:
+
+* create a frozen tagged release;
+* archive it to Zenodo/another persistent repository;
+* cite DOI + commit hash;
+* include environment lockfile;
+* archive exact aggregate reports;
+* archive exact model config/checkpoint if permitted.
+
+A mutable GitHub `main` branch is not enough as the canonical reproducibility artifact.
+
+---
+
+# Audit iteration 71 — the paper needs an exact model parameter count now
+
+You acknowledge this as missing. 
+
+This is easy and should not wait for final timing.
+
+Give:
+
+* total trainable parameters;
+* per-stage parameters;
+* peak inference memory.
+
+It matters for comparison with the very compact ZDC flow-matching baseline.
+
+---
+
+# Audit iteration 72 — your speed problem could be worse than you think
+
+Your eventual runtime comprises:
+
+* several hierarchical heads;
+* flow ODE solves;
+* a 6,790-node graph;
+* 107,920 edges;
+* Gumbel sampling;
+* sparse decode.  
+
+A sparse final vector does not automatically make that fast.
+
+If timing is poor, architectural options include:
+
+* precompute static geometry embeddings;
+* cache graph-side static features;
+* restrict support candidates geometrically;
+* distill flow sampling;
+* reduce ODE NFE;
+* replace some flows with one-shot conditional distributions;
+* batch support operations aggressively.
+
+But don't optimize blindly until you profile.
+
+---
+
+# Audit iteration 73 — Figure 1 can be clearer
+
+Visually, the PDF is clean. I did a fresh render of all 11 pages; I don't see clipping, broken glyphs, overflow, or malformed equations.
+
+Figure 1 is understandable, but the serpentine direction remains slightly awkward: across the top row, down, then backward across the bottom row.
+
+Number the boxes **1–8**.
+
+Also distinguish random sampling from deterministic decoding visually.
+
+For example:
+
+* rounded random-variable boxes;
+* final deterministic decoder in a different outline;
+* perhaps \(V,T,L_0,A,D,K,H,r\) notation in the boxes.
+
+That would make Eq. (4) and the figure map directly to each other.
+
+---
+
+# Audit iteration 74 — Figure 2 should lose the 0.65 line eventually
+
+You correctly call it an internal operational gate, not statistically privileged. 
+
+Then why is it in the scientific figure?
+
+It invites the reader to interpret 0.65 as meaningful.
+
+For an internal report, keep it.
+
+For a final paper, remove it or move it to the governance supplement.
+
+Chance = 0.5 is scientifically meaningful.
+
+Your arbitrary internal screening threshold is not.
+
+---
+
+# Audit iteration 75 — Figure 6's split vertical scales are transparent but still visually dramatic
+
+You explicitly disclose the differing ranges. Good. 
+
+For publication I'd consider:
+
+* one logarithmic y-axis;
+* or a broken axis;
+* or a single plot plus inset.
+
+Current layout isn't dishonest, but two differently scaled panels make a reader work harder to compare magnitudes.
+
+---
+
+# Audit iteration 76 — “working manuscript; validation-only evidence” is useful now, remove later
+
+Title page status language is excellent for preventing the draft from circulating as if it contains final test results. 
+
+Keep it while developing.
+
+For submission, obviously remove.
+
+Same for the recurring “Preliminary development-bank study” header.
+
+---
+
+# Audit iteration 77 — the current conclusion is much better than the old one
+
+This is one area I would mostly leave alone:
+
+> decoder constraints coexist with distributional failure; current study does not establish faithful or faster simulation. 
+
+Just replace “detector simulator” with the narrower deposited-energy-surrogate wording and avoid “reproducible” beyond the figure package.
+
+---
+
+# Audit iteration 78 — the central paper story should probably change
+
+Right now the draft sounds like a failed fast-simulator project being carefully documented.
+
+There is a stronger conceptual story available:
+
+> **Structural validity and local teacher-forced objectives do not imply ancestral distributional fidelity in hierarchical sparse calorimeter generators.**
+
+Then your architecture is the case study.
+
+That story naturally organizes:
+
+1. exact output contract;
+2. hierarchical decomposition;
+3. teacher-forced training;
+4. oracle-vs-ancestral diagnostics;
+5. topology failure;
+6. scalar-loss failure;
+7. lessons for validation.
+
+But I would only use that framing if you add the oracle-vs-ancestral experiments. Otherwise it is still too much inference from one undertrained lineage.
+
+---
+
+# Audit iteration 79 — if the model eventually succeeds, most of this preliminary-negative framing should disappear
+
+Important strategic point.
+
+Do not over-invest in making the present failed pilot into a polished standalone negative paper if your actual goal is a successful full-data simulator.
+
+If full-data V4 later gets:
+
+* good grouped conditional C2ST;
+* good topology;
+* good response moments;
+* good reconstruction;
+* useful speedup;
+
+then this pilot becomes a short development/ablation subsection.
+
+That would be a stronger paper.
+
+---
+
+# Audit iteration 80 — if the model still fails after full-scale training, the burden becomes much higher
+
+If three full-data seeds still produce ~94% gaps and AUROC ~0.8, then a negative paper can work only if you demonstrate:
+
+* optimization competence;
+* several architecture alternatives;
+* simple baselines;
+* external/adapted baselines;
+* oracle-stage diagnostics;
+* enough compute/data;
+* repeated-condition fidelity tests.
+
+Otherwise the reviewer's explanation remains:
+
+> “This particular implementation didn't work.”
+
+That isn't enough.
+
+---
+
+## What I would change **before running any expensive new training**
+
+In priority order:
+
+1. **Rerun all C2ST with condition-pair-grouped folds and include condition variables alongside shower features.** Current Fig. 2 should be treated as provisional.
+2. **Audit split membership and overlaps mechanically**, especially pilot-train, pilot-val, 10k development, and the mysterious 4,096 loss bank.
+3. **Verify directed-graph component semantics** and rerun Figure 5 with weak/symmetrized connectivity as appropriate.
+4. **Run the topology threshold sweep.**
+5. **Evaluate multiple generator seeds from the same V3-SUP checkpoint.**
+6. **Run oracle-vs-ancestral stage diagnostics.** This is probably the most informative model diagnostic you can do.
+7. **Dump all component losses for M0-fresh and S2** and diagnose the 50.4% visibility collapse.
+8. **Add M0-fresh physical metrics**, not merely its loss.
+9. **Quantify CLR clipping at \(10^{-8}\)** and test centered Gaussian source coordinates.
+10. **Fix or formally redefine the response positive branch**, because the current Bernoulli-hurdle factorization and clamp/reset implementation do not match.
+11. **Freeze an untouched validation subset now**, before additional architecture choices.
+12. Only then decide whether the next expensive run should target activity modeling, support modeling, exposure mitigation, or simply full-data scale.
+
+The most important change from my previous audit is this: **the condition-only C2ST bug is no longer the main C2ST issue. You found it, but you haven't propagated the fix to the actual C2STs, and the actual C2STs don't condition on \(p^\mu\) anyway.** That is now the first thing I would fix because it can literally change your headline numbers.
+
+[1]: https://arxiv.org/abs/1610.06545?utm_source=chatgpt.com "Revisiting Classifier Two-Sample Tests"
+[2]: https://academic.oup.com/nargab/article/2/3/lqaa050/5874365?utm_source=chatgpt.com "Model-based joint visualization of multiple compositional omics datasets | NAR Genomics and Bioinformatics | Oxford Academic"
+[3]: https://www.researchgate.net/publication/376052111_CaloClouds_fast_geometry-independent_highly-granular_calorimeter_simulation?utm_source=chatgpt.com "(PDF) CaloClouds: fast geometry-independent highly-granular calorimeter simulation"
+[4]: https://www.researchgate.net/publication/379939319_CaloClouds_II_ultra-fast_geometry-independent_highly-granular_calorimeter_simulation?utm_source=chatgpt.com "(PDF) CaloClouds II: ultra-fast geometry-independent highly-granular calorimeter simulation"
+[5]: https://www.sciencedirect.com/science/article/pii/S0010465525004370?utm_source=chatgpt.com "Even faster simulations with flow matching: A study of zero degree calorimeter responses - ScienceDirect"
+[6]: https://github.com/JulianAttemptsCoding/fast-mc-paper "GitHub - JulianAttemptsCoding/fast-mc-paper · GitHub"

@@ -19,3 +19,4 @@ __pycache__/
 # Local render directories
 rendered/
 qa_render/
+/audit/render*/

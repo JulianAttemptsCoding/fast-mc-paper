@@ -1,20 +1,27 @@
 {
+  "excluded_from_claims": {
+    "legacy_random_fold_c2st": "not plotted or quoted; pair-grouped joint condition+shower evaluation is required"
+  },
   "figures_sha256": {
-    "c2st_validation.png": "44a51960a52674d3477b3de43a1b1f005610ef332dba496db0e686831446c4c6",
-    "generator_schematic.png": "dcf9732281b8ae6fa40241808a3bd57717501ba907aee854abec325a05daa353",
-    "longitudinal_profile.png": "1299f87f50197c8940422f6b41891dc7f61accf6f5a65c28922223c5da81e53c",
-    "response_energy_bins.png": "91771e8e29c1a75d9ca23eb5ba6407057cf475c114a4fe5c3160038fba3d315f",
-    "topology_validation.png": "838ec5bd2cf3716301e8c201391d3355439af2c7805a2fd18ecdeac9ee3e9ca1",
-    "zero_response_validation.png": "2d57e5ed28ffc9b8d022d0eba6c00a3e206c00196e1c73555edb6b561708de02"
+    "detector_geometry.png": "eacc8257268e1607d9e5d3e90e61cf0516af01cab7dfc1da560882df8c236388",
+    "generator_schematic.png": "b208a30bc631daf5d16242c6d60b721a07a696de97527912cac6521db6bf0610",
+    "longitudinal_profile.png": "e45e13cf1817e4cac9d7fa517264a3e2bea73d8ee093789d433a10d38ff848b4",
+    "response_energy_bins.png": "37672b653478cd305309b7351b98589c5109e776a881d7bb4950d17f3804096a",
+    "topology_validation.png": "f3ce4c3508e2b182c470f36d361b09588db3125d0484204e484436012692f872",
+    "zero_response_validation.png": "9aae465573d00d6702b151b270f5fd94c39ae22796fb38d0f5e9edc35a57a3cf"
   },
   "kind": "zdc-manuscript-development-bank-figures",
   "scientific_status": "development-bank diagnostics only; physics validation not established",
   "sources_sha256": {
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
     "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
     "data/reports/screening_summary.json": "0964dae168e9fde33dc5efb2603d3b726a1208de7a1e0b82548d07a64e90fab4",
+    "data/reports/v3-m0-fresh_epoch19.json": "732e3ea5acca20a781be50cb707c20b25f21b22fe03a39dea617ff023eef8d9e",
     "data/reports/v3-s2-response_epoch19.json": "fe797cc2c12af8be6b5707a94903740f158d6ea4398135b96a14ad806d4bcbb8",
     "data/reports/v3-sup_epoch12.json": "e853855151926cf50fd2e40e08b4a693dccabce823df3ddd30a56f32e6ab8f08",
     "data/reports/verified_condition_control.json": "f3837cc0a3162c5c2729053768147c9fc40c6028e2de6f879ed177ba877a696f"
   },
-  "test_events_used": 0
+  "test_events_used": 0,
+  "verified_condition_control_auroc": 0.5
 }

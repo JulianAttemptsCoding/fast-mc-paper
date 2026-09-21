@@ -1,29 +1,30 @@
 # Final build audit
 
-Created: 2026-09-21T04:51:14.827025+00:00
+Created: 2026-09-21T06:05:59.877701+00:00
 
 ## Artifact
 
 - Output: `output/fast_mc_zdc_manuscript.pdf`
-- SHA-256: `109f8a64db3f7bb1f15cbd21f0f7170a49ffa3d22171e60904fa6329e62e7780`
-- Size: 961,899 bytes
+- SHA-256: `86d36f62002c68219539d246d8acdd835f8bb7b96a422d45f03e8a788c8a7d82`
+- Size: 1,256,081 bytes
 - Layout: 11 A4 pages
-- Scientific status: preliminary development-bank manuscript
+- Scientific status: development-bank manuscript; no final fidelity or speed claim
 
 ## Checks
 
-- Figure generation completed from the pinned aggregate JSON reports.
-- Python bytecode compilation passed for `scripts/build_figures.py`.
-- Seven JSON files parsed successfully.
-- `pdflatex`, `biber`, and two final `pdflatex` passes completed with exit code 0.
-- The LaTeX log contains no LaTeX warnings, undefined control sequences, overfull boxes, or underfull boxes.
-- Extracted PDF text contains no unresolved-reference markers, the excluded malformed control value, or undefined-reference text.
-- All 11 PDF pages were rendered to PNG and inspected for clipping, overlaps, illegible figures, broken references, and encoding errors.
-- The verified pair-grouped condition-only control is AUROC 0.500 from `data/reports/verified_condition_control.json`.
+- Deterministic figure generation and Python bytecode compilation passed.
+- 8 JSON evidence files parsed successfully.
+- pdfLaTeX, Biber, and two final pdfLaTeX passes completed.
+- The final LaTeX log has no warnings, undefined controls, overfull boxes, or underfull boxes.
+- PDF text has no unresolved-reference markers or excluded historical C2ST values.
+- All 11 pages were rendered and visually inspected.
+- The historical random-fold shower-only C2ST is absent from the manuscript and archived as excluded evidence.
 
 ## Reproducibility boundary
 
-The repository can rebuild the manuscript and every plotted figure from aggregate reports. It cannot reproduce training or Geant4 production because the collaboration-owned event file, frozen model configurations, checkpoints, and full production metadata are not included. The unresolved submission blockers are listed in `audit/reviewer_response.md` and the machine-readable audit twin.
+The repository rebuilds the manuscript and all plotted figures from frozen aggregate evidence. It includes the portable V3-SUP configuration and event-independent geometry. It does not include the collaboration-owned event file or checkpoints and cannot recompute event-level tests or retrain the model.
+
+Submission blockers are tracked in `STATUS.md` and `audit/reviewer_response_round2.md`.
 
 ## Environment
 
