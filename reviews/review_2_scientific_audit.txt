@@ -1,0 +1,749 @@
+Short version: **the draft is scientifically self-aware, but right now it reads much more like an unusually rigorous internal validation report than a submission-ready “fast Monte Carlo generator” paper.** The biggest problems are not grammar. They are experimental identifiability, incomplete method specification, unclear publication thesis, a compromised/ambiguous test-set history, and several places where the evidence shown does not actually support the causal interpretation implied by the prose.
+
+The strongest thing you are doing is explicitly refusing to equate structural correctness with physics fidelity: you say the decoder closes exactly while the generated distribution is still wrong, and you report adverse validation results rather than hiding them.  That is good science. But it also creates the central problem: **what is this paper claiming to contribute today?** If the answer is “a validated fast simulator,” the data do not support it. If the answer is “a hierarchical sparse architecture plus a rigorous failure analysis,” that can potentially be defensible, but the paper needs to be reorganized around that thesis.
+
+## Pass 1 — What paper is this actually trying to be?
+
+The title says **“A Hierarchical Sparse Fast Monte Carlo Generator”**, while the abstract explicitly says physics fidelity and end-to-end speedup have *not* been established.   That mismatch will be the first thing a hostile reviewer notices.
+
+Right now I see at least four possible papers competing with each other: a new generative architecture paper; a detector-specific fast-simulation paper; a negative-result/validation paper; or a reproducibility/governance methodology paper. You have pieces of all four and therefore do not yet have one dominant scientific story.
+
+The sentence that the current evidence is “a single-generator-lineage validation study, not a completed multi-seed benchmark” is admirably precise, but it is also basically an admission that the paper is an interim report.  Similarly, “The potential publication outcome may be negative” reads like a lab notebook/project plan rather than the Discussion of a finished paper. 
+
+My current judgment: **do not spend much effort polishing prose yet. First decide what claim survives even if the final model remains bad.**
+
+## Pass 2 — The target distribution is still underspecified
+
+You define the target as deposited readout energy conditional on the neutron four-vector and fixed geometry, with \(50\le K_{\rm inc}\le250\) GeV.  Mathematically that is clean. Physically, however, too much surrounding information is missing.
+
+The manuscript never tells me whether incident position is fixed, whether angle is fixed or variable, the ranges of \(p_x,p_y,p_z\), whether the neutron enters at the detector center, whether the source point varies, whether all particles cross the same front face, or whether the corpus contains arbitrary incidence. Those details determine whether conditioning on the four-vector is sufficient.
+
+There is another terminology problem: you alternate among “visible response,” “deposited response,” “deposited readout energy,” and “raw deposited energy.” Those are not automatically interchangeable detector concepts. If \(Y_i\) is literally Geant4 energy deposited in sensitive material, call it that. If scintillation, sampling, SiPM response, quenching, digitization, or electronics enter, define them. The current wording risks implying detector-level response when the target may be an energy-deposition truth quantity.
+
+The phrase “stored non-sentinel deposited hit energy” also hides a potentially critical preprocessing operation.  What is a sentinel? Why does it exist? Can stored values be negative? Was there already zero suppression in the production file? A topology metric based on “inactive” layers is extremely sensitive to hidden storage thresholds.
+
+## Pass 3 — The detector/geometry description is not remotely sufficient yet
+
+You give 400 ECAL channels, 6,390 HCAL channels, 65 layers, a 90-channel final HCAL layer, and a 107,920-edge graph.   That tells me the tensor dimensions. It does not tell me enough to understand the detector.
+
+A serious calorimeter paper needs, at minimum, the physical segmentation, material sequence, dimensions, what “layer” means, where layer 0 sits, whether the 400 ECAL channels form one longitudinal layer, whether the remaining 64 layers are HCAL, how adjacency edges are constructed, whether edges are directed, whether self-loops exist, whether edges connect adjacent longitudinal layers, and how graph distances correspond to physical distances.
+
+The ganged-channel treatment deserves special scrutiny. You represent a ganged readout channel by the unweighted centroid of several stable physical positions.  If those physical positions are not spatially contiguous, the centroid may be a location at which no detector element exists. That could distort both graph message passing **and your connected-component validation metric**. This may be harmless if the ganged positions are local; it may be a serious geometry artifact if they are separated. The paper currently gives me no way to know.
+
+## Pass 4 — The mathematical factorization is elegant but hides important implementation semantics
+
+Equation (3) is one of the strongest parts conceptually: visibility → total → shower start/activity → layer budgets → counts → support → shares.  But the manuscript skips exactly the implementation details that determine whether this factorization works.
+
+For example, what happens to \(L_0,A,D,K,H,r\) when \(V=0\)? Are they never sampled, sampled and discarded, or deterministically assigned null values? What happens if the activity head selects an active layer with effectively zero layer budget? Does the count head get truth \(D_\ell\) or predicted \(D_\ell\) during training? Does the support head train on truth count/support and then receive sampled counts at inference? Does the share flow train on truth support and infer on generated support? If yes, there is teacher-forcing/exposure-shift throughout the hierarchy, which could plausibly explain the joint failure even when isolated components look acceptable.
+
+The statement that the profile and cell-share flows use conditional flow matching gives only the generic straight interpolation.  You have not defined the actual data transformations into Euclidean space. That is especially important because layer and cell shares live on simplices. “For a data transform \(x_1\)” is doing a huge amount of work. What transform? Additive log-ratio? centered log-ratio? logits against a reference? \(\log q\) with normalization? epsilon regularization? How are very small shares handled?
+
+You also do not specify the ODE solver, number of integration steps, tolerances, discretization, batching, or whether cell-share flows are integrated separately for each active layer. Those details matter simultaneously for fidelity **and the word “fast.”**
+
+## Pass 5 — Your “exact structural guarantees” need a qualification
+
+The decoder guarantees exact support cardinality and energy-budget closure *given finite valid upstream outputs*. Equation (4) makes that clear.  But the abstract says the decoder “guarantees finite nonnegative output.” 
+
+A neural network/ODE can emit NaNs, infinities, or logits large enough to cause numerical failure unless you use a stable softmax/log-sum-exp implementation and enforce finite-state checks. So I would distinguish a **mathematical decoder invariant conditional on finite inputs** from an **empirically checked runtime invariant**. Otherwise “guarantees finite” is slightly too strong.
+
+Also, “a single Gumbel-Top-\(k\) draw selects the channels” in the abstract sounds like one global draw. The method says one draw **for each active layer**.  Fix that ambiguity.
+
+There is a deeper modeling question here. Gumbel-Top-\(k\) gives weighted sampling without replacement, corresponding to a Plackett-Luce-type mechanism. ([Proceedings of Machine Learning Research][1]) Your support model is trained using support BCE plus a ranking loss, but generated using this coupled without-replacement sampler. Is the training objective actually matched to the induced subset distribution, or are the learned logits merely ranking scores? That mismatch deserves explicit thought.
+
+## Pass 6 — The training protocol is drastically underreported
+
+You describe nine loss terms and staged initialization, but not the actual architecture and optimization recipe.  Missing are parameter counts, hidden dimensions, number of graph layers, activation functions, normalization, optimizer hyperparameters, learning-rate schedule, batch size, epochs, early stopping, gradient clipping, numerical precision, training hardware, training wall time, data-loader behavior, augmentation if any, and checkpoint-selection rule.
+
+This is not optional detail for a generative-model paper.
+
+The pilot-data issue is particularly important. The canonical training split has 612,482 events, but the reported optimization lineage used only 26,624 training events.  That is about **23× fewer training examples than the canonical training set**. If the present model is badly mismatched to Geant4, the immediate reviewer question is going to be: *is this architecture failing, or is this a deliberately undertrained pilot?*
+
+You need a scientific rationale for why results from a ~26k-event pilot are worth interpreting beyond software validation.
+
+## Pass 7 — The test-set history is your most serious governance problem
+
+You state that 40,000 test events were used in an external classifier study and 200 test events in a visual draw, with unresolved overlap, leaving somewhere between 36,100 and 36,300 never used. 
+
+That is candid, but “neither earlier use informed model choices” does not magically make the original 76,300-event test set pristine again.
+
+The cleanest solution is probably to **burn the exposed portion permanently** and formally define a new untouched final subset before any more development. But that only works if you can identify which events were used. If the exact 40k and 200 event IDs cannot be reconstructed, you have a more serious problem.
+
+Do not wait until the final paper to resolve this. Resolve it now.
+
+## Pass 8 — The validation battery has good instincts but incomplete statistical definition
+
+Your fixed 10,000-condition bank and explicit separation of generator-training seeds from evaluator seeds is excellent.  But the C2ST is underspecified.
+
+What classifier architecture? What train/validation/test split? Is reported AUROC held out? How are generated and truth samples assigned to folds? Are matched conditions kept together? Are condition variables themselves included in high-/low-/profile-aware feature families? What are the exact feature lists? What preprocessing occurs? Are evaluator hyperparameters frozen? What prevents the classifier from learning bookkeeping artifacts rather than shower physics?
+
+The condition-only AUROC of 0.4636 deserves explanation.  If generated and Geant4 events use exactly the same 10,000-condition manifest, their condition distribution is not merely similar; it should be paired-identical. A condition-only classifier should therefore asymptotically be at chance. 0.4636 is plausibly finite-sample variation, but I want to see precisely how classifier folds are formed.
+
+The 0.65 “frozen diagnostic threshold” also needs a rationale.  Why 0.65? Was it chosen empirically, before seeing B0, from a calibration study, or just as an engineering gate? If it is an internal QA threshold, say that explicitly rather than letting it resemble a statistically meaningful acceptance criterion.
+
+And three evaluator seeds are not a substitute for uncertainty quantification. Bootstrap confidence intervals over events/conditions would be more informative.
+
+## Pass 9 — The S2 causal interpretation is not yet supported by the figures you show
+
+This is one of the biggest logical problems in the paper.
+
+Section 5.2 correctly says every screen must be compared against **M0-fresh**, because optimizer restart itself has a measurable cost.  Great.
+
+But your key S2 diagnostic figures compare S2 against **B0 and/or V3-SUP**, not M0-fresh. Figure 2 shows B0, V3-SUP, S2.  Figure 6 shows Geant4 vs S2 and Geant4/B0/V3-SUP, again without M0-fresh. 
+
+So what is the M0-fresh zero-response rate? What is its C2ST AUROC? What is its active-layer count? Without those numbers, you have not isolated how much of S2's collapse is attributable to the spline architecture versus fresh-optimizer retraining.
+
+This matters even more because “alter one mechanism at a time” does **not** mean only that mechanism's output will move if joint training unfreezes the shared encoder/full network. A response-head architecture change can alter gradients into the shared encoder, which then moves the visibility head. That may be exactly what happened. But it needs to be demonstrated rather than rhetorically assigned to the response spline.
+
+## Pass 10 — Table 1 has an arithmetic/rounding inconsistency
+
+Using the displayed values:
+
+\(4.935990-4.935508=+0.000482\), not \(+0.000481\).
+
+\(4.921213-4.935508=-0.014295\), not \(-0.014296\).
+
+\(5.466342-4.935508=+0.530834\), not \(+0.530833\).
+
+The table prints the latter values. 
+
+This may simply mean the differences were computed from higher-precision underlying numbers. If so, **either show enough precision in the losses to reproduce the differences, or calculate the displayed differences from the displayed rounded losses.** A reviewer checking arithmetic will absolutely notice this.
+
+Also, “Recorded decision” feels like experiment-tracking metadata rather than manuscript material. It may belong in an appendix/evidence ledger unless screening decisions are themselves part of the paper's methodological contribution.
+
+## Pass 11 — The response metrics need exact equations
+
+Section 6.2 is conceptually right that pooled response statistics can hide conditional failure.  But I cannot reproduce several reported metrics from the manuscript.
+
+“Mean positive-response bias”: is it \((\mu_{\rm gen}-\mu_{\rm G4})/\mu_{\rm G4}\)? Conditioned separately on \(T>0\) in each sample? Conditioned on truth being positive? What happens to generated zero events?
+
+“Response-resolution difference”: what is resolution? \(\sigma/\mu\)? RMS/mean? standard deviation? 68% interval? And is the plotted number an absolute difference or relative percentage difference?
+
+“Paired generated-minus-truth residual”: you correctly warn that it is not reconstruction error, but why use a paired event-level RMS at all when the generated and Geant4 showers are independent stochastic realizations at the same condition? That RMS folds together intrinsic Geant4 variance and model variance.
+
+“Relative \(L^1\) difference 0.1098 in the battery’s definition” is not enough.  Put the equation in the paper.
+
+No response plot has uncertainty intervals. With eight bins, I want bootstrap error bars or confidence bands before deciding which bin-to-bin oscillations are meaningful.
+
+## Pass 12 — The longitudinal/topology result may be your best scientific finding, but it needs much stronger definition
+
+The paper's clearest failure mode is that active-layer count is nearly right while arrangement is badly wrong: 53.53 vs 54.08 active layers, but 93.56% vs 52.43% interior-gap fraction and ~59 vs 23 connected components. 
+
+That is genuinely informative. But I need to know whether it is robust to the exact definition of “active.”
+
+At a nominal 0-GeV threshold, any nonzero stored energy activates a layer. But Geant4 files often have production/storage semantics that mean “zero threshold” in downstream analysis is not literally infinite detector sensitivity. If tiny hits are stored differently between truth and generator, gap statistics can become pathological.
+
+Connected-component count also needs conditioning. If generated showers have different hit multiplicity, 59 vs 23 components may partially be a multiplicity effect. Show component count versus number of hit cells, or at least report multiplicity jointly.
+
+And because your graph definition is central, this metric is only meaningful if graph edges correspond cleanly to physical adjacency—bringing us back to the ganged-channel centroid issue.
+
+## Pass 13 — The zero-response S2 failure is dramatic, but the loss decomposition is missing
+
+The S2 result is striking: 50.41% generated zeros versus 0.93% truth, while selected loss improves slightly.  This is probably the strongest pedagogical result in the draft.
+
+But I want the nine-term loss decomposition for M0-fresh and S2. The joint loss drops by only about 0.014 on a ~4.94 total, while a major physical marginal catastrophically deteriorates. Which component improves enough to compensate? Did the visibility BCE itself worsen? Did response NLL dominate the scale? Are loss weights miscalibrated? Did shared-encoder gradient interference move the visibility head?
+
+Without that decomposition, “aggregate objective and physical targets must be read together” is true but shallow. With the decomposition, you could make a concrete optimization diagnosis.
+
+## Pass 14 — The architecture-screening program is internally incomplete
+
+You list S1, S2, S3, S4, S5, S7, D1, and D2, then only report completed rows for S1–S3. 
+
+Why no S6? Maybe intentional naming history, but reviewers will wonder.
+
+More importantly, if several are implemented but unevaluated, do they belong in the manuscript at all? Naming future experimental variants makes the document feel like a progress memo. Either make this an explicit preregistered experimental program or remove future branches until results exist.
+
+The full-size critic having a 24-GiB memory blocker is similarly implementation-log detail unless it motivates a scientifically relevant computational constraint.
+
+## Pass 15 — Your literature review is much too thin
+
+The current Related Work is one paragraph and nine total references.   That is insufficient for a new calorimeter generative architecture.
+
+CaloChallenge alone compared 31 submissions across GANs, VAEs, flows, diffusion, conditional flow matching, and other families, using classifier AUCs, physics histograms, timing, and additional metrics. ([alphaXiv][2]) Your current paper selectively cites L2LFlows, CaloGraph, CaloDiffusion, and CaloPointFlow but omits foundational or widely deployed context such as CaloGAN, CaloFlow, and ATLAS AtlFast3. ([APS Journals][3])
+
+Also, reference [2] should now use the **peer-reviewed 2025 Reports on Progress in Physics publication**, not only the 2024 arXiv entry. ([PubMed][4])
+
+I would not pad references for appearance. But you need enough literature to establish exactly what is novel here: sparse exact-support decoding? hierarchical factorization? irregular detector geometry? one-draw support sampling? conditional four-vector control? failure-auditing methodology? At present the novelty boundary is blurry.
+
+## Pass 16 — There is at least one obvious bibliography/typesetting defect
+
+Reference [7] renders Dirk **“Kr"ucker”** instead of **Krücker**.  The correct spelling is Dirk Krücker. ([PubMed][4])
+
+That likely means the BibTeX accent escaping is malformed.
+
+I would run a dedicated bibliography pass for author accents, capitalization of Geant4/Gumbel/ECAL/HCAL, DOI formatting, journal publication updates, and arXiv-only references that now have peer-reviewed versions.
+
+## Pass 17 — The figures are mostly good, but the manuscript layout reveals its draft state
+
+Figure 1 belongs to the architecture section, but it floats all the way to page 5, after Experimental Design, leaving roughly half of page 4 empty. That disrupts the argument. The reader learns the architecture, reads the experiment design, and only then sees the architecture diagram.
+
+Move Figure 1 physically closer to Section 4.
+
+Figure 3 needs uncertainty and exact metric definitions. Figure 4 should probably show the ECAL result separately rather than simply saying it is omitted because the mean is much larger.  If the ECAL dominates total response, its behavior is scientifically important.
+
+The plots also use default sans-serif Matplotlib styling inside an otherwise serif LaTeX paper. Not wrong, but visibly draft-like.
+
+The running head “CBSC–ZDC manuscript draft” contains “CBSC,” which is never explained in the body.
+
+## Pass 18 — Reproducibility language is strong internally but weak externally
+
+You mention hashes, split manifests, frozen configurations, checkpoint hashes, JSON reports, and deterministic figure regeneration.  That is excellent internal practice.
+
+But “recorded in the project audit” is not reproducibility for an external reviewer unless they can access the audit. “The exact source and code-access statement … will be finalized with the project owner” is not a Data/Code Availability section yet.
+
+“Multi-tenant dataset” also sounds like cloud-infrastructure language rather than scientific data provenance. What is the actual restriction? Collaboration-owned? Shared institutional storage? Confidential? Licensed? Unreleased detector-production sample?
+
+## Pass 19 — You need much more Geant4 provenance
+
+The manuscript tells me that Geant4 is the reference but not enough about the simulation that generated those 764,940 events. 
+
+I need Geant4 version, physics list, detector-geometry version, production cuts, step limits if relevant, sensitive-volume definition, whether optical photons are simulated, neutron source distribution, energy distribution, angular distribution, entry position, random-seed policy, and whether all events come from one production campaign.
+
+Without that, another group cannot recreate \(p_{\rm G4}(Y\mid p^\mu,G)\).
+
+## Pass 20 — The conclusion is appropriately cautious but currently undersells what a finished negative-result paper would need
+
+The conclusion says generated and reference showers remain distinguishable and that a final performance claim requires multi-seed testing, governed test evaluation, baselines, reconstruction, and timing. 
+
+That is correct.
+
+But if you eventually publish a *negative result*, the bar is not merely “the model failed.” You need to show that the failure survived credible training scale, hyperparameter effort, multiple seeds, fair baselines, and diagnostic ablations. Otherwise the obvious interpretation is “this pilot implementation was not yet optimized.”
+
+---
+
+# Questions I would force you to answer before the next serious draft
+
+1. **Paper identity:** What is the single sentence claim you want an editor to remember?
+2. If the model remains at C2ST AUROC ~0.78 after full training, do you still intend to publish?
+3. If yes, what is the publishable contribution independent of fidelity?
+4. Is the novelty the hierarchy, sparse decoder, graph support mechanism, audit framework, or detector application?
+5. Why is “Fast Monte Carlo” justified in the title before any end-to-end timing exists?
+6. Would you still use “fast” if the flow solver turns out slower than a strong neural baseline?
+7. Is this intended as an internal validation report, preprint, conference paper, or journal article?
+8. Why does the document contain “Evidence snapshot through 29 August 2026” when dated 20 September?
+9. What changed between August 29 and September 20?
+10. What does “CBSC” mean?
+11. Why is “project owner” the terminology in a scientific manuscript?
+12. Who will actually be the authors?
+13. What detector/collaboration may be named publicly?
+14. Is the detector geometry public?
+15. Is the dataset public, restricted, or proprietary?
+16. What exactly does “multi-tenant dataset” mean scientifically?
+17. What is the exact reason the underlying dataset cannot be released?
+18. Can a reduced or synthetic reproduction dataset be released?
+19. Will the complete model code be public?
+20. Will preprocessing/conversion code be public?
+21. Will evaluation code be public?
+22. Will exact configs/checkpoint hashes be published?
+23. Will the audit/evidence catalog itself be available?
+24. **Incident beam:** Are neutron entry positions fixed?
+25. If fixed, where exactly?
+26. If variable, why is entry position absent from \(p_\theta(Y\mid p^\mu,G)\)?
+27. Are incident angles fixed or variable?
+28. What are the observed ranges of \(p_x,p_y,p_z\)?
+29. Is \(p_z\) always positive?
+30. What coordinate system defines \(x,y,z\)?
+31. Is \(z\) exactly the calorimeter longitudinal axis?
+32. Is the incoming four-vector evaluated at production, detector entrance, or somewhere else?
+33. Are neutrons propagated through upstream material before the calorimeter?
+34. Do all events intersect the active face?
+35. What happens to events that miss part of the detector?
+36. Are there repeated identical four-vectors?
+37. Approximately how many unique conditions exist?
+38. Is energy sampled uniformly over 0–300 GeV?
+39. Uniform in kinetic energy, total energy, momentum magnitude, or something else?
+40. What is the angular sampling distribution?
+41. Is the 50–250 GeV evaluation domain uniformly populated?
+42. How many events lie in each 25-GeV bin?
+43. Why were exactly those eight bins chosen?
+44. Were bin edges frozen before inspecting validation results?
+45. Does the on-shell relation hold numerically for every stored event?
+46. What tolerance is used to verify it?
+47. Why feed both \(E\) and three-momentum if \(E\) is redundant on the mass shell?
+48. Have you tested whether that redundancy helps or harms conditioning?
+49. Are four-vector inputs standardized?
+50. If so, using statistics computed only from training?
+51. **Target:** What exactly is \(Y_i\)?
+52. Is it Geant4 `edep` summed in sensitive material?
+53. Does it include passive-material energy?
+54. Does it include scintillation quenching?
+55. Does it include sampling fraction conversion?
+56. Does it include SiPM response?
+57. Does it include photostatistics?
+58. Does it include electronics effects?
+59. Why call it “readout energy” if digitization is absent?
+60. Why use “visible response” in the abstract?
+61. What is the sentinel value?
+62. Why are sentinel hits present?
+63. When are they introduced?
+64. Are sentinel values removed before all statistics?
+65. Can a channel contain both valid and sentinel entries?
+66. Is there any upstream Geant4 hit-energy threshold?
+67. Is there any ROOT-storage zero suppression?
+68. Does “zero-GeV threshold” mean literally no additional analysis threshold?
+69. How are floating-point subnormal/tiny values handled?
+70. What exact definition makes an event “zero response”?
+71. Does a single \(10^{-12}\) GeV hit make it nonzero?
+72. What exact definition makes a layer active?
+73. Have you repeated the topology analysis at small nonzero thresholds?
+74. Does the 52.43% Geant4 gap fraction remain stable under threshold variation?
+75. **Detector:** Are there exactly 1 ECAL + 64 HCAL longitudinal layers?
+76. If yes, say that explicitly.
+77. What are the ECAL physical dimensions?
+78. What are the HCAL physical dimensions?
+79. What are the absorber materials?
+80. What are the sensitive materials?
+81. What is the longitudinal depth in interaction lengths?
+82. What is the ECAL depth in radiation lengths?
+83. Are the ECAL 400 channels a 20×20 grid?
+84. Are normal HCAL layers 100 channels each?
+85. What is the HCAL transverse arrangement?
+86. Why does the last layer have 90 channels?
+87. Are those ten channels physically absent or merely unread?
+88. How many channels are ganged?
+89. How many physical positions can one ganged channel represent?
+90. Are ganged positions adjacent?
+91. Can a ganged channel represent disconnected spatial locations?
+92. If so, is a centroid meaningful?
+93. Could a centroid create false graph adjacency?
+94. Could that inflate or suppress connected-component counts?
+95. Would representing ganged channels using multiple physical coordinates be more faithful?
+96. How were the 107,920 graph edges constructed?
+97. Are they directed or undirected?
+98. Does the count include both directions separately?
+99. Are self-loops included?
+100. Are edges purely intra-layer?
+101. Are there inter-layer edges?
+102. What distance threshold defines neighbors?
+103. Are ECAL–HCAL edges present?
+104. Is the graph connected before masking to hit channels?
+105. What graph is used for connected-component evaluation: identical to model graph or an independent physical graph?
+106. Should validation use the same graph the model sees, or does that risk circularity?
+107. **Split:** What deterministic rule generated the 612,482/76,158/76,300 split?
+108. Is it hash-based?
+109. What field is hashed?
+110. Can duplicated/same-condition events appear across train and test?
+111. Is that intended?
+112. Are you testing interpolation at known conditions or generalization to unseen conditions?
+113. If the latter, why not split by unique condition?
+114. Was the pilot 26,624 training bank sampled from the canonical training split?
+115. Was the 6,656 pilot validation bank sampled only from canonical validation?
+116. Did any pilot event ever cross the canonical split boundary?
+117. Why use only 26,624 events when 612,482 training events exist?
+118. Was that compute-limited?
+119. How does model performance scale with training-set size?
+120. Is the current distribution gap potentially just data scarcity?
+121. What fraction of the training distribution is represented by the pilot?
+122. **Test governance:** Can you identify the exact IDs of the 40,000 test events used externally?
+123. Can you identify the exact IDs of the 200 visually inspected events?
+124. Why is their overlap unresolved?
+125. Were the manifests lost?
+126. Were any numerical outcomes from the 40k classifier study seen by model developers?
+127. Were the 200 images seen by model developers?
+128. If yes, how can you establish that they did not influence subsequent choices?
+129. Why not permanently redefine the final holdout as a provably untouched subset now?
+130. Can you construct a guaranteed untouched 36,100-event subset by ID?
+131. If not, should the entire old test split be considered contaminated?
+132. Has anyone inspected individual test events for debugging?
+133. Has any normalization constant been computed using the full dataset?
+134. Has geometry metadata used any event-dependent test information?
+135. **Model:** What is the dimension of \(c=f_\phi(p^\mu)\)?
+136. How many layers does the condition encoder have?
+137. What nonlinearities?
+138. What parameter count?
+139. Are separate stage heads conditioned directly on \(p^\mu\) as well as \(c\)?
+140. Is geometry embedded once or per stage?
+141. What happens downstream when \(V=0\)?
+142. Is \(\hat T\) explicitly set to zero?
+143. Are \(L_0,A,D,K,H,r\) skipped?
+144. How is \(L_0\) trained for zero-response events?
+145. Are zero events masked out of all downstream losses?
+146. What is \(s_T\) in \(\log(1+T/s_T)\)?
+147. What numerical value does it have?
+148. Was it selected using training only?
+149. Is the response mixture Gaussian in transformed space?
+150. How many mixture components?
+151. Are mixture weights/means/scales conditioned on \(c\)?
+152. How are scales constrained positive?
+153. Does the transformed Gaussian mixture assign support to physically impossible \(T<0\) after inverse transformation?
+154. If so, what happens?
+155. What exactly is the S2 spline architecture?
+156. What is its support interval?
+157. How are tails beyond the spline interval handled?
+158. Does the positive branch have support arbitrarily close to zero?
+159. Can it output exactly zero?
+160. How is positivity enforced?
+161. How is the visible/zero atom combined with the positive density mathematically?
+162. Is the hurdle model trained as a proper mixed discrete-continuous likelihood?
+163. What is the exact first-layer categorical support?
+164. Can \(L_0=0\) represent ECAL?
+165. Can a shower begin in HCAL with zero ECAL deposit?
+166. Can activity contain arbitrary gaps after \(L_0\)?
+167. Are the \(A_\ell\) independent Bernoulli draws conditional on context?
+168. If so, is that architectural independence the likely source of the 94% gap fraction?
+169. Is activity autoregressive?
+170. Is there bidirectional context in activity, or only support?
+171. What is S4 specifically changing?
+172. Is S4 essentially a structured sequence model for \(A\)?
+173. What distribution does the layer-profile flow model?
+174. What exact transform maps true layer shares to \(x_1\)?
+175. How are zeros handled in that transform?
+176. Are only active layers represented?
+177. Does dimensionality vary with the number of active layers?
+178. If yes, how is the flow implemented with variable dimension?
+179. If no, how are inactive dimensions masked?
+180. Does the ODE evolve masked coordinates?
+181. Can masked coordinates leak through network interactions?
+182. What base distribution is used?
+183. Is \(x_0\) independently sampled per event?
+184. What ODE solver is used?
+185. How many function evaluations?
+186. Fixed-step or adaptive?
+187. What integration tolerance?
+188. How much does fidelity change with solver accuracy?
+189. How much does latency change?
+190. Is profile generation one flow call per event?
+191. How is cell-share generation implemented?
+192. One flow per layer?
+193. One batched flow across all selected cells?
+194. Variable-dimensional packed representation?
+195. What transform maps cell shares to Euclidean logits?
+196. How do you ensure positive shares when true selected cells can contain numerically zero energy?
+197. Are truth supports defined by \(Y_i>0\)?
+198. What is the maximum feasible \(K_\ell\)?
+199. Does each active layer necessarily have \(K_\ell\ge1\)?
+200. How is the count head parameterized?
+201. One categorical over 1…\(N_\ell\)?
+202. Does that become expensive for 400-channel ECAL?
+203. Does \(K_\ell\) condition on generated \(\hat D_\ell\) at inference?
+204. What does it condition on during training?
+205. Do you teacher-force true \(D_\ell\)?
+206. Does support training use true \(K_\ell\)?
+207. Does share training use true support \(H_\ell\)?
+208. If yes, have you quantified compounding exposure error?
+209. Have you run oracle-stage ablations: generated response + truth activity; generated activity + truth counts; etc.?
+210. Those would localize which stage actually causes joint C2ST failure—have you done them?
+211. **Support:** Are Gumbel perturbations independent per valid channel?
+212. Is there one Top-\(k\) draw per active layer?
+213. Why does the abstract call it “a single” draw?
+214. Are support logits normalized before perturbation?
+215. Does adding a constant to all support scores leave sampling unchanged?
+216. Is the sampler mathematically the intended Plackett-Luce without-replacement law?
+217. Is BCE consistent with that law?
+218. What exactly is the ranking loss?
+219. Pairwise hinge?
+220. Listwise?
+221. How is its weight selected?
+222. Why use BCE and ranking simultaneously?
+223. Have you tried a likelihood/objective directly matched to the subset sampler?
+224. Is support sampling differentiable during joint training?
+225. If not, how do gradients reach upstream stages?
+226. Does joint training use teacher-forced supports instead of sampled supports?
+227. **Decoder:** Is softmax implemented stably via subtract-max/log-sum-exp?
+228. What happens if all logits are NaN or ±inf?
+229. What exactly is the “frozen numerical tolerance” for closure?
+230. Absolute tolerance?
+231. Relative tolerance?
+232. Does it scale with \(\hat T\)?
+233. How many events have ever violated it?
+234. Does float32 pass?
+235. Is decoding performed in float32 or float64?
+236. Is “finite output” guaranteed structurally or runtime-asserted?
+237. **Training:** Which optimizer?
+238. Adam or AdamW?
+239. Learning rate?
+240. Weight decay?
+241. Batch size?
+242. Number of epochs per stage?
+243. Epoch definition in the pilot bank?
+244. Learning-rate schedule?
+245. Warmup?
+246. Gradient clipping?
+247. AMP/mixed precision?
+248. Hardware?
+249. Training time?
+250. Number of parameters?
+251. Peak VRAM?
+252. Why 24 GiB specifically for the critic blocker?
+253. Can gradient checkpointing solve it?
+254. Is critic infeasibility actually scientifically relevant enough to mention?
+255. How are the nine loss weights defined?
+256. What does “calibrated using training gradients” mean exactly?
+257. GradNorm?
+258. Initial gradient norms?
+259. At what checkpoint?
+260. How many validation sensitivity studies were performed?
+261. Were loss weights repeatedly tuned against the same 10k bank?
+262. If yes, is that bank now effectively a development set rather than a final validation set?
+263. When exactly were evaluation thresholds frozen?
+264. Before B0?
+265. Before V3-SUP?
+266. Before S2?
+267. What selected B0 epoch 90?
+268. Best validation loss?
+269. Physics battery?
+270. Hand-selected checkpoint?
+271. What selected V3-SUP epoch 12?
+272. What selected S2 epoch 19?
+273. Are those selections comparable?
+274. **V3-SUP:** What exactly changed from B0 to V3-SUP?
+275. Is it the same architecture?
+276. Same loss?
+277. Same dataset?
+278. Same optimizer?
+279. Same encoder?
+280. What makes it “v3” if it is a supervised continuation?
+281. Why is it the “recent selected checkpoint” in the abstract?
+282. Was it selected using the high-level C2ST?
+283. If yes, then C2ST is no longer a purely confirmatory diagnostic.
+284. **M0-fresh:** How many M0-fresh replicates exist?
+285. What is its zero-response fraction?
+286. What is its high-level C2ST?
+287. What is its low-level C2ST?
+288. What is its profile-aware C2ST?
+289. What is its active-layer count?
+290. What is its interior-gap fraction?
+291. What is its connected-component count?
+292. Why are none of those shown next to S2?
+293. Is M0-fresh trained for exactly the same number of updates as S2?
+294. Same minibatch order?
+295. Same random initialization where architectures overlap?
+296. Same data-loader seed?
+297. Same generator evaluation seed?
+298. Same solver settings?
+299. What exactly is the 0.001259 “run-to-run reproducibility reference”?
+300. How many runs produced it?
+301. Standard deviation of what?
+302. Total validation loss?
+303. Across optimizer seeds?
+304. Across evaluator seeds?
+305. Why is comparing S1's loss difference to that single number statistically justified?
+306. **Common-measure loss:** What exactly is the +0.421936354321 offset?
+307. Derive it mathematically in the manuscript.
+308. Is it the validation-set average log-Jacobian term?
+309. Is it constant because the same truth observations are evaluated?
+310. Would it change on a different validation bank?
+311. If yes, why call it an “offset” without that qualification?
+312. Do the printed Table 1 differences use hidden-precision losses?
+313. If yes, why not print enough digits to reproduce them?
+314. **C2ST:** What classifier model is used?
+315. Gradient-boosted tree?
+316. MLP?
+317. Logistic regression?
+318. How many parameters?
+319. How are hyperparameters chosen?
+320. How is classifier train/test splitting performed?
+321. Is the AUROC evaluated on held-out events?
+322. Are paired Geant4/generated samples from the same condition kept in the same fold?
+323. If not, can condition identity leak?
+324. Does the classifier get incident energy?
+325. Does it get the full four-vector?
+326. Which exact features define “high-level”?
+327. Which exact features define “low-level”?
+328. Which exact features define “profile-aware”?
+329. Are raw 6,790-cell values ever given to the classifier?
+330. Are features standardized?
+331. Using which statistics?
+332. Why is the condition-only AUROC 0.4636 rather than ~0.5?
+333. What is its variance over evaluator seeds?
+334. What is the sample-level confidence interval?
+335. Why is 0.65 the threshold?
+336. Was 0.65 chosen before any generator output existed?
+337. What false-positive/false-negative interpretation does 0.65 have?
+338. Should it simply be described as an internal engineering gate?
+339. Why use only three evaluator seeds?
+340. Can you add bootstrap intervals?
+341. What prevents evaluator overfitting?
+342. Is classifier capacity sufficient to detect high-dimensional discrepancies?
+343. Have you checked classifier saturation?
+344. Have you performed label-permutation controls?
+345. Have you checked truth-vs-truth AUROC?
+346. Generated-vs-generated AUROC?
+347. These are arguably more informative null controls than “condition-only”—do they exist?
+348. What are the “truth-half floors”?
+349. Why are they mentioned but never defined?
+350. What is the nearest-neighbor memorization diagnostic?
+351. What metric/embedding does it use?
+352. Why are its results not shown?
+353. What correlation diagnostics are in the battery?
+354. Why are those results not shown?
+355. How was the subset of validation figures selected?
+356. Was figure selection predeclared?
+357. Could validation cherry-picking occur even though test was untouched?
+358. Will the complete battery be in supplementary material?
+359. **Conditional response:** Exact formula for mean positive-response bias?
+360. Exact formula for resolution?
+361. Exact formula for resolution difference?
+362. Are zero events excluded from both numerator and denominator?
+363. Do B0/V3-SUP have enough zeros to bias positive-only comparisons?
+364. Why is “paired residual” useful for independent stochastic draws?
+365. Would conditional moment differences be cleaner?
+366. What is the bin-wise sample count?
+367. Where are uncertainty bars?
+368. Are differences statistically stable under bootstrap?
+369. Does the sign flip between 150–175 and 175–200 GeV survive resampling?
+370. Are the bins neighboring regions of some training-distribution discontinuity?
+371. Is there an architectural reason for that oscillation?
+372. Is kinetic energy explicitly used as a scalar feature or only through \(p^\mu\)?
+373. **Profiles:** Exact definition of relative \(L^1=0.1098\)?
+374. Is each layer equally weighted?
+375. Is it normalized by total truth energy?
+376. Why omit ECAL from Figure 4 rather than show it separately?
+377. What is the ECAL mean discrepancy?
+378. What is ECAL occupancy discrepancy?
+379. Does ECAL dominate C2ST?
+380. Are profile means normalized per event or averaged in absolute GeV?
+381. Do you compare longitudinal variance/covariance, not only the mean?
+382. Have you plotted layer-layer correlation matrices?
+383. Would those directly expose the fragmentation problem?
+384. **Topology:** Is an interior gap one or more consecutive inactive layers counted how?
+385. The fraction asks whether at least one gap exists; mean gaps counts individual inactive layers or gap segments?
+386. Your wording “Mean gaps 2.10” is ambiguous—segments or layers?
+387. What happens when only one layer is active?
+388. Is there a defined first/last active layer for zero-response events?
+389. Are zero-response events excluded from topology metrics?
+390. If yes, say so.
+391. If no, how are their gaps defined?
+392. How are connected components computed for zero-response events?
+393. Are edges restricted to selected/hit nodes?
+394. Are isolated hit nodes each one component?
+395. Does component count scale trivially with hit count?
+396. What are Geant4/B0/V3-SUP mean hit counts?
+397. Why are those not plotted next to connected components?
+398. What is components-per-hit-cell?
+399. What is largest-component fraction?
+400. Would those disentangle fragmentation from multiplicity?
+401. Does the component mismatch persist conditional on total hit count?
+402. Does it persist conditional on energy?
+403. Does it persist in every 25-GeV bin?
+404. Is the 93.6% gap fraction roughly constant across energy?
+405. If not, where does it fail most?
+406. Does the failure differ between ECAL and HCAL?
+407. **S2:** Why did changing the positive response density move the visibility hurdle so catastrophically?
+408. Did the shared encoder move?
+409. Did visibility-head weights move?
+410. Was the visibility BCE increasing during S2 training?
+411. At what epoch did zero-response collapse occur?
+412. Was epoch 19 chosen despite already observing that collapse?
+413. If yes, why?
+414. What does M0-fresh do over the same epochs?
+415. Can you plot visibility BCE and zero fraction versus epoch for both runs?
+416. Can you plot all nine loss terms versus epoch?
+417. Which loss reduction dominates the -0.0143 total improvement?
+418. Does loss weighting make response NLL numerically dominate visibility?
+419. Would Pareto/multi-objective checkpoint selection avoid this?
+420. Was S2 intended to improve *only* response shape or total joint fidelity?
+421. Why say “response-head screen worsens the zero-response fraction” without showing the proper M0-fresh physical control?
+422. **Architecture screens:** Why is there no S6?
+423. What are exact scientific hypotheses for S1/S2/S3/S4/S5/S7/D1/D2?
+424. What metric determines promotion?
+425. Is promotion based on total loss alone?
+426. If not, what gate set?
+427. Did S3 perhaps improve topology despite worsening loss?
+428. Did S1 improve a physical metric even if total loss change is below noise?
+429. Are you screening architectures on one seed and only later doing three seeds?
+430. If yes, how do you avoid false negatives from noisy one-seed screening?
+431. How many total screens have been tried but not mentioned?
+432. Is there researcher-degree-of-freedom bias in the architecture search?
+433. Would a preregistered screen matrix help?
+434. **Baselines:** What is the simplest empirical baseline?
+435. Per-energy-bin resampling of real showers?
+436. Nearest-neighbor conditional resampling?
+437. Factorized layer/cell histogram sampler?
+438. PCA/latent Gaussian?
+439. Why is there no trivial baseline yet?
+440. What is the competent non-graph neural baseline?
+441. What is the graph baseline?
+442. What point-cloud baseline can operate on this representation?
+443. Which external model is actually feasible to port?
+444. Are you planning to use CaloFlow/L2LFlows/CaloGraph/CaloPointFlow-inspired baselines?
+445. How will you make parameter counts comparable?
+446. How will you make training compute comparable?
+447. How will you make timing scope identical?
+448. Why should a reviewer interpret the current model at all without even a simple empirical baseline?
+449. Could a crude conditional resampler beat AUROC 0.78?
+450. **Timing:** What is the current generation time per event?
+451. Even if not publication-ready, do you know the order of magnitude?
+452. CPU or GPU?
+453. Batch size?
+454. Does timing include host-device transfer?
+455. Condition encoding?
+456. ODE solves?
+457. Gumbel sampling?
+458. graph message passing?
+459. sparse decode?
+460. serialization?
+461. What Geant4 hardware will be used?
+462. Is Geant4 single-threaded per event?
+463. What physics configuration?
+464. Will you report throughput and latency separately?
+465. How does flow NFE affect timing?
+466. How much batching is required for claimed acceleration?
+467. Is the intended deployment one event at a time or large GPU batches?
+468. If acceleration disappears at batch size 1, is that acceptable?
+469. **Downstream utility:** What reconstruction will be run on generated showers?
+470. Energy reconstruction?
+471. Position?
+472. Direction?
+473. Shower-shape classification?
+474. Why is downstream reconstruction necessary for this detector use case?
+475. What tolerance makes two shower distributions “good enough” operationally?
+476. Is C2ST intended as an absolute fidelity requirement or merely diagnostic?
+477. Could AUROC 0.78 still yield unbiased reconstructed physics?
+478. Conversely, could AUROC 0.55 still hide a critical tail failure?
+479. What downstream quantities actually matter to users of this simulator?
+480. **Literature:** What exactly is novel relative to L2LFlows?
+481. Relative to CaloGraph?
+482. Relative to CaloPointFlow?
+483. Relative to CaloFlow?
+484. Relative to sparse point-cloud models?
+485. Relative to experiment-specific fast simulation such as AtlFast3?
+486. Has any prior calorimeter generator enforced exact hit multiplicity plus exact energy-budget closure in this manner?
+487. If that is the novelty, can you substantiate it with a systematic literature search?
+488. Why does Related Work have only one paragraph?
+489. Will you update CaloChallenge to its 2025 journal version?
+490. Will you add foundational CaloGAN/CaloFlow context?
+491. Will you cite the detector itself?
+492. Is there a public technical design report for this ZDC?
+493. **Writing:** What does “research candidate” mean in the abstract?
+494. Candidate for what?
+495. Why call adverse validation results a “contribution” rather than a result?
+496. Why repeatedly say what results “do not” prove instead of first establishing the positive scientific message?
+497. Are those disclaimers necessary because the paper is currently carrying claims it cannot support?
+498. Could the manuscript become much stronger by simply framing itself as a validation/failure-analysis study?
+499. Why use “estimand” for the target conditional distribution?
+500. Would “target distribution” be clearer?
+501. Why call \(V\) “visibility” rather than “nonzero-response indicator” if no detector visibility model is present?
+502. Is “zero-response law” standard enough terminology for the section title?
+503. Does “dust” belong in formal Discussion or should it be defined as low-energy spurious occupancy?
+504. Why mention that no second support perturbation is applied?
+505. Is that responding to a prior implementation bug that readers do not know about?
+506. Why mention “historical runs” and provenance in the main text?
+507. How much of the manuscript is written for future reviewers versus internal project bookkeeping?
+508. **Figures:** Can Figure 1 be moved into Section 4?
+509. Can page 4's large whitespace be eliminated?
+510. Can Figure 3 show confidence intervals?
+511. Can Figure 4 show ECAL separately?
+512. Can Figure 5 also show hit multiplicity?
+513. Can Figure 6 show M0-fresh?
+514. Can Figure 2 show M0-fresh if S2 is discussed causally?
+515. Should Figure 2 show confidence intervals rather than only three-seed evaluator SD?
+516. Should exact numerical results be in a table for reproducibility?
+517. Are plot colors accessible in grayscale/color-vision deficiency?
+518. Why is the 0.65 threshold only shown in one panel?
+519. Is it applicable only to high-level C2ST?
+520. If so, state that.
+521. **Bibliography:** Fix Krücker?
+522. Check every accented author name?
+523. Update published versions where available?
+524. Standardize Geant4 capitalization?
+525. Standardize “Top-\(k\)” capitalization?
+526. Standardize arXiv/journal reference style?
+527. **Final sanity:** If a skeptical reviewer said “you trained on 1/23 of the available training data, have one generator seed, no fair baseline, no final test, no timing, and your model is obviously distinguishable,” what is your one-paragraph answer?
+528. If you cannot answer that convincingly yet, should this remain an internal validation manuscript until the full experiment finishes?
+
+The three issues I would resolve **before doing anything else** are: the paper's scientific identity, the M0-fresh/S2 causal-control hole, and the exact disposition of the previously touched test events. Everything else is downstream of those.
+
+[1]: https://proceedings.mlr.press/v97/kool19a.html?utm_source=chatgpt.com "Stochastic Beams and Where To Find Them: The Gumbel-Top-k Trick for Sampling Sequences Without Replacement"
+[2]: https://www.alphaxiv.org/abs/2410.21611?utm_source=chatgpt.com "CaloChallenge 2022: A Community Challenge for Fast Calorimeter Simulation | alphaXiv"
+[3]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.97.014021?utm_source=chatgpt.com "CaloGAN: Simulating 3D high energy particle showers in multilayer electromagnetic calorimeters with generative adversarial networks | Phys. Rev. D"
+[4]: https://pubmed.ncbi.nlm.nih.gov/41086821/?utm_source=chatgpt.com "CaloChallenge 2022: a community challenge for fast calorimeter simulation - PubMed"

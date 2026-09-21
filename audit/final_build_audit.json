@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-21T04:51:14.827025+00:00",
+  "status": "preliminary-development-bank-manuscript",
+  "output": {
+    "path": "output/fast_mc_zdc_manuscript.pdf",
+    "sha256": "109f8a64db3f7bb1f15cbd21f0f7170a49ffa3d22171e60904fa6329e62e7780",
+    "bytes": 961899,
+    "pages": 11,
+    "page_size": "A4"
+  },
+  "qa": {
+    "build_exit_code": 0,
+    "python_compile": "pass",
+    "json_parse_count": 7,
+    "latex_warning_scan": "pass: no LaTeX Warning, undefined control sequence, overfull, or underfull messages",
+    "pdf_text_scan": "pass: no unresolved markers, malformed control value, or undefined-reference text",
+    "visual_render": "pass: all 11 pages rendered and inspected",
+    "condition_only_auroc": 0.5,
+    "condition_control_source": "data/reports/verified_condition_control.json"
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1",
+    "pdflatex": "MiKTeX-pdfTeX 4.23 (MiKTeX 25.12)",
+    "biber": "biber version: 2.21",
+    "pdftoppm": "pdftoppm version 26.07.0"
+  },
+  "commands": [
+    "python scripts/build_figures.py",
+    "python -m py_compile scripts/build_figures.py",
+    "pdflatex -interaction=nonstopmode -halt-on-error main.tex",
+    "biber main",
+    "pdflatex -interaction=nonstopmode -halt-on-error main.tex (two passes)",
+    "pdftotext output/fast_mc_zdc_manuscript.pdf <temporary text>",
+    "pdftoppm -png -r 120 output/fast_mc_zdc_manuscript.pdf <temporary render prefix>"
+  ],
+  "sha256": {
+    "main.tex": "e94813c3ff13b55c6908bced2dba8e33471c8b30aa1494523e9ba4347e4ccdb2",
+    "references.bib": "bd7ee8484b8442dcfeb3842defd49b5b47c6517d7ab4d20b25cf289ae23eb17f",
+    "scripts/build_figures.py": "cba74c6ce652c6a2636b71e1e7f49abc1ad14020e3d7e35dff88f2a102eb6680",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/screening_summary.json": "0964dae168e9fde33dc5efb2603d3b726a1208de7a1e0b82548d07a64e90fab4",
+    "data/reports/v3-s2-response_epoch19.json": "fe797cc2c12af8be6b5707a94903740f158d6ea4398135b96a14ad806d4bcbb8",
+    "data/reports/v3-sup_epoch12.json": "e853855151926cf50fd2e40e08b4a693dccabce823df3ddd30a56f32e6ab8f08",
+    "data/reports/verified_condition_control.json": "f3837cc0a3162c5c2729053768147c9fc40c6028e2de6f879ed177ba877a696f",
+    "figures/c2st_validation.png": "44a51960a52674d3477b3de43a1b1f005610ef332dba496db0e686831446c4c6",
+    "figures/generator_schematic.png": "dcf9732281b8ae6fa40241808a3bd57717501ba907aee854abec325a05daa353",
+    "figures/longitudinal_profile.png": "1299f87f50197c8940422f6b41891dc7f61accf6f5a65c28922223c5da81e53c",
+    "figures/response_energy_bins.png": "91771e8e29c1a75d9ca23eb5ba6407057cf475c114a4fe5c3160038fba3d315f",
+    "figures/topology_validation.png": "838ec5bd2cf3716301e8c201391d3355439af2c7805a2fd18ecdeac9ee3e9ca1",
+    "figures/zero_response_validation.png": "2d57e5ed28ffc9b8d022d0eba6c00a3e206c00196e1c73555edb6b561708de02",
+    "figures/manifest.json": "7b4b3ea506f76f5194a83667002e193d21256e766863054ed93093fd2478aae3",
+    "reviews/review_1_hostile_referee.txt": "d179c5916c9557d788c4006b63bb6398275d085dbfe93b693aa29c4263d01bb3",
+    "reviews/review_2_scientific_audit.txt": "3013f08ab98939a17f91660736516c0af842a36b7d216ba79ff0017c218ad4a9",
+    "reviews/review_3_reproducibility_audit.txt": "666847a2dd8f9f52d0bdddae8d3778dcce395a3abacb332bd56b9494361f745d"
+  },
+  "known_submission_blockers": [
+    "complete Geant4 and detector-production provenance",
+    "new locked evaluation bank and exact event identifiers",
+    "three independent generator-training seeds per frozen final condition",
+    "fixed-condition repeated shower study",
+    "per-bin and topology uncertainty intervals",
+    "threshold and independent-graph stability studies",
+    "frozen configuration, checkpoints, parameter count, and complete environment capture",
+    "matched baselines, reconstruction evaluation, and end-to-end timing"
+  ]
+}

@@ -1,0 +1,21 @@
+# LaTeX intermediates
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+/main.pdf
+
+# Python intermediates
+__pycache__/
+*.pyc
+
+# Local render directories
+rendered/
+qa_render/

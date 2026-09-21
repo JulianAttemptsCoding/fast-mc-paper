@@ -1,0 +1,40 @@
+{
+  "kind": "cbsc-zdc-english-manuscript-audit",
+  "date": "2026-09-20",
+  "scientific_status": "validation study; physics fidelity and acceleration not established",
+  "output": {
+    "path": "paper/CBSC_ZDC_manuscript.pdf",
+    "pages": 9,
+    "bytes": 984722,
+    "sha256": "db973fa160712b159236785308da447cbeca890d2b412791ec64f7bfe07d6193"
+  },
+  "sources": {
+    "paper/CBSC_ZDC_manuscript.tex": "9fae50b3b8dbae101769eaeb33125ac81328343b0901e65156fdcda032512fa9",
+    "paper/CBSC_ZDC_manuscript.bib": "eb6060444cd1ffd3286564f9b27c00b815b34cd5431c63d9724a0dfc83807de5",
+    "paper/build_manuscript_figures.py": "10fda875b89344efd72f6ac420616fbd1c84a63af9d0d960f6e7838814206539",
+    "exhibition/current/manuscript/manifest.json": "467018b8df0d59c4e91680de02a7cbd3e9ccc8a306eb75dcb0097ca8801cef04"
+  },
+  "data_usage": {
+    "split": "validation",
+    "validation_truth_conditions": 10000,
+    "test_events_used": 0,
+    "remote_jobs_launched": 0,
+    "training_jobs_launched": 0
+  },
+  "artifacts": {
+    "figures": 6,
+    "bibliography_entries": 9,
+    "rendered_pages_visually_checked": 9,
+    "render_qa_iterations": 5
+  },
+  "verification": {
+    "figure_builder": "pass",
+    "python_compile": "pass",
+    "latex_compile": "pass",
+    "unresolved_reference_scan": "pass",
+    "latex_layout_warning_scan": "pass",
+    "all_pages_visual_review": "pass",
+    "exhibition_catalog_refresh": "blocked by pre-existing missing dashboard source file",
+    "exhibition_metrics_tests": "4 passed, 5 failed from pre-existing missing dashboard source and escaped live_remote visual"
+  }
+}

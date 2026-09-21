@@ -1,0 +1,20 @@
+{
+  "figures_sha256": {
+    "c2st_validation.png": "44a51960a52674d3477b3de43a1b1f005610ef332dba496db0e686831446c4c6",
+    "generator_schematic.png": "dcf9732281b8ae6fa40241808a3bd57717501ba907aee854abec325a05daa353",
+    "longitudinal_profile.png": "1299f87f50197c8940422f6b41891dc7f61accf6f5a65c28922223c5da81e53c",
+    "response_energy_bins.png": "91771e8e29c1a75d9ca23eb5ba6407057cf475c114a4fe5c3160038fba3d315f",
+    "topology_validation.png": "838ec5bd2cf3716301e8c201391d3355439af2c7805a2fd18ecdeac9ee3e9ca1",
+    "zero_response_validation.png": "2d57e5ed28ffc9b8d022d0eba6c00a3e206c00196e1c73555edb6b561708de02"
+  },
+  "kind": "zdc-manuscript-development-bank-figures",
+  "scientific_status": "development-bank diagnostics only; physics validation not established",
+  "sources_sha256": {
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/screening_summary.json": "0964dae168e9fde33dc5efb2603d3b726a1208de7a1e0b82548d07a64e90fab4",
+    "data/reports/v3-s2-response_epoch19.json": "fe797cc2c12af8be6b5707a94903740f158d6ea4398135b96a14ad806d4bcbb8",
+    "data/reports/v3-sup_epoch12.json": "e853855151926cf50fd2e40e08b4a693dccabce823df3ddd30a56f32e6ab8f08",
+    "data/reports/verified_condition_control.json": "f3837cc0a3162c5c2729053768147c9fc40c6028e2de6f879ed177ba877a696f"
+  },
+  "test_events_used": 0
+}

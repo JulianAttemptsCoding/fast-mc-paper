@@ -1,0 +1,707 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage[backend=biber,style=numeric,sorting=none,maxbibnames=20]{biblatex}
+\addbibresource{references_v2_2.bib}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,urlcolor=blue!55!black,pdftitle={CBSC-ZDC v2.2 Auditor Specification}}
+\setlist{nosep,leftmargin=*}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,columns=fullflexible,showstringspaces=false}
+\newcommand{\pFour}{p^{\mu}}
+\newcommand{\Kinc}{K_{\mathrm{inc}}}
+\newcommand{\Etot}{E_{\mathrm{tot}}}
+\newcommand{\GeV}{\,\mathrm{GeV}}
+\newcommand{\model}{\textsc{CBSC-ZDC}}
+
+\title{\model\ v2.2: An Audited, CLI-Ready Specification for a Four-Momentum-Conditioned Fast Monte Carlo Surrogate of Neutron Showers in a Zero Degree Calorimeter}
+\author{Audited experimental specification}
+\date{24 July 2026; updated 29 August 2026 with production training, C2ST, and v3 screening results}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We specify a falsifiable experiment for learning the scored detector-readout distribution of non-pencil-beam single-neutron Geant4 events in a fixed Zero Degree Calorimeter (ZDC). The target detector has 65 longitudinal layers and 6,790 valid readout channels (400 ECAL and 6,390 HCAL). The available corpus is expected to contain approximately 765,000 events over 0--300\,GeV incident neutron kinetic energy; final claims are restricted to 50--250\,GeV. The sole raw event condition is the neutron four-momentum. This revision reconciles four independent audits line by line and removes six blocking defects in the previous specification: mixed raw/thresholded energy accounting, an unidentified shared latent, double-stochastic support generation, absent numerical decision gates, kinetic/total-energy conflation, and an unobserved reserve variable. The resulting hierarchy generates visible response, total response, first positive layer, active layers, arbitrary nonnegative longitudinal budgets, exact finite hit counts, exact support, and positive energy shares. Deposited energy is not forced to decrease with depth; only the remaining accounting budget is non-increasing. Binary support is produced once by a supervised geometry-aware scorer and Gumbel-Top-$k$ sampling, while conditional flow matching is restricted to continuous positive-energy shares. The repository implements the complete CLI path from ROOT inspection through geometry freezing, conversion, leakage-aware splitting, data audit, provenance freezing, training, sampling, evaluation, and timing.
+
+The original specification stopped here, before production training. It no longer does: \cref{sec:beyond_nine,sec:production_results} report what has since been measured. Production training on the frozen $\mathrm{v2.2}$ architecture (\cref{sec:beyond_nine} calls this the nine original losses) reached a validation-loss optimum with zero structural-invariant failures, but a held-out classifier two-sample test (C2ST) still separates generated from real showers with AUROC $0.77$--$0.92$ against a declared $0.65$ gate, and generated events are visibly empty roughly twice as often as Geant4 predicts. Six additional loss mechanisms, each aimed at a specific measured or reasoned defect in the original nine, have since been designed, implemented, and where possible screened against a frozen comparator; as of this revision \emph{none has been promoted}, for reasons that are themselves diagnostic and are reported in full, negative results included. No Geant4-fidelity, downstream-reconstruction, or speedup claim is made: the primary gates in \cref{sec:gates} remain unmet, and the final test split remains sealed.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Status, scope, and exact claim}
+
+\subsection{Research question}
+Let $Y\in\mathbb{R}_{\ge 0}^{6790}$ denote the frozen detector readout, $\pFour=(\Etot,p_x,p_y,p_z)$ the neutron four-momentum, and $\mathcal G$ the immutable detector geometry. The empirical question is whether a learned sampler can approximate
+\begin{equation}
+ p_{\theta}(Y\mid \pFour,\mathcal G) \approx p_{\mathrm{G4}}(Y\mid \pFour,\mathcal G)
+ \label{eq:target}
+\end{equation}
+over $50\le \Kinc\le250\GeV$, while preserving exact structural contracts and providing a useful end-to-end speedup.
+
+This document and repository were originally an implementation-ready experimental scaffold, not a trained simulator. ``Implementation-ready'' meant that the remaining software operation was to install the declared dependencies, execute the CLI against the production corpus, and run the frozen training/evaluation plan. That step has since happened: the architecture described here has been trained at production scale, screened for six candidate refinements, and evaluated with a held-out classifier two-sample test. This revision reports that work (\cref{sec:beyond_nine,sec:production_results}) without changing the underlying specification -- the mathematical contract in \cref{sec:factorization,sec:cascade,sec:count_support_share,sec:decoder} is exactly what was trained. The operational source of truth for agents is \texttt{docs/IMPLEMENTATION\_GUIDE.md}, supported by \texttt{AGENTS.md}, the data contract, loss-weight protocol, evaluation protocol, Vertex runbook, and troubleshooting guide.
+
+\subsection{Claims that are presently supported}
+\label{sec:claims}
+\begin{enumerate}
+\item The event-level longitudinal deposits $D_\ell$ must not be constrained by $D_{\ell+1}\le D_\ell$ for neutron-induced hadronic showers.
+\item The revised decoder gives algebraically exact finite support and budget closure under its feasibility conditions; implementation checks use a declared floating-point tolerance.
+\item The active code has a complete CLI, deterministic provenance, and a regression suite of 863 passing tests (\cref{sec:qa}).
+\item The experiment is falsifiable through predeclared absolute and comparative gates, and has in fact been evaluated against them (\cref{sec:production_results}): none has yet been met.
+\item Production-scale training converges with zero structural-invariant failures across every accepted run, and short-horizon validation-loss improvement is measurable across four calibrated hyperparameter families and the v3-supervised continuation run (\cref{sec:production_results}).
+\end{enumerate}
+
+No current artifact supports a claim of Geant4 fidelity, downstream reconstruction equivalence, absence of memorization, or speedup. This is now a measured statement, not a default one: \cref{sec:production_results} reports a held-out C2ST AUROC of $0.77$--$0.92$ against a declared $0.65$ gate, and every v3 screening row attempted so far has failed to promote (\cref{sec:screening}).
+
+\section{Audit reconciliation and design corrections}
+
+Four supplied audits contained contradictory overall verdicts but overlapping technical findings. Each was read in full and adjudicated at finding level. The strongest audit identified six blockers, all accepted after independent re-derivation. Their disposition is summarized in \cref{tab:blockers}.
+
+\begin{table}[ht]
+\centering
+\caption{Blocking defects and v2.2 corrections.}
+\label{tab:blockers}
+\begin{tabularx}{\textwidth}{@{}p{0.06\textwidth}Y Y@{}}
+\toprule
+ID & Defect & Correction \\
+\midrule
+B1 & Raw layer energy, thresholded cell output, and a subthreshold residual were mixed inconsistently. & Raw deposit is primary; thresholded-readout-only is a separate target; no mixed residual. \\
+B2 & A shared latent $z$ had neither marginal likelihood nor inference mechanism and could be ignored. & $z$ is removed; dependence is explicit through ancestral conditioning. \\
+B3 & Binary support was a singular continuous-flow target and was perturbed again by independent Gumbel noise. & A supervised support scorer plus one Gumbel-Top-$k$ draw generates support; flow models shares only. \\
+B4 & No numerical success, non-inferiority, or failure gates were declared. & Primary gates are frozen before final-test exposure. \\
+B5 & Geant4 kinetic energy was conflated with the total-energy component of a four-vector. & $\pFour_0=\Etot$; range selection/reporting use $\Kinc=\Etot-m_n$. \\
+B6 & A softmax reserve was positive, unobserved, and non-identifiable. & Reserve is removed; generated layer budgets and cell outputs close directly to total response. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Additional accepted corrections include distinct notation for the first positive layer and support set, dimensionless share transforms, explicit treatment of the zero residual-share case, bidirectional layer context as the primary model, dynamic count feasibility masks, required point-cloud comparison, independent seed repetitions, immutable final-test metrics, and corrected bibliography metadata. Original material is retained only under a clearly marked legacy directory.
+
+\section{Frozen data and detector contract}
+
+\subsection{Incident energy convention}
+Geant4 particle-gun energy is conventionally kinetic energy, while a four-vector stores total energy. We therefore define
+\begin{equation}
+ \pFour=(\Etot,p_x,p_y,p_z),\qquad
+ \Etot^2-\lVert\mathbf p\rVert^2=m_n^2,\qquad
+ \Kinc=\Etot-m_n,
+ \label{eq:energy}
+\end{equation}
+with $m_n=0.93956542052\GeV$. The mass shell is accepted by a float64 comparison of $\Etot$ with $\sqrt{\lVert\mathbf p\rVert^2+m_n^2}$, avoiding ill-conditioned float32 subtraction at high energy.
+
+The available support and primary domain always refer to $\Kinc$. The model condition remains the full $\pFour$. Derived event features must be deterministic functions of $\pFour$ only.
+
+\subsection{ROOT and target contract}
+The default adapter targets PODIO/EDM4hep-style branches for one generator neutron, event headers, and ECAL/HCAL \texttt{SimCalorimeterHit} collections. The stored hit energy and position are expected in GeV and mm, respectively, consistent with the EDM4hep data model, but production files must be inspected rather than assumed \cite{edm4hep}.
+
+The primary target is raw deposit:
+\begin{equation}
+ Y_i=\sum_{h:\,c(h)=i} E_h\,\mathbf 1[E_h>0],\qquad
+ T=\sum_{i=1}^{6790}Y_i.
+ \label{eq:rawtarget}
+\end{equation}
+Repeated channel IDs are summed. Zero-response events are retained. A separate thresholded-readout-only experiment may define $Y_i^{(\tau)}=Y_i\mathbf 1[Y_i\ge\tau]$ and $T_\tau=\sum_iY_i^{(\tau)}$, but it may not allocate raw energy into thresholded cells or introduce an unobserved residual.
+
+\subsection{Geometry}
+The strict geometry contains 65 layers with channel counts
+\begin{equation}
+ (N_0,\ldots,N_{64})=(400,\underbrace{100,\ldots,100}_{63\ \mathrm{layers}},90),
+\end{equation}
+so $\sum_\ell N_\ell=6790$. Channel identity is the pair (collection, cellID). A signed sentinel $-100$ and its uint64 representation are excluded before conversion.
+
+Median observed positions freeze the channel map. Physical lateral $k$-nearest-neighbor edges and adjacent-layer nearest-neighbor edges are deterministic functions of the frozen positions. Arrays, edges, and features are covered by a geometry SHA-256 hash. Any change defines a new experiment.
+
+\subsection{Split and leakage control}
+The preferred split unit is an independent Geant4 run/job/seed family represented by source file and run number. Deterministic event hashing is an explicitly disclosed fallback. The final test split is not used for target choice, cap estimation, normalization, architecture, objective, solver, checkpoint selection, or gate setting.
+
+\section{Conditional factorization without an unidentified latent}
+\label{sec:factorization}
+
+The v2.2 generation order is
+\begin{align}
+&p_\theta(V,T,L_0,A,D,K,H,W,Y\mid \pFour,\mathcal G)\\
+&=p_\theta(V\mid \pFour)\,
+  p_\theta(T\mid V,\pFour)\,
+  p_\theta(L_0\mid T,V,\pFour)\,
+  p_\theta(A\mid L_0,T,V,\pFour)\nonumber\\
+&\quad\times p_\theta(D\mid A,T,\pFour)\,
+  p_\theta(K\mid D,A,\pFour)\,
+  p_\theta(H\mid K,D,A,\pFour,\mathcal G)\nonumber\\
+&\quad\times p_\theta(W\mid H,K,D,\pFour,\mathcal G)\,
+  \delta\!\left(Y-\mathrm{Decode}(W,H,K,D)\right).
+\label{eq:factorization}
+\end{align}
+Here $V$ is visibility, $T$ total response, $L_0$ first positive layer, $A$ active layers, $D$ layer budgets, $K$ counts, $H$ selected support, and $W$ positive shares. There is no hidden common cause whose trainability is left unspecified. Stochastic dependence is induced by the explicit conditional chain.
+
+\section{Longitudinal cascade}
+\label{sec:cascade}
+
+\subsection{Visibility and total response}
+A Bernoulli hurdle models $V$. Given $V=1$, a finite beta mixture models a unit variable $r\in(0,1)$. We define
+\begin{equation}
+ T=\Kinc\,\rho_{\max}\,r,
+ \label{eq:response}
+\end{equation}
+where $\rho_{\max}>0$ is frozen from the complete training split and is not assumed to be one. If production data contain endpoint atoms or tails poorly represented by the beta mixture, those are explicit model failures or motivate a predeclared response ablation.
+
+\subsection{First positive layer and activity}
+\label{sec:l0activity}
+$L_0$ is modeled directly as a categorical layer index, conditional on a visible response. Activity satisfies
+\begin{equation}
+ A_\ell=0\ \text{for}\ \ell<L_0,\qquad A_{L_0}=1,
+ \label{eq:l0activity}
+\end{equation}
+while gaps are allowed for $\ell>L_0$. This replaces a renormalized in-detector hazard whose relation to no-response mass was ambiguous.
+
+\subsection{Arbitrary nonnegative profile}
+A conditional flow-matching field generates active-layer logits. A masked simplex yields
+\begin{equation}
+ D_\ell\ge0,\qquad D_\ell=0\ \text{if}\ A_\ell=0,\qquad \sum_{\ell=0}^{64}D_\ell=T.
+ \label{eq:profile}
+\end{equation}
+No order relation is imposed among the $D_\ell$. This is necessary because neutron hadronic interaction depth and final state are stochastic, and event-level deposits can start late, rise, fluctuate, and contain multiple maxima \cite{geant4_2003,geant4_2016,kulchitsky}.
+
+\paragraph{Proposition 1 (remaining-budget monotonicity).}
+Define $R_\ell=T-\sum_{j=0}^{\ell}D_j$. Then $R_{\ell+1}\le R_\ell$ and $R_\ell\ge0$.
+
+\paragraph{Proof.}
+$R_{\ell+1}=R_\ell-D_{\ell+1}\le R_\ell$ because $D_{\ell+1}\ge0$. Also, by \cref{eq:profile}, $R_\ell=\sum_{j>\ell}D_j\ge0$. No relation between $D_{\ell+1}$ and $D_\ell$ follows. \hfill$\square$
+
+\section{Count, support, and continuous share generation}
+\label{sec:count_support_share}
+
+\subsection{Finite count model}
+For layer $\ell$, $K_\ell$ is categorical on $\{0,\ldots,N_\ell\}$. Before sampling, logits are masked by geometry and budget:
+\begin{align}
+A_\ell=0\ \text{or}\ D_\ell=0 &\Rightarrow K_\ell=0,\\
+\text{raw mode},\ D_\ell>0 &\Rightarrow 1\le K_\ell\le N_\ell,\\
+\text{thresholded-only mode} &\Rightarrow K_\ell\le\left\lfloor D_\ell/\tau\right\rfloor.
+\end{align}
+Categorical counts avoid a forced Poisson mean-variance relation. Count calibration is a primary observable, not an internal nuisance.
+
+\subsection{One stochastic support mechanism}
+A graph network produces support logits $a_i$ using static geometry, condition, layer budgets, and count fractions. For each layer, exactly $K_\ell$ valid cells are drawn without replacement by Gumbel-Top-$k$ \cite{gumbel_topk}. The flow no longer models a binary endpoint, and no second independent Gumbel perturbation is applied.
+
+\subsection{Conditional flow matching for positive shares}
+For selected cells only, a continuous target encodes normalized positive shares. With reference noise $X_0$ and target $X_1$, the straight path is
+\begin{equation}
+ X_t=(1-t)X_0+tX_1,\qquad u_t=X_1-X_0,
+\end{equation}
+and the field minimizes
+\begin{equation}
+ \mathcal L_{\mathrm{FM}}=\mathbb E\left[\lVert M\odot(v_\theta(X_t,t,c,\mathcal G,D,K,H)-u_t)\rVert_2^2\right],
+ \label{eq:fm}
+\end{equation}
+where $M$ masks non-identifiable entries. The network consumes $t$ explicitly. Flow matching is a simulation-free method for learning continuous normalizing-flow vector fields \cite{flow_matching}.
+
+The primary backbone uses edge-conditioned message passing and bidirectional joint layer mixing. Causal shallow-to-deep context is retained only as an ablation: physical depth ordering does not require a parallel readout generator to prohibit deep-to-shallow internal computation.
+
+\section{Exact-support decoder and anti-dust theorem}
+\label{sec:decoder}
+
+Let $H_\ell$ be a selected set of cardinality $K_\ell$, and let
+\begin{equation}
+ w_i=\frac{\exp r_i}{\sum_{j\in H_\ell}\exp r_j},\qquad i\in H_\ell.
+\end{equation}
+
+\subsection{Raw-deposit mode}
+\begin{equation}
+ Y_i=\begin{cases}D_\ell w_i,&i\in H_\ell,\\0,&i\notin H_\ell.\end{cases}
+ \label{eq:rawdecode}
+\end{equation}
+
+\subsection{Thresholded-readout-only mode}
+For $D_\ell\ge K_\ell\tau$,
+\begin{equation}
+ Y_i=\begin{cases}\tau+(D_\ell-K_\ell\tau)w_i,&i\in H_\ell,\\0,&i\notin H_\ell.\end{cases}
+ \label{eq:thresholddecode}
+\end{equation}
+
+\paragraph{Theorem 2 (support, threshold, and budget).}
+Under the feasibility conditions, \cref{eq:rawdecode,eq:thresholddecode} produce zero outside $H_\ell$, exactly $K_\ell$ selected entries, nonnegative energies, and $\sum_{i:\,\ell(i)=\ell}Y_i=D_\ell$. In thresholded-only mode every selected energy is at least $\tau$.
+
+\paragraph{Proof.}
+Unselected entries are defined as zero. Since softmax weights are positive and sum to one, the raw sum is $D_\ell$. In thresholded mode,
+\[
+ \sum_{i\in H_\ell}Y_i=K_\ell\tau+(D_\ell-K_\ell\tau)\sum_{i\in H_\ell}w_i=D_\ell.
+\]
+Feasibility makes the residual coefficient nonnegative, so selected entries are at least $\tau$. \hfill$\square$
+
+This theorem prevents dense ``dust'' conditional on $K_\ell$. It does not make a wrong generated count correct. Counts, support, and positive-hit spectra are therefore trained and reported separately. In floating-point execution, exactness is tested against the declared tolerance.
+
+\section{Training objectives and exposure control}
+
+The component losses are
+\begin{equation}
+\mathcal L=
+\lambda_V\mathcal L_V+
+\lambda_T\mathcal L_T+
+\lambda_{L_0}\mathcal L_{L_0}+
+\lambda_A\mathcal L_A+
+\lambda_D\mathcal L_D+
+\lambda_K\mathcal L_K+
+\lambda_H\mathcal L_H+
+\lambda_W\mathcal L_W.
+\label{eq:ninelosses}
+\end{equation}
+They correspond to visibility BCE, response likelihood, first-layer CE, activity BCE, profile flow matching, count CE, support BCE/ranking, and share flow matching. Loss weights are explicit in a hashed configuration.
+
+Recommended order:
+\begin{enumerate}
+\item data/geometry/target freeze;
+\item response model;
+\item longitudinal profile;
+\item count model;
+\item support scorer;
+\item positive-share flow;
+\item generated-condition exposure and joint fine-tuning;
+\item matched baselines and frozen held-out evaluation.
+\end{enumerate}
+A decreasing aggregate loss is insufficient: each stage must be reported in free-running mode.
+
+The CLI training implementation includes AdamW, cosine or constant scheduling, mixed precision, gradient accumulation, clipping, early stopping, resume checks, environment capture, and checkpoint/config/geometry hashes. At least three predeclared training seeds are required; the best seed may not be selected after comparison.
+
+\section{Production training and the honest current gap}
+\label{sec:production_results}
+
+This section reports what happened when the nine losses of \cref{eq:ninelosses} were actually trained at production scale and evaluated. It supersedes no claim above -- the architecture and objective are exactly as specified -- and it is reported in full, including results that do not favor the model, per the predeclared gates of \cref{sec:gates} and the falsifiability commitment of \cref{sec:claims}.
+
+\subsection{Baseline and the comparator rule}
+The accepted v2.2 production baseline (internal label B0, run tag \texttt{dicos-f-02}) reached its selected checkpoint at epoch 90 with validation loss $4.483768$ in the historical $y=\log1p(T/s)$ density units of \cref{eq:response}, equivalently $4.905704$ on a common deposited-energy-GeV density measure used for all cross-configuration comparisons below (\texttt{audit/response\_loss\_measure\_M0\_20260815.json}; the two measures differ by a fixed, target-only additive offset with no gradient effect). Restarting the optimizer from a B0-initialized checkpoint costs a measured $0.021601$ on this bank and horizon, independent of any architectural change -- so a fresh-optimizer control run (internal label M0-fresh, $4.935508$ on the common measure) is the correct comparator for every screening row in \cref{sec:screening}, not B0 directly. Comparing a screening row against B0 charges its feature for the optimizer restart it did not choose to make.
+
+\subsection{Optimization and overfitting}
+Over a measured lineage of 67 epochs (48--114), training loss and validation loss both improved, but the gap between them widened with high statistical confidence: training loss vs.\ epoch $r=-0.805$ ($p<0.001$), validation loss vs.\ epoch $r=-0.358$ ($p<0.05$), and the gap (validation $-$ training) vs.\ epoch $r=+0.560$ ($p<0.001$). Training loss improved $0.13436$ over that span against a validation improvement of only $0.02324$ -- a ratio of $5.8\times$. The total validation gain across all 67 epochs was smaller than the one-off gain from an earlier learning-rate-schedule correction. Nearest-neighbor memorization, which would sharpen the interpretation of this gap, has never been run against this lineage and is not claimed either way.
+
+\subsection{Fidelity: classifier two-sample test}
+\label{sec:c2st_results}
+Across every accepted production checkpoint battery-evaluated to date, the high-level C2ST AUROC (nine physics summary statistics, gradient-boosted classifier, held-out) measures $0.77$--$0.92$ against the declared $0.65$ gate of \cref{sec:gates} -- never close. The condition-only control sits at exactly $0.50$, confirming the evaluator does not leak labels. Loss and the fidelity metric disagree about which checkpoint is best: across the same campaign, validation loss improved by $0.067$ while the gated AUROC moved by only $0.0018$. Checkpoint selection follows validation loss, as declared in advance, and does not switch to whichever metric flatters a run. Fast-MC also emits visibly empty events roughly twice as often as Geant4 ($0.015$--$0.023$ generated vs.\ $0.0097$ truth), which \cref{sec:response_spline} identifies a concrete architectural cause for.
+
+\subsection{Does more training close the gap?}
+\label{sec:epoch_trend}
+The current supervised continuation run (internal tag V3-SUP, the nine losses only, no architectural change) was battery-evaluated twice, five epochs apart, against the same frozen 10{,}000-pair validation bank and the same three evaluator seeds both times: epoch 7 (validation loss $4.940159$) and epoch 12 (validation loss $4.914728$, the current best). \Cref{tab:epoch_trend} reports what moved and what did not.
+
+\begin{table}[ht]
+\centering
+\caption{V3-SUP, epoch 7 vs.\ epoch 12: five epochs of pure continued training on the original nine losses, no architectural change.}
+\label{tab:epoch_trend}
+\begin{tabularx}{\textwidth}{@{}p{0.32\textwidth}p{0.16\textwidth}p{0.16\textwidth}Y@{}}
+\toprule
+Metric & Epoch 7 & Epoch 12 & Direction \\
+\midrule
+High-level C2ST AUROC & $0.79997$ & $0.77852$ & improving \\
+Low-level C2ST AUROC & $0.76721$ & $0.77682$ & slightly worse \\
+Profile-aware C2ST AUROC & $0.86408$ & $0.84598$ & improving \\
+Condition-only C2ST AUROC & $0.46359$ & $0.46359$ & unchanged (control) \\
+Total response bias (fractional) & $+7.24\%$ & $+2.06\%$ & improving \\
+Radial RMS gap to truth & $6.2$~mm & $1.9$~mm & improving \\
+Zero-response rate (generated) & $1.49\%$ & $1.61\%$ & flat / worse \\
+Shower gap fraction (generated) & $92.8\%$ & $93.6\%$ & flat / worse \\
+Connected-component count (generated) & $58.9$ & $59.0$ & flat / worse \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Read plainly: response bias and radial spread both closed most of the remaining distance to Geant4 -- real training improvement. C2ST moved in small, mixed amounts across its four families, nowhere near the gate either way. Shower fragmentation -- gap fraction, mean interior gaps, connected-component count -- did not move \emph{at all} in five real epochs. That is the strongest evidence yet that fragmentation is a structural limit of the independent per-layer activity model of \cref{eq:activity_v2}, not something the current objective resolves by running longer, and it is the direct motivation for \cref{sec:activity_head}.
+
+\section{Loss functions beyond the original nine}
+\label{sec:beyond_nine}
+
+\Cref{sec:c2st_results,sec:epoch_trend} establish that the nine losses of \cref{eq:ninelosses} converge but leave the fidelity gap open, and that continued training on the same objective closes part of that gap (response scale, radial spread) while leaving another part (C2ST, shower fragmentation) essentially untouched. Six additional loss mechanisms have since been designed against specific components of that residual gap: a change to the response head, a change to the first-layer head, two candidate changes to the activity head, a change to the count head, a change to how the profile flow-matching field is trained, and two adversarial critics trained inside the loss itself. Each subsection below states the defect motivating the change, the exact objective, and -- where a screening row has run -- what it measured. None has been promoted as of this revision; \cref{sec:screening} reports why in full.
+
+\subsection{Bounded response spline: a single source of zeros}
+\label{sec:response_spline}
+The v2.2 response head of \cref{eq:response} draws a continuous variable, exponentiates it, and clamps at zero. A draw landing below zero produces an exact zero \emph{after} the visibility hurdle $V$ has already declared the event visible -- a second, unintended source of zero-response events layered on top of the one $V$ already accounts for, and a direct, verified candidate mechanism for the $\sim2\times$ zero-response excess of \cref{sec:c2st_results}.
+
+The v3 replacement makes $V$ the \emph{only} possible source of a zero response. Let $C(K)$ be a per-condition cap frozen from the training split. If $V=1$,
+\begin{equation}
+T = C(K)\, S_\theta(u_0;\, c), \qquad u_0 \sim \mathrm{Uniform}(\varepsilon,\, 1-\varepsilon),
+\label{eq:response_spline_sample}
+\end{equation}
+where $S_\theta$ is a monotone rational-quadratic spline onto $(0,1)$, so $0 < T < C(K)$ by construction with no clamp anywhere and no second zero atom. Writing $r_T = T/C(K)$, the negative log-likelihood of a visible response is the standard change-of-variables density under $S_\theta$:
+\begin{equation}
+\mathcal{L}_{\mathrm{resp}} = -\log\left|\frac{\partial S_\theta^{-1}(r_T)}{\partial r_T}\right| + \log C(K).
+\label{eq:response_spline_nll}
+\end{equation}
+This is a structural fix, not a reweighting: the base density is uniform on $(0,1)$, so every draw is strictly positive and the visibility Bernoulli is the sole gate.
+
+\emph{Measured (screening row S2, epoch 19, run tag \texttt{v3-s2-response}, not promoted):} the mechanism did not yet deliver its intended effect. Generated zero-response rose to $50.4\%$ against a truth rate of $0.93\%$ -- a severe regression, not a fix -- and high-level C2ST AUROC rose to $0.933$, well above every value in \cref{sec:c2st_results}'s established range. The response-spline mechanism itself is sound by construction (\cref{eq:response_spline_sample} cannot reintroduce the old double-zero-atom bug); the visibility gate's current calibration is the leading suspect and is under diagnosis, not the spline shape.
+
+\subsection{Hierarchical first layer: giving the rare class its own gate}
+A flat 65-way softmax over the first active layer $L_0$ (\cref{sec:l0activity}) underproduces the rare ``shower starts in ECAL, layer 0'' class by roughly two orders of magnitude: it competes inside one categorical against 64 far more common HCAL starting layers. The v3 replacement splits the decision:
+\begin{align}
+p_E &= \sigma\big(g_E(c,\, \log T)\big), &Z_E &\sim \mathrm{Bernoulli}(p_E), \label{eq:firstlayer_gate}\\
+f &= \begin{cases} 0 & Z_E = 1 \\ 1 + \mathrm{Categorical}\big(g_H(c,\log T)\big) & Z_E = 0 \end{cases}, & &\\
+\mathcal{L}_{L_0} &= \mathrm{BCE}(Z_E,\, \mathbb{1}[\ell_0{=}0]) + \mathrm{CE}\big(f \mid \ell_0 > 0\big). & &
+\label{eq:firstlayer_loss}
+\end{align}
+A calibrated Bernoulli gate for ``does the shower start in ECAL at all'' plus a separate 64-way categorical over the HCAL starting layer fixes the class imbalance at its source instead of reweighting the symptom.
+
+\emph{Measured (screening row S3, epoch 19, run tag \texttt{v3-s3-first}, not promoted):} validation loss ($5.4663$) is markedly worse than the other rows ($\approx4.90$--$4.94$), though this row's total loss now sums a different set of component terms and is not directly comparable to the others on that measure alone -- the project's declared selection order ranks structural pass, physical metrics, and C2ST ahead of weighted validation loss, which serves only as a tie-breaker, for exactly this reason. High-level C2ST is essentially flat ($0.775$ vs.\ a $0.775$ baseline). Because this row does not touch the activity head, generated shower gap fraction remains at $0.93$ against a truth value of $0.52$ -- the defect \cref{sec:activity_head} targets directly.
+
+\subsection{Structured activity: a shower is one contiguous object}
+\label{sec:activity_head}
+The v2.2 activity head models each layer's on/off state $A_\ell$ as an independent Bernoulli conditional on $L_0$ and $T$:
+\begin{equation}
+\mathcal{L}_A^{(\mathrm{v2})} = \sum_{\ell > L_0} \mathrm{BCE}\big(a_\ell(c, T, L_0),\; A_\ell\big).
+\label{eq:activity_v2}
+\end{equation}
+Independent per-layer draws can place energy, a gap, then energy again -- an interior hole no physically contiguous hadronic cascade produces -- and \cref{sec:epoch_trend} measured this exact defect (gap fraction, mean interior gaps, connected-component count) completely unchanged across five real epochs of continued training under \cref{eq:activity_v2}. Two structured replacements are implemented, chosen ahead of time by a predeclared train-only statistic (compact\_fraction $\ge 0.99 \Rightarrow$ span+gaps, else autoregressive) and never by which one scores better after the fact:
+\begin{align}
+\text{span+gaps:} \quad \mathcal{L}_A &= \mathrm{CE}\big(\mathrm{last} \in \{L_0,\ldots,64\}\big) + \sum_{\ell\,\mathrm{interior}} \mathrm{BCE}(\mathrm{gap}_\ell), \label{eq:activity_spangaps}\\
+\text{autoregressive:} \quad \mathcal{L}_A &= \sum_{\ell > L_0} \mathrm{BCE}\big(\mathrm{GRU}_\ell(c, T, L_0) \mid A_{\ell-1}\big). \label{eq:activity_ar}
+\end{align}
+The first replaces independence with a last-active-layer categorical plus interior gap Bernoullis (a shower is ``on'' from $L_0$ to some last layer, with rare interior gaps); the second threads a GRU across layers so each layer's activity decision is conditioned on the previous layer's realized state.
+
+\emph{Measured (screening row S4, epoch 7 so far, run tag \texttt{v3-s4-activity-ar}, autoregressive variant): no battery evaluation has run yet.} This is the single most direct, already-implemented answer to \cref{sec:epoch_trend}'s finding, and the one row whose result remains genuinely open at the time of this revision.
+
+\subsection{Autoregressive count: cells do not fire in isolation}
+The original count loss (\cref{eq:count_original} below) predicts each layer's fired-cell count from an independent categorical conditioned only on that layer's own energy budget and geometry mask:
+\begin{equation}
+\mathcal{L}_K^{(\mathrm{v2})} = \sum_\ell w_\ell\, \mathrm{CE}\big(k_\ell(c, D_\ell, A_\ell),\; K_\ell\big), \qquad w_\ell = \begin{cases}1 & A_\ell = 1\\ 0.2 & A_\ell = 0\end{cases}.
+\label{eq:count_original}
+\end{equation}
+(Inactive layers are down-weighted rather than excluded, so the model still learns to predict exactly zero cells where the profile head says a layer is off.) A wide shower tends to stay wide layer to layer and a narrow one stays narrow -- correlation the independent model cannot use. The autoregressive replacement threads a GRU across layers:
+\begin{equation}
+\mathcal{L}_K = \sum_\ell \mathrm{CE}\Big(\mathrm{GRU}_\ell(c,\, D_\ell,\, A_\ell) \;\Big|\; K_{\ell-1}\Big).
+\label{eq:count_ar}
+\end{equation}
+This is the same structural move as \cref{eq:activity_ar} applied to a different head. It is implemented but has not yet been given its own screening row; it is queued behind S1--S4.
+
+\subsection{Mini-batch optimal-transport coupling for the profile flow}
+\label{sec:ot_cfm}
+The profile flow-matching field (generating the 65-layer longitudinal budget of \cref{eq:profile}) is trained by pairing each target profile $z_1$ with an independent random Gaussian source draw $z_0$, interpolating $x_t = (1-t)z_0 + tz_1$, and regressing the constant velocity $v = z_1 - z_0$ (the general form is \cref{eq:fm}). When two dissimilar targets happen to receive crossing paths under this arbitrary pairing, the learned velocity field must represent two incompatible directions through overlapping regions of state space, which can blur or bias the learned trajectory \cite{flow_matching}.
+
+The training \emph{pairing} -- not the loss key, and not the architecture -- is refined by a mini-batch optimal-transport coupling \cite{ot_cfm}. Within each group of training examples sharing the same visibility and active-layer mask, source draws $\{z_0^i\}$ and targets $\{z_1^j\}$ are paired by the assignment $\sigma^\star$ minimizing
+\begin{equation}
+\mathrm{cost}(z_0^i, z_1^j) = \big\lVert z_0^i - z_1^j \big\rVert^2 + 10\, \big\lVert c_i - c_j \big\rVert^2 + 2\Big(\log(1{+}T_i) - \log(1{+}T_j)\Big)^2,
+\label{eq:otcfm_cost}
+\end{equation}
+\begin{equation}
+\sigma^\star = \arg\min_\sigma \sum_i \mathrm{cost}\big(z_0^i,\, z_1^{\sigma(i)}\big),
+\label{eq:otcfm_assignment}
+\end{equation}
+solved exactly by the Hungarian algorithm (the pilot contract caps the coupled batch at 64, so this dependency-free $O(n^3)$ implementation is both bounded and reproducible; the assignment is a discrete, non-differentiable preprocessing step evaluated on detached values). Training then proceeds exactly as before, $x_t = (1-t)z_0 + t z_1^{\sigma^\star}$ and $v = z_1^{\sigma^\star} - z_0$, so the field only ever has to fit locally consistent, non-crossing paths. This mechanism is implemented and covered by tests (internal tag ``S7'') but has not yet been run against production data; it is queued behind the V3-SUP continuation run, alongside the adversarial critics below.
+
+\subsection{Adversarial critics D1/D2: a classifier trained inside the loss}
+\label{sec:adversarial}
+D1 (share critic) and D2 (profile critic) add a tenth and eleventh loss term on top of the share-flow and profile-flow objectives respectively -- a differentiable stand-in for the offline C2ST classifier of \cref{sec:c2st_results}, trained online and adversarially against the generator, on exactly the two continuous flow-matching stages most likely to leave a shape signature a classifier could exploit. Both critics share a spectrally normalized projection-conditioning head \cite{spectral_norm,projection_discriminator}: a graph-aware embedding network produces $h_Y$ for a real or generated shower (D1 sees the real per-cell graph with the same geometry the generator uses; D2 sees the 65-layer profile), and
+\begin{equation}
+d(Y, P) = u(h_Y) + \langle h_Y,\, W c \rangle
+\label{eq:critic_score}
+\end{equation}
+scores it against the condition, with larger $d$ meaning ``more Geant4-like.'' Critic parameters are never shared with the generator.
+
+Following the standard non-saturating adversarial formulation \cite{gan}, with $\mathrm{sp}$ denoting softplus,
+\begin{align}
+\mathcal{L}_D &= \mathbb{E}\big[\mathrm{sp}(-d_{\mathrm{real}})\big] + \mathbb{E}\big[\mathrm{sp}(d_{\mathrm{fake}})\big], \label{eq:critic_loss}\\
+\mathcal{L}_G &= \mathbb{E}\big[\mathrm{sp}(-d_{\mathrm{fake}})\big]. \label{eq:generator_loss}
+\end{align}
+A feature-matching alternative, $\mathcal{L}_G^{\mathrm{FM}} = \lVert \mathrm{mean}(h_{\mathrm{real}}) - \mathrm{mean}(h_{\mathrm{fake}}) \rVert^2$, is implemented as a separate stability ablation and is never summed with \cref{eq:generator_loss} in the same run. Fakes are detached for the critic update; the generator update instead freezes the critic by clearing \texttt{requires\_grad} on its parameters rather than wrapping it in a no-gradient context, so the generator's gradient still flows through the critic's input.
+
+Two mechanisms keep the adversarial term from dominating training. A lazy R1 gradient penalty \cite{r1_regularization} on real inputs only,
+\begin{equation}
+R_1 = \frac{\gamma}{2}\, \mathbb{E}\big[\lVert \nabla_{Y_{\mathrm{real}}}\, d \rVert^2\big], \qquad \gamma = 1,
+\label{eq:r1}
+\end{equation}
+is applied on one critic update in every sixteen and multiplied by sixteen, leaving its expected contribution unchanged while costing a fraction of the double-backward passes. A gradient-ratio controller sets the adversarial weight from measured gradient norms rather than a guess,
+\begin{equation}
+\lambda = \mathrm{clip}\!\left(\rho_{\mathrm{target}} \frac{|g_{\mathrm{base}}|}{|g_{\mathrm{adv}}|},\, 10^{-5},\, 10\right), \qquad \rho_{\mathrm{target}} = 0.10,
+\label{eq:gradratio}
+\end{equation}
+re-measured every 16 updates and blended into the previous value by exponential moving average so the weight cannot jump on one noisy batch; an observed ratio $\lambda |g_{\mathrm{adv}}|/|g_{\mathrm{base}}|$ above $0.25$ is treated as a failed run and reported as such rather than silently rescaled.
+
+\emph{Hardware status.} D2 is resource-eligible: a measured peak of $0.098$~GiB, since it does not touch the edge set, runs comfortably on the current training card and is not yet started, queued behind the V3-SUP continuation run. D1 is currently \textbf{resource-blocked}: measured $22.80$--$22.86$~GiB peak against the real production graph (6,790 nodes, 107,920 edges, 65 layers) on a $23.52$~GiB card, with $4.7$--$42.7$~MiB free -- a genuine out-of-memory condition. An earlier preflight measurement using a synthetic 40,740-edge graph wrongly concluded D1 would fit; the discrepancy was only caught against the real frozen production geometry. D1 needs a card with at least $32$~GB of memory to run at all.
+
+\subsection{The v3 screening scoreboard}
+\label{sec:screening}
+\Cref{tab:screening} consolidates every v3 screening row evaluated to date, each compared against the M0-fresh control per the comparator rule above.
+
+\begin{table}[ht]
+\centering
+\caption{v3 screening scoreboard. Every row is compared against M0-fresh ($4.935508$), not the older B0 baseline. \texttt{promoted\_rows: []} as of this revision.}
+\label{tab:screening}
+\begin{tabularx}{\textwidth}{@{}p{0.15\textwidth}p{0.20\textwidth}p{0.05\textwidth}p{0.09\textwidth}p{0.09\textwidth}Y@{}}
+\toprule
+Row & Tested change & Ep. & Val.\ loss & C2ST$_{\mathrm{hi}}$ & Finding \\
+\midrule
+M0 (control) & zero axis, fresh optimizer & 19 & $4.9355$ & $0.770$ & the correct comparator for every row below \\
+S1 (axis) & real incident-axis coordinates & 19 & $4.9360$ & $0.775$ & $0.0005$ from M0 -- statistically neutral \\
+S2 (response, \cref{sec:response_spline}) & bounded, single-zero-atom response head & 19 & $4.9212$ & $0.933$ & generated zero-response $50.4\%$ vs.\ truth $0.93\%$ -- regression \\
+S3 (first layer) & Bernoulli ECAL gate + categorical HCAL & 19 & $5.4663$ & $0.775$ & gap fraction $0.93$ vs.\ truth $0.52$ -- unchanged, row does not touch activity \\
+S4 (activity, \cref{sec:activity_head}) & GRU-threaded per-layer activity & 7 & $5.4570$ & --- & no battery evaluation yet -- the fragmentation question is still open \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\texttt{promoted\_rows: []} -- none of S1--S4 has been promoted. Under the project's promotion rule (retain the simpler parent unless a declared target improves \emph{and} every declared guard passes), that is the correct, working outcome of a screening protocol doing exactly what it is for, not a failure of the protocol. S1 (axis features) is resolved neutral: its deviation from M0-fresh is below the measured run-to-run reproducibility reference. S2 and S3 each identify a specific, diagnosed regression rather than a vague non-improvement. S4, D1, D2, and the OT-CFM coupling of \cref{sec:ot_cfm} remain open questions with concrete next steps: finish S4 (the most direct test of whether shower fragmentation is fixable at all), diagnose S2's zero-rate regression, run D2 (resource-eligible today), and secure a $\ge32$~GB card for D1.
+
+\section{CLI and production procedure}
+
+The repository exposes a native command-line interface:
+\begin{lstlisting}
+cbsc-zdc inspect-root ...
+cbsc-zdc scan-geometry ...
+cbsc-zdc convert ...
+cbsc-zdc split ...
+cbsc-zdc audit-dataset ...
+cbsc-zdc freeze-config ...
+cbsc-zdc train ...
+cbsc-zdc qa ...
+cbsc-zdc sample ...
+cbsc-zdc evaluate ...
+cbsc-zdc benchmark ...
+\end{lstlisting}
+
+The production sequence is strict. ROOT inspection resolves every branch. Geometry freezing requires the exact project counts and hashes all arrays/edges. Conversion aborts on unknown cells, variable vertices under the fixed-vertex contract, branch-length mismatch, or excessive rejection fraction. Splitting prefers independent run groups. The training-split audit measures response support and proposes a finite cap. \texttt{freeze-config} binds geometry, dataset, split, audit, and cap by hash. Training rejects mismatched frozen provenance.
+
+A schema-equivalent ROOT fixture was supplied. Binary inspection confirms the required branch strings, but the build environment lacked Uproot/Awkward and could not install them from its offline index. Numeric fixture and production inspection therefore remain mandatory CLI gates rather than inferred facts.
+
+\section{Evaluation and predeclared decisions}
+
+\subsection{Structural gates}
+Every generated event must have finite nonnegative energies, no energy outside selected valid support, requested/realized count agreement, layer and event closure within $2\times10^{-5}$, and no response-cap violation.
+
+\subsection{Distributional evaluation}
+Required global and conditional diagnostics include total response, zero rate, ECAL/HCAL sharing, longitudinal means and covariance, first/last active layer, late energy, counts, positive-hit spectra, centroids, widths, containment radii, top-cell fractions, connectedness, and neighbor correlations. Both high-level and geometry-aware low-level classifier two-sample tests are required, with a truth-half statistical floor. Diversity, coverage, nearest-neighbor memorization, repeated identical-$\pFour$ ensembles, and frozen downstream reconstruction closure are mandatory.
+
+\subsection{Primary gates}
+\label{sec:gates}
+Before final-test exposure, the project freezes at least:
+\begin{itemize}
+\item absolute global mean-response bias $\le1\%$;
+\item absolute relative resolution difference $\le5\%$;
+\item no energy-bin mean bias above $2\%$;
+\item no energy-bin resolution difference above $10\%$;
+\item high-level C2ST AUC $\le0.60$;
+\item low-level geometry-aware C2ST AUC $\le0.65$;
+\item measured end-to-end speedup over the declared Geant4 reference $\ge50\times$;
+\item no structural failure and satisfaction of the matched baseline rule across three seeds.
+\end{itemize}
+These are project engineering thresholds, not universal detector-simulation standards. Uncertainties and all component metrics remain visible.
+
+\section{Baselines and external context}
+
+The required internal ladder contains a conditional empirical/template model (B0), a matched non-graph CFM (B1), a single-stage graph flow (S1), a causal/serial ablation (A1), and a sparse point-cloud model (P1). P1 is required because recent post-reconstruction benchmarking indicates a favorable speed--accuracy balance for point-cloud calorimeter surrogates \cite{full_physics_benchmark,calopointflow2}.
+
+Relevant external work includes ALICE ZDC generators \cite{alice_zdc_ml,wojnar_zdc,faster_zdc,expertsim}, inductive/layerwise flows \cite{icaloflow,l2lflows}, and irregular-geometry graph generation \cite{calograph}. Public methods must first be reproduced on their native detector representation. Their adaptation to this 6,790-channel layered ZDC is a new experiment, not a direct reproduction. For example, the public flow-matching ZDC work reports excellent native ALICE latency, but the channel count, topology, scoring, and hardware protocol differ \cite{faster_zdc}.
+
+All adapted comparisons freeze data, split, target, geometry, condition, optimization budget, seeds, solver evaluations, metrics, and timing scope. Parameter count alone is not a fairness criterion.
+
+\section{Software QA and verified execution}
+\label{sec:qa}
+
+The active source compiles and the bundled regression suite currently contains 863 passing tests (measured 2026-08-29; 18 at the original July revision). The tests cover energy convention and mass-shell handling, target-mode contracts, sparse exact decoding, preselected support, geometry/data artifacts, split-group integrity, model structural invariants, flow-time dependence, configuration validation, loss-weight calibration, the adversarial-critic update mechanics of \cref{sec:adversarial}, the OT-CFM coupling of \cref{sec:ot_cfm}, and the v3 screening/battery pipeline of \cref{sec:production_results}. Eight additional tests concerning exhibition-dashboard graphic cataloging currently fail for a single, unrelated, already-diagnosed cause -- a stray file path produced by an automated remote-metrics sync job escaping its expected directory scope -- and are excluded from the count above; they exercise public-site bookkeeping, not the physics or training contract, and are tracked for a separate fix. This remains a regression suite, not a claim of exhaustive coverage. Production ROOT I/O, full CLI orchestration, and large-scale evaluator behavior at final-test scale remain mandatory production QA; production training, GPU execution, and the v3 screening battery are no longer future work -- \cref{sec:production_results} reports what they measured.
+
+An end-to-end synthetic CLI run executed:
+\begin{enumerate}
+\item synthetic geometry/data generation;
+\item deterministic split;
+\item training-split audit;
+\item configuration freeze by hash;
+\item one-epoch joint training;
+\item checkpoint reload;
+\item sample generation;
+\item structural QA;
+\item frozen evaluation and gate execution;
+\item model-only timing.
+\end{enumerate}
+The structural report contained no nonfinite, negative, outside-support, count-mismatch, closure, dust, or cap violations; its reported event/layer closure residual was zero at the configured report precision and remained within the declared $2\times10^{-5}\GeV$ tolerance. The deliberately tiny one-epoch model failed the physics gates, demonstrating that the evaluator does not convert software execution into a false fidelity pass. This is software evidence only. Synthetic events do not validate the production ROOT adapter at scale, the actual detector mapping, or Geant4 fidelity.
+
+\section{Residual risks and falsification paths}
+
+The remaining risks are empirical rather than hidden in the active mathematical contract:
+\begin{itemize}
+\item production ROOT units, primary selection, fixed vertex, sentinel, and ganging may differ;
+\item the strict 6,790-channel map may not be recovered from production hits without an external detector manifest;
+\item full graph training may exceed T4 memory or latency targets;
+\item the response mixture may miss tails or endpoint atoms;
+\item p4 alone is insufficient if the simulation varies vertex or beam conditions;
+\item a non-graph or point-cloud baseline may dominate the proposed hierarchy;
+\item exact support can preserve sparsity while count or spatial morphology remains wrong.
+\end{itemize}
+Each risk has a direct measurement or ablation. A negative result under the frozen protocol is a valid outcome and must not be obscured by post-test metric or target changes.
+
+\section{Auditor checklist}
+
+Before any physics claim, an independent auditor should verify:
+\begin{enumerate}
+\item source, environment, ROOT, geometry, data, split, audit, config, and checkpoint hashes;
+\item exact energy/unit/target semantics and training-only cap estimation;
+\item strict detector counts and edge/connectivity report;
+\item no train--test leakage or post-test adaptation;
+\item component and free-running metrics across three seeds;
+\item structural invariants on large generated samples;
+\item binned high/low-level, diversity, memorization, and reconstruction studies;
+\item matched baseline fairness and native external reproductions;
+\item decomposed batch-1 and throughput timing against measured Geant4;
+\item claim language consistent with the actual passed gates.
+\end{enumerate}
+
+\section{Conclusion}
+
+The v2.2 revision converted the earlier strong but internally incomplete proposal into a coherent CLI-ready experiment. Its key design commitments were conservative: correct incident-energy semantics, mutually exclusive target modes, arbitrary nonnegative longitudinal profiles, no unidentified slack or latent, one exact support mechanism, continuous flow only where the target is continuous, strict provenance, and predeclared failure gates. These choices made the experiment auditable and structurally valid. They did not predetermine whether the model would be an accurate or fast ZDC surrogate. That question was delegated to a frozen, reproducible empirical program on the actual Geant4 corpus, and this revision reports what that program has measured so far.
+
+The engineering commitments held: production-scale training converged with zero structural-invariant failures across every accepted run, checkpoint/resume and provenance hashing worked across interruptions, and the regression suite grew from 18 to 863 passing tests without weakening any invariant. The physics commitment the design could not settle in advance -- whether the resulting distribution is close enough to Geant4's -- remains open, and the honest answer as of this revision is no: high-level C2ST AUROC measures $0.77$--$0.92$ against a declared $0.65$ gate, generated events are empty roughly twice as often as Geant4 predicts, and five further epochs of training on the original nine losses closed part of that gap (response scale, radial spread) while leaving another part (the C2ST separation itself, and shower fragmentation specifically) essentially unmoved. This is reported as a negative result, not softened into a caveat, per \cref{sec:c2st_results,sec:epoch_trend}.
+
+The project's response has been six concrete, individually falsifiable loss-mechanism changes (\cref{sec:beyond_nine}), each built against a specific measured or reasoned component of that gap and screened, where screening has run, against a frozen comparator rather than against whichever earlier checkpoint makes it look best. As of this revision every attempted screening row has failed to promote (\cref{sec:screening}): two regressed on the metric they targeted, one is still mid-flight, and two more are implemented but not yet run for resource or scheduling reasons rather than having failed. A screening protocol whose default is to retain the simpler parent is expected to reject more often than it promotes; a scoreboard of zero promotions with a diagnosed reason attached to each row is the protocol working, not evidence against the underlying architecture. No claim of Geant4 fidelity, downstream reconstruction equivalence, absence of memorization, or measured speedup is made here, and the final test split remains sealed pending every remaining modeling decision.
+
+
+\appendix
+\section{Tensor and artifact contract}
+
+\begin{longtable}{@{}p{0.27\textwidth}p{0.22\textwidth}p{0.43\textwidth}@{}}
+\toprule
+Object & Shape/type & Contract \\
+\midrule
+\endfirsthead
+\toprule
+Object & Shape/type & Contract \\
+\midrule
+\endhead
+\texttt{p4\_total\_gev} & float $[B,4]$ & $[\Etot,p_x,p_y,p_z]$ in GeV; neutron mass shell checked in float64. \\
+\texttt{kinetic\_energy\_gev} & float $[B]$ & $\Etot-m_n$; used for selection, binning, and response scaling. \\
+\texttt{cell\_energy\_gev} & float $[B,6790]$ & Frozen readout order; finite and nonnegative. \\
+\texttt{layer\_index} & int $[6790]$ & Values $0,\ldots,64$ with strict project counts. \\
+\texttt{node\_features} & float $[6790,F]$ & Standardized position, layer, and subdetector metadata only. \\
+\texttt{edge\_index} & int $[2,E]$ & Deterministic physical graph with in-range indices. \\
+\texttt{edge\_features} & float $[E,7]$ & $\Delta x,\Delta y,\Delta z,d$ and edge-type indicators. \\
+\texttt{visible} & float $[B,1]$ & One iff modeled target response is positive. \\
+\texttt{total\_response\_gev} & float $[B,1]$ & Sum of modeled cell response. \\
+\texttt{first\_positive\_layer} & int $[B]$ & $-1$ for zero response; otherwise first positive layer. \\
+\texttt{active\_layers} & bool/float $[B,65]$ & Exactly those layers assigned positive budget. \\
+\texttt{layer\_energy\_gev} & float $[B,65]$ & Nonnegative and summing to total response. \\
+\texttt{requested\_counts} & int $[B,65]$ & Geometry/budget-feasible categorical samples. \\
+\texttt{support\_mask} & bool $[B,6790]$ & Exactly requested count per layer. \\
+\texttt{share\_state} & float $[B,6790]$ & Continuous flow state; zeroed outside support every step. \\
+\texttt{geometry\_manifest.json} & JSON & Counts, edge contract, and geometry hash. \\
+\texttt{dataset\_manifest.json} & JSON & Source hashes, target semantics, geometry hash, rejects, shards. \\
+\texttt{splits.json} & JSON & Grouping rule, seed, group count, and immutable indices. \\
+\texttt{train\_data\_audit.json} & JSON & Training-only support, cap, vertex, duplicate, and shell diagnostics. \\
+\texttt{best.pt}/\texttt{last.pt} & PyTorch & Model, optimizer, scheduler, scaler, hashes, stage, epoch, seed. \\
+\bottomrule
+\end{longtable}
+
+\section{Experiment matrix}
+
+\begin{table}[ht]
+\centering
+\caption{Minimum experiment matrix. All rows use three predeclared training seeds.}
+\begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}p{0.19\textwidth}p{0.20\textwidth}Y@{}}
+\toprule
+ID & Training support & Model & Purpose \\
+\midrule
+G1-full & 0--300\,GeV & full v2.2 graph hierarchy & primary broad-support experiment \\
+G1-primary & 50--250\,GeV & matched full v2.2 & tests whether outer support helps the primary domain \\
+B0 & matched & empirical/template & minimum competent non-neural reference \\
+B1 & matched & non-graph CFM hierarchy & tests value of geometry graph \\
+S1 & matched & single-stage graph flow & tests value of explicit hierarchy \\
+A1 & matched & causal/serial ablation & tests depth-causal restriction and latency \\
+P1 & matched & sparse point cloud & tests alternative sparse representation \\
+Native-ZDC & native public data & public ZDC methods & reproduction before detector adaptation \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Every matched row freezes the target, condition, geometry, split, optimization budget, solver evaluations, seeds, and metric implementation. The comparison reports parameter count, peak memory, training time, batch-1 latency, throughput, and the full physics vector.
+
+\section{Failure-mode matrix}
+
+\begin{longtable}{@{}p{0.24\textwidth}p{0.33\textwidth}p{0.35\textwidth}@{}}
+\toprule
+Observed failure & Immediate diagnosis & Disposition \\
+\midrule
+\endfirsthead
+\toprule
+Observed failure & Immediate diagnosis & Disposition \\
+\midrule
+\endhead
+Extreme or capped response & energy convention, cap, mixture support, units & stop; re-audit training data and refreeze \\
+Dense low-energy dust & support-mask bypass or dense decoder & hard structural failure \\
+Correct total, wrong counts & count calibration and generated-budget feasibility & repair count stage; do not retune total loss \\
+Correct counts, wrong morphology & support ranking, graph, geometry, low-level C2ST & inspect geometry and support stage \\
+Late HCAL suppression & start/activity/profile conditional distributions & compare teacher-forced and free-running stages \\
+Good stage losses, bad cascade & generated-condition exposure bias & staged free-running fine-tuning \\
+Near-perfect C2ST & globally separable samples & reject; use classifier feature importance to localize \\
+Empty split & insufficient independent run groups & repair provenance or disclose event-hash fallback \\
+Unknown cell ID & sentinel/ganging/geometry mismatch & abort conversion; new geometry experiment if corrected \\
+GPU memory failure & graph batch/hidden/edges too large & reduce batch first; profile before architecture change \\
+Fast model, failed reconstruction & low-level mismatch hidden by aggregate metrics & reject primary physics claim \\
+Good fidelity, insufficient speed & solver/backbone/decoder bottleneck & optimize only under frozen fidelity gates \\
+\bottomrule
+\end{longtable}
+
+\section{Audit-to-code traceability}
+
+\begin{longtable}{@{}p{0.25\textwidth}p{0.38\textwidth}p{0.29\textwidth}@{}}
+\toprule
+Audit concern & Active implementation & Verification \\
+\midrule
+\endfirsthead
+\toprule
+Audit concern & Active implementation & Verification \\
+\midrule
+\endhead
+Kinetic/total ambiguity & \texttt{contracts.py}, \texttt{data/root\_io.py}, \texttt{data/convert.py} & shell/energy unit tests \\
+Mixed threshold accounting & \texttt{TargetMode}, converter, truth hierarchy, decoder & raw and threshold decoder tests \\
+Shared latent ignored & no latent argument/state in active model & source/API tests \\
+Reserve non-identifiability & no reserve variable; direct closure & profile/system tests \\
+Double support randomness & \texttt{SupportScoreField} + one support sample & seed/exact-support tests \\
+Singular support CFM & \texttt{ShareFlowField} only on selected continuous shares & flow mask/time tests \\
+Count infeasibility & dynamic categorical logit mask & count/decoder tests \\
+Geometry ambiguity & scan/freeze/hash and strict counts & hash mutation/count tests \\
+Leakage-prone split & group hash with empty-split refusal & split tests and manifest \\
+Unfrozen response cap & training-split audit + config freeze & synthetic audit/freeze smoke \\
+Unfrozen RNG/optimizer & seed bundle and hashed resolved config/checkpoint & reproducibility/checkpoint tests \\
+No success gates & gate YAML and evaluator & gate parser/application tests \\
+Bibliography errors & rebuilt primary bibliography & metadata audit log \\
+\bottomrule
+\end{longtable}
+
+\section{Production command transcript template}
+
+An execution record should preserve the following literal command sequence and outputs:
+\begin{lstlisting}
+python -m pip install --no-build-isolation -e '.[root,eval,dev]'
+python -m compileall -q src tests vertex
+pytest -q
+cbsc-zdc inspect-root FILE --schema configs/schema_production_zdc.yaml
+cbsc-zdc scan-geometry FILES --schema ... --output artifacts/geometry
+cbsc-zdc convert FILES --schema ... --geometry ... --output artifacts/data \
+  --target-mode raw_deposit --min-kinetic-gev 0 --max-kinetic-gev 300
+cbsc-zdc split --manifest artifacts/data/dataset_manifest.json \
+  --output artifacts/splits.json --group-by source_group --seed 20260723
+cbsc-zdc audit-dataset --manifest artifacts/data/dataset_manifest.json \
+  --splits artifacts/splits.json --split train --kinetic-range 0 300 \
+  --output artifacts/train_data_audit.json
+cbsc-zdc freeze-config --template configs/templates/train_full_0_300_raw.yaml \
+  --audit artifacts/train_data_audit.json --geometry artifacts/geometry \
+  --manifest artifacts/data/dataset_manifest.json --splits artifacts/splits.json \
+  --output configs/frozen_full_0_300.yaml
+cbsc-zdc train --config configs/frozen_full_0_300.yaml
+cbsc-zdc qa --geometry artifacts/geometry --checkpoint runs/.../best.pt --device cuda
+cbsc-zdc evaluate --checkpoint runs/.../best.pt --geometry artifacts/geometry \
+  --manifest artifacts/data/dataset_manifest.json --splits artifacts/splits.json \
+  --split test --gates configs/gates_primary.yaml --output runs/.../test.json \
+  --device cuda
+cbsc-zdc benchmark --checkpoint runs/.../best.pt --geometry artifacts/geometry \
+  --device cuda --batch-size 1
+\end{lstlisting}
+
+\section{Evidence boundary for the supplied fixture}
+
+The supplied ROOT fixture is explicitly not drawn from the production event population. Its role is limited to branch/schema compatibility. The bundle records its SHA-256 and confirms the expected branch strings by binary inspection. Numerical event, unit, geometry, and distribution checks remain unresolved until the production environment installs Uproot/Awkward and executes the CLI. This limitation prevents a false claim that the 6,790-channel mapping or response distribution was recovered from the fixture.
+
+\printbibliography
+\end{document}

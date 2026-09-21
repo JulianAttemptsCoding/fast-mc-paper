@@ -1,0 +1,297 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=23mm,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx,booktabs,tabularx,array}
+\usepackage{caption,placeins,float}
+\usepackage{enumitem}
+\usepackage{xcolor,hyperref,fancyhdr}
+\usepackage[backend=biber,style=numeric,sorting=none,maxbibnames=6]{biblatex}
+\addbibresource{references.bib}
+\graphicspath{{figures/}}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,
+ urlcolor=blue!55!black,
+ pdftitle={Hierarchical Sparse Conditional Generation of Neutron Showers in a Zero Degree Calorimeter},
+ pdfauthor={Julian Juan}}
+\captionsetup{font=small,labelfont=bf}
+\setlength{\parskip}{0.28em}
+\setlength{\parindent}{1em}
+\setlist{nosep,leftmargin=*}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Sparse ZDC shower generation}
+\fancyhead[R]{\small Preliminary development-bank study}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\newcommand{\GeV}{\,\mathrm{GeV}}
+\newcommand{\Kinc}{K_{\mathrm{inc}}}
+\newcommand{\Etot}{E_{\mathrm{tot}}}
+\newcommand{\Gfour}{p^{\mu}}
+\newcommand{\gtruth}{\mathrm{G4}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{Hierarchical Sparse Conditional Generation\\of Neutron Showers in a Zero Degree Calorimeter}
+\author{Julian Juan}
+\date{20 September 2026\\\small Working manuscript; validation-only evidence}
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+
+\begin{abstract}
+We study a hierarchical conditional generator for channelized Geant4 energy deposits from single neutrons in a fixed Zero Degree Calorimeter geometry with 65 longitudinal layers and 6,790 readout channels. The model samples a zero-response hurdle, total deposited energy, active layers, per-layer budgets, hit counts, graph-aware sparse support, and positive energy shares. Its decoder enforces exact zeros outside sampled support, realizes sampled hit counts, and closes to the \emph{generated} energy budget within numerical tolerance. These structural properties do not establish distributional fidelity. The current model lineage was optimized on a 26,624-event pilot, only 4.35\% of the canonical training split, and inspected repeatedly on a fixed 10,000-condition development bank drawn from the canonical validation split. On that bank, a supervised continuation has high-level classifier two-sample AUROC $0.779$, while the fraction of events with interior inactive layers is $93.6\%$ versus $52.4\%$ in Geant4. A response-head screen slightly improves its matched scalar loss but generates zero response for $50.4\%$ of events. We therefore present the work as a reproducible preliminary study of structural validity and failure localization. Physics fidelity, acceleration, and comparative performance remain unestablished pending a locked evaluation bank, multiple training seeds, matched baselines, reconstruction studies, and end-to-end timing.
+\end{abstract}
+
+\noindent\textbf{Keywords:} calorimeter simulation; neutron shower; sparse generative model; conditional flow matching; graph neural network; classifier two-sample test.
+
+\section{Introduction}
+\label{sec:intro}
+Geant4 provides detailed particle transport through detector material~\cite{geant4}. Its computational cost motivates learned and parameterized calorimeter surrogates, but speed is useful only when the generated distribution is sufficiently accurate for the intended analysis. Community studies therefore emphasize conditional shower observables, multivariate discrimination, model size, and timing rather than visual plausibility alone~\cite{calochallenge}.
+
+We study channelized deposited energy from single neutrons in a fixed Zero Degree Calorimeter (ZDC). The detector representation is sparse and irregular: it contains one electromagnetic (ECAL) readout layer with 400 channels and 64 hadronic (HCAL) layers with 6,390 channels. Some HCAL readout IDs gang multiple physical locations. These properties motivate explicit generation of discrete support rather than a dense image model.
+
+The present contribution is methodological and diagnostic. We define the data and geometry contract, specify a hierarchical sparse generator, and report adverse development-bank results rather than treating decoder constraints as evidence of physical accuracy. The strongest current finding is that exact readout-level structure is insufficient: generated showers remain readily distinguishable from Geant4 and are substantially more fragmented in depth and on the readout graph. We do not use \emph{fast} in the title because no matched end-to-end timing result exists.
+
+\section{Related work}
+\label{sec:related}
+Parameterized detector simulation predates modern generative models; AtlFast3 combines parameterized and learned components in production-oriented ATLAS simulation~\cite{atlfast3}. CaloFlow introduced normalizing flows and classifier discrimination for calorimeter shower generation~\cite{caloflow}; iCaloFlow extended a layerwise construction to higher granularity~\cite{icaloflow}. Score and diffusion approaches include CaloScore~\cite{caloscore}, CaloDiffusion~\cite{calodiffusion}, and CaloGraph for irregular geometry~\cite{calograph}. Other relevant representations include layer-to-layer flows~\cite{l2lflows} and point-cloud generation~\cite{calopointflow2}.
+
+Flow matching has also been applied directly to ALICE ZDC simulation with published fidelity and inference-time measurements~\cite{fasterzdc}. Its detector representation and target differ from the present readout, so its numbers are context rather than a baseline. A native comparison would require adaptation to the same target, training events, conditions, hardware, and timing scope. The potentially distinctive combination studied here is a frozen irregular readout graph, explicit layer hit counts, stochastic exact-size support, and energy-budget closure. The present single-lineage study does not establish that this combination outperforms the alternatives.
+
+\section{Data, geometry, and scientific scope}
+\label{sec:data}
+\subsection{Condition and target}
+The event condition is one neutron four-vector \(\Gfour=(\Etot,p_x,p_y,p_z)\), in GeV. Selection and binning use kinetic energy
+\begin{equation}
+ \Kinc=\Etot-m_n,\qquad m_n=0.93956542052\GeV,
+ \qquad \Etot^2-\lVert\mathbf p\rVert^2=m_n^2.
+ \label{eq:kinetic}
+\end{equation}
+The production contract records a fixed generator vertex. Entry position is therefore not an independent event condition; if later data violate fixed-vertex tolerance, the condition must be expanded before training. The five deterministic encoder inputs are
+\begin{equation}
+ c_{\rm raw}=\left[\log(1+\Kinc/100\GeV),u_x,u_y,u_z,
+ \log(\Etot/1\GeV)\right],\qquad \mathbf u=\mathbf p/\lVert\mathbf p\rVert.
+ \label{eq:condition}
+\end{equation}
+
+For readout channel \(i\), \(Y_i\) is the sum of stored, non-sentinel Geant4 deposited energy mapped to that channel. Duplicate records are summed. No detector digitization, SiPM response, noise, calibration, or analysis threshold is modeled in this target; zero threshold means no additional threshold beyond what was stored by the production. We therefore use \emph{deposited energy} rather than detector readout response. The target is
+\begin{equation}
+ p_{\theta}(Y\mid \Gfour,\mathcal G)\simeq p_{\gtruth}(Y\mid \Gfour,\mathcal G),
+ \qquad Y\in\mathbb R_{\ge0}^{6790},\quad 50\leq \Kinc/\GeV\leq250.
+ \label{eq:estimand}
+\end{equation}
+
+\subsection{Corpus, splits, and development-bank status}
+The converted corpus contains 764,940 events spanning 0--300\,GeV in 187 sparse shards. A deterministic canonical assignment contains 612,482 training, 76,158 validation, and 76,300 nominal test events. The model lineage reported here used 26,624 pilot-training and 6,656 pilot-validation events. Thus it used only 4.35\% of the canonical training split, and its failures cannot be interpreted as an architectural ceiling.
+
+The 10,000-condition bank used for Figs.~\ref{fig:c2st}--\ref{fig:zero} was drawn from the canonical validation split and contains no nominal test events. It has been inspected during successive architecture screens; we therefore call it a \emph{development bank}, even though the source reports retain the field name \texttt{validation}. A separate locked validation subset is required before final test evaluation.
+
+The nominal test split also has a historical exposure problem. An external classifier study used 40,000 nominal test events, and a separate visualization used 200; their exact overlap and identities have not been fully reconciled. Human influence cannot be excluded merely because those exercises were not formal selection gates. We consequently make no claim from the nominal test split and require either exact manifest recovery or a newly governed holdout before a final result.
+
+\subsection{Frozen geometry and graph}
+The geometry has 6,790 nodes and 65 logical layers. There are 2,400 ganged HCAL readout channels, with at most four stable physical positions per readout ID. Each ganged node is represented by the unweighted centroid of its distinct positions to avoid response-dependent geometry. This centroid can nevertheless distort physical adjacency and is a limitation of graph-based topology metrics.
+
+The frozen graph has 107,920 directed edges. Each node connects to its eight nearest transverse neighbors within the same layer. It also connects to four nearest nodes in each adjacent layer, with both longitudinal directions stored. Edge features contain standardized coordinate differences, their norm, and an edge-type indicator. The same graph is used by the support model and connected-component diagnostic, so the latter describes connectivity on the readout graph rather than an independent physical-cell topology.
+
+\subsection{Reference-simulation reporting boundary}
+The available paper snapshot does not contain the exact Geant4 version, physics list, production cuts, detector material configuration, upstream material, or primary random-seed policy. These omissions prevent independent recreation of \(p_{\gtruth}\). The present report can reproduce figures from released aggregate reports, but it is not a complete detector-simulation reproduction package. Those fields must be supplied from the production owner before submission.
+
+\section{Hierarchical sparse generator}
+\label{sec:model}
+The condition encoder maps Eq.~\eqref{eq:condition} to \(c\in\mathbb R^{128}\) using a linear layer, SiLU activation, two residual MLP blocks, and layer normalization. The graph fields use hidden width 96, three edge-conditioned message-passing blocks, four attention heads, and two bidirectional layer-context blocks by default. The original response head uses four mixture components and a hidden width of 192.
+
+Let \(V\) denote nonzero deposited response, \(\widehat T\) the generated total, \(L_0\) the first active layer, \(A_\ell\) activity, \(\widehat D_\ell\) layer budgets, \(\widehat K_\ell\) hit counts, \(H_\ell\) support, and \(r_i\) share logits. The sampling order is summarized schematically by
+\begin{align}
+ p_\theta(V,\widehat T,L_0,A,\widehat D,\widehat K,H,r\mid c,\mathcal G)
+ &=p(V\mid c)p(\widehat T\mid V,c)p(L_0,A\mid\widehat T,c)
+ p(\widehat D\mid A,\widehat T,c)\nonumber\\
+ &\quad\times p(\widehat K\mid\widehat D,A,c)
+ p(H\mid\widehat K,\widehat D,c,\mathcal G)
+ p(r\mid H,\widehat D,c,\mathcal G).
+ \label{eq:factorization}
+\end{align}
+The zero-response branch skips downstream sampling and returns an all-zero vector. Figure~\ref{fig:architecture} shows the operational order.
+
+\begin{figure}[H]
+ \centering\includegraphics[width=\textwidth]{generator_schematic.png}
+ \caption{Sampling order. The final decoder imposes sparse support and energy-budget semantics. It does not constrain the learned probability law of the sampled variables.}
+ \label{fig:architecture}
+\end{figure}
+
+\subsection{Response head and positivity qualification}
+The original positive branch models \(z=\log(1+T/s_T)\), with \(s_T=10\GeV\), using a conditional Gaussian mixture. A Gaussian draw can have \(z<0\); inference therefore computes \(T=s_T\operatorname{expm1}(z)\), clamps negative values to zero, applies a training-audit safety cap, and resets \(V=0\) when the resulting total is zero. Nonnegativity is therefore enforced by the sampling implementation, not by the mixture support. This creates a second zero atom beyond the Bernoulli hurdle. The manuscript does not hide that distinction.
+
+\subsection{Profile and share coordinates}
+For active layers, truth shares are \(q_\ell=D_\ell/T\). The flow target is the centered log share
+\begin{equation}
+ x_\ell=\left[\log\max(q_\ell,10^{-8})-
+ \frac{1}{|A|}\sum_{j\in A}\log\max(q_j,10^{-8})\right]\mathbb 1[\ell\in A].
+ \label{eq:centeredlog}
+\end{equation}
+Cell shares use the analogous per-layer transform. Conditional flow matching interpolates between masked Gaussian noise and these targets~\cite{flowmatching}. A masked softmax converts the terminal profile state to nonnegative shares summing to one.
+
+Component training is teacher-forced: profile, count, support, and share losses receive truth upstream quantities and truth masks. Inference samples them ancestrally. The resulting exposure mismatch can compound errors across stages and is one plausible explanation for the observed fragmentation; it has not yet been isolated experimentally.
+
+\subsection{Support sampling and decoder}
+The support scorer combines static node features, edge messages, the event condition, layer energy, count fraction, and bidirectional layer context. Its training objective is class-balanced support BCE plus a positive-negative ranking term. This is a surrogate score objective; it is not the likelihood of the Plackett--Luce law induced by Gumbel-Top-$k$. At generation, one Gumbel-Top-$k$ draw selects exactly \(\widehat K_\ell\) valid channels without replacement~\cite{gumbeltopk}.
+
+Given support \(H_\ell\), the raw-deposit decoder is
+\begin{equation}
+ \widehat Y_i=
+ \begin{cases}
+ \widehat D_\ell\dfrac{\exp(r_i)}{\sum_{j\in H_\ell}\exp(r_j)},&i\in H_\ell,\\[6pt]
+ 0,&i\notin H_\ell.
+ \end{cases}
+ \label{eq:decoder}
+\end{equation}
+For finite accepted inputs, this gives \(|H_\ell|=\widehat K_\ell\), \(\widehat Y_i\ge0\), and exact real-arithmetic closure to \(\widehat T\). Runtime checks quarantine nonfinite values, negative output, count mismatches, and closure failures. The guarantee is conditional on passing these numerical checks and says nothing about agreement with Geant4.
+
+\section{Evaluation protocol}
+\label{sec:protocol}
+\subsection{Snapshots and reuse}
+We compare three snapshots on the same 10,000-condition development manifest: B0, the frozen v2.2 checkpoint at epoch 90; V3-SUP, a supervised continuation at epoch 12; and S2, a response-spline screen at epoch 19. Each report contains 10,000 generated showers, 10,000 Geant4 showers at matched incident conditions, and zero test events. All snapshots use the same generator seed, so they are not independent training replications.
+
+\subsection{Classifier two-sample diagnostics}
+Classifier two-sample tests (C2ST) measure whether a held-out classifier separates generated and reference samples~\cite{c2st}. The evaluator is a scikit-learn histogram gradient-boosting classifier with 100 iterations, maximum depth 4, learning rate 0.08, and a 70/30 stratified train/evaluation split. Three random seeds change both this split and classifier stochasticity. The reported error bars are the standard deviation across those three evaluator runs; they are neither generator-seed uncertainty nor sampling confidence intervals.
+
+Three feature families are kept separate:
+\begin{table}[H]
+\centering
+\caption{C2ST feature families.}
+\begin{tabularx}{\textwidth}{@{}lYl@{}}\toprule
+Family & Features & Dimension\\\midrule
+High level & total deposit, hit count, depth centroid, transverse centroids, radial RMS, leading-cell fraction, ECAL fraction, late-layer fraction & 9\\
+Low level & full channelized deposited-energy vector & 6,790\\
+Profile aware & per-layer deposited energies & 65\\\bottomrule
+\end{tabularx}
+\end{table}
+
+The original battery split did not keep matched condition pairs in the same fold, so its malformed condition-only result is excluded. A separate hash-pinned evaluator with pair-grouped, energy-stratified splitting reports condition-only AUROC exactly 0.500 on validation data; that value is stored in \texttt{data/reports/verified\_condition\_control.json}. The remaining C2ST values are retained as diagnostics, with the random-fold limitation stated explicitly. The historical 0.65 high-level line is an internal operational gate, not a statistically privileged threshold.
+
+\subsection{Physics-observable definitions}
+For energy bin \(b\), let \(\mu_b^t,\mu_b^g\) and \(\sigma_b^t,\sigma_b^g\) be the unconditional mean and standard deviation of total deposited energy for truth and generation, including zero-response events. We report
+\begin{equation}
+ B_b=\frac{\mu_b^g-\mu_b^t}{|\mu_b^t|},\qquad
+ R_b=\frac{\sigma_b^g-\sigma_b^t}{|\sigma_b^t|}.
+ \label{eq:responsemetrics}
+\end{equation}
+The frozen aggregate reports do not contain per-bin bootstrap intervals, so Fig.~\ref{fig:responsebins} uses unconnected points and makes no binwise significance claim.
+
+For layer means \(\bar D_\ell\), the profile metric is
+\begin{equation}
+ L^1_{\rm rel}=\frac{\sum_{\ell=0}^{64}|\bar D_\ell^g-\bar D_\ell^t|}
+ {\sum_{\ell=0}^{64}|\bar D_\ell^t|}.
+ \label{eq:profilemetric}
+\end{equation}
+It includes ECAL layer 0. A layer is active when its stored deposited energy is strictly greater than zero. For each nonempty event, an interior gap is any inactive layer between the first and last active layer. Connected components are counted on the frozen readout graph. Threshold stability and an independent physical-adjacency graph have not yet been evaluated.
+
+\subsection{Architecture screens and loss measure}
+The response mixture is trained in \(z=\log(1+T/s_T)\) coordinates. Converting its density to deposited-energy units gives
+\begin{equation}
+ -\log p_T(T)=-\log p_z(z)+\log(s_T+T).
+ \label{eq:jacobian}
+\end{equation}
+The project offset is not universal: on 4,096 development events, 4,046 positive, the mean log-Jacobian was 2.622334; multiplication by the frozen response-loss weight 0.160901 gave a total-loss offset 0.421936. We use it only for same-bank screen bookkeeping.
+
+S2 changes the positive-response parameterization while shared parameters and the visibility behavior can also move. It is therefore a configuration screen, not a localized causal ablation. Scalar loss is never a promotion criterion by itself.
+
+\section{Development-bank results}
+\label{sec:results}
+\subsection{Classifier separation}
+\begin{figure}[H]
+ \centering\includegraphics[width=\textwidth]{c2st_validation.png}
+ \caption{Development-bank C2ST AUROC. Points and error bars give the mean and standard deviation over three evaluator seeds. The dotted line is chance; the dashed 0.65 line is an internal high-level diagnostic gate. The verified pair-grouped condition-only control is 0.500.}
+ \label{fig:c2st}
+\end{figure}
+
+High-level AUROC is $0.7748$ for B0, $0.7785$ for V3-SUP, and $0.9330$ for S2. V3-SUP low-level and profile-aware AUROC are $0.7768$ and $0.8460$. These values show that this evaluator separates generated and Geant4 samples. They do not quantify a universal distance, and a future value near 0.5 would not prove equivalence without classifier-power and permutation studies.
+
+\subsection{Deposited-energy response}
+\begin{figure}[H]
+ \centering\includegraphics[width=\textwidth]{response_energy_bins.png}
+ \caption{Unconditional total deposited-energy mean bias and width difference from Eq.~\eqref{eq:responsemetrics}. Points are not joined because the eight bins are discrete estimates; the aggregate reports do not provide binwise uncertainty intervals.}
+ \label{fig:responsebins}
+\end{figure}
+
+For V3-SUP, the paired generated-minus-Geant4 total deposit divided by \(\Kinc\) has mean $7.8\times10^{-5}$ and RMS 0.0462. A 1,000-replicate paired energy-stratified bootstrap gives a 95\% interval $[-8.43\times10^{-4},9.45\times10^{-4}]$ for the mean. This is a paired stochastic diagnostic, not event-by-event reconstruction. Binwise biases still change sign, reaching about $-6.4\%$ in 150--175\,GeV and $+6.4\%$ in 175--200\,GeV; the corresponding width difference in 175--200\,GeV is about $+18.2\%$. The response Wasserstein distance has bootstrap mean $0.125\GeV$ and 95\% interval $[0.075,0.224]\GeV$.
+
+\begin{figure}[H]
+ \centering\includegraphics[width=\textwidth]{longitudinal_profile.png}
+ \caption{Mean deposited energy by layer. ECAL is shown explicitly rather than hidden by the different HCAL scale. The middle panel emphasizes early HCAL development, and the right panel shows the long HCAL tail logarithmically.}
+ \label{fig:profile}
+\end{figure}
+
+The V3-SUP profile has \(L^1_{\rm rel}=0.1098\). Agreement of the mean profile is incomplete evidence because it averages over which layers are simultaneously active.
+
+\subsection{Longitudinal and graph fragmentation}
+\begin{figure}[H]
+ \centering\includegraphics[width=\textwidth]{topology_validation.png}
+ \caption{Strict-zero activity and readout-graph topology on the development bank. These observables have not yet been repeated under nonzero hit thresholds or an independent physical-cell graph.}
+ \label{fig:topology}
+\end{figure}
+
+The Geant4 interior-gap fraction is $52.43\%$, compared with $93.53\%$ for B0 and $93.56\%$ for V3-SUP. Mean gaps are 2.10, 6.05, and 6.25 per event, and mean connected-component counts are 23.20, 58.55, and 58.99. V3-SUP nevertheless has 53.53 active layers on average versus 54.08 for Geant4. Matching the marginal active-layer count therefore does not recover its joint arrangement. The result is strong evidence of failure under the declared strict-zero/readout-graph definition, while its sensitivity to storage thresholds and ganged-channel geometry remains open.
+
+\subsection{A scalar objective selects a catastrophic screen}
+\begin{figure}[H]
+ \centering\includegraphics[width=\textwidth]{zero_response_validation.png}
+ \caption{Zero-response fraction. Different vertical ranges expose the small B0/V3-SUP discrepancy and the much larger S2 failure. The S2 zeros arise from the learned visibility hurdle in the stored report.}
+ \label{fig:zero}
+\end{figure}
+
+Geant4 has $0.93\%$ zero response, B0 $1.42\%$, and V3-SUP $1.61\%$. For V3-SUP the generated-minus-truth zero-rate difference has a 1,000-replicate bootstrap mean 0.00678 and 95\% interval $[0.0036,0.0096]$. S2 instead produces zero response in $50.41\%$ of events. Its high-level AUROC rises to 0.933 and mean active-layer count falls to 25.50.
+
+Despite that failure, S2's common-measure development loss is slightly lower than the matched M0-fresh control (Table~\ref{tab:screens}). The result demonstrates that this weighted scalar objective can prefer a physically unusable generative distribution. Future promotion requires predeclared gates on zero mass, conditional response, activity, topology, and C2ST in addition to loss.
+
+\begin{table}[H]
+\centering
+\caption{Single-lineage architecture screens. Digits are limited to the precision relevant for this comparison.}
+\label{tab:screens}
+\begin{tabular}{@{}llll@{}}\toprule
+Run & Development loss & Difference from M0 & Decision\\\midrule
+M0-fresh control & 4.9355 & --- & control\\
+S1 axis coordinates & 4.9360 & $+0.0005$ & not promoted\\
+S2 response spline & 4.9212 & $-0.0143$ & not promoted\\
+S3 first-layer hierarchy & 5.4663 & $+0.5308$ & not promoted\\\bottomrule
+\end{tabular}
+\end{table}
+
+S1 is smaller than the measured single-lineage run-to-run reference 0.0013 and was treated as neutral. S3 is worse. None of these rows has three independent generator-training seeds.
+
+\section{Discussion and limitations}
+\label{sec:discussion}
+The decoder solves a concrete software problem: it gives sparse outputs with exact sampled cardinalities and generated-budget accounting. The development results show that this contract does not solve the distribution problem. The most persistent failures are longitudinal gaps, readout-graph fragmentation, and conditional deposited-energy moments.
+
+The hierarchical design also helps localize hypotheses. Zero-rate errors implicate the response hurdle; conditional moment errors implicate total-response modeling; gaps implicate activity generation; graph disconnection can involve both activity and support. Because training is teacher-forced and several screens update shared parameters, these are diagnostic hypotheses rather than proven causes.
+
+The current evidence has six central limitations:
+\begin{enumerate}
+ \item one generator-training lineage and only 4.35\% of the canonical training data;
+ \item repeated inspection of the 10,000-condition development bank;
+ \item unresolved historical exposure of the nominal test set;
+ \item one generated and one Geant4 shower per condition in the principal bank, which is insufficient to characterize fixed-condition stochasticity;
+ \item missing production-level Geant4 and detector-material metadata; and
+ \item no matched baseline, downstream reconstruction test, parameter-count report, or end-to-end timing benchmark.
+\end{enumerate}
+The battery runtime is dominated by evaluation and topology code and is not generation latency. Any later speed claim must include condition encoding, ODE integration, Gumbel support sampling, sparse decoding, transfers, and serialization, compared with a fully specified Geant4 setup.
+
+A defensible final experiment requires a locked development/validation/test governance scheme, three independent training seeds per frozen condition, repeated draws at selected fixed conditions, confidence intervals for every primary observable, threshold-stability tests, fair empirical and learned baselines, and a complete negative-result report if the gaps persist. A negative result is scientifically useful only after credible scale, optimization, and comparator effort exclude a merely undertrained pilot.
+
+\section{Conclusion}
+\label{sec:conclusion}
+We implemented a hierarchical sparse generator whose accepted outputs satisfy explicit channel-support and generated-energy constraints. On a fixed Geant4 development bank, those constraints coexist with clear distributional failure: C2ST separates the samples, shower activity is fragmented, and a lower scalar loss can select a model with a catastrophic zero-response law. The present manuscript establishes a transparent preliminary result and a reproducible figure package. It does not yet establish a faithful or faster detector simulator.
+
+\section*{Acknowledgements}
+The author thanks Dr.~Wen-Chen Chang of the Institute of Physics, Academia Sinica, for mentorship and guidance on the research project. The author also thanks the reviewers whose adversarial scientific and reproducibility audits motivated the revisions documented in this repository.
+
+\section*{Data and code availability}
+The manuscript source, figure builder, aggregate development reports, hashes, and review history are available at \url{https://github.com/JulianAttemptsCoding/fast-mc-paper}. The underlying collaboration-owned Geant4 production file is not redistributed. The aggregate reports are sufficient to regenerate the figures in this paper but not to retrain the model or reproduce the Geant4 production. Exact model code, frozen configurations, checkpoints, detector materials, and complete Geant4 provenance must be released or archived before submission.
+
+\section*{Author contributions}
+Julian Juan developed the project, performed the analysis, generated the figures, and wrote the manuscript.
+
+\printbibliography
+
+\end{document}
