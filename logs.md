@@ -54,3 +54,5 @@ Reframed as close mean counts with fragmented support; corrected pilot size, gap
 - 2026-09-22T20:09:26Z: v0.7.0 model-exposition release candidate completed. Full QA iteration 41 passed (9 pages); all nine final page hashes match the inspected iteration-40 renders; 7 QA-guard tests passed; exact source/PDF/figure/visual binding passed. PDF SHA-256 `9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25`. No training, data-role, threshold, configuration, result, or scientific-claim change occurred.
 
 - 2026-09-22: Staged-release whitespace check found trailing spaces copied from the iteration-36 LaTeX failure transcript. Normalized only that Markdown audit record; manuscript, figures, evidence JSON, and PDF were unchanged.
+
+- 2026-09-22T20:10:35Z: Published v0.7.0 scientific release commit `243ce2f8285f1e8f627376ca54f00b0489802fa0` to `origin/main`; remote ref matched exactly. Committed PDF SHA-256 `9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25` (938480 bytes).
