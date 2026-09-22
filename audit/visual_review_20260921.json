@@ -1,0 +1,26 @@
+{
+  "result": "pass",
+  "reviewed_utc": "2026-09-22T06:46:54.1177169+00:00",
+  "method": "Direct inspection of all twelve iteration-28 Poppler page PNGs using view_image; no clipping, overlap, broken glyphs, unreadable legends, table overflow, or stranded bibliography page found.",
+  "pdf_sha256": "c2f6e4060c4d0ad84120f34e305f07b5cacef6610cf2cdffcef167629adda82e",
+  "page_sha256": {
+    "1": "f933d476fc29f93b344ce5348d48028462fe7cd514b81658e2d1cab2ae4f4761",
+    "2": "8ce9aa1aefe2136fc635de04ad0ce378e63d3bb8f5fb67fc15d365ca1ff5dee6",
+    "3": "34268614ab9fc70ccb56e0503b9ece0919db045ba283667eeb1c1091a856cf14",
+    "4": "469b0b184cf3bcdc1498efd6ac3fde62534193a605c444ea1a541362e80ef9bc",
+    "5": "ee312dd0b204e215886f44d9678f52aaf251af818499c03e1eee30cf4841e2ef",
+    "6": "ba86a2050e8ee46ff2d9220f2237b0eaba097f4d32801d93dbfae4a0cd1b6e84",
+    "7": "12966068b1ed1cd18369ba64c467a9a447e565b8bf04cc87bb9b236f54a06cc8",
+    "8": "f19be4509dcf569027d2ff88b5c19cbd2894c6946de70d714f1d86c9602fa496",
+    "9": "257821862bff2d4661db3790e9a1cd557ceef71e327210cb6577b6ec0bebf0e8",
+    "10": "f354bb4955c129e9bc638d80d08d246198a361dd9b243eb09673e11aa66955d1",
+    "11": "75b22455d4ee080210d7b3cddbb57c19c09150ce3ea38f2d1628631c8ce5b3aa",
+    "12": "9a46f531f18a03c661a423ff442c3edf4ff942cf93285b61661433e10f4fd066"
+  },
+  "observations": {
+    "1-4": "Reframed title, abstract, introduction, equations, geometry and architecture readable.",
+    "5-8": "Decoder, weights, training plot, response annotations, subsystem labels and table readable.",
+    "9-12": "Ratio labels clear; interpretation, scope, conclusion, metadata and complete bibliography readable."
+  },
+  "prior_findings": "QA27 passed automated checks but visual review rejected a nearly empty thirteenth bibliography page. Iteration 28 uses smaller standard bibliography type, restores balanced 12-page pagination, and passes direct review. Earlier semantic and visual failures remain preserved."
+}

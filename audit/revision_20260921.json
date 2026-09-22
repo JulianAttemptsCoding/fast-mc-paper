@@ -1,0 +1,185 @@
+{
+  "created_utc": "2026-09-21T16:17:15.276904+00:00",
+  "status": "completed_preprint_revision",
+  "scope": "Manuscript, aggregate evidence, implementation provenance, primary literature, build and every-page visual QA. No training or test-data access.",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "initial_git_status": "paper clean; canonical project had pre-existing uncommitted autopilot/rule/log changes, preserved",
+  "input_sha256": {
+    "archive\\pre_revision_20260921\\build.ps1": "54053b010007e50be7d1ba4ecb907a8ab4dec4d4f13acfc1a73c1fd5098e2db4",
+    "archive\\pre_revision_20260921\\CITATION.cff": "7876e2fae669a8da0a2b1a3727495a8dac64bde7b4cd5d46d97ab2569a71b053",
+    "archive\\pre_revision_20260921\\fast_mc_zdc_manuscript.pdf": "775763e71e4b3150f2c43f0bb5df29c60e396b7db55ce13be0b644da730d5154",
+    "archive\\pre_revision_20260921\\full_manuscript_qa.py": "40ff0bec9e5a4f7c5e8140c2a5267d517e014262c0b2bbb3b711cc3a8d8d7003",
+    "archive\\pre_revision_20260921\\main.tex": "6c740b465d63914ab4a20797b73f44adf2f87248e705937eaf18485b2ef3fe4f",
+    "archive\\pre_revision_20260921\\README.md": "1454d6a1030cb223070f598812cb232731f6978722e74a62887c735d641f241c",
+    "archive\\pre_revision_20260921\\references.bib": "1affdd5846edfc283d195bc0f349b403ce8931a251417e5a7b3654d929082c86",
+    "archive\\pre_revision_20260921\\STATUS.md": "1ebc52fd4755f1c1661e02c9ef66745dd6014d22079bc137eb6edfa8c0bc151f",
+    "archive\\pre_revision_20260921\\write_build_audit.py": "4bfaf439d6fa25c7b1d132fcf11862ab78d9896c59a2c0167c7f939e5c8f7929"
+  },
+  "events": [
+    {
+      "kind": "initial_read",
+      "commands": [
+        "Get-Content docs/IMPLEMENTATION_GUIDE.md (complete, in chunks)",
+        "Get-Content docs/FOCUSED_OPERATING_RULES.md",
+        "Get-Content PDF SKILL.md",
+        "rg --files in paper repository",
+        "Get-Content main.tex references.bib README.md STATUS.md build.ps1 scripts/full_manuscript_qa.py scripts/write_build_audit.py and provenance sidecars",
+        "git status --short (both repositories)",
+        "Get-Command python,pdflatex,biber,pdftoppm,pdfinfo,pdftotext,node",
+        "node mark_artifact_operation_started.mjs --operation-kind edit --expected-output-count 1 --output-format pdf",
+        "Copy-Item nine initial source/build/output files to archive/pre_revision_20260921"
+      ],
+      "outcome": "Located actual output/fast_mc_zdc_manuscript.pdf (user path contained escaped underscores); existing 20 QA records do not substitute for scientific review. Initial evidence conflicts under investigation.",
+      "failed_attempts": [
+        "Large batched tool output truncated; relevant files reread in bounded chunks."
+      ]
+    },
+    {
+      "time_utc": "2026-09-21T20:25:17.001714+00:00",
+      "kind": "evidence_corrections_and_reframing",
+      "commands": [
+        "Read user pasted-text.txt reframing note",
+        "Read local graft cards, exact source spans, source audits and pipeline documentation",
+        "graft ask (unresponsive; interrupted process 21189, fell back to local cards)",
+        "web.run primary arXiv/PMLR metadata and full-text checks",
+        "apply_patch build.ps1",
+        "apply_patch main.tex (atomic failed match; no edits)",
+        "Python guarded paragraph revision of main.tex",
+        "Python source-evidence extraction with source SHA-256 hashes"
+      ],
+      "decisions": [
+        "Adopt close mean counts / fragmented support case-study framing; no claim of matching full marginal laws or causal attribution.",
+        "Correct training size 551234 -> 26624 by exact frozen-config hash binding; canonical split counts corrected to preparation audit.",
+        "One declared continuation epochs91-114; incorrect scheduler variant excluded.",
+        "Retain historical batch-relative QA verdict and explicitly distinguish absolute-only rule; no thresholds edited.",
+        "Mark intended EIC ZDC context as user-provided motivation only, not verified detector equivalence.",
+        "Native build process failures now stop before replacing final PDF."
+      ],
+      "failures": [
+        "Three independent reviewers interrupted by usage limits; parent continuing all unfinished checks.",
+        "graft query did not return; used local indexed cards.",
+        "Two CaloChallenge HTML version URLs unavailable; used abstract/PDF metadata.",
+        "Optional guessed V3_DATA_CONTRACT.md absent; no mutation.",
+        "Large main.tex patch failed exact paragraph match; atomic failure, corrected via unique guarded line replacements."
+      ],
+      "changed_sha256": {
+        "main.tex": "31ef1f81c6451fd8d2e420730cb24f0935a72ffb97bee0661ab77387ddc89760",
+        "build.ps1": "08cadce15e0b56ab9cacdf8f59cc33207eb6925f5d3d4451679931be55711697",
+        "data/provenance/source_evidence.json": "6582511fc13695a4ad6f021cd24afe6ad4c6d7c48cf1281af75296a7c12afa0f"
+      }
+    },
+    {
+      "time_utc": "2026-09-21T20:26:50.299264+00:00",
+      "kind": "claim_consistency_revision",
+      "commands": [
+        "Guarded main.tex section replacement and references.bib metadata correction"
+      ],
+      "changes": [
+        "Batch-wide closure bound plus legacy absolute-rule countercheck",
+        "Underflow and trivial raw dust counter correctly scoped",
+        "No full-marginal or causal claims",
+        "Counterexample with fixed budgets/cardinality and different connectivity",
+        "Correct cited first author and published CaloClouds3/ParaFlow metadata",
+        "Remove false numerical Jacobian offset attribution",
+        "Source evidence extraction complete"
+      ],
+      "failures": [
+        "Prior logging script wrote source evidence and audit twins, then failed IndexError while composing log entry; corrected here."
+      ],
+      "hashes": {
+        "main.tex": "69fc1e7271f7fb5715564d91201839008512966a4ac9e1a53c52d1ff7b2c7a95",
+        "references.bib": "2d8cfd6ab5a3b344f5b8ef8a5196281d1ba42a8042c52aec9f526bfcf9535774",
+        "data/provenance/source_evidence.json": "6582511fc13695a4ad6f021cd24afe6ad4c6d7c48cf1281af75296a7c12afa0f"
+      }
+    },
+    {
+      "time_utc": "2026-09-21T20:34:02.650003+00:00",
+      "kind": "qa_hardening_and_first_rebuild",
+      "commands": [
+        "Guarded edits to full_manuscript_qa.py, build_figures.py, README.md, STATUS.md, CITATION.cff",
+        "Rewrite write_build_audit.py; add test_qa_guards.py",
+        "python scripts/test_qa_guards.py: six passes",
+        "python scripts/full_manuscript_qa.py --iteration 21: failed exact-language case check after successful build",
+        "python scripts/full_manuscript_qa.py --iteration 22: see immutable iteration record",
+        "web.run primary papers and publication metadata"
+      ],
+      "decisions": [
+        "Current release must match PDF/source/figure manifest and every visually inspected raster page.",
+        "Older 20 QA records preserved as historical; no pass-count assurance.",
+        "Exact canonical counts and pilot population tested against source evidence rather than arithmetic alone.",
+        "Only 14 cited primary references retained; unused entries preserved in initial archive."
+      ],
+      "failures": [
+        "apply_patch rejected delete and add of same target atomically; rewritten via Set-Content",
+        "QA21 case-sensitive phrase mismatch; full explicit nonclaim now required",
+        "CERN guessed publications path and CPC DOI direct fetch unavailable; primary publisher/search and arXiv checks used"
+      ]
+    },
+    {
+      "time_utc": "2026-09-21T20:36:59.282425+00:00",
+      "kind": "P1_metric_definition_failure",
+      "finding": "The metric activity.mean_gaps equals span minus active-layer count. It counts missing interior layers, not maximal inactive runs. Original draft, reframing note and earlier QA all mislabeled it.",
+      "source": "src/cbsc_zdc/eval/v3_battery.py:_activity_report",
+      "proof": "generated mean_span 60.88374923919659 minus conditional active layers 54.83495638060458 equals mean_gaps 6.048792858592006; reference 56.68517210053498 - 54.58302210558191 = 2.1021499949530633",
+      "disposition": "Correct all manuscript, table, figure and current documentation labels; add arithmetic and semantic regression assertions. Do not alter aggregate data.",
+      "scientific_effect": "Numerical values and their ratio remain valid as counts of inactive interior layers. No run-count or run-length measurement is supported."
+    },
+    {
+      "kind": "final_research_and_QA",
+      "commands": [
+        "Primary-source web research recorded in literature_benchmark.md and claim_register_20260921.json",
+        "python scripts/test_qa_guards.py: 7 passing tests",
+        "python scripts/full_manuscript_qa.py --iteration 23: failed literature detector-name assertion",
+        "python scripts/full_manuscript_qa.py --iteration 24: failed trailing blank-line check",
+        "python scripts/full_manuscript_qa.py --iteration 25: full suite PASS",
+        "view_image every page 01-12 of iteration25",
+        "write visual review matching PDF and every rendered page hash"
+      ],
+      "corrections": [
+        "Interior inactive layers, not gap runs",
+        "Condition feature order and calibrated loss weights",
+        "Pilot training and canonical split provenance",
+        "Historical parameter count and scheduler history",
+        "Figures: response annotation separation, subsystem contrast, ratio readability"
+      ],
+      "failures": [
+        "Attempted audit/qa_runs/iteration_23.json read used wrong directory; correct evidence is audit/iterations/iteration_23.json",
+        "Attempted listing iteration24 raster directory before raster stage: absent because whitespace check stopped run"
+      ],
+      "no_new_experiments": true
+    },
+    {
+      "time_utc": "2026-09-22T06:46:54.1177169+00:00",
+      "kind": "HEP_computational_physics_reframing",
+      "commands": [
+        "Read user HEP and computational-physics framing notes",
+        "Review pre-November-2025 CaloFlow, CaloGraph, CaloDREAM, CaloChallenge 2022, and ALICE ZDC flow-matching papers for disciplinary organization and register",
+        "Revise title, abstract, introduction, section hierarchy, interpretation, scope, conclusion, figure title, repository metadata, and QA assertions",
+        "python scripts/full_manuscript_qa.py --iteration 26: failed stale exact-language guard",
+        "python scripts/full_manuscript_qa.py --iteration 27: automated pass; visual review rejected sparse bibliography page",
+        "python scripts/full_manuscript_qa.py --iteration 28: full suite pass",
+        "Direct view_image inspection of every iteration-28 page"
+      ],
+      "framing_order": [
+        "detector observation",
+        "HEP validation implication",
+        "computational-physics interpretation"
+      ],
+      "result": "complete",
+      "no_new_experiments": true,
+      "scientific_scope_unchanged": true
+    }
+  ],
+  "user_context": "Potential future Stony Brook/New Haven EIC laboratory ZDC application, per user; not claimed as established detector identity or performance.",
+  "completed_utc": "2026-09-22T06:46:54.1177169+00:00",
+  "output": {
+    "pdf_sha256": "c2f6e4060c4d0ad84120f34e305f07b5cacef6610cf2cdffcef167629adda82e",
+    "pages": 12,
+    "qa_record": "audit/iterations/iteration_28.json",
+    "visual_record": "audit/visual_review_20260921.json",
+    "claim_register": "audit/claim_register_20260921.json"
+  }
+}

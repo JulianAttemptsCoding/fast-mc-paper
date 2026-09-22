@@ -1,0 +1,30 @@
+{
+  "iteration": 21,
+  "created_utc": "2026-09-21T20:33:02.727902+00:00",
+  "result": "fail",
+  "full_suite": false,
+  "failure": "Required phrase matched lowercase physics fidelity, but explicit nonclaim begins with capital Physics. Source case mismatch; build itself succeeded.",
+  "source_sha256": {
+    "main.tex": "5dc65f517c99d1fe9c30fdbbe4ba7e05fdb79835d1970a926f1a047fa2defc22",
+    "references.bib": "2d8cfd6ab5a3b344f5b8ef8a5196281d1ba42a8042c52aec9f526bfcf9535774",
+    "build.ps1": "08cadce15e0b56ab9cacdf8f59cc33207eb6925f5d3d4451679931be55711697",
+    "README.md": "630507e6a2e431e0460018a7f323662ccd8f4532c83d9e541d44d17856b4d9c6",
+    "STATUS.md": "8a7c49157491ecc2770d5279fb80843a78c62d64bea309648054897b0cdf9fcf",
+    "CITATION.cff": "8e2281de846b044404d006c1b742ffaecdb24930aa4d97f1ab5a17f874f8a28b",
+    "scripts/build_figures.py": "1240595a5f48e627d5cf7aeab34606986e9c6acef7fe1755c53dc855b16c3956",
+    "scripts/full_manuscript_qa.py": "a3a19a123b047490b47bdda32a05b7683e9abd392f1e414ef2c2c40ee3eda98c",
+    "scripts/test_qa_guards.py": "8af0a2e38717fd981041e4521de66b9a55b3e6f3a36357f4a1fda2454d095f41",
+    "scripts/write_build_audit.py": "e2e41e16b29642cf19a2d35f76bcf31171a90cec98ae2637d8b308689e9a58b7",
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+    "data/provenance/source_evidence.json": "6582511fc13695a4ad6f021cd24afe6ad4c6d7c48cf1281af75296a7c12afa0f",
+    "data/reports/condition_only_control.json": "8d9b1ec17e23a11233b0eac9e12de86dc834928d119ef38d97ff41d42de5619f",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
+    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+    "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
+  },
+  "pdf_sha256": "13c9ef75ada44f5dc8b38ba745b57f6ec69a2806eabcb42722a314890b1484ea",
+  "command": "python scripts/full_manuscript_qa.py --iteration 21 --focus ... --disposition ...",
+  "output_log": "audit/qa_runs/revision_build_21.log"
+}

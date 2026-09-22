@@ -1,0 +1,302 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.82in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{placeins}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{xurl}
+\usepackage{hyperref}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=8]{biblatex}
+\addbibresource{references.bib}
+
+\graphicspath{{figures/}}
+\hypersetup{colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!55!black}
+\captionsetup{font=small,labelfont=bf}
+\setlist{nosep,leftmargin=*}
+\newcommand{\GeV}{\,\mathrm{GeV}}
+\newcommand{\Kinc}{K_{\mathrm{inc}}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\Ddev}{D_{\mathrm{dev}}}
+
+\title{Auditing a Hierarchical Generator for Sparse Calorimeter Readout Deposits}
+\author{Julian Juan}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study a hierarchical conditional generator for raw Geant4 energy deposits from single neutrons in a fixed Zero Degree Calorimeter readout. The model factorizes a 6,790-channel event into a deposit indicator, total deposited energy, longitudinal activity, layer budgets, per-layer channel counts, graph-scored support, and positive channel shares. Its decoder realizes every sampled channel count and conserves the sampled layer and event budgets within floating-point tolerance. We audit the single-seed checkpoint with the lowest teacher-forced validation objective over the recorded continuation lineage through absolute epoch 114; two continuations after the selected epoch 90 did not improve that objective. On a repeatedly inspected 10,000-condition development bank, the generated and reference events have almost equal mean active-layer counts conditional on nonempty events (54.83 and 54.58), yet the generated sequence has 6.05 interior inactive runs per event rather than 2.10. The mean number of weak readout-graph components is 59.39 rather than 23.42, despite a channel-count difference of only $-1.8\%$. Total deposited energy agrees at the percent level because an $8.3\%$ ECAL excess partly cancels a $5.8\%$ HCAL deficit. These results isolate a useful failure pattern: exact decoder constraints and close marginal counts do not ensure correct dependence across layers and channels. They do not establish physics fidelity, acceleration, or performance on an untouched test sample.
+\end{abstract}
+
+\section{Introduction}
+
+Detailed detector simulation is essential to high-energy-physics analyses and can dominate computing cost. Generative surrogates have therefore been developed with normalizing flows, diffusion and score models, point clouds, graphs, and conditional flow matching~\cite{caloflow,calodiffusion,calograph,caloclouds2,calodream}. The CaloChallenge comparison makes the evaluation burden clear: one-dimensional observables, multivariate tests, model size, and end-to-end generation time probe different properties and none can substitute for the others~\cite{calochallenge}. Recent work also moves beyond isolated shower summaries toward detector integration and post-reconstruction tests~\cite{physicsbenchmark}.
+
+This study addresses a fixed irregular readout with exact zeros, ganged channels, and 65 longitudinal layers. It asks a narrower question than whether the model is ready to replace Geant4:
+\begin{quote}
+Where does an explicitly constrained hierarchical generator lose joint shower structure while preserving local constraints and some marginal statistics?
+\end{quote}
+The answer is a diagnostic case study rather than a validation claim. We specify the sampler, freeze one accepted checkpoint, define the denominators of every reported statistic, and separate verified decoder invariants from distributional agreement. Short architecture screens and an invalid shower-aware classifier study are omitted because their controls or splitting procedures do not support clean scientific comparisons.
+
+The closest application-level comparator is recent flow-matching work on ALICE Zero Degree Calorimeters~\cite{fasterzdc}. Numerical fidelity and timing are not compared across these studies because the detector geometry, event representation, preprocessing, and evaluation metrics differ. Graph diffusion addresses irregular calorimeter geometry~\cite{calograph}, while CaloClouds II and CaloClouds3 use geometry-independent point-cloud representations~\cite{caloclouds2,caloclouds3}. ParaFlow shows why upstream material must be treated as part of the condition or simulation configuration when it changes the shower distribution~\cite{paraflow}. These studies motivate the graph and flow components used here, but the present evidence does not support a state-of-the-art claim.
+
+\section{Target, data, and readout}
+\label{sec:data}
+
+\subsection{Conditional target and scope}
+
+For each event, the available condition is a stored incident-neutron four-vector $p^\mu=(E,p_x,p_y,p_z)$. The model input is
+\begin{equation}
+ c=\left(\log(1+\Kinc/100\GeV),\,\log(E/\GeV),\,u_x,\,u_y,\,u_z\right),
+ \qquad \mathbf u=\mathbf p/\lVert\mathbf p\rVert ,
+\end{equation}
+with $\Kinc=E-m_n$. The reference production records a fixed generator vertex, but the released metadata does not establish whether $p^\mu$ is a generator-level or calorimeter-entry state and does not fully specify upstream material. The operational target is therefore
+\begin{equation}
+ p(\Y\mid p^\mu,\mathcal S),
+\end{equation}
+where $\mathcal S$ denotes the fixed but incompletely documented reference-simulation configuration. If the four-vector is generator truth, this target implicitly includes stochastic upstream transport. The manuscript makes no claim about a different geometry, material configuration, particle species, or detector-entry state.
+
+The corpus contains 764,940 events spanning 0--300\,GeV in incident kinetic energy. A deterministic event-hash rule produced approximately 80/10/10 partitions: 612,482 training, 76,160 validation, and 76,298 nominal test events, or 80.069\%, 9.956\%, and 9.974\%. The training partition was further frozen into 551,234 generator-training events and two 30,624-event roles reserved for planned critic development. No critic is active in the model reported here, and the generator did not use either reserved role. This is a governance choice inherited from the project design rather than a claim that 551,234 events exhaust the nominal training split.
+
+All quantitative results use a 10,000-event bank drawn from the validation partition with $50\leq\Kinc\leq250\GeV$. We denote it $\Ddev$ because its results were repeatedly inspected during development. One Geant4 event and one independent generated event are available for each condition. The design samples many conditions but cannot estimate the full shower distribution at a fixed condition. No nominal test event is used in this manuscript; the nominal test partition is no longer considered pristine because earlier project work inspected it.
+
+\subsection{Readout representation}
+
+The target $\Y\in\mathbb R_{\geq0}^{6790}$ is a vector of raw, nondigitized energy deposits. Layer 0 contains 400 electromagnetic-calorimeter (ECAL) channels. Hadronic-calorimeter (HCAL) layers 1--63 contain 100 channels each and layer 64 contains 90, giving 6,390 HCAL channels. Across all 6,790 readout IDs, 4,390 represent one physical position, 1,950 represent two, 444 represent three, and six represent four. Equivalently, 2,400 of the 6,390 HCAL channels are ganged and 3,990 HCAL channels represent a single position. This accounting fixes the all-detector versus HCAL ambiguity in earlier drafts.
+
+Each ganged ID is represented by the unweighted centroid of its physical positions. The model graph connects every channel to its eight nearest same-layer centroids. Adjacent layers receive four nearest-neighbor links per node in each direction, producing 107,920 directed edges. Both the model and the graph-connectivity diagnostic use this readout graph. Consequently, graph components are representation-specific and cannot resolve physical separation within a ganged channel.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=\linewidth]{detector_geometry.png}
+ \caption{Frozen readout geometry. The left panels show ECAL layer 0 and HCAL layer 1. The ganging histogram is over all 6,790 readout channels; its first bar includes 400 ECAL and 3,990 HCAL channels.}
+ \label{fig:geometry}
+\end{figure}
+
+\section{Hierarchical generator}
+\label{sec:model}
+
+The 2,082,507-parameter generator follows the sequence in Fig.~\ref{fig:architecture}. It is probabilistically hierarchical but computationally dense over the readout graph. Training supplies reference upstream quantities to downstream component losses; evaluation samples every stage ancestrally. This teacher-forcing difference is part of the evaluated system.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=\linewidth]{generator_schematic.png}
+ \caption{Sampling hierarchy. The diagram names the variables sampled at inference; component losses use reference upstream states during training.}
+ \label{fig:architecture}
+\end{figure}
+
+\subsection{Deposit and total-energy branch}
+
+A Bernoulli variable $B$ first selects the nominal positive-deposit branch. Conditional on $B=1$, a four-component Gaussian mixture models
+\begin{equation}
+ z=\log(1+T/10\GeV).
+\end{equation}
+The positive-reference training term is the mixture negative log density in $z$; it is a latent-branch surrogate objective, not the likelihood of the final sampler. At generation time, a mixture draw $z_s$ is transformed and projected onto the allowed interval,
+\begin{align}
+ T_{\rm raw} &= 10\GeV\,\max\{\exp(z_s)-1,0\},\\
+ C(\Kinc)&=\min\{0.630110\max(\Kinc,1\GeV),61.2338\GeV\},\\
+ \widetilde T&=\min\{T_{\rm raw},C(\Kinc)\},\qquad
+ V=B\,\mathbb 1[\Kinc>0]\,\mathbb 1[\widetilde T>0],\\
+ T&=V\widetilde T.
+\end{align}
+The cap constants are a numerical safety rail derived from the complete training selection, rather than a physical detector bound. This projection can create atoms at both zero and $C(\Kinc)$; neither is represented by the positive-branch mixture density. The development report records no positive-branch zeros for the selected checkpoint, but it does not record cap activations or reference exceedances. The cap therefore remains an unresolved support risk, especially because its constant branch begins at $\Kinc\simeq97.18\GeV$.
+
+\subsection{Longitudinal activity and energy}
+
+For $V=1$, the model samples a first active layer $F$. Layers before $F$ are forced inactive and $F$ is forced active. Every later activity bit is otherwise sampled independently given the condition, total deposit, first layer, and layer index:
+\begin{equation}
+ p(\mathbf A\mid c,T,F)=\prod_{\ell=F}^{64}p(A_\ell\mid c,T,F,\ell),\qquad A_F=1.
+\end{equation}
+This factorization can match per-layer activation probabilities while failing to reproduce residual adjacency and run-length dependence. It is a model restriction, not merely an optimization detail.
+
+Positive active-layer fractions are represented with centered log-ratio (CLR) coordinates after clipping fractions below $10^{-8}$. Independent Gaussian noise is transported toward the reference CLR target by conditional flow matching~\cite{flowmatching}. The source occupies the full coordinate space while a CLR target sums to zero; the terminal softmax removes the additive gauge. The clipping rate and energy affected by clipping were not logged. For both the layer-profile and selected-channel share flows, sampling uses eight explicit Euler updates whose vector field is evaluated at each interval's midpoint in time. This is not a second-order midpoint integrator, and no solver-step convergence study is available.
+
+\subsection{Counts, graph support, and channel shares}
+
+A categorical head produces a count $K_\ell\in\{0,\ldots,400\}$ for every layer. Feasibility masks enforce $K_\ell=0$ for inactive layers and $1\leq K_\ell\leq N_\ell$ for active layers. A graph network scores every readout channel. Within each layer, Gumbel-Top-$K_\ell$ sampling selects exactly the requested number of channels~\cite{gumbeltopk}. The score temperature is fixed at one. Training combines a class-weighted support binary cross entropy with up to 256 randomly paired positive-negative ranking comparisons per event; this surrogate does not directly optimize the sampled top-$k$ subset distribution.
+
+The share flow acts on a dense 6,790-vector masked to the selected support, so variable cardinality is represented by a fixed tensor and a Boolean mask. A softmax over selected channels converts terminal logits to strictly positive shares. For $K_\ell=1$, the softmax is identically one although the flow is still evaluated. The decoder sets
+\begin{equation}
+ Y_i=\mathbb 1[i\in S_\ell],D_\ell\,
+ \frac{\exp q_i}{\sum_{j\in S_\ell}\exp q_j},\qquad i\in\text{layer }\ell,
+\end{equation}
+where $D_\ell$ is the sampled layer budget and $S_\ell$ is the sampled exact-size support. Thus $\sum_iY_i=T$ up to floating-point accumulation error, but exact budget closure says nothing about whether the joint distribution is correct.
+
+\subsection{Composite training objective}
+
+All components are optimized together with a weighted teacher-forced objective,
+\begin{align}
+\mathcal L={}&2.574417\mathcal L_{\rm deposit}
++0.160901\mathcal L_{\rm response}
++2.159451\mathcal L_{\rm first}
++0.536770\mathcal L_{\rm activity}\nonumber\\
+&+0.160901\mathcal L_{\rm profile}
++0.160901\mathcal L_{\rm count}
++1.324108\mathcal L_{\rm support}
++1.477591\mathcal L_{\rm rank}
++0.444960\mathcal L_{\rm share}.
+\label{eq:objective}
+\end{align}
+The weights were frozen after a train-only gradient-norm calibration on the shared condition encoder: median component norms were inverted, clipped to $[0.25,4]$, and normalized to mean one. Deposit, activity, and support use elementwise binary cross entropies; first layer and counts use categorical cross entropies; profile and share use masked mean-squared flow-matching losses. Inactive count classes enter the count average with weight 0.2. The support positive weight is the valid negative-to-positive ratio clipped to $[1,100]$. The rank term averages at most 256 random positive-negative comparisons per event and then averages over eligible events.
+
+The historical objective used to select the checkpoint expresses the response term in the transformed $z$ measure. A later audit adds the target-only Jacobian, shifting this bank's composite value by 0.421936 without changing gradients or the selected epoch. We retain the historical scale in Fig.~\ref{fig:training} because the entire lineage was logged on that scale.
+
+\section{Checkpoint and evaluation protocol}
+\label{sec:evaluation}
+
+\subsection{Checkpoint selection}
+
+The model was optimized with AdamW, a $3\times10^{-4}$ peak learning rate, cosine annealing, batch size six, gradient accumulation over four batches, gradient clipping at one, and no automatic mixed precision. The training lineage used seed 20260723 and the 551,234-event generator role. Figure~\ref{fig:training} shows every recorded epoch from 11 through 114. Absolute epoch 90 has the lowest validation objective, 4.483768. Two declared continuations covering epochs 91--114 failed to improve it, so epoch 90 remains the selected state. The result remains a single-seed estimate; deterministic replay and between-seed variability are unestablished.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=\linewidth]{training_history.png}
+ \caption{Training and validation objective over the accepted family. Epoch 90 is selected only by the minimum validation objective. The shaded epochs are later continuation attempts and are not a test set.}
+ \label{fig:training}
+\end{figure}
+
+\subsection{Metrics and denominators}
+
+Total-deposit means and standard deviations are computed in eight 25\,GeV-wide incident-energy bins. Figure~\ref{fig:response} reports
+\begin{equation}
+ \Delta_\mu=100\frac{\mu_g-\mu_r}{\mu_r},\qquad
+ \Delta_\sigma=100\frac{\sigma_g-\sigma_r}{\sigma_r},
+\end{equation}
+where $g$ and $r$ denote generated and reference events in the same bin. These are differences in empirical moments, not response resolution or confidence intervals. The pooled Wasserstein-1 distance is supplemented by a deterministic reference-half versus reference-half sampling floor and a paired, energy-stratified event bootstrap. One reference draw per condition still prevents fixed-condition variance or tail validation.
+
+A layer or channel is active when its stored energy is strictly positive; no detector threshold is applied. A gap is a maximal inactive run strictly between the first and last active layers. Gap statistics exclude empty events. To avoid mixed denominators, Table~\ref{tab:results} conditions every other activity and topology mean on nonempty events; conditional values are recovered from the released all-event means by dividing by the nonempty fraction. Weak components are connected components after discarding direction from the model graph. For a nonempty support $S$ with weak components $C_1,\ldots,C_m$, the largest-component fraction is $\max_j|C_j|/|S|$.
+
+The only retained classifier number is a condition-only pipeline control with AUROC 0.500. Because reference and generated samples use the same conditions and the classifier receives no shower information, this is a sanity check rather than a fidelity result. Shower-aware classifier statistics from the existing evaluator are excluded: their split and feature construction do not meet the grouped conditional two-sample-test design required for a claim~\cite{c2st}.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Total deposit and longitudinal allocation}
+
+The all-event mean total deposit is 4.369\,GeV for the generator and 4.324\,GeV for Geant4, a $+1.0\%$ difference. Across energy bins, mean differences range from $-7.7\%$ to $+7.7\%$ and standard-deviation differences range from $-10.9\%$ to $+9.6\%$ (Fig.~\ref{fig:response}). The pooled Wasserstein-1 distance is 0.0727\,GeV. Its 1,000-replicate paired bootstrap interval is 0.0684--0.1984\,GeV, while a single deterministic split of the reference bank gives a reference-half floor of 0.1475\,GeV. These finite-sample summaries do not establish conditional agreement.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=\linewidth]{response_energy_bins.png}
+ \caption{Differences in unconditional within-bin total-deposit moments. Every panel includes zero-deposit events. Labels give the number of matched conditions in each bin; no uncertainty bars are shown.}
+ \label{fig:response}
+\end{figure}
+
+The total mean hides compensating subsystem errors. Mean ECAL energy is 2.275\,GeV rather than 2.100\,GeV ($+8.3\%$), whereas mean HCAL energy is 2.094\,GeV rather than 2.224\,GeV ($-5.8\%$). The mean longitudinal profile has relative $L^1$ discrepancy
+\begin{equation}
+ \frac{\sum_{\ell=0}^{64}|\bar D_{\ell,g}-\bar D_{\ell,r}|}
+ {\sum_{\ell=0}^{64}\bar D_{\ell,r}}=0.071.
+\end{equation}
+Figure~\ref{fig:longitudinal} shows that the apparent total-energy agreement is partly cancellation rather than uniform layerwise agreement.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=\linewidth]{longitudinal_profile.png}
+ \caption{Mean longitudinal allocation on $\Ddev$. The stacked bars expose opposite ECAL and HCAL shifts. The layer plots show HCAL layers only; layer 0 is isolated in the bars.}
+ \label{fig:longitudinal}
+\end{figure}
+
+\subsection{Matched marginals and incorrect dependence}
+
+The clearest result appears after conditioning on nonempty events. The generator and reference have mean active-layer counts of 54.83 and 54.58, a $0.5\%$ difference. Their arrangement is nevertheless different: 93.53\% of generated events contain an interior gap compared with 52.43\% of reference events, and the mean number of gap runs is 6.05 rather than 2.10. The model therefore nearly matches the active-layer count while misrepresenting longitudinal dependence.
+
+An analogous pattern appears at channel level. The mean number of active channels differs by $-1.8\%$ conditional on nonempty events, yet the generated support has 2.54 times as many weak readout-graph components. Its largest component contains 88.87\% of active channels on average, compared with 94.90\% in the reference. These statistics use the same graph that informs the model, so they are not independent geometric validation; they still show that exact cardinality realization does not imply a connected support law.
+
+\begin{table}[t]
+\centering
+\caption{Development-bank results. Except for the first row, all quantities are conditional on nonempty events. Values are descriptive because $\Ddev$ was repeatedly inspected.}
+\label{tab:results}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Quantity & Geant4 reference & Generator & Gen./ref. \\
+\midrule
+Zero-deposit events (\%) & 0.93 & 1.42 & 1.53 \\
+ECAL-start prevalence (\%) & 93.81 & 92.53 & 0.99 \\
+Mean first active layer & 0.510 & 0.735 & 1.44 \\
+Mean active layers & 54.58 & 54.83 & 1.00 \\
+Events with interior gaps (\%) & 52.43 & 93.53 & 1.78 \\
+Mean interior-gap runs & 2.10 & 6.05 & 2.88 \\
+Mean active channels & 1617.6 & 1588.8 & 0.98 \\
+Mean weak graph components & 23.42 & 59.39 & 2.54 \\
+Mean largest-component fraction (\%) & 94.90 & 88.87 & 0.94 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=0.97\linewidth]{structure_ratio_summary.png}
+ \caption{Generator-to-reference ratios. Total deposit and active counts lie near unity, while gap and weak-component statistics do not. The graph quantities are conditional on nonempty events and use the readout graph defined in Sec.~\ref{sec:data}.}
+ \label{fig:structure}
+\end{figure}
+
+\subsection{Decoder invariants}
+
+All 10,000 generated events passed the finite-value, nonnegativity, valid-support, count-realization, and budget checks implemented by the evaluation battery. Across 1,250 generated batches, the maximum event-budget error was $1.14\times10^{-5}$\,GeV and the maximum layer-budget error was $3.05\times10^{-5}$\,GeV. The closure rule is
+\begin{equation}
+ |\widehat T-T|\leq\max(2\times10^{-5}\GeV,10^{-5}T),
+\end{equation}
+whose maximum effective bound on this sample was $4.94\times10^{-4}$\,GeV. Requested-versus-realized count mismatch, support-mask mismatch, invalid support, negative values, nonfinite values, and numerical dust counters were all zero. These are implementation guarantees for the sampled output, not tests of Geant4 fidelity.
+
+\section{Discussion}
+
+The central observation is a dependence failure. Independent Bernoulli activity can reproduce conditional activation marginals while losing run-length and adjacency structure. A graph scorer followed by exact top-$k$ sampling can reproduce support size while losing the spatial relationships among selected channels. Teacher-forced component losses can remain well behaved while ancestral sampling compounds upstream errors. The present aggregate evidence is consistent with all three mechanisms, but it does not isolate their causal contributions.
+
+An oracle cascade is the most direct next experiment: replace one generated upstream stage at a time with reference truth and evaluate every downstream stage on the same event bank. Adjacent-layer transition matrices, gap-length distributions, per-layer counts, component-size spectra, and energy outside the largest component would then localize the failure. A sequential or autoregressive activity model is a targeted alternative to the independent Bernoulli factorization. Support evaluation also needs a threshold sweep and a physical-neighbor graph that does not reuse the model adjacency.
+
+Recent calorimeter papers typically combine broad shower-shape diagnostics with multivariate tests and timing~\cite{calochallenge,calodream,caloclouds3}. Detector-integration work further tests reconstructed observables and multi-particle or full-physics tasks~\cite{physicsbenchmark}. This manuscript presently satisfies only the model-specification, aggregate-diagnostic, and structural-invariant parts of that standard. It does not report a valid shower-aware C2ST, matched Geant4 timing, reconstructed observables, fixed-condition ensembles, or a controlled baseline suite. Direct performance ranking against those publications would therefore be misleading.
+
+\section{Limitations and required validation}
+\label{sec:limitations}
+
+The following gaps materially limit interpretation:
+\begin{enumerate}
+ \item \textbf{Selection and replication.} The checkpoint is selected on a repeatedly used validation objective and has one training seed. A newly locked bank and at least three independently trained final seeds are required.
+ \item \textbf{Conditional coverage.} The bank has one reference and one generated event per condition. Repeated simulations at fixed energies and angles are required to validate conditional spread, tails, and diversity. Angular dependence is not reported.
+ \item \textbf{Reference provenance.} Geant4 version, physics list, production cuts, detector materials, upstream geometry, magnetic field, generator semantics, and seed policy are incomplete in the released evidence.
+ \item \textbf{Sampler support.} Cap activation, reference cap exceedance, CLR clipping, Gumbel temperature sensitivity, and four/eight/sixteen-step solver comparisons were not measured.
+ \item \textbf{Geometry semantics.} Ganged-channel centroids collapse multiple physical positions, and the same approximate graph is used for generation and topology diagnostics.
+ \item \textbf{Statistics.} The condition-only AUROC of 0.500 checks the pairing pipeline but says nothing about showers. No retained multivariate conditional fidelity statistic is available.
+ \item \textbf{Usefulness and speed.} There is no matched dense, graph, point-cloud, resampling, or flow baseline; no downstream reconstruction study; and no end-to-end latency or throughput measurement.
+\end{enumerate}
+
+These are requirements for a later preprint-quality validation claim. The present manuscript can support the narrower audited observation that local constraints and marginal agreement coexist with large dependence errors in this checkpoint.
+
+\section{Conclusion}
+
+We audited a hierarchical generator for 6,790-channel neutron energy deposits in a fixed calorimeter readout. The selected checkpoint is the minimum-validation-objective state in the recorded lineage through absolute epoch 114, and its decoder realizes sampled counts and energy budgets to the stated numerical tolerance. On a 10,000-condition development bank, total energy and active-layer count are close to the reference while ECAL and HCAL errors compensate, interior gaps nearly triple, and readout-graph components increase by a factor of 2.54. The data therefore support a precise model-development conclusion: deterministic output constraints and close marginal counts do not ensure the joint longitudinal and spatial structure required of a calorimeter surrogate. A locked bank, repeated fixed-condition showers, multiple training seeds, a valid condition-aware multivariate test, independent geometry diagnostics, downstream reconstruction, and matched timing remain necessary before claiming physics fidelity or fast-simulation readiness.
+
+\section*{Code and data availability}
+
+The manuscript source, aggregate validation report, event-independent geometry, training-history extract, deterministic figure builder, and QA records are available at \url{https://github.com/JulianAttemptsCoding/fast-mc-paper}. The accepted checkpoint is identified by SHA-256 \nolinkurl{491284c7423f365230d34b0443f95aa4888ec770bdc673c4c979897bad8acbce}; the frozen runtime configuration is identified by SHA-256 \nolinkurl{116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5}. The collaboration-owned event file and checkpoint are not redistributed. Public aggregates reproduce the figures and quoted battery statistics, but they cannot retrain the model or reconstruct event-level tests.
+
+\section*{Acknowledgments}
+
+The author thanks Dr. Wen-Chen Chang (Institute of Physics, Academia Sinica) for mentorship and guidance on the experimental high-energy-physics context of this project.
+
+\section*{Author contributions}
+
+Julian Juan: conceptualization, methodology, software, investigation, visualization, and writing.
+
+\section*{Use of generative AI}
+
+Generative-AI tools were used for editorial assistance, code generation, literature discovery, and adversarial manuscript auditing. The author checked numerical statements against versioned project artifacts and retains responsibility for the manuscript.
+
+\appendix
+\section{Artifact identity and audit boundary}
+
+The aggregate battery report has schema version 3 and records 10,000 generated and 10,000 validation-reference events, zero test events, generator seed 20260723, evaluator seeds 20260804--20260806, and checkpoint epoch 90. The checkpoint was selected by the lowest validation objective over its declared horizon. The report's checkpoint hash matches its provenance sidecar. A queued copy has a different file hash because its serialized container differs; no metric is joined by file hash across those two containers in this paper.
+
+The model implementation and aggregate evidence are sufficient to inspect the reported sampler and recompute manuscript figures. They are insufficient to verify the reference physics configuration or retrain from the raw corpus. All statements are therefore scoped to the fixed artifact and development bank identified above.
+
+\printbibliography
+
+\end{document}

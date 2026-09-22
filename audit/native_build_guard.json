@@ -1,0 +1,18 @@
+{
+  "command": [
+    "powershell",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\build.ps1",
+    "-Python",
+    "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\audit\\qa_runs\\negative_native_exit.cmd"
+  ],
+  "returncode": 1,
+  "expected_native_exit": 7,
+  "pdf_before": "c2f6e4060c4d0ad84120f34e305f07b5cacef6610cf2cdffcef167629adda82e",
+  "pdf_after": "c2f6e4060c4d0ad84120f34e305f07b5cacef6610cf2cdffcef167629adda82e",
+  "result": "pass",
+  "interpretation": "Intentional synthetic build failure rejected; not physics validation"
+}

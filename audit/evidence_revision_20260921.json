@@ -1,0 +1,62 @@
+{
+  "created_utc": "2026-09-21T16:18:15.152386+00:00",
+  "status": "in_progress",
+  "scope": "Independent manuscript quantitative and method evidence audit; local aggregate evidence and source only; no remote commands; zero raw/test-event reads",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "findings": [
+    {
+      "priority": "P1",
+      "id": "training_population",
+      "finding": "Current manuscript assigns the 551234-event v3 generator role to pilot-trained dicos-f-02 epoch90; prior manuscript audit explicitly identifies 26624 pilot events for B0.",
+      "sources": [
+        "audit/reviewer_response_round2.md:7",
+        "desktop project docs/PIPELINES.md:212-220"
+      ],
+      "disposition": "Parent notified; pin frozen config and source records before correction."
+    },
+    {
+      "priority": "P1",
+      "id": "split_counts",
+      "finding": "Manuscript split 612482/76160/76298 disagrees with canonical project verified preparation 612482/76158/76300.",
+      "disposition": "Resolve source provenance; current self-referential QA checks arithmetic only."
+    }
+  ],
+  "inputs": [
+    {
+      "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\main.tex",
+      "sha256": "6c740b465d63914ab4a20797b73f44adf2f87248e705937eaf18485b2ef3fe4f"
+    },
+    {
+      "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py",
+      "sha256": "40ff0bec9e5a4f7c5e8140c2a5267d517e014262c0b2bbb3b711cc3a8d8d7003"
+    },
+    {
+      "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\audit\\reviewer_response_round2.md",
+      "sha256": "2b1a3ab131a38b9fa057a8b64633f6d5f157cf07908f6157a2358b2b236c71a5"
+    },
+    {
+      "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\docs\\PIPELINES.md",
+      "sha256": "7b912bd1254e2ad3ccb34a4648f0168b6c2277362f48e042e7fd1832a133a630"
+    },
+    {
+      "path": "C:\\Users\\Julia\\OneDrive\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\audit\\verified_prepare_r5.json",
+      "sha256": "779daf54fc4216cee1b86e1ff85cd3e3f7816399072c60209fefb00c67985f26"
+    }
+  ],
+  "failed_attempts": [
+    "rg search named missing artifacts directory in canonical repository; no artifacts opened",
+    "rg search named nonexistent prep/graft/audit/graft/docs and guessed configs/templates/dicos_f02_20260805 path; corrected by file inventory",
+    "graft condition.md absent; use exact indexed file inventory"
+  ],
+  "commands": [
+    "Get-Content docs/IMPLEMENTATION_GUIDE.md and docs/FOCUSED_OPERATING_RULES.md in canonical project; repeated slices to recover initially truncated output",
+    "Get-Content main.tex, README.md, STATUS.md, report/provenance/geometry/history and manuscript QA source in paper",
+    "rg --files and targeted rg -n over local project audit/configs/docs/source inventories",
+    "git rev-parse HEAD and git status --short in canonical and desktop projects",
+    "Read desktop AGENTS.md, docs/PIPELINES.md, graft/INDEX.md; compare implementation-guide bytes/line endings using git diff --no-index"
+  ],
+  "review_disposition": "Partial agent review interrupted by usage limits; superseded by completed root claim register and revision audit. Retained as historical evidence."
+}

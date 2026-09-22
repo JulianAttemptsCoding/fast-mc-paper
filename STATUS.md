@@ -1,33 +1,23 @@
 # Scientific status
 
-Version 0.3.0 is an auditable development-bank manuscript. It is a defensible preprint draft about a specific generator failure pattern, rather than a final Fast MC validation or speed result.
+Version 0.5.0 is a HEP/computational-physics preprint draft: **for one Zero Degree Calorimeter checkpoint, decoder-level numerical validity and percent-level agreement in selected inclusive response and occupancy observables coexist with substantially more fragmented longitudinal and readout-graph shower support.**
 
-## Supported by the current evidence
+## Supported claim
 
-- The accepted `dicos-f-02` epoch-90 checkpoint is the minimum-validation-objective state in the recorded single-seed lineage through epoch 114. Two later continuation attempts did not improve the selection quantity.
-- The generator used the 551,234-event generator role. The remaining two 30,624-event training roles were reserved for planned critic work and were not used by the reported generator.
-- All quantitative results use a repeatedly inspected 10,000-condition validation bank over 50--250 GeV. No nominal-test event appears in the manuscript.
-- The decoder realized requested channel counts and generated budgets across 1,250 recorded evaluation batches, with zero nonfinite, negative, dust, support-mask, or count-mismatch findings.
-- Close total-deposit and active-count marginals coexist with compensating ECAL/HCAL errors, excessive interior gaps, and substantially more weak readout-graph components.
-- The retained condition-only AUROC of 0.500 checks pairing only. All shower-aware classifier outputs from the invalid evaluator are excluded.
+On the recorded 10,000-condition development bank, mean active layers differ by +0.5% and active channels by -1.8%, while interior inactive layers and weak graph components increase by factors of 2.88 and 2.54. Mean total deposit differs by +1.0%, with opposing ECAL and HCAL biases. The detector-level conclusion is that inclusive response and occupancy agreement do not establish correct shower morphology. The computational-physics conclusion is that constraint preservation guarantees admissibility with respect to the decoder, not fidelity to the reference stochastic process. Both conclusions are restricted to the selected dicos-f-02 epoch 90 checkpoint trained on 26,624 pilot events.
 
-## Current claim boundary
+The batch-relative evaluator reports numerical validity. Its maximum layer residual exceeds the earlier absolute-only tolerance. The revision describes both policies without changing either. Raw-mode dust is a trivial zero-threshold counter. Aggregate records cannot independently reconstruct per-batch checks.
 
-The evidence supports this statement: for this checkpoint and development bank, deterministic output constraints and close marginal counts do not ensure the joint longitudinal and spatial structure needed from a calorimeter surrogate.
+## Corrected provenance
 
-The evidence does not support final conditional fidelity, architecture superiority, reconstruction equivalence, cross-detector ranking, or acceleration.
+The earlier v0.3.0 draft incorrectly attributed a later model's 551,234-event training role to this pilot checkpoint, misstated canonical split counts, described two later continuations rather than one accepted continuation, and presented a batch-wide closure tolerance as eventwise. Those statements and the previous QA assurances are superseded. Source evidence is bound to the checkpoint's exact configuration hash in `data/provenance/source_evidence.json`.
 
-## Required before a physics-fidelity or production claim
+## Limits of this draft
 
-1. Freeze a new evaluation bank with exact event identifiers and no adaptive inspection.
-2. Train at least three independent seeds for every frozen final condition.
-3. Generate repeated Geant4 and model showers at fixed conditions.
-4. Run pair-grouped shower-only and joint condition-plus-shower C2STs with permutation and same-source controls.
-5. Measure response-cap activations, reference cap exceedances, CLR clipping frequency and moved energy, and solver-step convergence.
-6. Run the component-wise teacher-forced and oracle-versus-ancestral cascade.
-7. Report angle dependence, energy-angle maps, tails, distributions rather than means alone, and threshold-stable topology.
-8. Validate topology with an independent physical-neighbor representation that preserves ganged-channel geometry.
-9. Add matched simple baselines and relevant published baselines under the same readout semantics.
-10. Evaluate reconstructed observables and end-to-end timing, including transfer and decode costs.
-11. Archive complete Geant4, detector, material, field, cut, software, and random-seed provenance.
-12. Resolve collaboration data ownership, authorship, and an immutable archival release before submission.
+The bank was repeatedly inspected, the checkpoint has one training seed, and event arrays are not available in this package for new topology uncertainty estimates. The readout graph collapses ganged positions and is shared with the model. The manuscript makes no physics-fidelity, speed, causal-mechanism or architecture-superiority claim. Historical shower-aware classifier results remain excluded; condition-only AUROC 0.500 is not evidence of shower fidelity or complete leakage control.
+
+## Work needed for broader claims
+
+A locked bank with exact identities; at least three independent final training seeds; repeated fixed-condition Geant4 and model showers; valid paired/grouped multivariate tests; cap, clipping, solver and threshold diagnostics; an independent physical-neighbor graph; oracle-cascade and matched baseline comparisons; full-training-sample controls; reconstruction and memorization studies; end-to-end timing; and complete production physics provenance.
+
+Before submission, the author must verify authorship/acknowledgments, collaboration data permissions and the immutable release. These are publication decisions; manuscript QA cannot establish them. The user's intended future Stony Brook/New Haven EIC ZDC context is noted as motivation only and is not used to assert detector identity, affiliation or readiness.

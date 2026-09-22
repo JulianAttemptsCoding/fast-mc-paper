@@ -39,6 +39,8 @@ def load_report() -> dict:
         raise ValueError("Unexpected development-bank size")
     if report["identity"]["epoch"] != 90 or report["identity"]["run_tag"] != "dicos-f-02":
         raise ValueError("Unexpected checkpoint identity")
+    if sha256(REPORT) != provenance["report_sha256"]:
+        raise ValueError("Report byte hash disagrees with provenance sidecar")
     if report["identity"]["checkpoint_sha256"] != provenance["checkpoint_sha256"]:
         raise ValueError("Checkpoint hash disagrees with provenance sidecar")
     return report
@@ -49,9 +51,9 @@ def style() -> None:
         {
             "font.family": "serif",
             "font.serif": ["DejaVu Serif"],
-            "font.size": 9.5,
-            "axes.titlesize": 10.5,
-            "axes.labelsize": 9.5,
+            "font.size": 10.5,
+            "axes.titlesize": 11,
+            "axes.labelsize": 10.5,
             "axes.spines.top": False,
             "axes.spines.right": False,
             "axes.grid": True,
@@ -69,7 +71,7 @@ def save(fig: plt.Figure, filename: str) -> None:
 
 
 def plot_architecture() -> None:
-    fig, ax = plt.subplots(figsize=(10.8, 3.4), layout="constrained")
+    fig, ax = plt.subplots(figsize=(8.6, 3.4), layout="constrained")
     ax.set_xlim(0, 12.2)
     ax.set_ylim(0, 3.2)
     ax.axis("off")
@@ -96,7 +98,7 @@ def plot_architecture() -> None:
                 )
             )
             ax.text(x + width / 2, y_positions[row_index] + height / 2, label,
-                    ha="center", va="center", fontsize=9.4, color="#1d2b3c")
+                    ha="center", va="center", fontsize=10.4, color="#1d2b3c")
 
     def arrow(start: tuple[float, float], end: tuple[float, float]) -> None:
         ax.add_patch(FancyArrowPatch(start, end, arrowstyle="-|>", mutation_scale=13,
@@ -117,7 +119,7 @@ def plot_geometry() -> None:
     positions = geometry["positions_mm"]
     layers = geometry["layer_index"]
     multiplicity = geometry["physical_position_count"]
-    fig, axes = plt.subplots(1, 3, figsize=(10.8, 3.55), layout="constrained")
+    fig, axes = plt.subplots(1, 3, figsize=(8.6, 3.55), layout="constrained")
 
     for ax, layer, title in [(axes[0], 0, "ECAL layer 0"), (axes[1], 1, "HCAL layer 1")]:
         select = layers == layer
@@ -138,7 +140,7 @@ def plot_geometry() -> None:
     y = np.array([histogram[k] for k in x])
     axes[2].bar(x, y, color="#4c78a8", width=0.65)
     for xi, yi in zip(x, y, strict=True):
-        axes[2].text(xi, yi + 70, f"{yi:,}", ha="center", fontsize=8.7)
+        axes[2].text(xi, yi + 70, f"{yi:,}", ha="center", fontsize=9.5)
     axes[2].set_xticks(x)
     axes[2].set_xlabel("physical positions represented")
     axes[2].set_ylabel("all-detector readout channels")
@@ -160,19 +162,19 @@ def plot_training_history() -> None:
     best_index = int(np.argmin(validation))
     if int(epochs[best_index]) != 90:
         raise ValueError("Epoch 90 is not the minimum recorded validation loss")
-    fig, ax = plt.subplots(figsize=(10.8, 3.7), layout="constrained")
+    fig, ax = plt.subplots(figsize=(8.6, 3.7), layout="constrained")
     ax.plot(epochs, train, color="#607d8b", lw=1.3, alpha=0.9, label="training objective")
     ax.plot(epochs, validation, color=COLORS["Validation"], lw=1.25, alpha=0.8,
             label="validation objective")
     ax.scatter([90], [validation[best_index]], s=55, zorder=5, color="#9b2c2c",
                label=f"selected epoch 90 ({validation[best_index]:.4f})")
-    ax.axvspan(91, 114, color="#6b7280", alpha=0.1, label="post-selection continuations")
+    ax.axvspan(91, 114, color="#6b7280", alpha=0.1, label="later continuation")
     ax.set_xlabel("absolute epoch across continuation lineage")
     ax.set_ylabel("weighted teacher-forced objective")
     ax.set_xlim(11, 114)
-    ax.legend(frameon=False, ncol=2, fontsize=8.5)
+    ax.legend(frameon=False, ncol=2, fontsize=9.5)
     ax.set_axisbelow(True)
-    fig.suptitle("Checkpoint selection over the complete recorded training lineage", fontsize=11.5)
+    fig.suptitle("Checkpoint selection over recorded joint-training epochs", fontsize=11.5)
     save(fig, "training_history.png")
 
 
@@ -183,7 +185,7 @@ def plot_response_bins(report: dict) -> None:
     width_diff = 100 * np.asarray([b["resolution_difference_fraction"] for b in bins])
     counts = np.asarray([b["n"] for b in bins])
     labels = [f"{int(b['low'])}\u2013{int(round(b['high']))}" for b in bins]
-    fig, axes = plt.subplots(1, 2, figsize=(10.8, 3.8), sharex=True, layout="constrained")
+    fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.8), sharex=True, layout="constrained")
     for ax, values, title in [
         (axes[0], mean_diff, r"Mean difference: $100(\mu_g-\mu_r)/\mu_r$"),
         (axes[1], width_diff, r"Width difference: $100(\sigma_g-\sigma_r)/\sigma_r$"),
@@ -192,10 +194,11 @@ def plot_response_bins(report: dict) -> None:
         ax.plot(x, values, marker="o", ms=5.2, lw=1.5, color=COLORS["Generator"])
         for xi, value, n in zip(x, values, counts, strict=True):
             ax.annotate(f"n={n:,}", (xi, value), xytext=(0, 8 if value >= 0 else -13),
-                        textcoords="offset points", ha="center", fontsize=6.8, color="#4b5563")
+                        textcoords="offset points", ha="center", fontsize=9, color="#4b5563")
+        ax.margins(y=0.22)
         ax.set_title(title)
         ax.set_xlabel("incident kinetic-energy bin (GeV)")
-        ax.set_xticks(x, labels, rotation=35, ha="right", fontsize=7.5)
+        ax.set_xticks(x, labels, rotation=35, ha="right", fontsize=9)
         ax.set_ylabel("relative difference (%)")
         ax.set_axisbelow(True)
     fig.suptitle("Total-deposit moments on the 10,000-condition development bank", fontsize=11.5)
@@ -210,7 +213,7 @@ def plot_longitudinal(report: dict) -> None:
     truth_total, gen_total = truth.sum(), generated.sum()
     truth_parts = [truth[0], truth[1:].sum()]
     gen_parts = [generated[0], generated[1:].sum()]
-    fig, axes = plt.subplots(1, 3, figsize=(10.8, 3.45), width_ratios=[0.8, 1.35, 1.35], layout="constrained")
+    fig, axes = plt.subplots(1, 3, figsize=(8.6, 3.45), width_ratios=[0.8, 1.35, 1.35], layout="constrained")
     x = np.arange(2)
     axes[0].bar(x, [truth_parts[0], gen_parts[0]], color=[COLORS["Reference"], COLORS["Generator"]],
                 width=0.68, label="ECAL")
@@ -219,9 +222,10 @@ def plot_longitudinal(report: dict) -> None:
     axes[0].set_xticks(x, ["reference", "generator"])
     axes[0].set_ylabel("mean deposit / event (GeV)")
     axes[0].set_title("Subsystem cancellation")
-    axes[0].legend(frameon=False, fontsize=7.7)
-    axes[0].text(0, truth_total + 0.06, f"{truth_total:.3f}", ha="center", fontsize=8)
-    axes[0].text(1, gen_total + 0.06, f"{gen_total:.3f}", ha="center", fontsize=8)
+    axes[0].text(0, truth_parts[0] / 2, "ECAL", color="white", ha="center", va="center", fontsize=9.5)
+    axes[0].text(0, truth_parts[0] + truth_parts[1] / 2, "HCAL", color="white", ha="center", va="center", fontsize=9.5)
+    axes[0].text(0, truth_total + 0.06, f"{truth_total:.3f}", ha="center", fontsize=9.5)
+    axes[0].text(1, gen_total + 0.06, f"{gen_total:.3f}", ha="center", fontsize=9.5)
     for ax in axes[1:]:
         ax.plot(layers, truth, label="Geant4 reference", color=COLORS["Reference"], lw=1.8, ls="--")
         ax.plot(layers, generated, label="accepted checkpoint", color=COLORS["Generator"], lw=1.7)
@@ -233,7 +237,7 @@ def plot_longitudinal(report: dict) -> None:
     axes[2].set_xlim(1, 64)
     axes[2].set_yscale("log")
     axes[2].set_title("HCAL tail (log scale)")
-    axes[2].legend(frameon=False, fontsize=7.7)
+    axes[2].legend(frameon=False, fontsize=9.5)
     fig.suptitle("Mean longitudinal energy allocation; relative $L^1$ discrepancy = 0.071", fontsize=11.5)
     save(fig, "longitudinal_profile.png")
 
@@ -252,9 +256,9 @@ def plot_structure_ratios(report: dict) -> None:
                                       (report["activity"]["truth"]["mean_active_layers"] / nonempty_t)),
         ("active channels | nonempty", (report["counts"]["generated"]["mean_hit_count"] / nonempty_g) /
                                         (report["counts"]["truth"]["mean_hit_count"] / nonempty_t)),
-        ("events with interior gaps", report["activity"]["generated"]["gap_fraction"] /
+        ("events with interior gaps | nonempty", report["activity"]["generated"]["gap_fraction"] /
                                       report["activity"]["truth"]["gap_fraction"]),
-        ("interior-gap runs | nonempty", report["activity"]["generated"]["mean_gaps"] /
+        ("interior inactive layers | nonempty", report["activity"]["generated"]["mean_gaps"] /
                                          report["activity"]["truth"]["mean_gaps"]),
         ("weak components | nonempty", (report["topology"]["generated"]["connected_components_mean"] / nonempty_g) /
                                        (report["topology"]["truth"]["connected_components_mean"] / nonempty_t)),
@@ -263,19 +267,20 @@ def plot_structure_ratios(report: dict) -> None:
     ]
     labels = [m[0] for m in metrics][::-1]
     values = np.asarray([m[1] for m in metrics][::-1])
-    fig, ax = plt.subplots(figsize=(10.8, 4.8), layout="constrained")
+    fig, ax = plt.subplots(figsize=(8.6, 4.8), layout="constrained")
     y = np.arange(len(labels))
     ax.axvline(1, color="#222222", lw=1.0, ls="--")
     ax.hlines(y, np.minimum(values, 1), np.maximum(values, 1), color="#9ab5c7", lw=2)
     ax.scatter(values, y, color=COLORS["Generator"], s=48, zorder=3)
     for yi, value in zip(y, values, strict=True):
-        ax.text(value + (0.035 if value >= 1 else -0.035), yi, f"{value:.2f}\u00d7",
-                ha="left" if value >= 1 else "right", va="center", fontsize=8.5)
+        ax.annotate(f"{value:.3f}\u00d7", (value, yi), xytext=(7, 0),
+                    textcoords="offset points", ha="left", va="center", fontsize=9.5,
+                    bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.85, "pad": 0.4})
     ax.set_yticks(y, labels)
     ax.set_xlabel("generator / reference ratio")
-    ax.set_xlim(0.75, 3.05)
+    ax.set_xlim(0.85, 3.3)
     ax.set_axisbelow(True)
-    fig.suptitle("Close marginal counts coexist with incorrect longitudinal and graph dependence", fontsize=11.5)
+    fig.suptitle("Topology-sensitive shower observables reveal fragmented generated support", fontsize=11.5)
     save(fig, "structure_ratio_summary.png")
 
 

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-21",
+  "status": "complete",
+  "requested_frame": "HEP and computational physics research paper",
+  "framing_order": [
+    "detector observation",
+    "HEP validation implication",
+    "computational-physics interpretation"
+  ],
+  "style_cutoff": "papers available before 2025-11-01",
+  "style_references": [
+    {"name": "CaloFlow", "url": "https://arxiv.org/abs/2106.05285"},
+    {"name": "CaloGraph", "url": "https://arxiv.org/abs/2402.11575"},
+    {"name": "CaloDREAM", "url": "https://arxiv.org/abs/2405.09629"},
+    {"name": "CaloChallenge 2022", "url": "https://arxiv.org/abs/2410.21611"},
+    {"name": "ALICE ZDC flow matching v1", "url": "https://arxiv.org/abs/2507.18811v1"}
+  ],
+  "files_reframed": [
+    "main.tex",
+    "README.md",
+    "STATUS.md",
+    "CITATION.cff",
+    "scripts/build_figures.py",
+    "scripts/full_manuscript_qa.py",
+    "scripts/write_build_audit.py"
+  ],
+  "scientific_scope_unchanged": true,
+  "new_experiments": false,
+  "test_events_accessed": false,
+  "frozen_configuration_changed": false,
+  "final_qa_record": "audit/iterations/iteration_28.json",
+  "final_visual_record": "audit/visual_review_20260921.json",
+  "pdf_sha256": "c2f6e4060c4d0ad84120f34e305f07b5cacef6610cf2cdffcef167629adda82e",
+  "pages": 12
+}

@@ -5,12 +5,12 @@
     "short_v3_screens": "removed from the main narrative because they are undercontrolled and use different analysis roles"
   },
   "figures_sha256": {
-    "detector_geometry.png": "3f42479084ab5880079af513138d9afa8380687247096cf1f05efa2404a50a24",
-    "generator_schematic.png": "3898aba1b0b5d46e48065b25c741c2e595c7e34728fbc8af7229194638833c47",
-    "longitudinal_profile.png": "3f56f419a64d6d18a704bd05eb797db941d45879bc1fd8766acc00f189231fc9",
-    "response_energy_bins.png": "feaaba1daf22725c292d89f232faae1af7ddd793e153a4e866e1a380fa71ea61",
-    "structure_ratio_summary.png": "483e492ce58490f0b8bdfb5e8ab3fd6e9853ba231896ec7679290f1a9f832b7b",
-    "training_history.png": "3d1d57e9e953848c810ea524b0284ecd8feb6d56680e3b52aca70e5727e9b32e"
+    "detector_geometry.png": "1289827705a7a095f28f82dcf063c6902a7679fc5c7172edf5e64d392f349a2a",
+    "generator_schematic.png": "4662e0d04ee081020b9bf31eff4b6f1ffddf73cf7896bf66d1caa5c6b08e2bfa",
+    "longitudinal_profile.png": "7392bc2ce951dc59976444f70ab3b6297430f11a0906084fbeac892751bee279",
+    "response_energy_bins.png": "f47f067a1e5603b52d1f89fe1f928c316461da5fd5a63cf2ca50ac1d2d2ded77",
+    "structure_ratio_summary.png": "a0caa776f86935be7c5831dc0e2a61e132e823a0a8aa1a8c72f51119fb2b6863",
+    "training_history.png": "47c98d5de49bbb78803c685a0824bb1bc28cf6b97c83ef9759df5cb575e81bc5"
   },
   "kind": "fast-mc-paper-development-figures",
   "scientific_status": "development-bank diagnostics; physics validation not established",

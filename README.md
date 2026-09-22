@@ -1,58 +1,40 @@
-# Auditing a hierarchical generator for sparse calorimeter readout deposits
+# Topology-Sensitive Validation of a Constraint-Preserving Generative Surrogate for Zero Degree Calorimeter Showers
 
-This repository contains Julian Juan's English LaTeX manuscript and its complete public build package. The paper studies a hierarchical Fast MC generator for raw Geant4 neutron energy deposits in a fixed 6,790-channel Zero Degree Calorimeter readout.
+Version 0.5.0 is a HEP/computational-physics preprint draft about the validation of one pilot-trained calorimeter surrogate. For this checkpoint, decoder-level numerical validity and percent-level agreement in selected inclusive response and occupancy observables coexist with substantially more fragmented longitudinal and readout-graph shower support. The paper does not assert overall physics fidelity, causal attribution, architecture superiority, acceleration, or detector readiness.
 
-The paper is a diagnostic case study. It shows that exact sampled counts and numerical energy-budget closure can coexist with incorrect longitudinal and graph dependence. It does not claim physics fidelity, acceleration, or performance on an untouched test set.
+## Fixed case
 
-## Accepted artifact
+- Run `dicos-f-02`, epoch 90; training seed 20260723.
+- 26,624 pilot training events; 6,656 pilot validation events for the selection objective.
+- 10,000-condition diagnostic bank from canonical validation, 50--250 GeV; repeatedly inspected and not an untouched test.
+- Checkpoint SHA-256: `491284c7423f365230d34b0443f95aa4888ec770bdc673c4c979897bad8acbce`.
+- Configuration SHA-256: `116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5`.
+- The 104-row history covers epochs 11--114. One declared post-90 continuation did not improve the minimum. An incorrect scheduler variant remains excluded.
 
-- Run: `dicos-f-02`
-- Checkpoint: epoch 90, selected by the minimum teacher-forced validation objective over the recorded lineage through epoch 114
-- Generator training seed: `20260723`
-- Checkpoint SHA-256: `491284c7423f365230d34b0443f95aa4888ec770bdc673c4c979897bad8acbce`
-- Frozen configuration SHA-256: `116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5`
-- Evaluation: repeatedly inspected 10,000-condition validation bank over 50--250 GeV; zero nominal-test events
+## Build and QA
 
-The old epoch-12 snapshot and the B0, M0, and S2 screens are not part of the scientific comparison. Their training states or controls do not support a clean manuscript claim. Shower-aware C2ST outputs from the existing evaluator are also excluded. The retained condition-only AUROC of 0.500 is a pipeline sanity control with no shower information.
-
-## Build
-
-Requirements are Python 3 with `matplotlib`, `numpy`, and Pillow; `pdflatex`; `biber`; and Poppler. On Windows PowerShell:
+Requirements: Python with NumPy, Matplotlib and Pillow; pdflatex, biber and Poppler on PATH.
 
 ```powershell
 .\build.ps1
+python scripts/full_manuscript_qa.py --iteration 21 --focus "scientific revision" --disposition "source-bound checks"
 ```
 
-The command regenerates all six figures, compiles the bibliography and manuscript, scans the LaTeX log and PDF text, and writes:
+Choose an unused iteration number; historical records cannot be overwritten. The build stops on a failed native command before replacing `output/fast_mc_zdc_manuscript.pdf`. The QA checks evidence hashes, source-bound data roles, reported arithmetic, citation/label resolution, every figure and every rendered page. Automated raster checks are not human visual review. A final release audit additionally requires a hash-matched visual-review record and rejects stale source/PDF hashes.
 
-```text
-output/fast_mc_zdc_manuscript.pdf
-```
+## Evidence and reproducibility
 
-Run one complete adversarial QA pass with:
+- `main.tex`, `references.bib`: revised manuscript and primary literature.
+- `data/reports/`: immutable aggregate diagnostic report and provenance.
+- `data/provenance/source_evidence.json`: training-population/config binding, preparation counts, evaluator policy and source-file hashes.
+- `data/training/`, `data/geometry/`: recorded history and event-independent geometry.
+- `scripts/build_figures.py`, `figures/manifest.json`: reproducible figures and input/output hashes.
+- `audit/revision_20260921.*`: corrections, failed attempts, research and decisions.
+- `audit/framing_revision_20260921.*`: HEP/computational-physics framing criteria and pre-November-2025 style references.
+- `audit/claim_register_20260921.*`: claim-by-claim disposition and sources.
+- `audit/iterations/`: historical and current build checks; only a hash-matched current record applies to the current PDF.
+- `archive/pre_revision_20260921/`: original v0.3.0 source/PDF/build snapshot.
+- `reviews/`: the nine earlier reviews, unchanged; their previous dispositions are historical.
+- `STATUS.md`: supported claim and outstanding research for broader claims.
 
-```powershell
-python scripts/full_manuscript_qa.py --iteration 1 --focus "scope and claims" --disposition "reviewed"
-```
-
-Each pass rebuilds the full paper, checks all headline values against the epoch-90 aggregate, verifies hashes and split arithmetic, resolves citations and labels, scans excluded terms, validates every generated figure, rasterizes every PDF page, checks page ink and clipping margins, and records JSON and Markdown evidence under `audit/iterations/`.
-
-## Repository map
-
-- `main.tex`: manuscript source
-- `references.bib`: primary-source bibliography
-- `scripts/build_figures.py`: deterministic generator for all manuscript figures
-- `scripts/full_manuscript_qa.py`: full manuscript and rendered-PDF audit
-- `data/reports/dicos-f-02_epoch90.json`: aggregate development-bank report
-- `data/reports/dicos-f-02_epoch90.provenance.json`: checkpoint and report provenance
-- `data/training/`: accepted-family training history and provenance
-- `data/geometry/`: event-independent readout geometry
-- `figures/`: six generated figures and hash manifest
-- `reviews/`: all nine supplied audits, preserved verbatim
-- `audit/reviewer_response_round3.md`: consolidated disposition of the latest audits
-- `audit/literature_benchmark.md`: comparison with recent HEP calorimeter-surrogate work
-- `audit/iterations/`: 20 complete QA records
-- `audit/final_build_audit.*`: final release hashes and QA summary
-- `STATUS.md`: supported claims and missing experiments
-
-The collaboration-owned Geant4 event file and model checkpoint are not redistributed. The public aggregates reproduce the figures and quoted battery statistics, but cannot retrain the model or reconstruct event-level tests.
+The package rebuilds the paper from aggregate evidence. It does not redistribute the collaboration-owned event file or checkpoint and cannot reproduce training or event-level tests. No source data, frozen model configuration, or scientific threshold was modified by this manuscript revision. Intended future EIC ZDC use is project motivation, not a validated detector-equivalence claim.

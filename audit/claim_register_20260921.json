@@ -1,0 +1,263 @@
+{
+  "date": "2026-09-21",
+  "scope": "All claim families in the HEP/computational-physics manuscript and six figures; local empirical evidence plus primary literature. No new scientific evaluation.",
+  "claims": [
+    {
+      "id": "C01",
+      "claim": "Decoder-level numerical validity and percent-level agreement in selected inclusive response and occupancy observables coexist with substantially more fragmented longitudinal and readout-graph shower support for this checkpoint/bank.",
+      "evidence": "Aggregate activity/count/topology fields; all conditional means recomputed with nonempty fractions. No population-general or causal inference.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C02",
+      "claim": "26624 training /6656 selection-validation pilot; 764940 canonical corpus with 612482/76158/76300 partitions.",
+      "evidence": "source_evidence pilot_training exact config hash + canonical_preparation; the 551234 role belongs another model.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C03",
+      "claim": "10000 diagnostic conditions, 50-250 GeV; training/selection/diagnostic roles distinct; historical nominal-test exposure disclosed.",
+      "evidence": "Report identity, source evidence battery contract, source docs/PIPELINES.md and existing terminal-gate evidence.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C04",
+      "claim": "6790 readout channels, 65 layers, 400 ECAL +6390 HCAL; physical-position multiplicities 4390/1950/444/6.",
+      "evidence": "geometry_summary.json and readout_geometry.npz; checks verify count/layer/multiplicity arithmetic.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C05",
+      "claim": "Fixed centroid graph and 107920 directed edges; topology tied to that representation.",
+      "evidence": "Frozen geometry summary and model graph precedent; ganged positions cannot be individually recovered.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C06",
+      "claim": "Condition order logK,ux,uy,uz,logE; zero-direction denominator convention.",
+      "evidence": "Source features.py exact implementation hash in source_evidence.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C07",
+      "claim": "2082507 parameters for reported checkpoint alias B0.",
+      "evidence": "Historical v3_parameter_counts_20260816.json; source_evidence records input hash and method.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C08",
+      "claim": "Gaussian-mixture transformed response, Bernoulli branch, zero projection, cap at frozen constants.",
+      "evidence": "Source response.py and report identity; cap values preserved in archived inherited portable config. No cap-activation claim.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C09",
+      "claim": "Independent post-first-layer Bernoulli activities, CLR flows, eight first-order time-centered updates.",
+      "evidence": "Source profile.py/system.py + report steps. No convergence or invertibility claim.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C10",
+      "claim": "Counts satisfy masks, Gumbel draw without replacement, support BCE and ranking, conditional masked share flow.",
+      "evidence": "Source support.py/losses.py and Gumbel Top-k primary paper.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C11",
+      "claim": "Piecewise decoder including empty supports; exact identities are real-arithmetic statements.",
+      "evidence": "Source decode_exact_support; finite-precision checks distinct. Removed universal strict-positivity guarantee and malformed equation.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C12",
+      "claim": "Nine weights and clipped geometric-mean-over-median calibration.",
+      "evidence": "source_evidence calibration audit + weights.py. Actual normalized numbers recomputed by QA.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C13",
+      "claim": "One declared post-90 continuation and documented scheduler restart; epoch90 objective minimum4.483768.",
+      "evidence": "104 unique contiguous history rows, provenance hash and terminal gate. Incorrect scheduler variant excluded.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C14",
+      "claim": "Interior missing layers6.04879 vs2.10215, ratio2.87743; NOT separate gap runs.",
+      "evidence": "Source _activity_report at historical commit dce44556; exact mean_span - conditional mean_active_layers identity verified on both sides.",
+      "disposition": "corrected P1 metric definition"
+    },
+    {
+      "id": "C15",
+      "claim": "Gap-event prevalence93.53% vs52.43%; means conditional on nonempty.",
+      "evidence": "activity.gap_fraction, first_layer source, explicit n_generated9858 and n_reference9907.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C16",
+      "claim": "Active channels1588.819 vs1617.568; weak components59.3895 vs23.4192; largest fractions88.8709% vs94.9006%.",
+      "evidence": "counts/topology all-event aggregates divided by nonempty fractions; topology.py zero-event convention checked.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C17",
+      "claim": "Mean total4.36936 vs4.32418; ECAL+8.3%, HCAL-5.8%; profile L1=0.070965.",
+      "evidence": "distribution_metrics profile and total; weighted bin consistency recomputed.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C18",
+      "claim": "Bin mean differences-7.7%..+7.7%, width differences-10.9%..+9.6%.",
+      "evidence": "positive_response.response_bins all-event moments; no reconstruction or error-bar interpretation.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C19",
+      "claim": "W1=0.0727 GeV and exploratory nominal95% bootstrap endpoints; reference-half0.1475 not calibrated floor.",
+      "evidence": "bootstrap fields and correlations.py/v3_battery.py; 5000-vs5000 reference versus10000-vs10000 generator comparison.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C20",
+      "claim": "Recorded all1250 batches pass under batch-maximum-scaled tolerance; layer residual exceeds old absolute-only criterion.",
+      "evidence": "structural_invariants + source invariants.py; old and new rules stated without edits. Aggregate lacks per-batch reports.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C21",
+      "claim": "Raw-mode dust zero is trivial, while support/counters and finite values are actual recorded checks.",
+      "evidence": "invariants.py conditional dust counter; threshold0.",
+      "disposition": "corrected"
+    },
+    {
+      "id": "C22",
+      "claim": "Condition-only AUROC0.500 is not shower-fidelity or complete leakage evidence; historical shower-aware outputs excluded.",
+      "evidence": "condition_only_control.json, source contract and C2ST primary paper.",
+      "disposition": "corrected interpretation"
+    },
+    {
+      "id": "C23",
+      "claim": "Four-node path example proves accounting/cardinality do not determine support connectivity.",
+      "evidence": "Direct arithmetic: (1,1,0,0) and (1,0,1,0) both sum2 with two active nodes; induced path supports have1 and2 components.",
+      "disposition": "algebraic illustration only"
+    },
+    {
+      "id": "C24",
+      "claim": "Architectural and training causes remain hypotheses; no demonstrated repair or all-model claim.",
+      "evidence": "No oracle cascade or controlled alternatives in retained evidence. Limits stated consistently.",
+      "disposition": "supported within stated scope"
+    },
+    {
+      "id": "C25",
+      "claim": "Potential EIC ZDC use is motivation, not verified detector equivalence, affiliation or readiness.",
+      "evidence": "User steering; noted in STATUS only.",
+      "disposition": "not a scientific claim"
+    },
+    {
+      "id": "C26",
+      "claim": "Source/figures rebuild from aggregates, no independent retraining or event-level tests.",
+      "evidence": "Public-package contents inspected; model checkpoint and raw data absent.",
+      "disposition": "supported within stated scope"
+    }
+  ],
+  "primary_sources": [
+    {
+      "bibkey": "geant4",
+      "name": "Geant4 toolkit",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0168900203013688",
+      "verified_scope": "Particle-transport toolkit and original reference metadata; no validation of this production configuration."
+    },
+    {
+      "bibkey": "caloflow",
+      "name": "CaloFlow",
+      "url": "https://arxiv.org/abs/2106.05285",
+      "verified_scope": "Normalizing-flow calorimeter surrogate; published PRD title retained."
+    },
+    {
+      "bibkey": "calodiffusion",
+      "name": "CaloDiffusion",
+      "url": "https://arxiv.org/abs/2308.03876",
+      "verified_scope": "Diffusion with geometry adaptation; method-family precedent."
+    },
+    {
+      "bibkey": "calograph",
+      "name": "CaloGraph",
+      "url": "https://arxiv.org/abs/2402.11575",
+      "verified_scope": "Graph diffusion on irregular calorimeter geometry; no cross-detector ranking."
+    },
+    {
+      "bibkey": "caloclouds2",
+      "name": "CaloClouds II",
+      "url": "https://arxiv.org/abs/2309.05704",
+      "verified_scope": "Point-cloud generation; published JINST 19 (2024) P04020."
+    },
+    {
+      "bibkey": "calodream",
+      "name": "CaloDREAM",
+      "url": "https://arxiv.org/html/2405.09629v3",
+      "verified_scope": "Sections 4.4-4.5 explicitly examine different high-/low-level classifier diagnostics and sparse-feature failure modes; supports acknowledgment of prior evaluation work."
+    },
+    {
+      "bibkey": "calochallenge",
+      "name": "CaloChallenge 2022",
+      "url": "https://arxiv.org/abs/2410.21611",
+      "verified_scope": "Community comparison includes univariate distributions, multivariate tests, timing and model size. Primary project page confirms publication 88 (2025) 116201."
+    },
+    {
+      "bibkey": "physicsbenchmark",
+      "name": "Full physics benchmark",
+      "url": "https://arxiv.org/html/2511.17293v1",
+      "verified_scope": "Post-reconstruction observables and full physics benchmarks; primary class hep-ex corrected."
+    },
+    {
+      "bibkey": "fasterzdc",
+      "name": "ALICE flow matching",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0010465525004370",
+      "verified_scope": "CPC 319 (2026) 109936 verified. arXiv full text Section 1 describes optical-fiber photon-count images, different from raw deposits here."
+    },
+    {
+      "bibkey": "caloclouds3",
+      "name": "CaloClouds3",
+      "url": "https://arxiv.org/abs/2511.01460",
+      "verified_scope": "First author Thorsten Buss, ten authors; JINST 21 (2026) 03 P03018. Corrected author/year/DOI. Cited for point clouds, not unsupported multivariate-testing assertion."
+    },
+    {
+      "bibkey": "paraflow",
+      "name": "ParaFlow",
+      "url": "https://arxiv.org/abs/2503.21461",
+      "verified_scope": "Upstream-material-conditioned toy calorimeter; EPJ C 85 (2025) 857. Metadata updated."
+    },
+    {
+      "bibkey": "flowmatching",
+      "name": "Flow Matching",
+      "url": "https://arxiv.org/abs/2210.02747",
+      "verified_scope": "Probability-path vector-field regression. Actual straight path, masks and eight time-centered Euler updates verified in local source, not attributed to paper as a universal requirement."
+    },
+    {
+      "bibkey": "gumbeltopk",
+      "name": "Gumbel Top-k",
+      "url": "https://proceedings.mlr.press/v97/kool19a.html",
+      "verified_scope": "Sampling without replacement and exact cardinality; does not establish learned support fidelity."
+    },
+    {
+      "bibkey": "c2st",
+      "name": "Classifier two-sample tests",
+      "url": "https://arxiv.org/abs/1610.06545",
+      "verified_scope": "Held-out classification; grouping matched conditions is this project-specific extension and no longer overattributed to original IID formulation."
+    }
+  ],
+  "preserved_negative_evidence": [
+    "Initial QA21 failed exact case-sensitive phrase test; preserved.",
+    "QA22 automated pass missed gap-definition and visual defects; superseded by subsequent correction.",
+    "Prior20 QA passes did not establish claim correctness.",
+    "Legacy absolute-only closure countercheck fails; applicable later batch-relative experiment is separately identified."
+  ],
+  "unsupported_claims_removed": [
+    "551234-event training population for pilot",
+    "gap-run count interpretation",
+    "eventwise relative closure rule",
+    "two declared post90 continuations",
+    "statistically calibrated reference-half floor",
+    "universal positive floating-point softmax shares",
+    "CaloClouds3 incorrect first-author attribution"
+  ]
+}

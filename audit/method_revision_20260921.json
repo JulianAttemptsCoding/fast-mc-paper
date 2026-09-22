@@ -1,0 +1,132 @@
+{
+  "kind": "independent-methodological-manuscript-review",
+  "date": "2026-09-21",
+  "status": "in-progress",
+  "scientific_status": "PHYSICS VALIDATION NOT ESTABLISHED",
+  "scope": "Read-only skeptical review of manuscript, aggregate reports, source QA, source model/evaluator; no training or test-event access.",
+  "base_commit": "4815b6c17c5035723f2130e9af9459a91637e54c",
+  "environment": {
+    "os": "Windows",
+    "shell": "PowerShell 7.6.5",
+    "paper_root": "C:/Users/Julia/Desktop/coding/ASIoP/fast-mc-paper",
+    "initial_cwd": "C:/Users/Julia/OneDrive/Desktop/coding/ASIoP/Fast MC CBSC"
+  },
+  "input_hashes": {
+    "main.tex": "6c740b465d63914ab4a20797b73f44adf2f87248e705937eaf18485b2ef3fe4f",
+    "references.bib": "1affdd5846edfc283d195bc0f349b403ce8931a251417e5a7b3654d929082c86",
+    "STATUS.md": "1ebc52fd4755f1c1661e02c9ef66745dd6014d22079bc137eb6edfa8c0bc151f",
+    "scripts/full_manuscript_qa.py": "40ff0bec9e5a4f7c5e8140c2a5267d517e014262c0b2bbb3b711cc3a8d8d7003",
+    "scripts/build_figures.py": "b66fbb350ab73cd5a76e6dca4f903bf3ca2d249c15abeb30d066333ebd6ca2be",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
+    "data/reports/condition_only_control.json": "8d9b1ec17e23a11233b0eac9e12de86dc834928d119ef38d97ff41d42de5619f",
+    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+    "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
+  },
+  "commands": [
+    {
+      "id": "d99cac",
+      "action": "Get-Content docs/IMPLEMENTATION_GUIDE.md and FOCUSED_OPERATING_RULES.md in supplied cwd",
+      "exit": 0
+    },
+    {
+      "id": "848725",
+      "action": "Read guide 390..640; list paper files; optional paper AGENTS.md read",
+      "exit": 1
+    },
+    {
+      "id": "bddf88",
+      "action": "Read guide 640..890 and complete main.tex",
+      "exit": 0
+    },
+    {
+      "id": "165fb0",
+      "action": "rg --files data scripts reviews audit; read STATUS.md and bibliography; git status; shell version",
+      "exit": 0
+    },
+    {
+      "id": "c29c06",
+      "action": "Read paper QA/figure scripts, latest reviewer response, report/condition/history provenance",
+      "exit": 0
+    },
+    {
+      "id": "c6be79",
+      "action": "Parse aggregate report fields; read OneDrive invariants; enumerate Desktop battery source files",
+      "exit": 0
+    },
+    {
+      "id": "ed8b2d",
+      "action": "Read Desktop AGENTS and invariants; search v3_battery tolerance/bootstrap and audit split counts",
+      "exit": 1
+    },
+    {
+      "id": "40c7d5",
+      "action": "Read Desktop pipelines and implementation guide introduction; graft map and evaluator cards",
+      "exit": 0
+    },
+    {
+      "id": "64fe66",
+      "action": "Hash 11 paper inputs, obtain HEAD and timestamp",
+      "exit": 0
+    }
+  ],
+  "failures": [
+    {
+      "id": "848725",
+      "issue": "Optional paper AGENTS.md is absent; command returned 1, no file modified."
+    },
+    {
+      "issue": "An initial source search used paper-relative report path from project cwd; no such file. Corrected to absolute path."
+    },
+    {
+      "id": "ed8b2d",
+      "issue": "Searched optional prep directory absent in local Desktop repo; rg returned 1; used audited source docs instead."
+    },
+    {
+      "issue": "Several combined read outputs truncated; needed source spans re-read separately."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://arxiv.org/abs/1610.06545",
+      "finding": "Standard C2ST requires held-out discrimination; no claim near-chance proves conditional equality."
+    },
+    {
+      "url": "https://proceedings.mlr.press/v97/kool19a.html",
+      "finding": "Gumbel-top-k samples without replacement; exact size does not imply arbitrary support-dependence capacity."
+    },
+    {
+      "url": "https://arxiv.org/abs/2210.02747",
+      "finding": "Flow matching fits probability-path vector fields; solver and support details remain implementation-specific."
+    }
+  ],
+  "findings": [
+    {
+      "id": "M1",
+      "severity": "major",
+      "status": "verified",
+      "issue": "Closure equation is eventwise but source uses batch-global largest total; relative tolerance is historically documented, not unauthorized.",
+      "next": "Write actual batch-global closure rule."
+    },
+    {
+      "id": "M2",
+      "severity": "major",
+      "status": "investigating",
+      "issue": "551234 generator-role count may be later planned partition rather than selected checkpoint training corpus; inconsistent canonical split totals.",
+      "next": "Evidence agent resolves exact frozen parent config."
+    },
+    {
+      "id": "M3",
+      "severity": "major",
+      "status": "investigating",
+      "issue": "Reference-half distance uses ~5000 samples per side; generator distance uses 10000 per side. Floor is not calibrated test."
+    },
+    {
+      "id": "M4",
+      "severity": "moderate",
+      "status": "verified",
+      "issue": "Decoder indicator followed by comma in equation; empty support denominator undefined without piecewise definition."
+    }
+  ],
+  "review_disposition": "Partial agent review interrupted by usage limits; superseded by completed root claim register and revision audit. Retained as historical evidence."
+}
