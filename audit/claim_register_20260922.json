@@ -5,9 +5,9 @@
   "values": {
     "active_layers_difference": 0.2519342750226694,
     "last_active_layer_difference": 4.423773647160425,
-    "inactive_layers_in_span_difference": 3.9466428636389427,
+    "inactive_layers_in_span_difference": 3.946642863638943,
     "active_channels_difference": -28.7486476841646,
-    "weak_components_difference": 35.970332798618135,
+    "weak_components_difference": 35.97033279861814,
     "largest_component_fraction_difference_percentage_points": -6.029700995384565,
     "total_deposit_difference_gev": 0.045186934235844,
     "zero_event_count_reference": 93,
@@ -18,7 +18,10 @@
     "training_events": 26624,
     "training_seed": 20260723,
     "development_pairs": 10000,
-    "incident_kinetic_energy_gev": [50, 250],
+    "incident_kinetic_energy_gev": [
+      50,
+      250
+    ],
     "threshold": "stored energy > 0",
     "graph": "frozen model graph",
     "test_events_used": 0
@@ -30,5 +33,19 @@
     "persistence across sampling or training seeds",
     "causal mechanism",
     "speed or detector readiness"
-  ]
+  ],
+  "model_description": {
+    "source_audit": "audit/model_exposition_20260922.json",
+    "condition_features": 5,
+    "condition_embedding": 128,
+    "parameter_count": 2082507,
+    "response_components": 4,
+    "profile_flow_steps": 8,
+    "share_flow_steps": 8,
+    "graph_message_blocks": 3,
+    "graph_hidden_width": 96,
+    "layer_transformer_layers": 2,
+    "layer_attention_heads": 4,
+    "mechanism_claim_boundary": "implementation behavior only; no adequacy, convergence, causal, or architecture-superiority claim"
+  }
 }

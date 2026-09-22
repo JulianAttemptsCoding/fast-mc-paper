@@ -42,3 +42,15 @@ Reframed as close mean counts with fragmented support; corrected pilot size, gap
 - 2026-09-22: Staged-release whitespace check found trailing spaces in retained iteration-29/30 audit transcripts. Normalized only those Markdown audit records; no manuscript, figure, or PDF content changed.
 
 - 2026-09-22T07:56:36Z: Published scientific release commit `a52e3e42d58d319b8adbcc88dcbef80a72f96d8b` to `origin/main`; remote ref matched exactly. Committed PDF SHA-256 `a3c6fcffd3f1204226a21f47627b249d4c7754641d1500b58e4a5c0306559186` (890685 bytes).
+
+- 2026-09-22T19:58:54Z: Began v0.7.0 model-exposition revision. The first PDF operation-marker command used an incorrect `scripts/` path and failed with MODULE_NOT_FOUND; the required marker was then run successfully from `container_tools/` before authoring. Audited the selected generator path against source commit `e039841404fc442c7496383d20a8566ac589eea3`, added source-blob hashes and a sentence-level evidence review, expanded the model from condition encoding through deterministic decoding, and redrew the architecture schematic. No training, frozen configuration, threshold, event data, or numerical result changed.
+
+- 2026-09-22: Full QA iteration 36 failed during the first LaTeX pass because the CFM norm contained a missing command backslash (`left\lVert`). Corrected the equation to `\lVert...\rVert`; the failure record is preserved.
+
+- 2026-09-22: Full QA iteration 37 completed the build but failed the source-language guard because three required strings still used v0.6 wording. Updated the guard to the equally strict v0.7 phrases (`strict-positive readout support`, `104 retained rows`, and `defines the checkpoint studied here`); no manuscript claim was relaxed.
+
+- 2026-09-22: QA iterations 38 and 39 passed automated checks. Visual inspection of iteration 39 found the architecture float could split a flow-matching sentence across pages. Replaced it with a nonfloating minipage; iteration 40 passed, and all nine pages were inspected. Pages 1, 2, and 4-9 match the individually inspected iteration-38 renders byte-for-byte; the revised page 3 was inspected at original resolution.
+
+- 2026-09-22T20:09:26Z: v0.7.0 model-exposition release candidate completed. Full QA iteration 41 passed (9 pages); all nine final page hashes match the inspected iteration-40 renders; 7 QA-guard tests passed; exact source/PDF/figure/visual binding passed. PDF SHA-256 `9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25`. No training, data-role, threshold, configuration, result, or scientific-claim change occurred.
+
+- 2026-09-22: Staged-release whitespace check found trailing spaces copied from the iteration-36 LaTeX failure transcript. Normalized only that Markdown audit record; manuscript, figures, evidence JSON, and PDF were unchanged.

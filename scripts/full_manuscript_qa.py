@@ -31,6 +31,8 @@ def release_source_hashes() -> dict:
     paths += [ROOT / p for p in [
         "audit/claim_register_20260922.json", "audit/claim_register_20260922.md",
         "audit/adversarial_revision_20260922.json", "audit/adversarial_revision_20260922.md",
+        "audit/model_exposition_20260922.json", "audit/model_exposition_20260922.md",
+        "audit/sentence_evidence_20260922.json", "audit/sentence_evidence_20260922.md",
         "audit/literature_benchmark.md",
     ]]
     paths += sorted((ROOT / "scripts").glob("*.py"))
@@ -246,12 +248,12 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     bib = (ROOT / "references.bib").read_text(encoding="utf-8")
     required = [
         "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
-        "exploratory case study", "strict-positive support", "condition-only pipeline control has AUROC 0.500",
+        "exploratory case study", "strict-positive readout support", "condition-only pipeline control has AUROC 0.500",
         "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
-        "104 rows spanning epochs 11--114", "single checkpoint",
+        "104 retained rows spanning epochs 11--114", "defines the checkpoint studied here",
         "four nearest centroids are selected", "stored in both directions", "107,920 in total",
         r"\prod_{\ell>F}^{64}", "The two energy features are deterministically related",
-        "event-level arrays needed for uncertainty estimates", "end-to-end timing",
+        "event arrays needed for uncertainty estimates", "end-to-end timing",
         "This counts inactive layers, not contiguous runs.", "26,624 training events", "6,656 validation events", "76,158 validation", "76,300 nominal test",
         "batch-wide absolute-plus-relative tolerance", "0.25 more active layers", "4.42 layers farther downstream",
         "35.97 more weak components", "6.03-percentage-point reduction",
@@ -259,6 +261,9 @@ def validate_tex_and_bib(checks: list[str]) -> None:
         "Mean last active layer & 56.20 & 60.62 & $+4.42$",
         "Mean weak graph components & 23.42 & 59.39 & $+35.97$",
         "Mean largest-component fraction & 94.90\\% & 88.87\\% & $-6.03$ pp",
+        "no learned shower encoder", "separate Gaussian source states",
+        "five edge features", "does not require the selected nodes to form a connected set",
+        "The nine losses are binary cross entropy", "These identities conserve the model's sampled readout budget",
     ]
     missing = [phrase for phrase in required if phrase not in tex]
     assert not missing, f"required manuscript text missing: {missing}"
@@ -271,6 +276,8 @@ def validate_tex_and_bib(checks: list[str]) -> None:
         "Topology-Sensitive Validation", "The contribution is threefold", "Artifact identity and audit boundary",
         "response_energy_bins.png", "structure_ratio_summary.png", "training_history.png",
         "0.0727", "0.1475", "0.0684", "0.1984", "2.88", "2.54",
+        "delve", "foster", "leverage", "groundbreaking", "in the realm of",
+        "it is important to note", "underscores the importance",
     ]
     found = [phrase for phrase in forbidden if phrase in tex]
     assert not found, f"stale or excluded manuscript language: {found}"
@@ -330,12 +337,20 @@ def validate_repository(checks: list[str]) -> None:
     status = (ROOT / "STATUS.md").read_text(encoding="utf-8")
     citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
     literature = (ROOT / "audit" / "literature_benchmark.md").read_text(encoding="utf-8")
+    model_audit = load_json(ROOT / "audit" / "model_exposition_20260922.json")
+    sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.6.0" in status
-    assert "version: 0.6.0" in citation and "Connectivity Diagnostics" in citation
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.7.0" in status
+    assert "version: 0.7.0" in citation and "Connectivity Diagnostics" in citation
     assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
+    assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
+    assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]
+    assert len(model_audit["source_blob_sha256"]) == 14 and len(model_audit["claims"]) == 9
+    assert sentence_audit["manuscript_version"] == "0.7.0"
+    assert sentence_audit["review_scope"] == "Every prose paragraph, equation, table caption, and figure caption"
+    assert len(sentence_audit["sections"]) == 8
     assert all(token in response for token in ["reviews/review7.txt", "reviews/review8.txt", "reviews/review9.txt", "Findings resolved by removal"])
-    checks.append(f"Active-versus-archived evidence separation, {len(json_paths)} active JSON files, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check")
+    checks.append(f"Active-versus-archived evidence separation, {len(json_paths)} active JSON files, source-bound model exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check")
 
 
 def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:

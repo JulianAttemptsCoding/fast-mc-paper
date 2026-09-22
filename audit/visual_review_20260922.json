@@ -1,21 +1,24 @@
 {
   "result": "pass",
-  "reviewed_utc": "2026-09-22T09:05:00Z",
-  "method": "Direct inspection of the complete iteration-35 contact sheet. All seven iteration-35 page-render hashes are identical to the individually inspected iteration-34 renders. Checked title and abstract, equations, all three figures, table, captions, page breaks, corrected references, margins, glyphs, and links; no clipping, overlap, broken glyphs, unreadable labels, table overflow, or underfilled spill page remained.",
-  "pdf_sha256": "a3c6fcffd3f1204226a21f47627b249d4c7754641d1500b58e4a5c0306559186",
+  "reviewed_utc": "2026-09-22T20:08:12Z",
+  "method": "Direct inspection of all nine iteration-40 pages at original resolution and the complete contact sheet. Every iteration-41 page-render hash is identical to the corresponding inspected iteration-40 render. Checked title and abstract, detector geometry, the complete generator schematic and derivation, equations, result table, longitudinal plot, captions, section transitions, references, margins, glyphs, and links.",
+  "pdf_sha256": "9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25",
   "page_sha256": {
-    "1": "5be0ccb4cc1839c839aef8f8282a25662abf1290bd9cdfee7c24aaf08e9e1c20",
-    "2": "6d9986921b7ec96c9741f69033fa3d0647b7394936e12fd7b72c0d3558a4cb0a",
-    "3": "e1b923042cc7fc7fb65bf89aaaa159945b8d1addc5d1a5e51c116c91fe98dcd8",
-    "4": "e6f33a9a48860c5e881898dfafdaa16e0ca1f4ab2d969e0b539703227bba9f11",
-    "5": "39e4b76a840d556e1e698862f456ce873b5327054cb7c130f5bb54f67449cf1f",
-    "6": "4afb04f0eb57c5ae2fe6f5a496fa16ebebfffd78a3ccce5f09bfe683d354920b",
-    "7": "d497c41a4c0c8424e81f7aa4dfa45ec75f8740eec10f0b0a75208416d636a41d"
+    "1": "76b0fa116753bd728fee6145bdf3516e09987b188e43b259808ee5053a0b64e8",
+    "2": "d2f34dbc69df2ab2db5d2a273c8ec85e927db7d7b22135ce99cfd9d060dc8321",
+    "3": "c04c2ebd1cb683880d4e13a141cabe9af3a2ea180e7db2725ce26a90e5b10e92",
+    "4": "201a299ba023925913ada3d2578ad94b9c8c19460de72168f6dc9364ebe29b3e",
+    "5": "1b89aae192b2d287576346751e8c1fbab98c919982909e3f33ee8816510fa500",
+    "6": "9df13a1f4de28f56d069449047d5f3fe27626194cc6ad741c5987c7265edb6d2",
+    "7": "2e8ffb124c2130351fc0fa3778fa75815f3d8360e0275de803ce1e14693b67f3",
+    "8": "43a0f47ac3b5152ae0e98870775963d63527314813886352566cb1ba2f36b26a",
+    "9": "ecaac13c4ca37a6f4dbdb9c2cb074c3297944cccccea59450900004724439a8c"
   },
   "observations": {
-    "1-3": "Title, abstract, literature framing, geometry, model diagram, equations, and detector-description text are clear and balanced.",
-    "4-5": "Diagnostic definitions, absolute-difference results, full table, and discussion are legible without overflow or misleading ratio graphics.",
-    "6-7": "Longitudinal figure, scope, conclusion, availability text, acknowledgments, AI statement, and complete 13-entry bibliography are clear; the final page is balanced."
+    "1-2": "Title, abstract, literature framing, geometry, target definition, graph construction, and evaluation-population text are clear and unclipped.",
+    "3-5": "The generator schematic follows the factorization paragraph; every variable is defined; the two flows, graph scorer, exact decoder, teacher forcing, and diagnostic definitions remain readable without a sentence split by a float.",
+    "6-7": "The table, longitudinal plot, result interpretation, numerical QA, and discussion are legible and contain no overlap or overflow.",
+    "8-9": "Conclusion, availability, declarations, and the complete 14-entry bibliography render cleanly. The reference continuation contains no isolated single-item spill."
   },
-  "prior_findings": "Iteration 31 left five references on an underfilled eighth page. Iteration 32 left one reference on an otherwise empty eighth page and failed the page-density guard. Iteration 33 removed that spill. A later primary-record check corrected one publication venue and three arXiv classes. Iteration 35 adds executable README QA instructions; its seven page renders are hash-identical to visually inspected iteration 34."
+  "iteration_findings": "Iteration 36 failed on a malformed LaTeX norm delimiter. Iteration 37 failed three stale exact-string guards. Iterations 38 and 39 passed automated checks; visual inspection of iteration 39 showed that the architecture float could interrupt the flow-matching sentence. The final fixed figure block in iterations 40 and 41 removes that defect."
 }

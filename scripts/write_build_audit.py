@@ -35,7 +35,7 @@ def main():
     validate_binding(qa, visual, sources, sha256(PDF), sha256(FIGURE_MANIFEST))
     payload = {
         'schema_version': 4, 'created_utc': datetime.now(timezone.utc).isoformat(),
-        'release': 'v0.6.0', 'status': 'exploratory HEP/computational-physics case study',
+        'release': 'v0.7.0', 'status': 'exploratory HEP/computational-physics case study',
         'claim': 'On the specified development bank, one pilot checkpoint has similar mean occupancies but a later longitudinal reach and a more disconnected strict-positive support on the model graph.',
         'output': {'path': str(PDF.relative_to(ROOT)), 'sha256': sha256(PDF), 'bytes': PDF.stat().st_size, 'pages': qa['pdf']['pages']},
         'current_qa': {'record': str(latest.relative_to(ROOT)), 'sha256': sha256(latest), 'checks': qa['checks'],
@@ -43,11 +43,11 @@ def main():
         'historical_qa': 'Earlier records are preserved; no pass count is used as evidence for this output.',
         'environment': {'platform': platform.platform(), 'python': sys.version},
         'source_sha256': sources, 'figures_manifest_sha256': sha256(FIGURE_MANIFEST),
-        'research_boundary': 'No new training, test-data use or model evaluation. Aggregate arithmetic and source provenance were audited; physics fidelity was not established.',
+        'research_boundary': 'No new training, test-data use or model evaluation. Aggregate arithmetic, model implementation statements and source provenance were audited; physics fidelity was not established.',
         'remaining_publication_actions': ['Author/collaborator approval of authorship and acknowledgments', 'Confirm data-release permissions and immutable archival version'],
         'broader_claim_requirements': 'See STATUS.md; these do not negate the descriptive case-study observation.'}
     (ROOT / 'audit/final_build_audit.json').write_text(json.dumps(payload, indent=2)+'\n', encoding='utf-8')
-    text = ('# Final manuscript build audit\n\nVersion 0.6.0; '+payload['created_utc']+'.\n\n'
+    text = ('# Final manuscript build audit\n\nVersion 0.7.0; '+payload['created_utc']+'.\n\n'
             +'PDF: `'+payload['output']['path']+'`; '+str(payload['output']['pages'])+' pages.\n\n'
             +'SHA-256: `'+payload['output']['sha256']+'`.\n\n'
             +'The complete automated suite in `'+str(latest.relative_to(ROOT))+'` and an every-page visual review match the current PDF and source hashes. '

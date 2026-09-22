@@ -6,7 +6,7 @@
   },
   "figures_sha256": {
     "detector_geometry.png": "1289827705a7a095f28f82dcf063c6902a7679fc5c7172edf5e64d392f349a2a",
-    "generator_schematic.png": "4662e0d04ee081020b9bf31eff4b6f1ffddf73cf7896bf66d1caa5c6b08e2bfa",
+    "generator_schematic.png": "e5df51ab65801a860abc36cc7e75eaba3029d8c754a5f6e860b11d264bcea368",
     "longitudinal_profile.png": "7392bc2ce951dc59976444f70ab3b6297430f11a0906084fbeac892751bee279"
   },
   "kind": "fast-mc-paper-development-figures",

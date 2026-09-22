@@ -1,6 +1,8 @@
 # Scientific status
 
-Version 0.6.0 is an exploratory HEP/computational-physics case study: **for one pilot Zero-Degree Calorimeter checkpoint, similar mean occupancies coexist with a later longitudinal reach and a more disconnected strict-positive support on the model graph.**
+Version 0.7.0 is an exploratory HEP/computational-physics case study: **for one pilot Zero-Degree Calorimeter checkpoint, similar mean occupancies coexist with a later longitudinal reach and a more disconnected strict-positive support on the model graph.**
+
+The manuscript now explains the implemented generator from input to output: five condition features feed a residual condition encoder; response, longitudinal profile, count, support, and share stages are sampled in sequence; graph message passing and layer attention score channels; and a deterministic softmax decoder closes each layer to its sampled budget. These are implementation statements verified against source blobs, not claims that the architecture is physically adequate or responsible for the measured discrepancy.
 
 ## Supported claim
 

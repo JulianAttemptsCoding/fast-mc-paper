@@ -71,45 +71,57 @@ def save(fig: plt.Figure, filename: str) -> None:
 
 
 def plot_architecture() -> None:
-    fig, ax = plt.subplots(figsize=(8.6, 3.4), layout="constrained")
+    fig, ax = plt.subplots(figsize=(8.6, 3.85), layout="constrained")
     ax.set_xlim(0, 12.2)
-    ax.set_ylim(0, 3.2)
+    ax.set_ylim(0, 3.75)
     ax.axis("off")
     rows = [
-        [(0.05, "Incident four-vector"), (2.5, "Condition encoder"),
-         (4.95, "Deposit hurdle and\ntotal-energy draw"), (7.4, "First layer and\nlayer activity"),
-         (9.85, "Layer-energy\nfractions")],
-        [(9.85, "Per-layer channel\ncounts"), (7.4, "Graph scores and\nGumbel top-k"),
-         (4.95, "Selected-channel\nshare flow"), (2.5, "Budget-preserving\ndecoder"),
-         (0.05, "6,790-channel\nenergy vector")],
+        [(0.05, "$c$\n5 condition features", "input"),
+         (2.5, "$h_c$\n5 $\\rightarrow$ 128 MLP", "learned"),
+         (4.95, "$V,\\,T$\nBernoulli + 4-Gaussian", "learned"),
+         (7.4, "$F,\\,A_\\ell$\ncategory + Bernoulli", "learned"),
+         (9.85, "$B_\\ell$\n8-step flow + softmax", "flow")],
+        [(9.85, "$K_\\ell$\nmasked categorical", "learned"),
+         (7.4, "$S_\\ell$\ngraph scores + top-$K_\\ell$", "learned"),
+         (4.95, "$r_{\\ell i}$\n8-step graph flow", "flow"),
+         (2.5, "$Y_{\\ell i}=B_\\ell\\,\\mathrm{softmax}(r)$\nexact layer closure", "decode"),
+         (0.05, "$\\mathbf{Y}$\n6,790 channel energies", "output")],
     ]
     width, height = 2.15, 0.88
-    y_positions = [1.95, 0.35]
+    y_positions = [2.35, 0.65]
+    face = {
+        "input": "#f1f3f5", "output": "#f1f3f5", "learned": "#e6eef5",
+        "flow": "#e8f0e7", "decode": "#ece7f2",
+    }
     for row_index, row in enumerate(rows):
-        for node_index, (x, label) in enumerate(row):
-            color = "#e6eef5" if row_index == 0 else "#e8f0e7"
-            if row_index == 1 and node_index == 3:
-                color = "#ece7f2"
+        for x, label, kind in row:
             ax.add_patch(
                 FancyBboxPatch(
                     (x, y_positions[row_index]), width, height,
                     boxstyle="round,pad=0.06,rounding_size=0.1",
-                    linewidth=1.05, edgecolor="#31445b", facecolor=color,
+                    linewidth=1.05, edgecolor="#31445b", facecolor=face[kind],
                 )
             )
             ax.text(x + width / 2, y_positions[row_index] + height / 2, label,
-                    ha="center", va="center", fontsize=10.4, color="#1d2b3c")
+                    ha="center", va="center", fontsize=9.8, color="#1d2b3c")
 
     def arrow(start: tuple[float, float], end: tuple[float, float]) -> None:
         ax.add_patch(FancyArrowPatch(start, end, arrowstyle="-|>", mutation_scale=13,
                                      linewidth=1.35, color="#344c65"))
 
     for i in range(4):
-        arrow((rows[0][i][0] + width + 0.08, 2.39), (rows[0][i + 1][0] - 0.08, 2.39))
-        arrow((rows[1][i][0] - 0.08, 0.79), (rows[1][i + 1][0] + width + 0.08, 0.79))
-    arrow((10.925, 1.88), (10.925, 1.31))
-    ax.text(6.1, 1.57, "Teacher-forced component losses; ancestral sampling at evaluation",
-            ha="center", va="center", fontsize=9.7, color="#344c65", style="italic")
+        arrow((rows[0][i][0] + width + 0.08, 2.79), (rows[0][i + 1][0] - 0.08, 2.79))
+        arrow((rows[1][i][0] - 0.08, 1.09), (rows[1][i + 1][0] + width + 0.08, 1.09))
+    arrow((10.925, 2.28), (10.925, 1.61))
+    legend = [("learned", "learned head"), ("flow", "conditional flow"),
+              ("decode", "deterministic decoder")]
+    x0 = 2.7
+    for kind, label in legend:
+        ax.add_patch(FancyBboxPatch((x0, 0.08), 0.35, 0.18, boxstyle="round,pad=0.02",
+                                    linewidth=0.8, edgecolor="#526477", facecolor=face[kind]))
+        ax.text(x0 + 0.45, 0.17, label, ha="left", va="center", fontsize=9.0,
+                color="#344c65")
+        x0 += 2.55
     save(fig, "generator_schematic.png")
 
 

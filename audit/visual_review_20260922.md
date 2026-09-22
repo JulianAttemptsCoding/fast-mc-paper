@@ -1,5 +1,7 @@
 # Final visual review
 
-PASS: the complete iteration-35 contact sheet was inspected directly, and all seven page-render hashes are identical to the individually inspected iteration-34 pages. PDF SHA-256: `a3c6fcffd3f1204226a21f47627b249d4c7754641d1500b58e4a5c0306559186`.
+PASS: all nine pages of iteration 40 were inspected directly, and every iteration-41 page render is byte-identical to the inspected page. PDF SHA-256: `9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25`.
 
-The title, abstract, equations, three figures, result table, captions, section transitions, links, acknowledgments, AI statement, and corrected 13-entry bibliography are legible and balanced. No clipping, overlap, broken glyph, table overflow, or stranded bibliography page remains. Iterations 31 and 32 are retained as evidence of the corrected reference-pagination failures; iteration 33 is superseded by the primary-source metadata correction. Per-page hashes are in the JSON twin.
+The model description now runs in sampling order from the five condition features to the 6,790-channel output. The schematic is fixed immediately after the factorization paragraph, and no float interrupts an equation or sentence. The geometry figure, model figure, result table, longitudinal plot, captions, section transitions, links, and 14-entry bibliography are legible. No clipping, overlap, broken glyph, unreadable label, table overflow, or isolated-reference spill remains.
+
+Iterations 36 and 37 preserve the LaTeX and stale-guard failures. Iteration 39 preserves the otherwise-valid float layout that was rejected during visual review. Per-page hashes are recorded in the JSON twin.

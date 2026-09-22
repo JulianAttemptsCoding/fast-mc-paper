@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-22T17:37:58Z",
+  "purpose": "Source-level verification of the model explanation in manuscript v0.7.0",
+  "source_repository": "https://github.com/JulianAttemptsCoding/fast-mc-handoff-2",
+  "source_commit": "e039841404fc442c7496383d20a8566ac589eea3",
+  "selected_checkpoint": "dicos-f-02 epoch 90",
+  "selected_config_sha256": "116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5",
+  "source_blob_sha256": {
+    "src/cbsc_zdc/features.py": "d1b99e90cc941b6c2c377534040fa9d6be9624a1833b10fee2e7b60bdae84441",
+    "src/cbsc_zdc/models/blocks.py": "17998da582fa45577eba28d5306bc4f5448f072f8fb13b869bed97018e5bf8d2",
+    "src/cbsc_zdc/models/system.py": "8616466081a626b8a798504ca1fe8019031db075917d6c1088b9bbda4660d8eb",
+    "src/cbsc_zdc/models/response.py": "0bee892ca06dc7789a146dca202721e0dd90a98d9651f361830b8ff1ce7f3a79",
+    "src/cbsc_zdc/models/profile.py": "64bb03c5293347cdba5e546c33a313da10207c171f3d83aa3fc7bbc06162285e",
+    "src/cbsc_zdc/models/counts.py": "3bca32a46ab5ebb02a1e517dc46a65b9e3fef3e148603d494e69846ea661f8dd",
+    "src/cbsc_zdc/models/node_fields.py": "2ba66a33e081e328d564fb30536e6ebb39a8bb3154c2175dba9101c5d345ccf9",
+    "src/cbsc_zdc/models/graph.py": "a6757029e17d35df2ba230d82b2b934214a7a6a0912d7fb8649716cb41eeb773",
+    "src/cbsc_zdc/models/support.py": "f900e42c9374793a1a6c8e9d1f104e12ef8153c03b72d2cbe5e19a495b5d0a7d",
+    "src/cbsc_zdc/training/truth.py": "aea548e121da3c2cda64c555ee7406378ca3a2b6666c3e9400a4e166df595fd4",
+    "src/cbsc_zdc/training/flow_matching.py": "fadc11f52006681f885f3f644add0d336648bbd27237d7c943b7ffd8296f51e3",
+    "src/cbsc_zdc/training/losses.py": "f926dd69567c8023516ed3ecbfff40649dd5965f565723615cd28e2df7794b1f",
+    "src/cbsc_zdc/training/trainer.py": "067da903f927c9082e3c52c6ccbf1006b8f721ced7fbf3f5e7bf5a7444f1ec04",
+    "src/cbsc_zdc/data/geometry.py": "0322808c0bb59f877441ecba7af6cc41b5c87bfe38be13cb1b09adc5579909cb"
+  },
+  "claims": [
+    {
+      "id": "M01",
+      "claim": "Five deterministic condition features are encoded by a residual MLP into 128 components.",
+      "evidence": [
+        "src/cbsc_zdc/features.py",
+        "src/cbsc_zdc/models/blocks.py",
+        "src/cbsc_zdc/models/system.py"
+      ]
+    },
+    {
+      "id": "M02",
+      "claim": "Generation uses no reference shower, learned shower encoder, or one latent variable shared by all stages.",
+      "evidence": [
+        "src/cbsc_zdc/models/system.py"
+      ]
+    },
+    {
+      "id": "M03",
+      "claim": "The response stage uses a Bernoulli visibility head and a four-component Gaussian mixture in log1p total deposit, followed by inverse transformation and caps.",
+      "evidence": [
+        "src/cbsc_zdc/models/response.py",
+        "src/cbsc_zdc/models/system.py"
+      ]
+    },
+    {
+      "id": "M04",
+      "claim": "The profile stage samples first layer and later activity, then maps Gaussian noise to layer-share logits and closes layer budgets to total deposit with a masked softmax.",
+      "evidence": [
+        "src/cbsc_zdc/models/profile.py",
+        "src/cbsc_zdc/training/flow_matching.py",
+        "src/cbsc_zdc/training/truth.py"
+      ]
+    },
+    {
+      "id": "M05",
+      "claim": "The count head samples a feasible categorical count per layer, with zero required for inactive layers and a positive count required for active layers.",
+      "evidence": [
+        "src/cbsc_zdc/models/counts.py"
+      ]
+    },
+    {
+      "id": "M06",
+      "claim": "Support and share fields use static geometry, three 96-component edge-message blocks, pooled layer tokens, and a two-layer four-head layer transformer.",
+      "evidence": [
+        "src/cbsc_zdc/data/geometry.py",
+        "src/cbsc_zdc/models/node_fields.py",
+        "src/cbsc_zdc/models/graph.py",
+        "src/cbsc_zdc/models/system.py"
+      ]
+    },
+    {
+      "id": "M07",
+      "claim": "Gumbel-perturbed top-k selection realizes exactly the sampled count but applies no connectivity constraint.",
+      "evidence": [
+        "src/cbsc_zdc/models/support.py",
+        "src/cbsc_zdc/models/system.py"
+      ]
+    },
+    {
+      "id": "M08",
+      "claim": "A second graph flow produces selected-channel logits; the deterministic decoder uses a within-layer softmax and closes each layer to its sampled budget.",
+      "evidence": [
+        "src/cbsc_zdc/models/node_fields.py",
+        "src/cbsc_zdc/models/system.py",
+        "src/cbsc_zdc/models/support.py"
+      ]
+    },
+    {
+      "id": "M09",
+      "claim": "The nine component losses use reference-derived upstream quantities during training, while inference passes sampled outputs downstream.",
+      "evidence": [
+        "src/cbsc_zdc/training/truth.py",
+        "src/cbsc_zdc/training/losses.py",
+        "src/cbsc_zdc/training/trainer.py",
+        "src/cbsc_zdc/models/system.py"
+      ]
+    }
+  ],
+  "boundary": "This audit verifies the implemented sampling and training paths. It does not establish statistical adequacy, solver convergence, physical fidelity, speed, or causal responsibility for the observed discrepancy."
+}
