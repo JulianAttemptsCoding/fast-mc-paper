@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-09-22T20:08:23.438908+00:00",
-  "release": "v0.7.0",
+  "created_utc": "2026-09-22T20:36:37.544415+00:00",
+  "release": "v0.8.0",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but a later longitudinal reach and a more disconnected strict-positive support on the model graph.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25",
-    "bytes": 938480,
+    "sha256": "99a057eb25a67728021e4fa2fbeb8e377b7e24266868319bf3d43a0d94d94284",
+    "bytes": 943670,
     "pages": 9
   },
   "current_qa": {
-    "record": "audit\\iterations\\iteration_41.json",
-    "sha256": "f61b0af5b994a1b53ab269942593232dca69d978ddc23650e7c65db8c1e2e036",
+    "record": "audit\\iterations\\iteration_47.json",
+    "sha256": "c68be07532873da7215f4e3fff1e9c55926803bde9948f86f48dd42aa66dbf83",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -30,7 +30,7 @@
       "9-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_20260922.json",
-    "visual_sha256": "f853629d7d990a64687fedca809376ac346acab7a2774bac1fd22daff984b703"
+    "visual_sha256": "4bf7f4a6c5649a48d828b43bcd72e3391361eeaf89bfa5d100cea1baaa90225b"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -38,25 +38,25 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "13b506395d2c228a9a21d51d27ee556577bddb43bf3b9f7d2d53a0f76a4b2c77",
-    "references.bib": "1324fda56b4aca16e43f0f508a1c78f73765d34c2eb34b13ce710da137e5c86a",
+    "main.tex": "9656c995e9f66cd5c7543346ddebaa70d43eca573c01610882cc4b63fd4d3bce",
+    "references.bib": "ed058a52b44236d034ae1b64e667302bd48b96f7b447ada763622fdc41cfc908",
     "build.ps1": "08cadce15e0b56ab9cacdf8f59cc33207eb6925f5d3d4451679931be55711697",
-    "README.md": "8ac85bb0236c82e76e02cd6f686cae936045a084bc1a04c82a225725255a00ae",
-    "STATUS.md": "621cdc0d3e16d5c43d291d6d48034ec3ccfaa57b98337f1342f1aeb8d1bc4092",
-    "CITATION.cff": "007aa9bd520ef2159fb001f915fd624de26a8bd9bbe9b6734a367b79c00447ed",
+    "README.md": "bd139ea71eade40b615b257eabf24c400edd984b0a522bb2f7ec08c5a1c97e11",
+    "STATUS.md": "720918754d3705a1cb74c8db8a0802183bf8a24f94fc7574a4f64e18c13182e7",
+    "CITATION.cff": "ac2a6401bfb776838d884346788177cfdf6c3a9981592745e403527f96d7ad67",
     "audit/claim_register_20260922.json": "2392e0f853a1343d7243b87cdae0b1b42991f3d121800f111a6d14deb2a8fea7",
     "audit/claim_register_20260922.md": "1054eb24b7f47627ca1b87cc8a0a3aaa6916622fc86ae87d3c8e3a86f42db9da",
     "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
     "audit/adversarial_revision_20260922.md": "242b9a9ea5e32edd2dfec801d225c98839787d34c9e18810e82dbfaefabb9346",
     "audit/model_exposition_20260922.json": "36a8cfbc005387789c6029520be7bee58262eb2aefc826938db2dd4214f8c1ac",
     "audit/model_exposition_20260922.md": "d38e6e6ad8f694b613ecbc1c8db24d74c4fa259b87385c8c25de793ac1144ce2",
-    "audit/sentence_evidence_20260922.json": "f5738fffb2662fd733af3a5280f52c85214f0e24e679fa350792341694f8d9d2",
-    "audit/sentence_evidence_20260922.md": "283bee15c04006ca184133f29ca708e29a19b4f24e072274aa17bd9e1b020652",
+    "audit/sentence_evidence_20260922.json": "feeaeb63f05627f8514856e47b0bce5c6bdbdb7d982e348c859c2146795e727d",
+    "audit/sentence_evidence_20260922.md": "18e8d33970d6be0c3d6f2c071a5f2902453fc86dd4b3d766cc9fc3c0af757422",
     "audit/literature_benchmark.md": "d2e57176f6ff8e6c78621b9f57b1a712e6f2a74fcba5e7dadf05c1254a43bcb2",
-    "scripts/build_figures.py": "b710bcf5094871c3e37edb2b4ab3db4e15bbd251b80609b6479618e84953d667",
-    "scripts/full_manuscript_qa.py": "bab76bb8a2bc1e3866a86bb196b655ed02438533b8d7b8956f782256cf665eb8",
+    "scripts/build_figures.py": "f638f93c5ca3cb4ccdec9b6431eeaecb99b6e7c9678687ea51a4529d3e5c3ec1",
+    "scripts/full_manuscript_qa.py": "806507b4d1f81b29e8c773281b331a0281d43706b53cf53dd466e913522ea73f",
     "scripts/test_qa_guards.py": "e3c66c54b8321d7d4a8ae1c394f61beac277d5a449218c51aa8213c0be90c9dd",
-    "scripts/write_build_audit.py": "44f2ea3f132c7ad6b443f6ad48054c457f03c2c9cf2d74ad810b9a48be60d256",
+    "scripts/write_build_audit.py": "7c7a8294af787a3e4ae263375c644c869260be8e2d75b52ed3b042701878d1d6",
     "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
     "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
     "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
@@ -66,7 +66,7 @@
     "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
     "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
   },
-  "figures_manifest_sha256": "2d28e42295777b9a0abe9f96ce3541ae8089c404e32004415f1dbbec5a4d7b13",
+  "figures_manifest_sha256": "4247d2a31e3a24cd0dedf1a8924c7421e62e9b97d584af8ed6407d15db5f4228",
   "research_boundary": "No new training, test-data use or model evaluation. Aggregate arithmetic, model implementation statements and source provenance were audited; physics fidelity was not established.",
   "remaining_publication_actions": [
     "Author/collaborator approval of authorship and acknowledgments",

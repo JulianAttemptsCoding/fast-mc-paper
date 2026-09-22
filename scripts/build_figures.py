@@ -71,57 +71,70 @@ def save(fig: plt.Figure, filename: str) -> None:
 
 
 def plot_architecture() -> None:
-    fig, ax = plt.subplots(figsize=(8.6, 3.85), layout="constrained")
-    ax.set_xlim(0, 12.2)
-    ax.set_ylim(0, 3.75)
+    fig, ax = plt.subplots(figsize=(8.6, 3.2), layout="constrained")
+    ax.set_xlim(0, 13.4)
+    ax.set_ylim(0, 3.35)
     ax.axis("off")
+    x_positions = [0.15, 2.85, 5.55, 8.25, 10.95]
     rows = [
-        [(0.05, "$c$\n5 condition features", "input"),
-         (2.5, "$h_c$\n5 $\\rightarrow$ 128 MLP", "learned"),
-         (4.95, "$V,\\,T$\nBernoulli + 4-Gaussian", "learned"),
-         (7.4, "$F,\\,A_\\ell$\ncategory + Bernoulli", "learned"),
-         (9.85, "$B_\\ell$\n8-step flow + softmax", "flow")],
-        [(9.85, "$K_\\ell$\nmasked categorical", "learned"),
-         (7.4, "$S_\\ell$\ngraph scores + top-$K_\\ell$", "learned"),
-         (4.95, "$r_{\\ell i}$\n8-step graph flow", "flow"),
-         (2.5, "$Y_{\\ell i}=B_\\ell\\,\\mathrm{softmax}(r)$\nexact layer closure", "decode"),
-         (0.05, "$\\mathbf{Y}$\n6,790 channel energies", "output")],
+        [(x_positions[0], "$c$\n5 input features", "input"),
+         (x_positions[1], "$h_c$\nencoding", "learned"),
+         (x_positions[2], "$V,\\,T$\nevent response", "learned"),
+         (x_positions[3], "$F,\\,A_\\ell$\nlayer activity", "learned"),
+         (x_positions[4], "$B_\\ell$\nlayer budgets", "flow")],
+        [(x_positions[4], "$K_\\ell$\nchannel counts", "learned"),
+         (x_positions[3], "$S_\\ell$\nchannel set", "learned"),
+         (x_positions[2], "$r_{\\ell i}$\nenergy logits", "flow"),
+         (x_positions[1], "$Y_{\\ell i}$\nchannel deposits", "decode"),
+         (x_positions[0], "$\\mathbf{Y}$\n6,790 deposits", "output")],
     ]
-    width, height = 2.15, 0.88
-    y_positions = [2.35, 0.65]
+    width, height = 2.25, 0.80
+    y_positions = [2.1, 0.70]
     face = {
         "input": "#f1f3f5", "output": "#f1f3f5", "learned": "#e6eef5",
         "flow": "#e8f0e7", "decode": "#ece7f2",
     }
+    labels_and_boxes = []
     for row_index, row in enumerate(rows):
         for x, label, kind in row:
-            ax.add_patch(
-                FancyBboxPatch(
-                    (x, y_positions[row_index]), width, height,
-                    boxstyle="round,pad=0.06,rounding_size=0.1",
-                    linewidth=1.05, edgecolor="#31445b", facecolor=face[kind],
-                )
+            box = FancyBboxPatch(
+                (x, y_positions[row_index]), width, height,
+                boxstyle="round,pad=0.035,rounding_size=0.09",
+                linewidth=1.05, edgecolor="#31445b", facecolor=face[kind],
             )
-            ax.text(x + width / 2, y_positions[row_index] + height / 2, label,
-                    ha="center", va="center", fontsize=9.8, color="#1d2b3c")
+            ax.add_patch(box)
+            label_artist = ax.text(
+                x + width / 2, y_positions[row_index] + height / 2, label,
+                ha="center", va="center", fontsize=11.2, linespacing=1.4,
+                color="#1d2b3c",
+            )
+            labels_and_boxes.append((label_artist, box))
 
     def arrow(start: tuple[float, float], end: tuple[float, float]) -> None:
         ax.add_patch(FancyArrowPatch(start, end, arrowstyle="-|>", mutation_scale=13,
-                                     linewidth=1.35, color="#344c65"))
+                                     linewidth=1.35, color="#344c65", shrinkA=0, shrinkB=0))
 
     for i in range(4):
-        arrow((rows[0][i][0] + width + 0.08, 2.79), (rows[0][i + 1][0] - 0.08, 2.79))
-        arrow((rows[1][i][0] - 0.08, 1.09), (rows[1][i + 1][0] + width + 0.08, 1.09))
-    arrow((10.925, 2.28), (10.925, 1.61))
-    legend = [("learned", "learned head"), ("flow", "conditional flow"),
+        arrow((rows[0][i][0] + width + 0.065, 2.5), (rows[0][i + 1][0] - 0.065, 2.5))
+        arrow((rows[1][i][0] - 0.065, 1.1), (rows[1][i + 1][0] + width + 0.065, 1.1))
+    arrow((x_positions[4] + width / 2, 1.98), (x_positions[4] + width / 2, 1.62))
+    legend = [("learned", "learned stage"), ("flow", "conditional flow"),
               ("decode", "deterministic decoder")]
-    x0 = 2.7
+    x0 = 2.55
     for kind, label in legend:
-        ax.add_patch(FancyBboxPatch((x0, 0.08), 0.35, 0.18, boxstyle="round,pad=0.02",
+        ax.add_patch(FancyBboxPatch((x0, 0.15), 0.35, 0.18, boxstyle="round,pad=0.02",
                                     linewidth=0.8, edgecolor="#526477", facecolor=face[kind]))
-        ax.text(x0 + 0.45, 0.17, label, ha="left", va="center", fontsize=9.0,
+        ax.text(x0 + 0.45, 0.24, label, ha="left", va="center", fontsize=10.2,
                 color="#344c65")
-        x0 += 2.55
+        x0 += 2.95
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    for label_artist, box in labels_and_boxes:
+        label_bbox = label_artist.get_window_extent(renderer)
+        box_bbox = box.get_window_extent(renderer)
+        if not (box_bbox.x0 + 4 < label_bbox.x0 and label_bbox.x1 < box_bbox.x1 - 4
+                and box_bbox.y0 + 4 < label_bbox.y0 and label_bbox.y1 < box_bbox.y1 - 4):
+            raise ValueError(f"Architecture label exceeds its box: {label_artist.get_text()}")
     save(fig, "generator_schematic.png")
 
 

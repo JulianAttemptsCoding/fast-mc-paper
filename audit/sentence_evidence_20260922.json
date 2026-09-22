@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_utc": "2026-09-22T17:42:45Z",
-  "manuscript_version": "0.7.0",
+  "manuscript_version": "0.8.0",
   "review_scope": "Every prose paragraph, equation, table caption, and figure caption",
   "sections": [
     {
@@ -95,7 +95,7 @@
     "policy": "Prefer named variables, operations, evidence, and limits over promotional or vague language."
   },
   "result": "pass",
-  "typeset_qa_iteration": 40,
-  "typeset_pdf_sha256": "eee4392f5b0dd3aa3618782d71506fc7afd5147de378e857c047ce35145a84b4",
-  "visual_review": "All nine pages inspected. The architecture figure was changed from a float to a fixed block after an intermediate render showed that it could interrupt a flow-matching sentence."
+  "typeset_qa_iteration": 46,
+  "typeset_pdf_sha256": "7d66a900aa09c1d993c08f63dd020b1289df67bcd3fc66dd79184a06e0befdb4",
+  "visual_review": "All nine pages inspected in iteration 45; only pages 6 and 8 changed in iteration 46, and both were reinspected. The diagram has a source-level label-containment check. The geometry figure and results table were fixed at their explanatory text after page review found misplaced top floats."
 }

@@ -1,6 +1,6 @@
 # Connectivity Diagnostics in a Pilot Generative Surrogate of Zero-Degree Calorimeter Showers
 
-Version 0.7.0 is an exploratory HEP/computational-physics case study of one pilot-trained calorimeter surrogate. On the repeatedly inspected development bank, similar mean occupancies coexist with a later longitudinal reach and a more disconnected strict-positive readout support. The methods now trace the complete generation path from the incident four-vector to the 6,790-channel energy vector, distinguishing learned draws, conditional flows, and deterministic decoding. The paper does not assert statistical significance, physical relevance after digitization, performance across retraining, causal attribution, acceleration, or detector readiness.
+Version 0.8.0 is an exploratory HEP/computational-physics case study of one pilot-trained calorimeter surrogate. On the repeatedly inspected development bank, similar mean occupancies coexist with a later longitudinal reach and a more disconnected strict-positive readout support. The methods trace the complete generation path from the incident four-vector to the 6,790-channel energy vector, distinguishing learned draws, conditional flows, and deterministic decoding. The revised generator diagram has a checked label-to-box layout, and the prose defines the model stages in physical readout terms. The paper does not assert statistical significance, physical relevance after digitization, performance across retraining, causal attribution, acceleration, or detector readiness.
 
 ## Fixed case
 
@@ -34,7 +34,7 @@ Choose an unused iteration number; historical records cannot be overwritten. The
 - `audit/framing_revision_20260921.*`: HEP/computational-physics framing criteria and pre-November-2025 style references.
 - `audit/adversarial_revision_20260922.*`: disposition of the two supplied adversarial audits.
 - `audit/claim_register_20260922.*`: current claim-by-claim disposition and sources.
-- `audit/model_exposition_20260922.*`: source-hash-bound audit of every model-mechanism statement added in v0.7.0.
+- `audit/model_exposition_20260922.*`: source-hash-bound audit of the model mechanisms described in the manuscript.
 - `audit/sentence_evidence_20260922.*`: section-by-section evidence and clarity review for the complete manuscript.
 - `audit/iterations/`: historical and current build checks; only a hash-matched current record applies to the current PDF.
 - `archive/pre_revision_20260921/`: original v0.3.0 source/PDF/build snapshot.

@@ -33,7 +33,7 @@
 \maketitle
 
 \begin{abstract}
-We report an exploratory case study of a hierarchical generative surrogate for single-neutron Geant4 showers in a 6,790-channel Zero-Degree Calorimeter readout. The generator samples, in order, the total deposited energy, the active layers and their energy budgets, the number and identity of active channels in each layer, and the energy assigned to those channels. The selected checkpoint was trained on 26,624 events and evaluated on a repeatedly inspected development bank of 10,000 conditions at 50--250\,GeV. Its mean total deposit differs from the reference by 0.045\,GeV (1.0\%), but this small net difference combines shifts of opposite sign in the electromagnetic and hadronic sections. On nonempty events, the mean number of active layers differs by 0.25, while the generated shower reaches 4.42 layers farther downstream and contains 3.95 more inactive layers within its occupied span. The mean number of active channels differs by $-28.7$ ($-1.8\%$), yet the active support contains 35.97 more weak components on the model graph and its mean largest-component fraction is lower by 6.03 percentage points. These numbers describe one checkpoint, one graph, and the threshold $Y_i>0$. The event arrays needed for uncertainty estimates, threshold scans, and graph sensitivity studies were not retained. The result is therefore a measured connectivity discrepancy in this development artifact, not a test of general surrogate fidelity or a demonstration of its cause.
+We study a pilot generative model of single-neutron Geant4 showers in a 6,790-channel Zero-Degree Calorimeter readout. Conditioned on neutron energy and direction, it samples the total recorded deposit, allocates that deposit among active layers, selects active channels, and distributes each layer's energy among them. We compare one checkpoint trained on 26,624 events with Geant4 showers at 10,000 stored conditions in the 50--250\,GeV incident kinetic-energy range. The mean total deposit differs by 0.045\,GeV (1.0\%); opposing shifts in the electromagnetic and hadronic sections partly cancel. Among nonempty events, mean active-layer counts differ by 0.25, but the mean last active layer is 4.42 layers farther downstream and the mean number of inactive layers within the occupied span is 3.95 higher. Mean active-channel counts differ by $-28.7$ ($-1.8\%$), while the generated support has 35.97 more connected components on the model graph and a 6.03-percentage-point lower mean largest-component fraction. These descriptive differences concern one checkpoint, a strict-positive readout threshold, and a repeatedly inspected development sample. Event-level arrays needed for uncertainty estimates and threshold or graph sensitivity tests were not retained. The observed connectivity discrepancy has no established statistical significance or causal attribution.
 \end{abstract}
 
 \section{Introduction}
@@ -59,12 +59,14 @@ where $\Kinc=E-m_n$. The two energy features are deterministically related by $E
 
 The target $\Y\in\mathbb R_{\geq0}^{6790}$ contains raw, nondigitized energy deposits summed by valid readout ID. It is not the incident-neutron energy or the total energy lost in all detector material. Layer 0 contains 400 electromagnetic-calorimeter (ECAL) channels. Hadronic-calorimeter (HCAL) layers 1--63 contain 100 channels each and layer 64 contains 90, for 6,390 HCAL channels. Of the HCAL readout IDs, 2,400 gang two to four stable physical positions. Each ganged channel is represented by the unweighted centroid of its positions (Fig.~\ref{fig:geometry}). The released metadata does not specify the full material composition, Geant4 version, physics list, production cuts, field configuration, or whether $p^\mu$ is recorded at generation or calorimeter entry. The observed few-GeV readout response can therefore be interpreted only as energy in the stored active-readout target, not as a calibrated calorimeter response fraction.
 
-\begin{figure}[t]
+\begin{center}
+\begin{minipage}{\linewidth}
  \centering
  \includegraphics[width=\linewidth]{detector_geometry.png}
- \caption{Frozen readout geometry. The left panels show ECAL layer 0 and HCAL layer 1. The ganging histogram covers all 6,790 readout channels; its first bar contains 400 ECAL and 3,990 HCAL channels.}
+ \captionof{figure}{Frozen readout geometry. The left panels show ECAL layer 0 and HCAL layer 1. The ganging histogram covers all 6,790 readout channels; its first bar contains 400 ECAL and 3,990 HCAL channels.}
  \label{fig:geometry}
-\end{figure}
+\end{minipage}
+\end{center}
 
 The graph connects every channel to its eight nearest same-layer centroids. For each node in layer $\ell=0,\ldots,63$, four nearest centroids are selected in layer $\ell+1$, and each selected longitudinal pair is stored in both directions. This gives $8\times6790=54{,}320$ lateral directed edges and $2\times4\times(400+63\times100)=53{,}600$ longitudinal directed edges, or 107,920 in total. The same graph is used by the generator and by the connectivity diagnostic. It is an implementation graph, not a uniquely established physical-neighbor graph, and centroiding removes separation within a ganged channel.
 
@@ -75,22 +77,22 @@ All shower comparisons use a 10,000-condition sample from the canonical validati
 \section{Generator and training procedure}
 \label{sec:model}
 
-The generator has 2,082,507 trainable parameters. It receives only the five conditioning features in Eq.~\eqref{eq:condition}; no reference shower is supplied when an event is generated. A two-block residual multilayer perceptron maps the five inputs to a 128-component vector $h_c$. Every subsequent head is conditioned on $h_c$. The model is not an autoencoder: it has no learned shower encoder and no single latent vector shared by all stages. Randomness instead enters through the discrete draws and through separate Gaussian source states for the two conditional flows described below.
+The generator has 2,082,507 trainable parameters. It receives the five conditioning features in Eq.~\eqref{eq:condition}; no reference shower is supplied when generating an event. A two-block residual multilayer perceptron maps these inputs to a 128-component representation $h_c$, which conditions all subsequent stages. Here a \emph{head} is a neural network that predicts the parameters of a distribution from which a quantity is drawn. A \emph{conditional flow} starts from Gaussian random numbers and follows a learned velocity field to produce correlated continuous outputs. The model has no learned shower encoder or common random latent vector: independent draws enter at the discrete heads and at the two flows.
 
-Figure~\ref{fig:architecture} follows the inference path. Each sampled quantity becomes an input to the next stage. This ordering defines the model's factorization: an error in an early draw can propagate downstream, whereas a later stage cannot alter an upstream budget or count.
+Figure~\ref{fig:architecture} follows the sampling path. Each draw conditions later stages. Thus a change in total deposit can affect every later allocation, whereas the final channel-energy assignment cannot change a previously sampled layer budget or channel count.
 
 \begin{center}
 \begin{minipage}{\linewidth}
  \centering
  \includegraphics[width=\linewidth]{generator_schematic.png}
- \captionof{figure}{Event generation in sampling order. Blue boxes are learned probability heads, green boxes are conditional flow fields, and the purple box is a deterministic decoder. $V$ is the visible-event indicator, $T$ is total readout deposit, $F$ is the first active layer, $A_\ell$ is layer activity, $B_\ell$ is the layer budget, $K_\ell$ is the active-channel count, and $S_\ell$ is the selected support. During training, each head receives the corresponding quantities derived from the reference shower. During inference, it receives the sampled outputs of earlier stages.}
+ \captionof{figure}{Event generation runs left to right across the top row, then right to left across the bottom row. Blue boxes are learned conditioning and sampling stages, green boxes are conditional flows, and the purple box is the deterministic decoder. $V$ indicates any positive readout deposit, $T$ is its total, $F$ is the first active layer, $A_\ell$ is layer activity, $B_\ell$ is the layer budget, $K_\ell$ is the active-channel count, and $S_\ell$ is the selected channel set. The flow output $r_{\ell i}$ gives channel-energy logits, normalized within each layer to obtain $Y_{\ell i}$. During training, stages receive upstream quantities derived from the reference shower; generation uses earlier sampled outputs.}
  \label{fig:architecture}
 \end{minipage}
 \end{center}
 
 \subsection{Total deposit and longitudinal allocation}
 
-A Bernoulli head samples the visible-event indicator $V$. A second head outputs the mixture weights, means, and positive scales of a four-component Gaussian mixture for
+A Bernoulli head samples $V$, which indicates whether the event has any positive readout deposit. A second head outputs the weights, means, and positive widths of a four-component Gaussian mixture for the transformed total deposit
 \begin{equation}
  q_T=\log(1+T/10\GeV).
  \label{eq:response_transform}
@@ -101,7 +103,7 @@ When $V=1$, the implementation samples a mixture component and a normal variate,
  C(\Kinc)=\min\{0.630110\max(\Kinc,1\GeV),61.2338\GeV\}.
  \label{eq:cap}
 \end{equation}
-The cap is a numerical bound derived from the training sample. If $V=0$, or if the transformed draw becomes zero after inversion and clipping, the implementation sets $T=0$ and generates no active layer. The aggregate evaluation did not retain cap-activation or reference-exceedance counts, so it cannot test the response tail near this boundary.
+The cap is a numerical bound derived from the training sample. If $V=0$, or if inversion and clipping give $T=0$, no layer is activated. The aggregate evaluation did not retain cap-activation or reference-exceedance counts, so the response tail near this boundary is untested.
 
 For $V=1$, a categorical head samples the first active layer $F$ from $(h_c,T)$. Layers before $F$ are set inactive, layer $F$ is forced active, and a Bernoulli head samples the later activity indicators. The later indicators are independent conditional on the variables supplied to that head,
 \begin{equation}
@@ -111,14 +113,14 @@ For $V=1$, a categorical head samples the first active layer $F$ from $(h_c,T)$.
 \end{equation}
 This head does not require the active layers to be contiguous.
 
-The first conditional flow assigns the total deposit to the sampled active layers. Its training target is the centered log of the reference layer fractions after flooring each fraction at $10^{-8}$. For a transformed target $x_1$, flow training draws $x_0$ from a standard normal distribution and $t$ uniformly from $[0,1]$, constructs
+The first conditional flow apportions $T$ among active layers. For training, each reference layer deposit is divided by the reference total; the logarithms of these fractions, floored at $10^{-8}$, are centered over active layers to form a target vector $x_1$. The flow draws a standard-normal vector $x_0$ and a time $t$ uniformly in $[0,1]$, then constructs
 \begin{equation}
  x_t=(1-t)x_0+t x_1,
  \qquad
  \mathcal L_{\mathrm{CFM}}=\lVert v_\theta(x_t,t;\text{context})-(x_1-x_0)\rVert_2^2,
  \label{eq:cfm}
 \end{equation}
-and fits the velocity field $v_\theta$ by mean-squared error~\cite{flowmatching}. At inference, the flow starts from a new Gaussian draw on the active layers and applies eight fixed first-order updates to the learned ordinary differential equation. A masked softmax then gives layer fractions $\pi_\ell$, and the layer budgets are
+The squared error trains the velocity field $v_\theta$ to point along the straight path from $x_0$ to $x_1$~\cite{flowmatching}. At generation, the field advances a fresh Gaussian vector through eight fixed updates, with velocity evaluated at the midpoint time of each interval. A softmax over active layers converts its output to nonnegative fractions $\pi_\ell$ that sum to one. The layer budgets are
 \begin{equation}
  B_\ell=T\pi_\ell,\qquad B_\ell=0\ \text{when}\ A_\ell=0,
  \qquad \sum_{\ell=0}^{64}B_\ell=T.
@@ -128,11 +130,11 @@ The velocity field uses a 128-component layer representation and two bidirection
 
 \subsection{Channel count, support, and deposited energy}
 
-For each layer, a categorical head receives $(h_c,B_\ell,A_\ell)$ and a learned layer embedding, then samples the number of active channels $K_\ell$. Its feasibility mask permits only $K_\ell=0$ in an inactive layer and $1\leq K_\ell\leq N_\ell$ in an active layer, where $N_\ell$ is the number of channels in that layer. Because this study uses a zero threshold, the count mask imposes no positive minimum energy per selected channel.
+For each layer, a categorical head receives $(h_c,B_\ell,A_\ell)$ and a learned layer identifier, then samples the active-channel count $K_\ell$. Its feasibility mask permits $K_\ell=0$ in an inactive layer and $1\leq K_\ell\leq N_\ell$ in an active layer, where $N_\ell$ is that layer's channel count. The mask fixes a count but imposes no minimum energy per channel in this zero-threshold study.
 
-The support network assigns one score to every channel. Its static node inputs are standardized $(x,y,z)$ coordinates, normalized layer index, and ECAL/HCAL indicators. It appends $h_c$, the budget $B_\ell$, and the occupancy fraction $K_\ell/N_\ell$ for the channel's layer. Three 96-component message-passing blocks use the directed graph and five edge features: standardized coordinate differences, their Euclidean norm, and a code for lateral, forward-longitudinal, or backward-longitudinal edges. Node representations are then averaged within each layer; a two-layer, four-head bidirectional transformer exchanges information among the 65 layer summaries; and the resulting layer context is broadcast back to the nodes. Adding independent Gumbel noise to the scores and retaining the largest $K_\ell$ values selects exactly $K_\ell$ channels in layer $\ell$~\cite{gumbeltopk}. This operation fixes support cardinality, but it does not require the selected nodes to form a connected set.
+The support network scores every channel for selection. Its inputs for each channel are standardized $(x,y,z)$ coordinates, normalized layer index, ECAL/HCAL indicators, $h_c$, the layer budget $B_\ell$, and the requested occupancy fraction $K_\ell/N_\ell$. Three 96-component graph blocks update each channel representation from its neighbors. Their five edge inputs specify coordinate differences, distance, and whether an edge is lateral, forward-longitudinal, or backward-longitudinal. Channel representations are averaged within each layer; a two-layer, four-head bidirectional transformer exchanges information among the 65 layer summaries; the resulting context is returned to each channel. Independent Gumbel noise is added to the channel scores, and the $K_\ell$ highest scores select exactly $K_\ell$ channels in layer $\ell$~\cite{gumbeltopk}. Selection has no constraint that would make those channels a connected set.
 
-The second conditional flow assigns relative energy within the selected support. Its target is the centered log of the reference channel fractions in each layer after the same $10^{-8}$ floor. It uses the construction in Eq.~\eqref{eq:cfm}. The velocity network has the same graph and layer-context structure as the support network, with the current flow state and a sinusoidal time encoding added to each node. Node states are masked by the selected support before and after every message-passing block. At inference, the selected nodes receive independent Gaussian source values, and eight fixed first-order updates produce final logits $r_{\ell i}$. The deterministic decoder computes
+The second conditional flow divides each sampled layer budget among its selected channels. Its training target is obtained by taking the log of each reference channel's fraction of its layer energy, flooring fractions at $10^{-8}$, and centering the logs within that layer. It uses the same straight-path objective as Eq.~\eqref{eq:cfm}. Its velocity network has the support network's graph and layer-context structure, with the current flow state and a sinusoidal time encoding added at each channel. Unselected channels are masked before and after every graph block. At generation, independent Gaussian values on selected channels undergo eight fixed updates to produce logits $r_{\ell i}$. The deterministic decoder computes
 \begin{equation}
  Y_{\ell i}=
  \begin{cases}
@@ -145,21 +147,21 @@ where $S_\ell$ is the selected set. Thus, in exact arithmetic, $|S_\ell|=K_\ell$
 
 \subsection{Training and checkpoint selection}
 
-Training uses the reference shower to derive $V$, $T$, $F$, $A_\ell$, $B_\ell$, $K_\ell$, $S_\ell$, and the two flow targets. Each component is trained with those reference upstream quantities rather than with samples from preceding heads; this is the teacher forcing shown in Fig.~\ref{fig:architecture}. The nine losses are binary cross entropy for visibility and activity, mixture negative log likelihood for $T$, categorical cross entropy for $F$ and $K_\ell$, binary cross entropy plus pairwise ranking for support, and mean-squared velocity error for each flow. Their weights were obtained from gradient norms measured on training data. Response, layer-profile, and count weights reached the lower clipping bound, while the visibility weight reached the upper bound; this records the optimizer setup and does not identify the source of the connectivity discrepancy.
+Training derives $V$, $T$, $F$, $A_\ell$, $B_\ell$, $K_\ell$, $S_\ell$, and both flow targets from each reference shower. A component receives the reference values of earlier components, whereas generation passes its own sampled values downstream. This training procedure is often called teacher forcing. The nine losses are binary cross entropy for visibility and activity, mixture negative log likelihood for $T$, categorical cross entropy for $F$ and $K_\ell$, binary cross entropy plus pairwise ranking for support, and mean-squared velocity error for each flow. Weights were obtained from gradient norms measured on training data. The response, layer-profile, and count weights reached the lower clipping bound, and the visibility weight reached the upper bound. These weights describe the optimization; they do not identify the source of the connectivity discrepancy.
 
 The selected joint-training run used AdamW with a peak learning rate of $3\times10^{-4}$, batch size six, accumulation over four batches, gradient clipping at one, and seed 20260723. Epoch 90 has the lowest recorded validation objective among the 104 retained rows spanning epochs 11--114 and defines the checkpoint studied here. Validation objectives are lower than training objectives over much of this record. The retained aggregates do not identify why, so the ordering is not given a physical interpretation. Both flows use eight integration updates at evaluation; no solver-step comparison was retained.
 
 \section{Diagnostics}
 \label{sec:diagnostics}
 
-We first compare all-event mean total, ECAL, and HCAL deposits. Eight 25\,GeV incident-energy bins are also available as aggregate means and standard deviations. They are used only to identify the range of descriptive deviations because the retained report contains no binwise uncertainty estimates. We omit the pooled Wasserstein distance and the historical reference-half comparison: the sample sizes and condition distributions differ, and the stored bootstrap does not provide a calibrated uncertainty statement for that comparison.
+We compare mean total, ECAL, and HCAL deposits over all events. For eight 25\,GeV incident-energy bins, retained means and standard deviations describe how these deposits vary with energy. The report contains no binwise uncertainty estimates.
 
 A layer or channel is active when its stored energy is strictly positive; no detector or analysis threshold is applied. For a nonempty event with first and last active layers $F$ and $L$, the occupied span is $L-F+1$, and the number of inactive layers inside it is
 \begin{equation}
  G=L-F+1-\sum_{\ell=0}^{64}A_\ell.
  \label{eq:gaps}
 \end{equation}
-This counts inactive layers, not contiguous runs. A shower has an interior gap when $G>0$. On the undirected form of the model graph, the active support $S$ separates into weak components $C_1,\ldots,C_m$; we report $m$ and $\max_j|C_j|/|S|$. All support summaries are conditioned on nonempty events. The reference and generated nonempty sample sizes are 9,907 and 9,858, respectively.
+This counts inactive layers, not contiguous runs. A shower has an interior gap when $G>0$. Ignoring edge direction, the occupied channels $S$ form connected components $C_1,\ldots,C_m$ on the model graph. We report their number $m$ and the fraction of occupied channels in the largest one, $\max_j|C_j|/|S|$. These support summaries use only nonempty events: 9,907 reference and 9,858 generated events.
 
 The retained condition-only pipeline control has AUROC 0.500. Because it contains no shower variables, it checks only that identical condition distributions are presented to the two labels; it is not a two-sample test of the generated showers. A valid classifier test would require held-out discrimination~\cite{kansalmetrics} and, for this paired design, a split that keeps each matched reference--generated pair together.
 
@@ -168,9 +170,10 @@ The retained condition-only pipeline control has AUROC 0.500. Because it contain
 
 Table~\ref{tab:results} reports absolute differences so that ratios on small denominators do not exaggerate the comparison. The all-event mean total deposit differs by 0.045\,GeV, but this sum combines an ECAL excess of 0.175\,GeV with an HCAL deficit of 0.129\,GeV. Across the eight incident-energy bins, the generated-minus-reference mean difference ranges from $-7.7\%$ to $+7.7\%$, while the standard-deviation difference ranges from $-10.9\%$ to $+9.6\%$. Without binwise uncertainties these ranges diagnose possible cancellation but do not establish a statistically resolved energy dependence.
 
-\begin{table}[t]
+\begin{center}
+\begin{minipage}{\linewidth}
 \centering
-\caption{Aggregate development-bank results. Deposit rows and zero-deposit counts use all 10,000 pairs. Support rows are conditional on nonempty events (9,907 reference and 9,858 generated). Percentage-point differences are denoted pp. No uncertainty intervals can be reconstructed from the retained aggregates.}
+\captionof{table}{Aggregate development-bank results. Deposit rows and zero-deposit counts use all 10,000 pairs. Support rows are conditional on nonempty events (9,907 reference and 9,858 generated). Percentage-point differences are denoted pp. No uncertainty intervals can be reconstructed from the retained aggregates.}
 \label{tab:results}
 \small
 \begin{tabular}{@{}lrrr@{}}
@@ -193,9 +196,10 @@ Mean weak graph components & 23.42 & 59.39 & $+35.97$ \\
 Mean largest-component fraction & 94.90\% & 88.87\% & $-6.03$ pp \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{minipage}
+\end{center}
 
-The longitudinal discrepancy is more directly described as a shift in reach than as a ratio of gap counts. The generated shower has nearly the same mean number of active layers, but its first active layer is 0.225 layer later and its last active layer is 4.42 layers later. The occupied span consequently grows by 4.20 layers while the active-layer count grows by only 0.25, leaving 3.95 additional inactive layers inside the span. Figure~\ref{fig:longitudinal} shows the corresponding mean energy allocation.
+The longitudinal discrepancy is more directly described as a shift in reach than as a ratio of gap counts. The mean active-layer counts are close, but the generated sample's mean first active layer is 0.225 layer later and its mean last active layer is 4.42 layers later. The mean occupied span consequently grows by 4.20 layers while the mean active-layer count grows by only 0.25, leaving 3.95 additional inactive layers inside the span on average. Figure~\ref{fig:longitudinal} shows the corresponding mean energy allocation.
 
 \begin{figure}[t]
  \centering
@@ -204,7 +208,7 @@ The longitudinal discrepancy is more directly described as a shift in reach than
  \label{fig:longitudinal}
 \end{figure}
 
-At channel level, the generated events contain 28.7 fewer active channels on average but 35.97 more weak components. Their largest component contains 6.03 percentage points less of the active support. Under the declared graph and strict-positive definition, the support is therefore more disconnected even though its mean cardinality is similar. The available aggregates do not record component energies. They cannot determine whether the additional components carry substantial energy or arise from small positive deposits produced by the selected-channel softmax.
+At channel level, the generated sample has 28.7 fewer active channels and 35.97 more weak components on average. Its mean largest-component fraction is lower by 6.03 percentage points. Under the declared graph and strict-positive definition, the generated support is therefore more disconnected even though its mean cardinality is similar. The available aggregates do not record component energies. They cannot determine whether the additional components carry substantial energy or arise from small positive deposits produced by the selected-channel softmax.
 
 There are 49 more zero-deposit generated events than reference events. A significance calculation would require the joint paired zero/nonzero counts, which were not retained; the marginal counts alone do not support one. The result is reported because the visibility hurdle is part of the sampled model and because excluding empty events changes the denominators of every support statistic.
 
@@ -223,9 +227,9 @@ $\Ddev$ was repeatedly inspected, its overlap with pilot validation is unresolve
 
 \section{Conclusion}
 
-For the single pilot checkpoint studied here, close mean occupancies do not coincide with close readout-support organization. Relative to the paired Geant4 sample, the generated events contain 0.25 more active layers but reach 4.42 layers farther downstream, leaving 3.95 more inactive layers within the occupied span. They contain 28.7 fewer active channels but 35.97 more weak components on the model graph, with a 6.03-percentage-point reduction in the largest-component fraction. Opposing ECAL and HCAL shifts also partially cancel in the mean total deposit.
+For the single pilot checkpoint studied here, close mean occupancies do not coincide with close readout-support organization. Relative to the paired Geant4 sample, generated events have 0.25 more active layers on average but a mean last active layer 4.42 layers farther downstream, leaving 3.95 more inactive layers within the occupied span on average. They have 28.7 fewer active channels and 35.97 more weak components on average, with a 6.03-percentage-point reduction in the mean largest-component fraction. Opposing ECAL and HCAL shifts also partially cancel in the mean total deposit.
 
-These values describe one repeatedly inspected development bank under a strict-positive threshold and one shared graph. They establish a reproducible discrepancy in this artifact. They do not establish its statistical significance, physical relevance after digitization, persistence across model fits, or causal origin. Those questions require the event-level, threshold, graph, seed, and locked-evaluation studies specified above.
+These values describe one repeatedly inspected development bank under a strict-positive threshold and one shared graph. They document a discrepancy in the retained aggregate report. They do not establish its statistical significance, physical relevance after digitization, persistence across model fits, or causal origin. Those questions require the event-level, threshold, graph, seed, and locked-evaluation studies specified above.
 
 \section*{Code and data availability}
 

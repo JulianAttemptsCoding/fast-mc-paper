@@ -5,6 +5,6 @@ type: article
 authors:
   - family-names: Juan
     given-names: Julian
-version: 0.7.0
+version: 0.8.0
 date-released: 2026-09-22
 repository-code: "https://github.com/JulianAttemptsCoding/fast-mc-paper"

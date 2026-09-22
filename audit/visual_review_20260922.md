@@ -1,7 +1,7 @@
 # Final visual review
 
-PASS: all nine pages of iteration 40 were inspected directly, and every iteration-41 page render is byte-identical to the inspected page. PDF SHA-256: `9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25`.
+PASS: all nine pages of iteration 45 were inspected at original resolution. Pages 6 and 8 were reinspected after the final mean-level wording edits in iteration 46; the other seven page renders were byte-identical. Every iteration-47 page render is identical to iteration 46. Final PDF SHA-256: `99a057eb25a67728021e4fa2fbeb8e377b7e24266868319bf3d43a0d94d94284`.
 
-The model description now runs in sampling order from the five condition features to the 6,790-channel output. The schematic is fixed immediately after the factorization paragraph, and no float interrupts an equation or sentence. The geometry figure, model figure, result table, longitudinal plot, captions, section transitions, links, and 14-entry bibliography are legible. No clipping, overlap, broken glyph, unreadable label, table overflow, or isolated-reference spill remains.
+The generator schematic now uses larger, short labels whose rendered text fits inside every box under a programmatic containment check. The detector figure follows its first explanation, and the Results heading precedes the table. The three figures, model equations, captions, section transitions, links, and 14-entry bibliography are legible. No clipping, overlap, broken glyph, unreadable label, table overflow, or isolated-reference spill remains.
 
-Iterations 36 and 37 preserve the LaTeX and stale-guard failures. Iteration 39 preserves the otherwise-valid float layout that was rejected during visual review. Per-page hashes are recorded in the JSON twin.
+The first v0.8.0 build failed on a missing math delimiter. Iteration 42 failed stale wording guards, and the first compact schematic was rejected by the new containment check. These failures and corrections remain in the logs. Per-page hashes of the final PDF are recorded in the JSON twin.

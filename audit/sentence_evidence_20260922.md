@@ -2,7 +2,7 @@
 
 Created: 2026-09-22T17:42:45Z
 
-Every prose paragraph, equation, table caption, and figure caption in manuscript v0.7.0 was assigned an evidence basis. Sentences were retained only when they define the computation, report a stored result, cite external physics context, state a direct algebraic consequence, or mark an evidence boundary.
+Every prose paragraph, equation, table caption, and figure caption in manuscript v0.8.0 was assigned an evidence basis. The v0.8.0 clarity revision preserves the measured claims and numerical values; it explains the sampling path in readout terms, identifies flow outputs as logits before normalization, and removes an account of an omitted historical comparison from the methods. Sentences were retained only when they define the computation, report a stored result, cite external physics context, state a direct algebraic consequence, or mark an evidence boundary.
 
 | Section | Why each sentence is present | Evidence |
 |---|---|---|
@@ -19,8 +19,8 @@ Every prose paragraph, equation, table caption, and figure caption in manuscript
 
 The manuscript avoids promotional adjectives, stock contribution language, unsupported causal verbs, and vague claims of robustness or validation. The automated source guard rejects the canned phrases listed in the JSON twin. Model jargon is defined at first use or paired with its operation and inputs.
 
-The scientific claim is unchanged: the source audit improves the explanation of the generator; it does not convert the development-bank discrepancy into a validation result.
+The scientific claim is unchanged: the source audit improves the explanation of the generator; it does not convert the development-bank discrepancy into a validation result. The CaloChallenge entry is pinned to arXiv v1, submitted in October 2024, for the requested pre-November-2025 literature baseline.
 
 ## Typeset disposition
 
-Iteration 40 passed the complete automated suite. All nine pages were inspected. The only visual issue found during iteration was an architecture float that could interrupt the flow-matching explanation; the figure is now a fixed block immediately after the model factorization is introduced.
+Iteration 46 passed the complete automated suite. All nine pages were inspected in iteration 45; only pages 6 and 8 changed in iteration 46, and both were reinspected. The architecture diagram has shorter, larger labels and a programmatic label-containment check. The geometry figure and results table were fixed at their explanatory text after page review found misplaced top floats.

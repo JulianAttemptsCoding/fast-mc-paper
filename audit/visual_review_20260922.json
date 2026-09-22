@@ -1,24 +1,24 @@
 {
   "result": "pass",
-  "reviewed_utc": "2026-09-22T20:08:12Z",
-  "method": "Direct inspection of all nine iteration-40 pages at original resolution and the complete contact sheet. Every iteration-41 page-render hash is identical to the corresponding inspected iteration-40 render. Checked title and abstract, detector geometry, the complete generator schematic and derivation, equations, result table, longitudinal plot, captions, section transitions, references, margins, glyphs, and links.",
-  "pdf_sha256": "9c8780495ff78e09ad982355672736b55a28292b3ad029c1cea0c939121a8c25",
+  "reviewed_utc": "2026-09-22T20:36:07Z",
+  "method": "Direct inspection of all nine iteration-45 pages at original resolution and the contact sheet. Pages 6 and 8 were re-inspected after mean-level wording changed in iteration 46; the other seven rendered pages were byte-identical. All nine iteration-47 page renders are byte-identical to iteration 46. Checked title and abstract, target and geometry, complete generator schematic and equations, result table, longitudinal plot, captions, section transitions, bibliography, margins, glyphs, and links.",
+  "pdf_sha256": "99a057eb25a67728021e4fa2fbeb8e377b7e24266868319bf3d43a0d94d94284",
   "page_sha256": {
-    "1": "76b0fa116753bd728fee6145bdf3516e09987b188e43b259808ee5053a0b64e8",
-    "2": "d2f34dbc69df2ab2db5d2a273c8ec85e927db7d7b22135ce99cfd9d060dc8321",
-    "3": "c04c2ebd1cb683880d4e13a141cabe9af3a2ea180e7db2725ce26a90e5b10e92",
-    "4": "201a299ba023925913ada3d2578ad94b9c8c19460de72168f6dc9364ebe29b3e",
-    "5": "1b89aae192b2d287576346751e8c1fbab98c919982909e3f33ee8816510fa500",
-    "6": "9df13a1f4de28f56d069449047d5f3fe27626194cc6ad741c5987c7265edb6d2",
-    "7": "2e8ffb124c2130351fc0fa3778fa75815f3d8360e0275de803ce1e14693b67f3",
-    "8": "43a0f47ac3b5152ae0e98870775963d63527314813886352566cb1ba2f36b26a",
-    "9": "ecaac13c4ca37a6f4dbdb9c2cb074c3297944cccccea59450900004724439a8c"
+    "1": "cc8b6f400fa6116a3f9751eb6da71c806f51a23513ea5abcaccf47601c62b795",
+    "2": "884c906d82798f654bac1cbeaeb981b1788d75f19c5b51d447d7e6898fca3962",
+    "3": "c389827694e9936e13bde7814569db73e98238cfe5949160d280be48860e6ab6",
+    "4": "f2557829c8e819f2113fdd3a72b0caa7a7032befdc58587080284b16cb8adc8b",
+    "5": "710d1e78a4e3a5551bc6c9e13c5c5a333e4016855e94f11459f5711f0524fb71",
+    "6": "8c753b453b9be2c6d2e40ad26a0e10c14e20e0ad9f68e32e5731cbddd7d668fd",
+    "7": "a282a4e94f152f7eabfca75f05638b97e43f53f8b99e0882dd724a15cde492de",
+    "8": "e90d820c0930def7b31ab578f9da11e6a324a966862f31033cc9c7e991f90cac",
+    "9": "2b2e7cd7fe2650787f5d314f0c6e77f388e21e479f05dde96c3b2954a082bea7"
   },
   "observations": {
-    "1-2": "Title, abstract, literature framing, geometry, target definition, graph construction, and evaluation-population text are clear and unclipped.",
-    "3-5": "The generator schematic follows the factorization paragraph; every variable is defined; the two flows, graph scorer, exact decoder, teacher forcing, and diagnostic definitions remain readable without a sentence split by a float.",
-    "6-7": "The table, longitudinal plot, result interpretation, numerical QA, and discussion are legible and contain no overlap or overflow.",
+    "1-2": "Title, abstract, literature framing, geometry after its first discussion, target definition, graph construction, and evaluation population are clear and unclipped.",
+    "3-5": "The compact generator schematic has larger print-scale labels contained within boxes. Its two flows, graph scorer, exact decoder, teacher forcing, equations, and diagnostics remain readable.",
+    "6-7": "The Results heading precedes the fixed table. Mean-level wording, longitudinal plot, numerical QA, and discussion are legible and contain no overlap or overflow.",
     "8-9": "Conclusion, availability, declarations, and the complete 14-entry bibliography render cleanly. The reference continuation contains no isolated single-item spill."
   },
-  "iteration_findings": "Iteration 36 failed on a malformed LaTeX norm delimiter. Iteration 37 failed three stale exact-string guards. Iterations 38 and 39 passed automated checks; visual inspection of iteration 39 showed that the architecture float could interrupt the flow-matching sentence. The final fixed figure block in iterations 40 and 41 removes that defect."
+  "iteration_findings": "The first v0.8.0 build failed on an omitted closing math delimiter in the abstract; corrected. Iteration 42 failed five stale exact-phrase guards, replaced with equally strict new-phrase checks. Iteration 43 passed, then page review led to a more legible schematic; its first compact label was rejected by the new containment assertion and corrected. Iteration 44 passed, but direct review found two misplaced top floats, fixed for iteration 45. Iterations 45-47 passed the complete automated suite; the final iteration differs from 46 only in PDF container bytes, with identical rendered pages."
 }
