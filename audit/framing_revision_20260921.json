@@ -32,5 +32,11 @@
   "final_qa_record": "audit/iterations/iteration_28.json",
   "final_visual_record": "audit/visual_review_20260921.json",
   "pdf_sha256": "c2f6e4060c4d0ad84120f34e305f07b5cacef6610cf2cdffcef167629adda82e",
-  "pages": 12
+  "pages": 12,
+  "github": {
+    "remote": "https://github.com/JulianAttemptsCoding/fast-mc-paper.git",
+    "branch": "main",
+    "content_commit": "757c36817a4185d25752b6211b511606fc39e03f",
+    "remote_verified": true
+  }
 }

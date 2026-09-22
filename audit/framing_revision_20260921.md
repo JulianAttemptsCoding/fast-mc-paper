@@ -2,6 +2,8 @@
 
 Status: complete. Full automated QA iteration 28 passed, and all 12 final rendered pages passed direct visual review.
 
+The v0.5.0 manuscript package was pushed to GitHub `main` in content commit `757c36817a4185d25752b6211b511606fc39e03f`; `git ls-remote` returned the same branch head.
+
 The manuscript now follows the sequence used in representative detector-simulation papers available before November 2025: establish the detector-simulation problem; define the physical target and readout; describe the numerical surrogate and enforced constraints; report detector observables; then state the broader computational implication.
 
 ## Framing hierarchy
