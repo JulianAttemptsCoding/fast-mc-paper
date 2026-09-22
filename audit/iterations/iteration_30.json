@@ -1,0 +1,73 @@
+{
+  "iteration": 30,
+  "created_utc": "2026-09-22T07:40:26.543328+00:00",
+  "result": "fail",
+  "full_suite": false,
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 472, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 462, in main\n    validate_repository(checks)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 336, in validate_repository\n    assert literature.count(\"https://\") >= 8 and \"CaloChallenge\" in literature and \"Zero Degree\" in literature\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "source_sha256": {
+    "main.tex": "65e6d3d5990f0b04b1816500866e09b23dde7af6ee4360fc517e297d8a33ccff",
+    "references.bib": "eaf73da17eae764790715fed99e0b3bc790f308a7a725083bc0f300c3afac371",
+    "build.ps1": "08cadce15e0b56ab9cacdf8f59cc33207eb6925f5d3d4451679931be55711697",
+    "README.md": "6017103798b97fa8d888301aa3631b522e135e845f4e38aae0b205d6d3a65c53",
+    "STATUS.md": "00f045b9534681cde68a2ca06c5bc8db176a45365cca1fe9fa44a27215ef1a33",
+    "CITATION.cff": "ec88211a749567d7fec9d0f262f724c0e478407d2006cd75b55b039b60268619",
+    "audit/claim_register_20260922.json": "e2d17feae1773de7c3006fd6566bbe8bfb47b39536d0c1246c3fb118f58b0071",
+    "audit/claim_register_20260922.md": "3b410af40c14a698d5c8d8358c226c94f6fae3e1c1e3a6398dba0ff37c2b8caa",
+    "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
+    "audit/adversarial_revision_20260922.md": "242b9a9ea5e32edd2dfec801d225c98839787d34c9e18810e82dbfaefabb9346",
+    "audit/literature_benchmark.md": "d2e57176f6ff8e6c78621b9f57b1a712e6f2a74fcba5e7dadf05c1254a43bcb2",
+    "scripts/build_figures.py": "088a33b9dab989e11bf86226feb321e551daf46a47d05d7f48b0260d43c18bc7",
+    "scripts/full_manuscript_qa.py": "4942564685f400100e6faac0352fab9186e796c459048ffad27cfe1096b31458",
+    "scripts/test_qa_guards.py": "e3c66c54b8321d7d4a8ae1c394f61beac277d5a449218c51aa8213c0be90c9dd",
+    "scripts/write_build_audit.py": "99e6533191f6a8ccf48cd27ba937c0704e7cab1f46a73455330192526ef4d8bb",
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+    "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
+    "data/reports/condition_only_control.json": "8d9b1ec17e23a11233b0eac9e12de86dc834928d119ef38d97ff41d42de5619f",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
+    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+    "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
+  },
+  "executed_commands": [
+    {
+      "argv": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "build.ps1",
+        "-Python",
+        "C:\\Python313\\python.exe"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "55b0aa64060e8a5106cc6de970d6fc5802f25638b4a8515b366024ef90b79c6a",
+      "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+    },
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-m",
+        "py_compile",
+        "scripts/build_figures.py",
+        "scripts/full_manuscript_qa.py",
+        "scripts/write_build_audit.py"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "f04eb177eb9543d08baac22497ded38815449655799b93bce9da75179efe70ea"
+    }
+  ]
+}

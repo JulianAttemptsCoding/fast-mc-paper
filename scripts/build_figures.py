@@ -285,7 +285,7 @@ def plot_structure_ratios(report: dict) -> None:
 
 
 def write_manifest() -> None:
-    inputs = [REPORT, PROVENANCE, TRAINING_HISTORY, GEOMETRY_DATA, GEOMETRY_SUMMARY]
+    inputs = [REPORT, PROVENANCE, GEOMETRY_DATA, GEOMETRY_SUMMARY]
     manifest = {
         "kind": "fast-mc-paper-development-figures",
         "scientific_status": "development-bank diagnostics; physics validation not established",
@@ -301,10 +301,7 @@ def write_manifest() -> None:
             for name in [
                 "detector_geometry.png",
                 "generator_schematic.png",
-                "training_history.png",
-                "response_energy_bins.png",
                 "longitudinal_profile.png",
-                "structure_ratio_summary.png",
             ]
         },
     }
@@ -316,16 +313,16 @@ def main() -> None:
     style()
     plot_architecture()
     plot_geometry()
-    plot_training_history()
-    plot_response_bins(report)
     plot_longitudinal(report)
-    plot_structure_ratios(report)
-    for stale_name in ["zero_response_validation.png", "topology_validation.png"]:
+    for stale_name in [
+        "zero_response_validation.png", "topology_validation.png",
+        "training_history.png", "response_energy_bins.png", "structure_ratio_summary.png",
+    ]:
         stale = OUTPUT_DIR / stale_name
         if stale.exists():
             stale.unlink()
     write_manifest()
-    print(f"Wrote six manuscript figures to {OUTPUT_DIR}")
+    print(f"Wrote three manuscript figures to {OUTPUT_DIR}")
 
 
 if __name__ == "__main__":

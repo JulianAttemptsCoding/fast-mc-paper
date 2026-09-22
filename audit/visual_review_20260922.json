@@ -1,0 +1,21 @@
+{
+  "result": "pass",
+  "reviewed_utc": "2026-09-22T09:05:00Z",
+  "method": "Direct inspection of the complete iteration-35 contact sheet. All seven iteration-35 page-render hashes are identical to the individually inspected iteration-34 renders. Checked title and abstract, equations, all three figures, table, captions, page breaks, corrected references, margins, glyphs, and links; no clipping, overlap, broken glyphs, unreadable labels, table overflow, or underfilled spill page remained.",
+  "pdf_sha256": "a3c6fcffd3f1204226a21f47627b249d4c7754641d1500b58e4a5c0306559186",
+  "page_sha256": {
+    "1": "5be0ccb4cc1839c839aef8f8282a25662abf1290bd9cdfee7c24aaf08e9e1c20",
+    "2": "6d9986921b7ec96c9741f69033fa3d0647b7394936e12fd7b72c0d3558a4cb0a",
+    "3": "e1b923042cc7fc7fb65bf89aaaa159945b8d1addc5d1a5e51c116c91fe98dcd8",
+    "4": "e6f33a9a48860c5e881898dfafdaa16e0ca1f4ab2d969e0b539703227bba9f11",
+    "5": "39e4b76a840d556e1e698862f456ce873b5327054cb7c130f5bb54f67449cf1f",
+    "6": "4afb04f0eb57c5ae2fe6f5a496fa16ebebfffd78a3ccce5f09bfe683d354920b",
+    "7": "d497c41a4c0c8424e81f7aa4dfa45ec75f8740eec10f0b0a75208416d636a41d"
+  },
+  "observations": {
+    "1-3": "Title, abstract, literature framing, geometry, model diagram, equations, and detector-description text are clear and balanced.",
+    "4-5": "Diagnostic definitions, absolute-difference results, full table, and discussion are legible without overflow or misleading ratio graphics.",
+    "6-7": "Longitudinal figure, scope, conclusion, availability text, acknowledgments, AI statement, and complete 13-entry bibliography are clear; the final page is balanced."
+  },
+  "prior_findings": "Iteration 31 left five references on an underfilled eighth page. Iteration 32 left one reference on an otherwise empty eighth page and failed the page-density guard. Iteration 33 removed that spill. A later primary-record check corrected one publication venue and three arXiv classes. Iteration 35 adds executable README QA instructions; its seven page renders are hash-identical to visually inspected iteration 34."
+}

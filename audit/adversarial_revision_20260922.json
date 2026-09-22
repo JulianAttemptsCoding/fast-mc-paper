@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-22T08:00:00Z",
+  "inputs": [
+    {
+      "path": "C:/Users/Julia/.codex/attachments/3634dbaa-8e66-45e7-a1a2-e1e0009663ba/Pasted text.txt",
+      "sha256": "bbb85b4693fb2a8bacc811f56989fbb03c569f6d4b3c57b05dcda90f618e4912"
+    },
+    {
+      "path": "C:/Users/Julia/.codex/attachments/4d135a38-b710-4d1e-b6bc-829990de29d6/Pasted text.txt",
+      "sha256": "bbc6964642a1b639d385ca4d29644b2caf20437893ef5f9e656800890a14a4ef"
+    }
+  ],
+  "accepted_and_implemented": [
+    "exploratory case-study scope",
+    "connectivity terminology",
+    "absolute rather than ratio headlines",
+    "removal of uncalibrated Wasserstein and uncertainty-free/mixed-unit figures",
+    "zero-deposit discussion",
+    "factorization-index correction",
+    "redundant-energy-feature disclosure",
+    "shorter scientific narrative",
+    "expanded pre-November-2025 primary literature"
+  ],
+  "unavailable_evidence": [
+    "event-level uncertainty and distributions",
+    "threshold and graph sensitivity",
+    "cap and solver diagnostics",
+    "sampling/training seed studies",
+    "data scaling and oracle cascade",
+    "locked evaluation",
+    "shower-aware multivariate test",
+    "event displays, reconstruction, and timing",
+    "complete Geant4 production configuration"
+  ],
+  "corrected_review_claims": {
+    "edge_count": "107920 = 8*6790 + 2*4*(400 + 63*100) under the implemented directed construction",
+    "zero_significance": "paired joint counts are required and unavailable",
+    "cap_activation": "not identifiable from the aggregate batch-tolerance maximum",
+    "component_energy": "not identifiable from support-count aggregates"
+  },
+  "scientific_status": "descriptive aggregate case study; no general fidelity, significance, post-digitization relevance, or causal claim"
+}

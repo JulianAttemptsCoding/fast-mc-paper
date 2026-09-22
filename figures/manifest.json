@@ -7,10 +7,7 @@
   "figures_sha256": {
     "detector_geometry.png": "1289827705a7a095f28f82dcf063c6902a7679fc5c7172edf5e64d392f349a2a",
     "generator_schematic.png": "4662e0d04ee081020b9bf31eff4b6f1ffddf73cf7896bf66d1caa5c6b08e2bfa",
-    "longitudinal_profile.png": "7392bc2ce951dc59976444f70ab3b6297430f11a0906084fbeac892751bee279",
-    "response_energy_bins.png": "f47f067a1e5603b52d1f89fe1f928c316461da5fd5a63cf2ca50ac1d2d2ded77",
-    "structure_ratio_summary.png": "a0caa776f86935be7c5831dc0e2a61e132e823a0a8aa1a8c72f51119fb2b6863",
-    "training_history.png": "47c98d5de49bbb78803c685a0824bb1bc28cf6b97c83ef9759df5cb575e81bc5"
+    "longitudinal_profile.png": "7392bc2ce951dc59976444f70ab3b6297430f11a0906084fbeac892751bee279"
   },
   "kind": "fast-mc-paper-development-figures",
   "scientific_status": "development-bank diagnostics; physics validation not established",
@@ -18,8 +15,7 @@
     "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
     "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
     "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
-    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
-    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f"
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f"
   },
   "test_events_used": 0
 }

@@ -28,7 +28,11 @@ COMMAND_RECORDS: list[dict] = []
 
 def release_source_hashes() -> dict:
     paths = [ROOT / name for name in ["main.tex", "references.bib", "build.ps1", "README.md", "STATUS.md", "CITATION.cff"]]
-    paths += [ROOT / p for p in ["audit/claim_register_20260921.json", "audit/claim_register_20260921.md", "audit/literature_benchmark.md"]]
+    paths += [ROOT / p for p in [
+        "audit/claim_register_20260922.json", "audit/claim_register_20260922.md",
+        "audit/adversarial_revision_20260922.json", "audit/adversarial_revision_20260922.md",
+        "audit/literature_benchmark.md",
+    ]]
     paths += sorted((ROOT / "scripts").glob("*.py"))
     paths += sorted(p for p in (ROOT / "data").rglob("*") if p.is_file())
     return {str(p.relative_to(ROOT)).replace("\\", "/"): sha256(p) for p in paths}
@@ -36,10 +40,7 @@ def release_source_hashes() -> dict:
 EXPECTED_FIGURES = {
     "detector_geometry.png",
     "generator_schematic.png",
-    "training_history.png",
-    "response_energy_bins.png",
     "longitudinal_profile.png",
-    "structure_ratio_summary.png",
 }
 
 
@@ -139,11 +140,12 @@ def validate_evidence(checks: list[str]) -> dict:
     assert sum(geometry["layer_counts"][1:]) == 6390
     assert geometry["n_layers"] == 65
     assert geometry["n_edges"] == 107920
+    assert 8 * 6790 + 2 * 4 * (400 + 63 * 100) == geometry["n_edges"]
     gang = geometry["physical_position_count_histogram"]
     assert sum(int(v) for v in gang.values()) == 6790
     assert int(gang["1"]) == 4390 and int(gang["2"]) == 1950 and int(gang["3"]) == 444 and int(gang["4"]) == 6
     assert 4390 - 400 == 3990 and 6390 - 3990 == 2400
-    checks.append("Readout geometry, ganging arithmetic, layer count, and directed-edge count")
+    checks.append("Readout geometry, ganging arithmetic, layer count, and explicitly reproduced directed-edge count")
 
     zero_g = report["visibility_and_zero_response"]["generated"]["zero_fraction"]
     zero_r = report["visibility_and_zero_response"]["truth"]["zero_fraction"]
@@ -172,6 +174,10 @@ def validate_evidence(checks: list[str]) -> dict:
     assert round(100 * (values["channels_g"] / values["channels_r"] - 1), 1) == -1.8
     close(report["activity"]["generated"]["mean_gaps"], 6.048792858592006)
     close(report["activity"]["truth"]["mean_gaps"], 2.1021499949530633)
+    close(report["activity"]["generated"]["mean_last_active_layer"], 60.61888821261919)
+    close(report["activity"]["truth"]["mean_last_active_layer"], 56.195114565458766)
+    close(report["activity"]["generated"]["mean_span"], 60.88374923919659)
+    close(report["activity"]["truth"]["mean_span"], 56.68517210053498)
     close(report["activity"]["generated"]["gap_fraction"], 0.9352809900588355)
     close(report["activity"]["truth"]["gap_fraction"], 0.5242757646108812)
     close(report["first_layer"]["generated"]["ecal_start_prevalence"], 0.9253398255224183)
@@ -182,7 +188,11 @@ def validate_evidence(checks: list[str]) -> dict:
         activity = report["activity"][side]
         close(activity["mean_span"] - activity["mean_active_layers"] / nonempty,
               activity["mean_gaps"], atol=1e-10)
-    checks.append("Nonempty denominators; every table value; mean_gaps verified as span minus active layers, NOT run count")
+    close(values["active_layers_g"] - values["active_layers_r"], 0.2519342750226694, atol=1e-8)
+    close(report["activity"]["generated"]["mean_last_active_layer"] - report["activity"]["truth"]["mean_last_active_layer"], 4.423773647160425, atol=1e-8)
+    close(values["components_g"] - values["components_r"], 35.970332798618135, atol=1e-8)
+    close(100 * (values["largest_g"] - values["largest_r"]), -6.029700995384565, atol=1e-8)
+    checks.append("Nonempty denominators; absolute table differences; span/gap/last-layer identities; no ratio-only headline")
 
     total = report["distribution_metrics"]["total_response_gev"]
     close(total["generated_mean"], 4.36936254901063)
@@ -202,7 +212,7 @@ def validate_evidence(checks: list[str]) -> dict:
     close(interval["low"], 0.0684143976088688)
     close(interval["high"], 0.19837148981439048)
     close(report["truth_half_floors"]["response_wasserstein_gev"], 0.1474655284291369)
-    checks.append("Response moments, energy-bin counts/ranges, bootstrap interval, and reference-half floor")
+    checks.append("Response moments and energy-bin ranges; legacy Wasserstein/bootstrap fields verified as stored but excluded from the manuscript")
 
     profile = report["distribution_metrics"]["mean_longitudinal_profile"]
     g = np.asarray(profile["generated"], dtype=float)
@@ -236,20 +246,19 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     bib = (ROOT / "references.bib").read_text(encoding="utf-8")
     required = [
         "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
-        "condition-only pipeline control with AUROC 0.500", "single-seed",
+        "exploratory case study", "strict-positive support", "condition-only pipeline control has AUROC 0.500",
         "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
-        "104 recorded rows from absolute epochs 11--114",
-        r"V=B\,\mathbf{1}[\Kinc>0]\,\mathbf{1}[\widetilde T>0]",
-        "independently given the condition", "This factorization can match per-layer activation probabilities",
-        "unresolved support risk", "It does not establish overall physics fidelity, architecture superiority, or acceleration.", "end-to-end timing",
-        "This counts missing layers, not contiguous inactive runs.", "26,624 training events", "6,656 validation events", "76,158 validation", "76,300 nominal test",
-        "batch-wide tolerance", "earlier absolute-only", "not a calibrated noise floor",
-        "Topology-Sensitive Validation", "The detector-level conclusion is that inclusive response and occupancy agreement",
-        "The computational conclusion is that constraint preservation guarantees admissibility",
-        "Zero-deposit events (\\%) & 0.93 & 1.42 & 1.53",
-        "Mean first active layer & 0.510 & 0.735 & 1.44",
-        "Mean weak graph components & 23.42 & 59.39 & 2.54",
-        "Mean largest-component fraction (\\%) & 94.90 & 88.87 & 0.94",
+        "104 rows spanning epochs 11--114", "single checkpoint",
+        "four nearest centroids are selected", "stored in both directions", "107,920 in total",
+        r"\prod_{\ell>F}^{64}", "The two energy features are deterministically related",
+        "event-level arrays needed for uncertainty estimates", "end-to-end timing",
+        "This counts inactive layers, not contiguous runs.", "26,624 training events", "6,656 validation events", "76,158 validation", "76,300 nominal test",
+        "batch-wide absolute-plus-relative tolerance", "0.25 more active layers", "4.42 layers farther downstream",
+        "35.97 more weak components", "6.03-percentage-point reduction",
+        "Zero-deposit events & 93 (0.93\\%) & 142 (1.42\\%)",
+        "Mean last active layer & 56.20 & 60.62 & $+4.42$",
+        "Mean weak graph components & 23.42 & 59.39 & $+35.97$",
+        "Mean largest-component fraction & 94.90\\% & 88.87\\% & $-6.03$ pp",
     ]
     missing = [phrase for phrase in required if phrase not in tex]
     assert not missing, f"required manuscript text missing: {missing}"
@@ -259,6 +268,9 @@ def validate_tex_and_bib(checks: list[str]) -> None:
         "0.4636", "0.7748", "0.7785", "0.9330", "S2",
         "551,234-event", "76,160", "76,298", "Two declared continuations",
         "gap runs", "gap-run", "inactive runs increase", "interior-gap runs",
+        "Topology-Sensitive Validation", "The contribution is threefold", "Artifact identity and audit boundary",
+        "response_energy_bins.png", "structure_ratio_summary.png", "training_history.png",
+        "0.0727", "0.1475", "0.0684", "0.1984", "2.88", "2.54",
     ]
     found = [phrase for phrase in forbidden if phrase in tex]
     assert not found, f"stale or excluded manuscript language: {found}"
@@ -290,7 +302,7 @@ def validate_figures(checks: list[str]) -> None:
             gray = np.asarray(ImageOps.grayscale(image), dtype=np.uint8)
             assert float((gray < 245).mean()) > 0.005
     assert manifest["sources_sha256"]["data/reports/dicos-f-02_epoch90.json"] == sha256(REPORT)
-    checks.append("Six deterministic figures, source hashes, dimensions, and nonblank raster content")
+    checks.append("Three deterministic manuscript figures, source hashes, dimensions, and nonblank raster content")
 
 
 def validate_repository(checks: list[str]) -> None:
@@ -319,9 +331,9 @@ def validate_repository(checks: list[str]) -> None:
     citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
     literature = (ROOT / "audit" / "literature_benchmark.md").read_text(encoding="utf-8")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.5.0" in status
-    assert "version: 0.5.0" in citation and "Topology-Sensitive Validation" in citation
-    assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "Zero Degree" in literature
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.6.0" in status
+    assert "version: 0.6.0" in citation and "Connectivity Diagnostics" in citation
+    assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
     assert all(token in response for token in ["reviews/review7.txt", "reviews/review8.txt", "reviews/review9.txt", "Findings resolved by removal"])
     checks.append(f"Active-versus-archived evidence separation, {len(json_paths)} active JSON files, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check")
 
@@ -329,7 +341,7 @@ def validate_repository(checks: list[str]) -> None:
 def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
     info_text = run(["pdfinfo", str(PDF)]).stdout
     pages = int(re.search(r"^Pages:\s+(\d+)", info_text, re.MULTILINE).group(1))
-    assert 8 <= pages <= 16
+    assert 6 <= pages <= 14
     render_dir = ROOT / "audit" / "qa_runs" / f"iteration_{iteration:02d}"
     render_dir.mkdir(parents=True, exist_ok=False)
     run(["pdftoppm", "-png", "-r", "110", str(PDF), str(render_dir / "page")])
@@ -373,7 +385,7 @@ def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
     forbidden = ["??", "0.4636", "0.7748", "0.7785", "0.9330", "V3-SUP", "V3-S2", "M0", "S2"]
     found = [term for term in forbidden if term in pdf_text]
     assert not found, f"forbidden PDF text: {found}"
-    required = ["Topology-Sensitive Validation", "Julian Juan", "Wen-Chen Chang", "References"]
+    required = ["Connectivity Diagnostics", "Julian Juan", "Wen-Chen Chang", "References"]
     assert all(term in pdf_text for term in required)
     log = (ROOT / "main.log").read_text(encoding="utf-8", errors="replace")
     problems = re.findall(r"LaTeX Warning|Undefined control sequence|Overfull|Underfull|Citation '.+?' undefined", log)

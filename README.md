@@ -1,6 +1,6 @@
-# Topology-Sensitive Validation of a Constraint-Preserving Generative Surrogate for Zero Degree Calorimeter Showers
+# Connectivity Diagnostics in a Pilot Generative Surrogate of Zero-Degree Calorimeter Showers
 
-Version 0.5.0 is a HEP/computational-physics preprint draft about the validation of one pilot-trained calorimeter surrogate. For this checkpoint, decoder-level numerical validity and percent-level agreement in selected inclusive response and occupancy observables coexist with substantially more fragmented longitudinal and readout-graph shower support. The paper does not assert overall physics fidelity, causal attribution, architecture superiority, acceleration, or detector readiness.
+Version 0.6.0 is an exploratory HEP/computational-physics case study of one pilot-trained calorimeter surrogate. On the repeatedly inspected development bank, similar mean occupancies coexist with a later longitudinal reach and a more disconnected strict-positive readout support. The paper does not assert statistical significance, physical relevance after digitization, performance across retraining, causal attribution, acceleration, or detector readiness.
 
 ## Fixed case
 
@@ -17,7 +17,8 @@ Requirements: Python with NumPy, Matplotlib and Pillow; pdflatex, biber and Popp
 
 ```powershell
 .\build.ps1
-python scripts/full_manuscript_qa.py --iteration 21 --focus "scientific revision" --disposition "source-bound checks"
+$Iteration = Read-Host "Unused QA iteration number"
+python scripts/full_manuscript_qa.py --iteration $Iteration --focus "scientific revision" --disposition "source-bound checks"
 ```
 
 Choose an unused iteration number; historical records cannot be overwritten. The build stops on a failed native command before replacing `output/fast_mc_zdc_manuscript.pdf`. The QA checks evidence hashes, source-bound data roles, reported arithmetic, citation/label resolution, every figure and every rendered page. Automated raster checks are not human visual review. A final release audit additionally requires a hash-matched visual-review record and rejects stale source/PDF hashes.
@@ -31,10 +32,11 @@ Choose an unused iteration number; historical records cannot be overwritten. The
 - `scripts/build_figures.py`, `figures/manifest.json`: reproducible figures and input/output hashes.
 - `audit/revision_20260921.*`: corrections, failed attempts, research and decisions.
 - `audit/framing_revision_20260921.*`: HEP/computational-physics framing criteria and pre-November-2025 style references.
-- `audit/claim_register_20260921.*`: claim-by-claim disposition and sources.
+- `audit/adversarial_revision_20260922.*`: disposition of the two supplied adversarial audits.
+- `audit/claim_register_20260922.*`: current claim-by-claim disposition and sources.
 - `audit/iterations/`: historical and current build checks; only a hash-matched current record applies to the current PDF.
 - `archive/pre_revision_20260921/`: original v0.3.0 source/PDF/build snapshot.
 - `reviews/`: the nine earlier reviews, unchanged; their previous dispositions are historical.
 - `STATUS.md`: supported claim and outstanding research for broader claims.
 
-The package rebuilds the paper from aggregate evidence. It does not redistribute the collaboration-owned event file or checkpoint and cannot reproduce training or event-level tests. No source data, frozen model configuration, or scientific threshold was modified by this manuscript revision. Intended future EIC ZDC use is project motivation, not a validated detector-equivalence claim.
+The package rebuilds the paper from aggregate evidence. It does not redistribute the collaboration-owned event file or checkpoint and cannot reproduce training or event-level tests. No source data, frozen model configuration, or scientific threshold was modified by this manuscript revision. Intended future EIC ZDC use is project motivation, not a detector-identity or detector-equivalence claim.

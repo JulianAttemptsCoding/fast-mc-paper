@@ -1,10 +1,10 @@
 cff-version: 1.2.0
 message: "If you use this manuscript artifact, please cite it using the metadata below."
-title: "Topology-Sensitive Validation of a Constraint-Preserving Generative Surrogate for Zero Degree Calorimeter Showers"
+title: "Connectivity Diagnostics in a Pilot Generative Surrogate of Zero-Degree Calorimeter Showers"
 type: article
 authors:
   - family-names: Juan
     given-names: Julian
-version: 0.5.0
-date-released: 2026-09-21
+version: 0.6.0
+date-released: 2026-09-22
 repository-code: "https://github.com/JulianAttemptsCoding/fast-mc-paper"
