@@ -1,26 +1,19 @@
 # Sentence-level evidence and clarity review
 
-Created: 2026-09-23T17:42:45Z
+Revised: 2026-09-23; manuscript v0.11.0.
 
-Every prose paragraph, equation, table caption, and figure caption in manuscript v0.9.0 was reviewed for purpose and evidence. The revision corrects the zero-fraction uncertainty statement, centers the measured longitudinal discrepancy, and separates it from the graph-component statistic. Sentences were retained when they define the computation, report a stored result, cite physics context, state a direct consequence of the graph or decoder, or explain a material boundary of the result.
+Every prose paragraph, equation, table caption, and figure caption was reviewed for purpose and evidence. The revision adds mathematical detail to the existing model description without changing the scientific result.
 
-| Section | Why each sentence is present | Evidence |
+| Section | Review basis | Evidence |
 |---|---|---|
-| Abstract | Study identity, model order, sample sizes, longitudinal result, component confound, and evidence limits. | `data/reports/dicos-f-02_epoch90.json`, `data/provenance/source_evidence.json`, `audit/model_exposition_20260922.json`, `audit/claim_register_20260922.json` |
-| Introduction | Motivation and comparison to prior calorimeter-surrogate work; field claims carry primary citations. The final paragraph names the quantities compared. | `references.bib`, `audit/literature_benchmark.md`, `audit/claim_register_20260922.md` |
-| Simulation target and evaluation population | Feature semantics, target definition, channel/layer counts, graph construction, split counts, and development-bank role. | `data/provenance/source_evidence.json`, `data/geometry/geometry_summary.json`, `figures/manifest.json`, `audit/model_exposition_20260922.json` |
-| Generator and training procedure | Every architectural, sampling, decoder, loss, optimizer, and checkpoint-selection statement is tied to an implementation blob, selected-configuration identity, training history, or source audit. Interpretive sentences only state direct consequences of the equations or declared nonclaims. | `audit/model_exposition_20260922.json`, `data/provenance/source_evidence.json`, `data/training/calibrated_lr3e4_history.csv`, `data/reports/dicos-f-02_epoch90.provenance.json` |
-| Diagnostics | Definitions follow metric semantics. Adjacent-layer splitting follows the stated graph. The paired zero-fraction and hit-count intervals, original C2ST scores, failed gate, row-wise split, and separate pair-grouped monitor are checked against their records. | `data/reports/dicos-f-02_epoch90.json`, `data/reports/condition_only_control.json`, `audit/adversarial_revision_round3_20260922.json`, `references.bib` |
-| Results | Every number, including the zero-fraction interval and all-event edge co-occupancy, comes from the immutable report. Missing gap-run, component-energy, and structural-uncertainty claims follow from absent fields. | `data/reports/dicos-f-02_epoch90.json`, `audit/claim_register_20260922.json`, `audit/adversarial_revision_round3_20260922.json` |
-| Discussion and conclusion | The interpretation leads with longitudinal reach and identifies the graph confound. Possible mechanisms are labeled untested and tied to the experiments that would distinguish them. | `audit/claim_register_20260922.md`, `audit/adversarial_revision_round3_20260922.md`, `data/provenance/source_evidence.json` |
-| Availability, acknowledgments, contributions, and AI disclosure | Repository contents were checked directly. The author confirmed substantial Codex/GPT-5.6-Sol drafting and proposal roles, personal ownership of the main ideas, and verification of the work. | `README.md`, `STATUS.md`, `CITATION.cff`, author declaration in conversation |
+| Abstract | Checkpoint, population, observables, failed classifier gate, and limits are stated at their supported scope. | Aggregate report; provenance; claim register. |
+| Introduction | Detector-simulation motivation and prior work use primary citations; different detector representations are not numerically equated. | References; literature benchmark. |
+| Simulation target | Condition features, readout target, geometry, graph, and split roles are source bound. | Source evidence; geometry summary. |
+| Generator and training | Provisional and final visibility, centered log targets, masked flow loss, current-state eight-step updates, graph aggregation, perturbed top-k, deterministic closure, and nine loss terms match source at the recorded commit. Every symbol is introduced near its equation. | Mathematical-exposition and model-exposition audits; training history. |
+| Diagnostics and results | Equations define observables, and reported numbers come from the immutable aggregate report. The classifier split and development-bank limits are explicit. | Report; claim register; evaluator review. |
+| Discussion and conclusion | Structural observations are separated from untested mechanisms; graph and zero-threshold dependence remain visible. | Claim register; model audit. |
+| Declarations | Repository contents and author declarations are represented without implying collaboration approval. | README; STATUS; author declaration. |
 
-## Style pass
+The paper does not equate energy-budget closure with conservation of incident neutron energy or Geant4 fidelity. The flow equations describe the implemented objective and numerical update, not an exact likelihood or solver-convergence result. The mathematical audit records source hashes and per-equation bindings.
 
-The manuscript avoids promotional adjectives, stock contribution language, unsupported causal verbs, and vague claims of robustness or validation. The automated source guard rejects the canned phrases listed in the JSON twin. Model jargon is defined at first use or paired with its operation and inputs.
-
-The v0.9.0 scientific claim is narrower than v0.8.0: a longitudinal discrepancy is observed, while graph components cannot be interpreted as independent lateral fragmentation from the stored aggregates. The CaloChallenge entry is pinned to arXiv v1, submitted in October 2024, for the requested prose baseline. A 2026 ZDC paper is cited only as current scientific context.
-
-## Typeset disposition
-
-Iteration 50 passed the complete automated suite. Its nine pages were inspected at original render resolution, using byte-identical earlier renders for unchanged pages. The diagram retains its programmatic label-containment check. A subsequent exact-PDF visual review is recorded separately in `audit/visual_review_20260922.json`.
+Typeset QA and visual review of the exact final PDF are recorded separately in the latest iteration and visual-review records.

@@ -1,6 +1,6 @@
 # Longitudinal Gaps and Readout Connectivity in a Pilot Generative Model of Zero-Degree Calorimeter Showers
 
-Version 0.10.0 is a case study of one pilot-trained calorimeter model. On a repeatedly inspected validation bank, its showers extend farther downstream and contain more inactive layers within their occupied span than the Geant4 reference, despite similar mean active-layer counts. Mean graph-component counts also differ, but the adjacent-layer graph makes part of that difference inseparable from longitudinal gaps in the retained aggregates. The paper explains the generation path from incident four-vector to 6,790 deposited energies. The recorded high-level classifier AUROC of 0.775 fails its declared 0.65 gate; its row-wise split limits interpretation. The paper does not establish structural statistical significance, performance after digitization or retraining, acceleration, or detector readiness. Paired bootstrap intervals are available for the separate zero-deposit fraction and hit-count distance.
+Version 0.11.0 is a case study of one pilot-trained calorimeter model. On a repeatedly inspected validation bank, its showers extend farther downstream and contain more inactive layers within their occupied span than the Geant4 reference, despite similar mean active-layer counts. Mean graph-component counts also differ, but the adjacent-layer graph makes part of that difference inseparable from longitudinal gaps in the retained aggregates. The paper explains the generation path from incident four-vector to 6,790 deposited energies. The recorded high-level classifier AUROC of 0.775 fails its declared 0.65 gate; its row-wise split limits interpretation. The paper does not establish structural statistical significance, performance after digitization or retraining, acceleration, or detector readiness. Paired bootstrap intervals are available for the separate zero-deposit fraction and hit-count distance.
 
 ## Fixed case
 
@@ -37,6 +37,7 @@ Choose an unused iteration number; historical records cannot be overwritten. The
 - `audit/adversarial_revision_round4_20260923.*`: disposition of the subsequent audits, including the restored classifier results and mechanism corrections.
 - `audit/claim_register_20260922.*`: current claim-by-claim disposition and sources.
 - `audit/model_exposition_20260922.*`: source-hash-bound audit of the model mechanisms described in the manuscript.
+- `audit/mathematical_exposition_20260923.*`: equation-by-equation source binding for the response, flows, graph, support, decoder, and training loss.
 - `audit/sentence_evidence_20260922.*`: section-by-section evidence and clarity review for the complete manuscript.
 - `audit/iterations/`: historical and current build checks; only a hash-matched current record applies to the current PDF.
 - `archive/pre_revision_20260921/`: original v0.3.0 source/PDF/build snapshot.

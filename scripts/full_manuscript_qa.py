@@ -34,6 +34,7 @@ def release_source_hashes() -> dict:
         "audit/adversarial_revision_20260922.json", "audit/adversarial_revision_20260922.md",
         "audit/adversarial_revision_round3_20260922.json", "audit/adversarial_revision_round3_20260922.md",
         "audit/model_exposition_20260922.json", "audit/model_exposition_20260922.md",
+        "audit/mathematical_exposition_20260923.json", "audit/mathematical_exposition_20260923.md",
         "audit/sentence_evidence_20260922.json", "audit/sentence_evidence_20260922.md",
         "audit/literature_benchmark.md",
     ]]
@@ -295,8 +296,10 @@ def validate_tex_and_bib(checks: list[str]) -> None:
         "Mean largest-component fraction & 94.90\\% & 88.87\\% & $-6.03$ pp",
         "0.1375 for generated showers and 0.1458 for the reference",
         "no learned shower encoder", "independent draws enter at the discrete heads and at the two flows",
-        "five edge inputs specify coordinate differences", "Selection has no constraint that would make those channels a connected set",
-        "The nine losses are binary cross entropy", "These identities conserve the model's sampled readout budget",
+        "five edge inputs", r"top-$K_\ell$ selection enforce the count, but not connectivity",
+        "weighted joint objective contains nine component losses", "These identities conserve the model's sampled readout budget",
+        r"\label{eq:profile_target}", r"\label{eq:flow_steps}", r"\label{eq:message}",
+        r"\label{eq:topk}", r"\label{eq:share_target}", r"\label{eq:joint_loss}",
     ]
     missing = [phrase for phrase in required if phrase not in tex]
     assert not missing, f"required manuscript text missing: {missing}"
@@ -371,19 +374,32 @@ def validate_repository(checks: list[str]) -> None:
     citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
     literature = (ROOT / "audit" / "literature_benchmark.md").read_text(encoding="utf-8")
     model_audit = load_json(ROOT / "audit" / "model_exposition_20260922.json")
+    math_audit = load_json(ROOT / "audit" / "mathematical_exposition_20260923.json")
     sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.10.0" in status
-    assert "version: 0.10.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.11.0" in status
+    assert "version: 0.11.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
     assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
     assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
     assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]
     assert len(model_audit["source_blob_sha256"]) == 14 and len(model_audit["claims"]) == 9
-    assert sentence_audit["manuscript_version"] == "0.10.0"
+    assert math_audit["manuscript_version"] == "0.11.0"
+    assert math_audit["source_commit"] == model_audit["source_commit"]
+    assert math_audit["selected_config_sha256"] == model_audit["selected_config_sha256"]
+    assert len(math_audit["equation_sources"]) == 12
+    tex = (ROOT / "main.tex").read_text(encoding="utf-8")
+    for label, source_paths in math_audit["equation_sources"].items():
+        assert rf"\label{{{label}}}" in tex
+        assert source_paths and all(path in math_audit["source_file_sha256"] for path in source_paths)
+    for path, digest in math_audit["source_file_sha256"].items():
+        assert re.fullmatch(r"[0-9a-f]{64}", digest), path
+        if path in model_audit["source_blob_sha256"]:
+            assert digest == model_audit["source_blob_sha256"][path], path
+    assert sentence_audit["manuscript_version"] == "0.11.0"
     assert sentence_audit["review_scope"] == "Every prose paragraph, equation, table caption, and figure caption"
     assert len(sentence_audit["sections"]) == 8
     assert all(token in response for token in ["reviews/review7.txt", "reviews/review8.txt", "reviews/review9.txt", "Findings resolved by removal"])
-    checks.append(f"Active-versus-archived evidence separation, {len(json_paths)} active JSON files, source-bound model exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check")
+    checks.append(f"Active-versus-archived evidence separation, {len(json_paths)} active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check")
 
 
 def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:

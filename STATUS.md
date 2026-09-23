@@ -1,8 +1,8 @@
 # Scientific status
 
-Version 0.10.0 is a case study of one pilot Zero-Degree Calorimeter checkpoint: **similar mean occupancy accompanies later, more interrupted longitudinal support.** Mean graph-component counts also differ, but the adjacent-layer graph turns interior empty-layer runs into disconnected components by construction. The original high-level classifier AUROC is 0.775, above its declared 0.65 maximum; the row-wise matched-pair split means this is a development screening failure, not a clean held-out-pair fidelity estimate.
+Version 0.11.0 is a case study of one pilot Zero-Degree Calorimeter checkpoint: **similar mean occupancy accompanies later, more interrupted longitudinal support.** Mean graph-component counts also differ, but the adjacent-layer graph turns interior empty-layer runs into disconnected components by construction. The original high-level classifier AUROC is 0.775, above its declared 0.65 maximum; the row-wise matched-pair split means this is a development screening failure, not a clean held-out-pair fidelity estimate.
 
-The manuscript now explains the implemented generator from input to output: five condition features feed a residual condition encoder; response, longitudinal profile, count, support, and share stages are sampled in sequence; graph message passing and layer attention score channels; and a deterministic softmax decoder closes each layer to its sampled budget. These are implementation statements verified against source blobs, not claims that the architecture is physically adequate or responsible for the measured discrepancy.
+The manuscript now gives equations for the implemented generator from input to output: the provisional visibility and response mixture, reference-derived log-fraction targets, masked flow-matching loss and eight-step updates, graph messages, Gumbel top-k support, deterministic energy closure, and nine-term training objective. These are implementation statements checked against source blobs, not claims that the architecture is physically adequate or responsible for the measured discrepancy.
 
 ## Supported claim
 

@@ -74,6 +74,7 @@
     "graph_hidden_width": 96,
     "layer_transformer_layers": 2,
     "layer_attention_heads": 4,
-    "mechanism_claim_boundary": "implementation behavior only; no adequacy, convergence, causal, or architecture-superiority claim"
+    "mechanism_claim_boundary": "implementation behavior only; no adequacy, convergence, causal, or architecture-superiority claim",
+    "mathematical_audit": "audit/mathematical_exposition_20260923.json"
   }
 }

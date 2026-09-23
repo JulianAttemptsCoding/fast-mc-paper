@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-09-23",
+  "kind": "manuscript-mathematical-exposition-audit",
+  "manuscript_version": "0.11.0",
+  "source_repository": "https://github.com/JulianAttemptsCoding/fast-mc-handoff-2",
+  "source_commit": "e039841404fc442c7496383d20a8566ac589eea3",
+  "selected_config_sha256": "116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5",
+  "source_file_sha256": {
+    "src/cbsc_zdc/models/graph.py": "a6757029e17d35df2ba230d82b2b934214a7a6a0912d7fb8649716cb41eeb773",
+    "src/cbsc_zdc/models/node_fields.py": "2ba66a33e081e328d564fb30536e6ebb39a8bb3154c2175dba9101c5d345ccf9",
+    "src/cbsc_zdc/models/profile.py": "64bb03c5293347cdba5e546c33a313da10207c171f3d83aa3fc7bbc06162285e",
+    "src/cbsc_zdc/models/response.py": "0bee892ca06dc7789a146dca202721e0dd90a98d9651f361830b8ff1ce7f3a79",
+    "src/cbsc_zdc/models/support.py": "f900e42c9374793a1a6c8e9d1f104e12ef8153c03b72d2cbe5e19a495b5d0a7d",
+    "src/cbsc_zdc/models/system.py": "8616466081a626b8a798504ca1fe8019031db075917d6c1088b9bbda4660d8eb",
+    "src/cbsc_zdc/training/flow_matching.py": "fadc11f52006681f885f3f644add0d336648bbd27237d7c943b7ffd8296f51e3",
+    "src/cbsc_zdc/training/losses.py": "f926dd69567c8023516ed3ecbfff40649dd5965f565723615cd28e2df7794b1f",
+    "src/cbsc_zdc/training/trainer.py": "067da903f927c9082e3c52c6ccbf1006b8f721ced7fbf3f5e7bf5a7444f1ec04",
+    "src/cbsc_zdc/training/truth.py": "aea548e121da3c2cda64c555ee7406378ca3a2b6666c3e9400a4e166df595fd4",
+    "src/cbsc_zdc/training/weights.py": "340162791a048d6fc02ddac0350ece94eb898b170b8d98af76c70ba8d7a38787"
+  },
+  "equation_sources": {
+    "eq:response_transform": [
+      "src/cbsc_zdc/models/response.py"
+    ],
+    "eq:cap": [
+      "src/cbsc_zdc/models/response.py"
+    ],
+    "eq:activity": [
+      "src/cbsc_zdc/models/profile.py"
+    ],
+    "eq:profile_target": [
+      "src/cbsc_zdc/training/truth.py"
+    ],
+    "eq:cfm": [
+      "src/cbsc_zdc/training/flow_matching.py",
+      "src/cbsc_zdc/training/trainer.py"
+    ],
+    "eq:flow_steps": [
+      "src/cbsc_zdc/models/profile.py",
+      "src/cbsc_zdc/models/system.py"
+    ],
+    "eq:layer_budget": [
+      "src/cbsc_zdc/models/profile.py"
+    ],
+    "eq:message": [
+      "src/cbsc_zdc/models/graph.py",
+      "src/cbsc_zdc/models/node_fields.py"
+    ],
+    "eq:topk": [
+      "src/cbsc_zdc/models/support.py"
+    ],
+    "eq:share_target": [
+      "src/cbsc_zdc/training/truth.py"
+    ],
+    "eq:decoder": [
+      "src/cbsc_zdc/models/support.py"
+    ],
+    "eq:joint_loss": [
+      "src/cbsc_zdc/training/trainer.py",
+      "src/cbsc_zdc/training/losses.py",
+      "src/cbsc_zdc/training/weights.py",
+      "src/cbsc_zdc/models/response.py"
+    ]
+  },
+  "semantic_checks": [
+    "Provisional Bernoulli visibility and Gaussian-mixture draw precede clipping; final visibility and total are reset together.",
+    "Centered log layer and channel targets use a 1e-8 fraction floor, a 1e-12 GeV denominator floor, and zero inactive coordinates.",
+    "Masked flow-matching MSE divides by the number of active coordinates across the batch; both generation flows use eight current-state updates at midpoint times.",
+    "Graph aggregation sums directed-edge messages without degree normalization, then layer means enter a two-layer bidirectional transformer.",
+    "Gumbel perturbed top-k uses score divided by fixed temperature and clipped uniforms; it fixes counts but not graph connectivity.",
+    "The nine-term joint loss includes the transformed-response Jacobian, sampled positive-negative ranking, and downweighted inactive zero counts.",
+    "The decoder closes sampled layer budgets, not incident neutron energy."
+  ],
+  "limits": "No new model run or physics validation; this audit checks equations against source at the recorded commit, not exact training source-byte identity."
+}

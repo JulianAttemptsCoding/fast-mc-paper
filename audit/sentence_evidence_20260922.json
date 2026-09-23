@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_utc": "2026-09-23T00:00:00Z",
-  "manuscript_version": "0.10.0",
+  "manuscript_version": "0.11.0",
   "review_scope": "Every prose paragraph, equation, table caption, and figure caption",
   "sections": [
     {
@@ -35,12 +35,13 @@
     },
     {
       "section": "Generator and training procedure",
-      "sentence_basis": "Every architectural, sampling, decoder, loss, optimizer, and checkpoint-selection statement is tied to an implementation blob, selected-configuration identity, training history, or source audit. Interpretive sentences only state direct consequences of the equations or declared nonclaims.",
+      "sentence_basis": "Every response, reference-target, masked-flow, graph-message, perturbed top-k, decoder, and nine-term-loss equation is bound to an implementation source blob in the mathematical-exposition audit. Sampling and training statements distinguish provisional/final visibility, current-state numerical updates, teacher forcing, and exact decoder constraints; no physics-fidelity implication is inferred.",
       "evidence": [
         "audit/model_exposition_20260922.json",
         "data/provenance/source_evidence.json",
         "data/training/calibrated_lr3e4_history.csv",
-        "data/reports/dicos-f-02_epoch90.provenance.json"
+        "data/reports/dicos-f-02_epoch90.provenance.json",
+        "audit/mathematical_exposition_20260923.json"
       ]
     },
     {
@@ -92,7 +93,7 @@
       "it is important to note",
       "underscores the importance"
     ],
-    "result": "pass on revised source; typeset inspection recorded separately",
+    "result": "source prose and equation clarity reviewed; exact typeset inspection recorded separately",
     "policy": "Prefer named variables, operations, evidence, and limits over promotional or vague language."
   },
   "result": "pass",

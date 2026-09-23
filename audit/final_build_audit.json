@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-09-23T08:20:05.939382+00:00",
-  "release": "v0.10.0",
+  "created_utc": "2026-09-23T16:35:41.334751+00:00",
+  "release": "v0.11.0",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; graph-component differences are partly confounded by empty layers.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "e7e8f5a4edeebf3ba7b0ea611b3d83a187c45d33785dfbf15e3cd3561532a478",
-    "bytes": 927739,
-    "pages": 9
+    "sha256": "480433e8073bd767dea520208d1c79323e8410843afec3bc19046ba4a58540d9",
+    "bytes": 976438,
+    "pages": 10
   },
   "current_qa": {
-    "record": "audit\\iterations\\iteration_57.json",
-    "sha256": "38e9b1132a50ec994c91642c5ea97be679f36722c92b17741a103ce1f7e6c791",
+    "record": "audit\\iterations\\iteration_60.json",
+    "sha256": "0dcd88d24cdd7660625ee637e32e1b007ede18bafa81a26478c847e27faa635e",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -24,13 +24,13 @@
       "ECAL/HCAL cancellation and longitudinal-profile discrepancy",
       "Hash-verified 104-row extract, contiguous unique epochs, one declared post-90 continuation, and epoch-90 objective minimum",
       "Claim language, author/mentor metadata, scope statements, and stale-model exclusion",
-      "18 citation keys and 17 LaTeX labels/references",
+      "18 citation keys and 23 LaTeX labels/references",
       "Three deterministic manuscript figures, source hashes, dimensions, and nonblank raster content",
-      "Active-versus-archived evidence separation, 7 active JSON files, source-bound model exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check",
-      "9-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
+      "Active-versus-archived evidence separation, 7 active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check",
+      "10-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_20260922.json",
-    "visual_sha256": "58dbe03bf9114affeb4553ec23cbee713ebcc68a7960f38dc0142718eddda027"
+    "visual_sha256": "2bfe5a944c118734a41bca11d44cf3c1372dd2fdcb32ce0389bfc99d4c7e5bc7"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -38,14 +38,14 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "37d1c2a4dd52dd2f224b6ce3342b8d33d37570fad82fe90b3f86fd5dfe620b9b",
+    "main.tex": "420418dfb6170c788980edf5f01881e8b260777c091a87062a73a12e7df2a860",
     "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
-    "README.md": "b1594ebab5dc8c4a8ccb95af22015979fb2f813bc02702f48c3c9faee12127c0",
-    "STATUS.md": "f2cabbcd3d8fc28dc8d7ea99ab28f58233a751954625c5f4ff128004a236d599",
-    "CITATION.cff": "b65c2ad77defb9aa9423b7264b7c90d4fb866ca17ef4f9fc6b83dab9255b1c25",
-    "audit/claim_register_20260922.json": "0a1f2602aa870216e1004403eb1fcdb84f259e261045cde9545ef6e2440ac324",
-    "audit/claim_register_20260922.md": "c813d52eccc540e12e9ee77668d01d0f82ea75c71a1c887f0689ee6f53a35df2",
+    "README.md": "7382485b8e35d5672a1112504cf4911c9c35de9b54443f10aa5dde24d2fc21a9",
+    "STATUS.md": "ca021c6b9c12706b6657cacf99c2a814acb68166374bae1e15552a17258c6475",
+    "CITATION.cff": "2cdc0f6a3fb3b0ab2801fcbe783a0a349f68f2681f4099175eaa70747f07b708",
+    "audit/claim_register_20260922.json": "d73da07229886caf7ff3c24dfa9d8c9db4b483148a50c5fd4d9050dcbe7810d1",
+    "audit/claim_register_20260922.md": "229391dfbe011add8829718482cef71ee64524898b0e604a5fe5045d28157dc0",
     "audit/adversarial_revision_round4_20260923.json": "87a7221885cceb9cecc99b03738fee461150c8fa43483dfbaeb10cda67e0766a",
     "audit/adversarial_revision_round4_20260923.md": "a8d972178ad19132cea8566dcd548fa7804d799d9634b9cbf3afa094f53dd83a",
     "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
@@ -54,13 +54,15 @@
     "audit/adversarial_revision_round3_20260922.md": "f371fcf24dd7be8bbfc118573da4e5857eb1e2a87ca33d188cce9ef04c714fee",
     "audit/model_exposition_20260922.json": "36a8cfbc005387789c6029520be7bee58262eb2aefc826938db2dd4214f8c1ac",
     "audit/model_exposition_20260922.md": "d38e6e6ad8f694b613ecbc1c8db24d74c4fa259b87385c8c25de793ac1144ce2",
-    "audit/sentence_evidence_20260922.json": "8909fa1af815b54c892eac6be73af8dbf62e4d428a5bb9f93367ded8a2839db0",
-    "audit/sentence_evidence_20260922.md": "98ccea515daf5f745e6dcb33105ef4a0936b822657e82800d511a072896cb76a",
+    "audit/mathematical_exposition_20260923.json": "581b64a2604e41d303be9828caf052c3f0040106e9be9a4283c44760f30ecbe3",
+    "audit/mathematical_exposition_20260923.md": "c5d2ba22e979a7f4d6eff649653eca511a17a1e2fc915b2e0d9f6b71bbb869e5",
+    "audit/sentence_evidence_20260922.json": "6a2d474930be6d24d93634c1e36551c057e1ecc5ea1d204342e65ab74756ba0c",
+    "audit/sentence_evidence_20260922.md": "a9ba6d77fe977f07a8072de98ad1ed5c3d6b9b47bd13a1e8f87dee529e28d137",
     "audit/literature_benchmark.md": "68565544cc8895729c71aa2c3d31e73eea7839b9321975f1dac5eaae4d7b9ee3",
     "scripts/build_figures.py": "4aebebc4c61749997fa5a1e5fce627719bd69e24f01e2793cb2c890b0278a038",
-    "scripts/full_manuscript_qa.py": "d7ec1689b9100496ba851804df6b65f4538e9cd517ddf243429d2f08453da79f",
+    "scripts/full_manuscript_qa.py": "f7f5fc22e2fa1ebde599e2fd4fc17bd0fb6deb64a831ed60fcd0b154601c029e",
     "scripts/test_qa_guards.py": "e3c66c54b8321d7d4a8ae1c394f61beac277d5a449218c51aa8213c0be90c9dd",
-    "scripts/write_build_audit.py": "c32ea9214526e460dc7fd9d9140085fa546654d7896b6314eda55c39d29915f5",
+    "scripts/write_build_audit.py": "0e86a2ec0ed6a5acccf6ea0967f663b3638aa0d6de84d711629d99a138be446d",
     "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
     "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
     "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
