@@ -30,6 +30,7 @@ def release_source_hashes() -> dict:
     paths = [ROOT / name for name in ["main.tex", "references.bib", "build.ps1", "README.md", "STATUS.md", "CITATION.cff"]]
     paths += [ROOT / p for p in [
         "audit/claim_register_20260922.json", "audit/claim_register_20260922.md",
+        "audit/adversarial_revision_round4_20260923.json", "audit/adversarial_revision_round4_20260923.md",
         "audit/adversarial_revision_20260922.json", "audit/adversarial_revision_20260922.md",
         "audit/adversarial_revision_round3_20260922.json", "audit/adversarial_revision_round3_20260922.md",
         "audit/model_exposition_20260922.json", "audit/model_exposition_20260922.md",
@@ -224,7 +225,27 @@ def validate_evidence(checks: list[str]) -> dict:
     close(zero_interval["low"], 0.0019)
     close(zero_interval["high"], 0.0076)
     close(report["visibility_and_zero_response"]["generated"]["zero_fraction"] - report["visibility_and_zero_response"]["truth"]["zero_fraction"], 0.0049)
-    checks.append("Response moments and energy-bin ranges; paired stratified zero-fraction interval; excluded legacy response distance")
+    close(report["distribution_metrics"]["hit_count"]["wasserstein"], 58.6837)
+    hit_interval = report["bootstrap"]["intervals"]["hit_count_wasserstein"]
+    assert hit_interval["replicates"] == 1000
+    close(hit_interval["low"], 51.4664)
+    close(hit_interval["high"], 66.9248)
+    c2st = report["c2st"]
+    for name, expected in [("high_level", 0.7747664074074074),
+                           ("low_level", 0.7910063148148149),
+                           ("profile_aware", 0.8564428148148148),
+                           ("condition_only", 0.4635906851851852)]:
+        assert len(c2st[name]["auroc_per_seed"]) == 3
+        close(c2st[name]["auroc_mean"], expected)
+    assert c2st["high_level"]["gate"] == "max_high_level_c2st_auc"
+    close(c2st["high_level"]["gate_value"], 0.65)
+    assert c2st["high_level"]["auroc_mean"] > c2st["high_level"]["gate_value"]
+    external = load_json(ROOT / "archive/excluded_screens/verified_condition_control.json")
+    assert external["source_split"] == "validation" and external["test_events_used"] == 0
+    assert external["current"]["epoch"] == 90 and external["current"]["run_tag"] == "dicos-f-02"
+    close(external["current"]["high_level_auroc"], 0.8928972222222222)
+    close(external["current"]["condition_only_auroc"], 0.5)
+    checks.append("Response moments and bins; zero and hit-count bootstrap intervals; all original C2ST families and failed gate; separately labelled pair-grouped monitor")
 
     profile = report["distribution_metrics"]["mean_longitudinal_profile"]
     g = np.asarray(profile["generated"], dtype=float)
@@ -258,7 +279,7 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     bib = (ROOT / "references.bib").read_text(encoding="utf-8")
     required = [
         "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
-        "These measurements describe the stored checkpoint and bank", "strict-positive support", "condition-only pipeline control has AUROC 0.500",
+        "These measurements describe the stored checkpoint and bank", "strict-positive support", "high-level classifier two-sample test gives AUROC 0.775", "high-level value exceeds the predeclared maximum of 0.65",
         "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
         "104 retained rows spanning epochs 11--114", "defines the checkpoint studied here",
         "four nearest centroids are selected", "stored in both directions", "107,920 in total",
@@ -282,7 +303,7 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     forbidden = [
         "V3-SUP", "V3-S2", "M0", "B0", "epoch 12", "midpoint Euler",
         "plotted error bars", "promotion criterion",
-        "0.4636", "0.7748", "0.7785", "0.9330", "S2",
+        "0.7785", "0.9330", "S2",
         "551,234-event", "76,160", "76,298", "Two declared continuations",
         "every inactive layer adds a component", "paired joint counts are required and unavailable",
         "Topology-Sensitive Validation", "The contribution is threefold", "Artifact identity and audit boundary",
@@ -352,13 +373,13 @@ def validate_repository(checks: list[str]) -> None:
     model_audit = load_json(ROOT / "audit" / "model_exposition_20260922.json")
     sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.9.0" in status
-    assert "version: 0.9.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.10.0" in status
+    assert "version: 0.10.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
     assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
     assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
     assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]
     assert len(model_audit["source_blob_sha256"]) == 14 and len(model_audit["claims"]) == 9
-    assert sentence_audit["manuscript_version"] == "0.9.0"
+    assert sentence_audit["manuscript_version"] == "0.10.0"
     assert sentence_audit["review_scope"] == "Every prose paragraph, equation, table caption, and figure caption"
     assert len(sentence_audit["sections"]) == 8
     assert all(token in response for token in ["reviews/review7.txt", "reviews/review8.txt", "reviews/review9.txt", "Findings resolved by removal"])
@@ -409,7 +430,7 @@ def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
     sheet.save(render_dir / "contact.png", optimize=True)
 
     pdf_text = run(["pdftotext", str(PDF), "-"]).stdout
-    forbidden = ["??", "0.4636", "0.7748", "0.7785", "0.9330", "V3-SUP", "V3-S2", "M0", "S2"]
+    forbidden = ["??", "0.7785", "0.9330", "V3-SUP", "V3-S2", "M0", "S2"]
     found = [term for term in forbidden if term in pdf_text]
     assert not found, f"forbidden PDF text: {found}"
     required = ["Longitudinal Gaps and Readout Connectivity", "Julian Juan", "Wen-Chen Chang", "References"]

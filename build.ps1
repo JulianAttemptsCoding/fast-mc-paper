@@ -29,7 +29,7 @@ if ($LogProblems) {
 New-Item -ItemType Directory -Force audit/qa_runs/build | Out-Null
 $PdfText = Join-Path $RepoRoot "audit/qa_runs/build/manuscript.txt"
 Invoke-Checked "pdftotext" @("main.pdf", $PdfText)
-$TextProblems = Select-String -Path $PdfText -Pattern "\?\?|0\.4636|0\.7748|0\.7785|0\.9330|validation-only evidence|undefined references" -SimpleMatch:$false
+$TextProblems = Select-String -Path $PdfText -Pattern "\?\?|0\.7785|0\.9330|validation-only evidence|undefined references" -SimpleMatch:$false
 if ($TextProblems) {
     $TextProblems | ForEach-Object { Write-Error $_.Line }
 }

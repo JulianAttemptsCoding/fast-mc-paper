@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 
 \usepackage[T1]{fontenc}
-\usepackage[margin=0.82in]{geometry}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -13,9 +13,9 @@
 \usepackage{needspace}
 \usepackage{xurl}
 \usepackage{hyperref}
-\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=6,giveninits=true,url=false]{biblatex}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=3,giveninits=true,url=false]{biblatex}
 \addbibresource{references.bib}
-\renewcommand*{\bibfont}{\footnotesize}
+\renewcommand*{\bibfont}{\scriptsize}
 
 \graphicspath{{figures/}}
 \hypersetup{pdftitle={Longitudinal Gaps and Readout Connectivity in a Pilot Generative Model of Zero-Degree Calorimeter Showers},pdfauthor={Julian Juan},pdfsubject={Pilot calorimeter-shower model and validation-sample diagnostics},colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!55!black}
@@ -34,14 +34,14 @@
 \maketitle
 
 \begin{abstract}
-We study a pilot generative model of single-neutron Geant4 showers in a 6,790-channel Zero-Degree Calorimeter readout. Conditioned on neutron energy and direction, the model samples a total readout deposit, active layers, layer energies, active channels, and channel energies. We compare one checkpoint trained on 26,624 events with reference showers at 10,000 stored conditions between 50 and 250\,GeV incident kinetic energy. The mean total deposit differs by 0.045\,GeV (1.0\%), partly because opposite electromagnetic and hadronic shifts cancel. Among nonempty events, mean active-layer counts differ by 0.25, but the generated showers reach 4.42 layers farther downstream and contain 3.95 more inactive layers within their occupied span. Mean active-channel counts differ by $-28.7$ ($-1.8\%$); mean component counts on the model graph differ by $+35.97$. Because that graph links only adjacent layers, inactive layers can themselves split the support. The comparison is descriptive for one checkpoint on a repeatedly inspected validation sample. The retained aggregates cannot separate longitudinal splitting from within-layer fragmentation or establish the structural difference's uncertainty, threshold dependence, or persistence across fits.
+We study a pilot generative model of single-neutron Geant4 showers in a 6,790-channel Zero-Degree Calorimeter readout. Conditioned on neutron energy and direction, the model samples a total readout deposit, active layers, layer energies, active channels, and channel energies. We compare one checkpoint trained on 26,624 events with reference showers at 10,000 stored conditions between 50 and 250\,GeV incident kinetic energy. The mean total deposit differs by 0.045\,GeV (1.0\%), partly because opposite electromagnetic and hadronic shifts cancel. Among nonempty events, mean active-layer counts differ by 0.25, but the generated showers reach 4.42 layers farther downstream and contain 3.95 more inactive layers within their occupied span. Mean active-channel counts differ by $-28.7$ ($-1.8\%$); mean component counts on the model graph differ by $+35.97$. Because that graph links only adjacent layers, inactive layers can themselves split the support. The high-level classifier two-sample test gives AUROC 0.775, above its declared 0.65 limit, although its row-wise split is not a clean held-out-pair test. The comparison is descriptive for one checkpoint on a repeatedly inspected validation sample. The retained aggregates cannot separate longitudinal splitting from within-layer fragmentation or establish the structural difference's uncertainty, threshold dependence, or persistence across fits.
 \end{abstract}
 
 \section{Introduction}
 
 Detailed particle transport is central to detector studies, but calorimeter shower simulation is computationally expensive. Generative models based on normalizing flows, diffusion, point clouds, graph networks, and conditional flow matching have been developed for faster sampling~\cite{caloflow,calodiffusion,calograph,caloclouds2,calodream}. CaloChallenge evaluates such models with shower observables, distributional distances, classifier tests, model size, and generation time~\cite{calochallenge}. Different tests can reveal different distributional failures~\cite{kansalmetrics}.
 
-Zero-Degree Calorimeters (ZDCs) have their own fast-simulation literature. Studies of the ALICE ZDC have used variational autoencoders, generative adversarial networks, diffusion models, conditional flow matching, and mixtures of generative experts~\cite{dubinskizdc,kitazdc,fasterzdc,expertsim,wojnar2025}. A recent normalizing-flow study also tests co-activation of channels~\cite{majerz2026}. Those studies use a different detector representation, so their numerical results cannot be compared directly with the raw deposited-energy vector examined here.
+Zero-Degree Calorimeters (ZDCs) have their own fast-simulation literature. Studies of the ALICE ZDC have used variational autoencoders, generative adversarial networks, diffusion models, conditional flow matching, and mixtures of generative experts~\cite{dubinskizdc,kitazdc,fasterzdc,expertsim,wojnar2025}. A recent normalizing-flow study also tests co-activation of channels across showers at fixed incident conditions~\cite{majerz2026}. Those studies use a different detector representation, so their numerical results cannot be compared directly with the raw deposited-energy vector examined here.
 
 Spatial organization matters in calorimetry. ATLAS, for example, clusters neighboring cells above signal-significance thresholds and uses cluster shapes in reconstruction~\cite{atlastopocluster}. Here we examine connectivity on a different, model-defined graph with a zero threshold. Its components are diagnostic properties of the stored readout, not reconstructed shower clusters.
 
@@ -79,7 +79,7 @@ All shower comparisons use a 10,000-condition sample from the canonical validati
 \section{Generator and training procedure}
 \label{sec:model}
 
-The generator has 2,082,507 trainable parameters. At generation it receives only the five features in Eq.~\eqref{eq:condition}. A two-block residual multilayer perceptron maps them to a 128-component representation $h_c$, which conditions each sampling stage. The discrete stages predict probability distributions for visibility, layer activity, and channel counts or selection. Two conditional flows transform independent Gaussian draws into continuous layer-energy and channel-energy allocations. The model has no learned shower encoder or common random latent vector: independent draws enter at the discrete heads and at the two flows.
+The generator has 2,082,507 trainable parameters. At generation it receives only the five features in Eq.~\eqref{eq:condition}. A two-block residual multilayer perceptron maps them to a 128-component representation $h_c$, which conditions each sampling stage. The discrete stages predict probability distributions for visibility, layer activity, and channel counts or selection. Two conditional flow-matching models transform independent Gaussian draws into continuous layer-energy and channel-energy allocations. The model has no learned shower encoder or common random latent vector: independent draws enter at the discrete heads and at the two flows.
 
 Figure~\ref{fig:architecture} follows the sampling path. Each draw conditions later stages. Thus a change in total deposit can affect every later allocation, whereas the final channel-energy assignment cannot change a previously sampled layer budget or channel count.
 
@@ -105,9 +105,9 @@ When $V=1$, the implementation samples a mixture component and a normal variate,
  C(\Kinc)=\min\{0.630110\max(\Kinc,1\GeV),61.2338\GeV\}.
  \label{eq:cap}
 \end{equation}
-The cap is a numerical bound derived from the training sample. If $V=0$, or if inversion and clipping give $T=0$, no layer is activated. The aggregate evaluation did not retain cap-activation or reference-exceedance counts, so the response tail near this boundary is untested.
+The cap is a numerical bound derived from the training sample; it becomes constant at 61.2338\,GeV for $\Kinc\gtrsim97.2\GeV$. If $V=0$, or if inversion and clipping give $T=0$, the implementation resets visibility to zero and activates no layer. The aggregate evaluation did not retain cap-activation or reference-exceedance counts, so the response tail near this boundary is untested.
 
-For $V=1$, a categorical head samples the first active layer $F$ from $(h_c,T)$. Layers before $F$ are set inactive, layer $F$ is forced active, and a Bernoulli head samples the later activity indicators. The later indicators are independent conditional on the variables supplied to that head,
+For $V=1$, a categorical head samples the first active layer $F$ from $(h_c,T)$. Layers before $F$ are set inactive, layer $F$ is forced active, and a Bernoulli head samples the later activity indicators. The later indicators are independent conditional on the variables supplied to that head; this factorization cannot represent arbitrary conditional correlations between layer-activity patterns,
 \begin{equation}
  p(\mathbf A\mid h_c,T,F)=\prod_{\ell>F}^{64}p(A_\ell\mid h_c,T,F,\ell),
  \qquad A_F=1.
@@ -119,7 +119,7 @@ The first conditional flow apportions $T$ among active layers. For training, eac
 \begin{equation}
  x_t=(1-t)x_0+t x_1,
  \qquad
- \mathcal L_{\mathrm{CFM}}=\lVert v_\theta(x_t,t;\text{context})-(x_1-x_0)\rVert_2^2,
+ \mathcal L_{\mathrm{CFM}}=\lVert v_\theta(x_t,t;\text{context})-(x_1-x_0)\rVert_2^2.
  \label{eq:cfm}
 \end{equation}
 The squared error trains the velocity field $v_\theta$ to point along the straight path from $x_0$ to $x_1$~\cite{flowmatching}. At generation, the field advances a fresh Gaussian vector through eight fixed updates, with velocity evaluated at the midpoint time of each interval. A softmax over active layers converts its output to nonnegative fractions $\pi_\ell$ that sum to one. The layer budgets are
@@ -132,7 +132,7 @@ The velocity field uses a 128-component layer representation and two bidirection
 
 \subsection{Channel count, support, and deposited energy}
 
-For each layer, a categorical head receives $(h_c,B_\ell,A_\ell)$ and a learned layer identifier, then samples the active-channel count $K_\ell$. Its feasibility mask permits $K_\ell=0$ in an inactive layer and $1\leq K_\ell\leq N_\ell$ in an active layer, where $N_\ell$ is that layer's channel count. The mask fixes a count but imposes no minimum energy per channel in this zero-threshold study.
+For each layer, a categorical head receives $(h_c,B_\ell,A_\ell)$ and a learned layer identifier, then samples the active-channel count $K_\ell$. Its feasibility mask forces $K_\ell=0$ in an inactive layer and $1\leq K_\ell\leq N_\ell$ in an active layer, where $N_\ell$ is that layer's channel count. The mask fixes a count but imposes no minimum energy per channel in this zero-threshold study.
 
 The support network scores every channel for selection. Its inputs for each channel are standardized $(x,y,z)$ coordinates, normalized layer index, ECAL/HCAL indicators, $h_c$, the layer budget $B_\ell$, and the requested occupancy fraction $K_\ell/N_\ell$. Three 96-component graph blocks update each channel representation from its neighbors. Their five edge inputs specify coordinate differences, distance, and whether an edge is lateral, forward-longitudinal, or backward-longitudinal. Channel representations are averaged within each layer; a two-layer, four-head bidirectional transformer exchanges information among the 65 layer summaries; the resulting context is returned to each channel. Independent Gumbel noise is added to the channel scores, and the $K_\ell$ highest scores select exactly $K_\ell$ channels in layer $\ell$~\cite{gumbeltopk}. Selection has no constraint that would make those channels a connected set.
 
@@ -151,12 +151,12 @@ where $S_\ell$ is the selected set. Thus, in exact arithmetic, $|S_\ell|=K_\ell$
 
 Training derives $V$, $T$, $F$, $A_\ell$, $B_\ell$, $K_\ell$, $S_\ell$, and both flow targets from each reference shower. A component receives the reference values of earlier components, whereas generation passes its own sampled values downstream. This training procedure is often called teacher forcing. The nine losses are binary cross entropy for visibility and activity, mixture negative log likelihood for $T$, categorical cross entropy for $F$ and $K_\ell$, binary cross entropy plus pairwise ranking for support, and mean-squared velocity error for each flow. Weights were obtained from gradient norms measured on training data. The response, layer-profile, and count weights reached the lower clipping bound, and the visibility weight reached the upper bound. These weights describe the optimization; they do not identify the source of the connectivity discrepancy.
 
-The selected joint-training run used AdamW with a peak learning rate of $3\times10^{-4}$, batch size six, accumulation over four batches, gradient clipping at one, and seed 20260723. Epoch 90 has the lowest recorded validation objective among the 104 retained rows spanning epochs 11--114 and defines the checkpoint studied here. Validation objectives are lower than training objectives over much of this record. The retained aggregates do not identify why, so the ordering is not given a physical interpretation. Both flows use eight integration updates at evaluation; no solver-step comparison was retained.
+The selected checkpoint's training lineage used AdamW with a peak learning rate of $3\times10^{-4}$, batch size six, accumulation over four batches, gradient clipping at one, and seed 20260723. Epoch 90 has the lowest recorded validation objective among the 104 retained rows spanning epochs 11--114 and defines the checkpoint studied here. Validation objectives are lower than training objectives over much of this record. The retained aggregates do not identify why, so the ordering is not given a physical interpretation. Both flows use eight integration updates at evaluation; no solver-step comparison was retained.
 
 \section{Diagnostics}
 \label{sec:diagnostics}
 
-We compare mean total, ECAL, and HCAL deposits over all events. For eight 25\,GeV incident-energy bins, the report retains means and standard deviations but no binwise uncertainty estimates. A paired, incident-energy-stratified bootstrap with 1,000 resamples supplies a 95\% percentile interval for the difference in zero-deposit fractions. It does not supply intervals for the structural metrics.
+We compare mean total, ECAL, and HCAL deposits over all events. For eight 25\,GeV incident-energy bins, the report retains event counts, means, and standard deviations, but no confidence intervals for generated-minus-reference bin differences. A paired, incident-energy-stratified bootstrap with 1,000 resamples supplies 95\% percentile intervals for the zero-deposit-fraction difference and the hit-count Wasserstein distance. It does not supply intervals for the gap or component metrics.
 
 A layer or channel is active when its stored energy is strictly positive; no detector or analysis threshold is applied. For a nonempty event with first and last active layers $F$ and $L$, the occupied span is $L-F+1$, and the number of inactive layers inside it is
 \begin{equation}
@@ -166,17 +166,17 @@ A layer or channel is active when its stored energy is strictly positive; no det
 This counts inactive layers, not contiguous runs. A shower has an interior gap when $G>0$. Ignoring edge direction, the occupied channels $S$ form connected components $C_1,\ldots,C_m$ on the model graph. We report their number $m$ and the fraction of occupied channels in the largest one, $\max_j|C_j|/|S|$. These support summaries use only nonempty events: 9,907 reference and 9,858 generated events. Because longitudinal graph edges connect adjacent layers only, a contiguous run of inactive layers between occupied layers necessarily separates the support on either side. The retained value of $G$ cannot tell us how many such runs occur.
 
 \Needspace{5\baselineskip}
-The retained condition-only pipeline control has AUROC 0.500. It contains no shower variables and checks only the pairing of identical condition distributions across labels. The original battery also records shower-aware classifier scores, but its row-wise random train/test split can place members of a matched pair on opposite sides of the split. We exclude those scores rather than interpret them as shower-fidelity tests. A future classifier test should hold out matched pairs together~\cite{c2st,kansalmetrics}.
+The original classifier two-sample-test (C2ST) battery uses three classifier seeds and a row-wise random train/test split of labelled reference and generated showers. Members of a matched condition pair can fall on opposite sides of that split, so these are screening scores rather than a clean held-out-pair fidelity test. Its condition-only AUROC is 0.464. A separate pair-grouped validation monitor records condition-only AUROC 0.500 and high-level AUROC 0.893 on its own event bank. The two batteries are not interchangeable; the condition-only scores test the classifier pipeline, not shower fidelity. A future classifier test should hold out matched pairs together~\cite{c2st,kansalmetrics}.
 
 \section{Results}
 \label{sec:results}
 
-Table~\ref{tab:results} reports absolute differences so that ratios on small denominators do not exaggerate the comparison. The all-event mean total deposit differs by 0.045\,GeV, but this sum combines an ECAL excess of 0.175\,GeV with an HCAL deficit of 0.129\,GeV. Across the eight incident-energy bins, the generated-minus-reference mean difference ranges from $-7.7\%$ to $+7.7\%$, while the standard-deviation difference ranges from $-10.9\%$ to $+9.6\%$. Without binwise uncertainties these ranges diagnose possible cancellation but do not establish a statistically resolved energy dependence.
+Table~\ref{tab:results} reports absolute differences so that ratios on small denominators do not exaggerate the comparison. The all-event mean total deposit differs by 0.045\,GeV, but this sum combines an ECAL excess of 0.175\,GeV with an HCAL deficit of 0.129\,GeV. Across the eight incident-energy bins, the generated-minus-reference mean difference ranges from $-7.7\%$ to $+7.7\%$, while the standard-deviation difference ranges from $-10.9\%$ to $+9.6\%$. Without intervals for the bin differences these ranges diagnose possible cancellation but do not establish a statistically resolved energy dependence.
 
 \begin{center}
 \begin{minipage}{\linewidth}
 \centering
-\captionof{table}{Aggregate development-bank results. Deposit rows and zero-deposit counts use all 10,000 pairs. Support rows are conditional on nonempty events (9,907 reference and 9,858 generated). Percentage-point differences are denoted pp. The report supplies a bootstrap interval for the zero-deposit fraction difference, but no structural intervals.}
+\captionof{table}{Aggregate development-bank results. Deposit rows and zero-deposit counts use all 10,000 pairs. Support rows are conditional on nonempty events (9,907 reference and 9,858 generated). Percentage-point differences are denoted pp. The report supplies bootstrap intervals for zero-deposit fraction and hit-count distance, but none for gap or component differences.}
 \label{tab:results}
 \small
 \begin{tabular}{@{}lrrr@{}}
@@ -215,6 +215,10 @@ The generated shower reaches farther along the layer axis despite having nearly 
 
 At channel level, the generated sample has 28.7 fewer active channels and 35.97 more weak components on average. Its mean largest-component fraction is lower by 6.03 percentage points. These component statistics describe the same strict-positive support that contains the additional longitudinal gaps. The aggregate report does not distinguish components separated by empty layers from those arising within occupied layers, nor does it record component energies. A small positive deposit counts as occupied under this definition even if it would be removed by a realistic threshold.
 
+The all-event hit-count Wasserstein distance is 58.68 channels, with a stored paired-bootstrap 95\% interval of 51.47--66.92 channels. This distributional discrepancy accompanies the smaller difference in mean active-channel count; the interval describes resampling of the inspected bank.
+
+The original C2ST battery records AUROC 0.775 for high-level shower summaries, 0.791 for lower-level features, and 0.856 for layer-profile features, each averaged over three classifier seeds. Its high-level value exceeds the predeclared maximum of 0.65. These scores are evidence of separability under the recorded split, with the pairing caveat above; they are neither an independent test result nor a calibrated measure of simulation fidelity.
+
 The mean fraction of directed graph edges with both endpoints occupied is 0.1375 for generated showers and 0.1458 for the reference, averaged over all 10,000 events. This local co-occupancy statistic is subject to the same graph and threshold choices as the component counts.
 
 There are 49 more zero-deposit generated events than reference events, a difference of 0.49 percentage points. The stored paired bootstrap gives a nominal 95\% percentile interval of 0.19--0.76 percentage points for this difference. Because the same validation sample was repeatedly inspected, this interval describes resampling variation within the selected bank; it is not a confirmatory coverage statement for a new sample. Empty events are excluded from the support statistics and therefore change their denominators.
@@ -227,7 +231,7 @@ The decoder-level checks passed for all 1,250 batches of eight generated events.
 The longitudinal summaries show that generated showers extend farther downstream and contain more inactive layers between their first and last deposits. The graph-component difference is partly entangled with that result by construction. A contiguous empty-layer run separates occupied layers on an adjacent-layer graph, while additional components may also occur within occupied layers. The retained aggregates count empty layers but neither their runs nor the locations and energies of individual components. They therefore do not establish an independent lateral-fragmentation effect.
 
 \Needspace{8\baselineskip}
-The model enforces layer budgets and active-channel counts, not adjacency among selected channels. Its independent later-layer activity draws and Gumbel-perturbed top-$K_\ell$ support selection could permit gaps and fragmented support. This is a mechanism the architecture allows, not an explanation isolated by the present comparison. Pilot training size, validation-objective checkpoint selection, and eight-step flow integration also remain untested contributors. A matched ablation or an oracle cascade that replaces one generated upstream variable at a time with its reference value would locate the first stage at which the discrepancy appears.
+The model enforces layer budgets and active-channel counts, not adjacency among selected channels. Its independent later-layer activity draws and Gumbel-perturbed top-$K_\ell$ support selection could permit gaps and fragmented support. This is a mechanism the architecture allows, not an explanation isolated by the present comparison. Pilot training size and validation-objective checkpoint selection remain untested contributors. The layer-budget flow can affect later counts and support through its budgets; the final channel-energy flow cannot change sampled layer activity or selected channel sets in exact arithmetic. Solver-step effects on energy allocations were not tested. A matched ablation or an oracle cascade replacing one generated upstream variable at a time with its reference value could locate where the discrepancy first appears.
 
 The strict-positive support includes arbitrarily small stored deposits; it is not a thresholded detector observable. Recomputing component energies and connectivity under physically motivated energy thresholds, alternative adjacency graphs, and fixed energy and direction slices is necessary before interpreting the difference as shower morphology.
 
@@ -240,7 +244,7 @@ For this pilot checkpoint, similar mean occupancies accompany a later, more inte
 
 \section*{Code and data availability}
 
-The manuscript source, aggregate validation report, event-independent geometry summary, training-history extract, figure builder, and QA records are available at \url{https://github.com/JulianAttemptsCoding/fast-mc-paper}. The collaboration-owned event file and checkpoint are not redistributed. The public package reproduces the manuscript and aggregate arithmetic; it cannot retrain the model, regenerate showers, or reconstruct event-level tests. Hashes identify the implementation files inspected for this paper, but the available record does not establish that these were the exact source bytes used during training.
+The manuscript source, aggregate validation report, event-independent geometry summary, training-history extract, figure builder, and QA records are available in the \href{https://github.com/JulianAttemptsCoding/fast-mc-paper}{public repository}. The collaboration-owned event file and checkpoint are not redistributed. The public package reproduces the manuscript and aggregate arithmetic; it cannot retrain the model, regenerate showers, or reconstruct event-level tests. Hashes identify the implementation files inspected for this paper, but the available record does not establish that these were the exact source bytes used during training.
 
 \section*{Acknowledgments}
 

@@ -1,6 +1,6 @@
 # Scientific status
 
-Version 0.9.0 is a case study of one pilot Zero-Degree Calorimeter checkpoint: **similar mean occupancy accompanies later, more interrupted longitudinal support.** Mean graph-component counts also differ, but the adjacent-layer graph turns interior empty-layer runs into disconnected components by construction.
+Version 0.10.0 is a case study of one pilot Zero-Degree Calorimeter checkpoint: **similar mean occupancy accompanies later, more interrupted longitudinal support.** Mean graph-component counts also differ, but the adjacent-layer graph turns interior empty-layer runs into disconnected components by construction. The original high-level classifier AUROC is 0.775, above its declared 0.65 maximum; the row-wise matched-pair split means this is a development screening failure, not a clean held-out-pair fidelity estimate.
 
 The manuscript now explains the implemented generator from input to output: five condition features feed a residual condition encoder; response, longitudinal profile, count, support, and share stages are sampled in sequence; graph message passing and layer attention score channels; and a deterministic softmax decoder closes each layer to its sampled budget. These are implementation statements verified against source blobs, not claims that the architecture is physically adequate or responsible for the measured discrepancy.
 
@@ -16,7 +16,7 @@ The earlier v0.3.0 draft incorrectly attributed a later model's 551,234-event tr
 
 ## Limits of this draft
 
-The bank was repeatedly inspected, its overlap with pilot validation is unresolved, and the checkpoint has one training seed. Event arrays are unavailable for structural uncertainty estimates, distributions, threshold scans, or graph sensitivity tests. The support definition uses energy greater than zero, the readout graph collapses ganged positions, and the graph is shared with the model. The manuscript makes no structural significance, post-digitization, physics-fidelity, speed, causal-mechanism, or architecture-superiority claim. Historical shower-aware classifier results remain excluded because their random row split can separate matched pairs; condition-only AUROC 0.500 is not evidence of shower fidelity.
+The bank was repeatedly inspected, its overlap with pilot validation is unresolved, and the checkpoint has one training seed. Event arrays are unavailable for structural uncertainty estimates, threshold scans, or graph sensitivity tests; the retained hit-count bootstrap interval is an exception for that distributional metric. The support definition uses energy greater than zero, the readout graph collapses ganged positions, and the graph is shared with the model. The manuscript makes no structural significance, post-digitization, physics-fidelity, speed, causal-mechanism, or architecture-superiority claim. Original shower-aware classifier scores are disclosed with their split limitation. A separate pair-grouped validation monitor records high-level AUROC 0.893 and condition-only AUROC 0.500; it uses its own bank. Neither condition-only score is evidence of shower fidelity.
 
 ## Work needed for broader claims
 

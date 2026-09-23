@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-09-22T17:42:45Z",
-  "manuscript_version": "0.9.0",
+  "created_utc": "2026-09-23T00:00:00Z",
+  "manuscript_version": "0.10.0",
   "review_scope": "Every prose paragraph, equation, table caption, and figure caption",
   "sections": [
     {
       "section": "Abstract",
-      "sentence_basis": "Study identity, sampling order, sample sizes, deposit and longitudinal differences, component confound, and retained-evidence boundary.",
+      "sentence_basis": "Study identity, sampling order, sample sizes, deposit and longitudinal differences, component confound, and retained-evidence boundary. The disclosed high-level classifier gate failure is checked against the report.",
       "evidence": [
         "data/reports/dicos-f-02_epoch90.json",
         "data/provenance/source_evidence.json",
@@ -45,17 +45,18 @@
     },
     {
       "section": "Diagnostics",
-      "sentence_basis": "Definitions are equations or metric semantics. The adjacent-layer graph implication follows from its edge construction. The zero-fraction interval is stored in the report; classifier-control limits follow from the feature set and original evaluator's row-wise split.",
+      "sentence_basis": "Definitions follow the metric equations and evaluator. The adjacent-layer graph implication follows from edge construction. The zero-fraction and hit-count intervals, original C2ST scores, row-wise split, and separate pair-grouped monitor are checked against their respective records.",
       "evidence": [
         "data/reports/dicos-f-02_epoch90.json",
         "data/reports/condition_only_control.json",
         "data/provenance/source_evidence.json",
-        "references.bib"
+        "references.bib",
+        "archive/excluded_screens/verified_condition_control.json"
       ]
     },
     {
       "section": "Results",
-      "sentence_basis": "Every number is reproduced from the immutable aggregate report, including the paired zero-fraction interval and all-event edge co-occupancy. The structural uncertainty, threshold sensitivity, gap-run count, and component energy are absent from retained fields.",
+      "sentence_basis": "Every numeric result is reproduced from the immutable aggregate report, including zero-fraction and hit-count intervals, all-event edge co-occupancy, three-seed C2ST scores, and the failed high-level gate. Structural gap/component intervals and component energies are absent.",
       "evidence": [
         "data/reports/dicos-f-02_epoch90.json",
         "audit/claim_register_20260922.json",
@@ -64,7 +65,7 @@
     },
     {
       "section": "Discussion and conclusion",
-      "sentence_basis": "Longitudinal reach and gaps lead the interpretation; component counts are explicitly confounded by adjacent-layer geometry. Architectural and numerical explanations are possibilities, each paired with the experiment needed to test it.",
+      "sentence_basis": "Longitudinal reach and gaps lead interpretation; component counts are confounded by adjacent-layer geometry. The final energy-sharing flow cannot alter sampled support in exact arithmetic. Potential mechanisms are stated as possibilities with corresponding ablation or oracle tests.",
       "evidence": [
         "audit/claim_register_20260922.md",
         "audit/adversarial_revision_round3_20260922.md",
@@ -91,11 +92,9 @@
       "it is important to note",
       "underscores the importance"
     ],
-    "result": "pass before build",
+    "result": "pass on revised source; typeset inspection recorded separately",
     "policy": "Prefer named variables, operations, evidence, and limits over promotional or vague language."
   },
   "result": "pass",
-  "typeset_qa_iteration": 50,
-  "typeset_pdf_sha256": "85bd35b36f47befb36c19c6e59a04fd9e2fda30779db41c53f1acc2912610580",
-  "visual_review": "All iteration-50 pages were inspected at original render resolution, drawing on byte-identical earlier page renders where applicable. A later exact-PDF release review is recorded in audit/visual_review_20260922.json."
+  "visual_review": "Exact-PDF visual inspection is recorded separately in the release-bound visual-review record."
 }

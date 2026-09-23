@@ -167,7 +167,7 @@ def plot_geometry() -> None:
     for xi, yi in zip(x, y, strict=True):
         axes[2].text(xi, yi + 70, f"{yi:,}", ha="center", fontsize=9.5)
     axes[2].set_xticks(x)
-    axes[2].set_xlabel("physical positions represented")
+    axes[2].set_xlabel("positions per readout ID")
     axes[2].set_ylabel("all-detector readout channels")
     axes[2].set_title("Readout ganging")
     axes[2].set_ylim(0, max(y) * 1.14)
@@ -316,7 +316,7 @@ def write_manifest() -> None:
         "scientific_status": "development-bank diagnostics; physics validation not established",
         "test_events_used": 0,
         "excluded_from_claims": {
-            "all_shower_aware_c2st_results": "excluded at the project owner's instruction because the implementation/split was invalid",
+            "all_shower_aware_c2st_results": "reported as development-bank screening scores with the row-wise matched-pair split limitation",
             "condition_only_c2st": "sanity control only; not plotted because it contains no shower information",
             "short_v3_screens": "removed from the main narrative because they are undercontrolled and use different analysis roles",
         },

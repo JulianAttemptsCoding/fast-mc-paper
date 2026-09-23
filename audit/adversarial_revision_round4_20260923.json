@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-23",
+  "kind": "adversarial-audit-disposition",
+  "inputs_sha256": {
+    "C:\\Users\\Julia\\.codex\\attachments\\b7719023-1a97-41fc-8b8d-ac3fa7798d42\\Pasted text.txt": "d9c788222820eed867e01d54a3ad19dca969ad72b7116b519f8a3f0c0c036b67",
+    "C:\\Users\\Julia\\.codex\\attachments\\98e9fe78-3ac6-4b4d-b688-642fbd3d7da4\\Pasted text.txt": "803a5e744a62cefb46df2300a5c722cc4384e8c2f9cc2016756a1cda602d80ab",
+    "data\\reports\\dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5"
+  },
+  "accepted": [
+    "Disclose all original shower-aware C2ST AUROCs and the failed predeclared high-level gate, while marking row-wise pair-split limitations.",
+    "Distinguish original condition-only AUROC 0.464 from separate pair-grouped monitor AUROC 0.500, and disclose that monitor high-level AUROC 0.893.",
+    "Report hit-count Wasserstein distance and its stored paired, energy-stratified bootstrap interval.",
+    "Correct count mask from permits to forces zero in inactive layers, distinguish conditional flow matching from normalizing flows, and describe response clipping/reset.",
+    "Narrow stage-specific mechanism discussion: final channel-energy flow cannot alter sampled zero-threshold support in exact arithmetic.",
+    "Separate across-shower co-activation in related work from within-event graph components.",
+    "Update published bibliography details and repair the geometry-figure x-axis label."
+  ],
+  "qualified": [
+    "The independent layer-activity factorization and top-k support permit gaps or disconnected support but no causal attribution follows from this comparison.",
+    "Original C2ST row split creates pair-split leakage risk, but its direction of AUROC bias is not established by retained data.",
+    "Stored response zero_from_positive_branch does not measure pre-reset lower-clipping frequency because evaluator uses final visibility."
+  ],
+  "not_adopted": [
+    "Detector identity and physical threshold cannot be inferred from current metadata.",
+    "Anthropic-tool allegation conflicts with the author declaration naming Codex and GPT-5.6-Sol only.",
+    "No claim that post-selection validation-bank intervals have confirmatory coverage."
+  ],
+  "new_experiments": false,
+  "test_events_used": 0,
+  "source_split": "validation development bank",
+  "status": "revision applied; exact PDF QA and release binding recorded separately"
+}

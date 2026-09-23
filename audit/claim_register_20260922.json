@@ -13,9 +13,24 @@
     "zero_event_count_reference": 93,
     "zero_event_count_generated": 142,
     "zero_fraction_difference": 0.0049,
-    "zero_fraction_paired_stratified_bootstrap_95_percentile_interval": [0.0019, 0.0076],
+    "zero_fraction_paired_stratified_bootstrap_95_percentile_interval": [
+      0.0019,
+      0.0076
+    ],
     "directed_edge_cooccupancy_generated": 0.137470797813195,
-    "directed_edge_cooccupancy_reference": 0.14579406782802076
+    "directed_edge_cooccupancy_reference": 0.14579406782802076,
+    "hit_count_wasserstein_channels": 58.683699999999995,
+    "hit_count_wasserstein_paired_bootstrap_95_percentile_interval": [
+      51.4664,
+      66.9248
+    ],
+    "original_c2st_high_level_auroc": 0.7747664074074074,
+    "original_c2st_low_level_auroc": 0.7910063148148149,
+    "original_c2st_profile_aware_auroc": 0.8564428148148148,
+    "original_c2st_condition_only_auroc": 0.4635906851851852,
+    "original_c2st_high_level_gate_max": 0.65,
+    "separate_pair_grouped_monitor_high_level_auroc": 0.8928972222222222,
+    "separate_pair_grouped_monitor_condition_only_auroc": 0.5
   },
   "scope": {
     "checkpoint": "dicos-f-02 epoch 90",
@@ -43,7 +58,9 @@
     "graph": "Only adjacent-layer longitudinal edges; a contiguous empty-layer run separates occupied sides, but the aggregate gap count counts layers rather than runs.",
     "bootstrap": "The stored interval resamples pairs within incident-energy bins; repeated inspection of the validation bank precludes confirmatory interpretation.",
     "split_hashes": "Pilot and canonical split manifests differ; the exact pilot-validation/bank overlap is unresolved.",
-    "ai_use": "Author states Codex/GPT-5.6-Sol assisted code and manuscript drafting and analysis/model proposals; author supplied main ideas and checked the work."
+    "ai_use": "Author states Codex/GPT-5.6-Sol assisted code and manuscript drafting and analysis/model proposals; author supplied main ideas and checked the work.",
+    "c2st": "Original three-seed shower-aware scores exceed the declared high-level gate but use row-wise matched-pair splitting; separate pair-grouped validation monitor has its own bank. Neither is an untouched test.",
+    "response_clip": "The response cap and possible clipping to zero follow implementation; aggregate clipping frequencies were not retained."
   },
   "model_description": {
     "source_audit": "audit/model_exposition_20260922.json",

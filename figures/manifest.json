@@ -1,11 +1,11 @@
 {
   "excluded_from_claims": {
-    "all_shower_aware_c2st_results": "excluded at the project owner's instruction because the implementation/split was invalid",
+    "all_shower_aware_c2st_results": "reported as development-bank screening scores with the row-wise matched-pair split limitation",
     "condition_only_c2st": "sanity control only; not plotted because it contains no shower information",
     "short_v3_screens": "removed from the main narrative because they are undercontrolled and use different analysis roles"
   },
   "figures_sha256": {
-    "detector_geometry.png": "57f4233b9f31e457e649d02f6e4210a1c709da33eba23a0b31bec33c297b675c",
+    "detector_geometry.png": "b15b5a5a416e3d9864b011d155c8e8e0d2b3ceafb4c088cbf76ed36d245b7164",
     "generator_schematic.png": "496ef134ca9d8a0c477ad807dc1a09f25fcae008f544980a1c76fe11dc26df77",
     "longitudinal_profile.png": "a2a68ca16616e981281a397e57c182c719813274b5279439f77f2dd832812735"
   },
