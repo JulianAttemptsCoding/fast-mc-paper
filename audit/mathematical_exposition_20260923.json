@@ -2,7 +2,7 @@
   "schema_version": 1,
   "created_date": "2026-09-23",
   "kind": "manuscript-mathematical-exposition-audit",
-  "manuscript_version": "0.11.0",
+  "manuscript_version": "0.11.1",
   "source_repository": "https://github.com/JulianAttemptsCoding/fast-mc-handoff-2",
   "source_commit": "e039841404fc442c7496383d20a8566ac589eea3",
   "selected_config_sha256": "116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5",
@@ -63,6 +63,20 @@
       "src/cbsc_zdc/models/response.py"
     ]
   },
+  "reader_purpose": {
+    "eq:response_transform": "States how incident conditions determine the zero-event gate and a continuous deposit draw.",
+    "eq:cap": "Shows why the final deposit can be zero after a positive gate and where the untested tail bound enters.",
+    "eq:activity": "Makes the independent later-layer draws and their correlation limit explicit.",
+    "eq:profile_target": "Defines the reference longitudinal fractions used to train the first flow.",
+    "eq:cfm": "Defines the masked noise-to-reference training objective shared by both flows.",
+    "eq:flow_steps": "Specifies the actual eight generation updates rather than an idealized continuous solver.",
+    "eq:layer_budget": "Shows how the sampled total is split across active layers and exactly closed.",
+    "eq:message": "Shows how graph-neighbor information enters a channel score without enforcing connectivity.",
+    "eq:topk": "Shows how noisy channel scores yield an exact requested occupancy count.",
+    "eq:share_target": "Defines the reference within-layer fractions used to train the second flow.",
+    "eq:decoder": "Shows the final channel deposits and the distinction between readout-budget and incident-energy conservation.",
+    "eq:joint_loss": "Identifies which discrete and continuous stages are trained and how their losses combine."
+  },
   "semantic_checks": [
     "Provisional Bernoulli visibility and Gaussian-mixture draw precede clipping; final visibility and total are reset together.",
     "Centered log layer and channel targets use a 1e-8 fraction floor, a 1e-12 GeV denominator floor, and zero inactive coordinates.",
@@ -70,7 +84,8 @@
     "Graph aggregation sums directed-edge messages without degree normalization, then layer means enter a two-layer bidirectional transformer.",
     "Gumbel perturbed top-k uses score divided by fixed temperature and clipped uniforms; it fixes counts but not graph connectivity.",
     "The nine-term joint loss includes the transformed-response Jacobian, sampled positive-negative ranking, and downweighted inactive zero counts.",
-    "The decoder closes sampled layer budgets, not incident neutron energy."
+    "The decoder closes sampled layer budgets, not incident neutron energy.",
+    "The reader-facing revision defines detector quantities, masks, context, learned graph functions, ranks, and loss abbreviations near use; it replaces an unnecessary Gumbel inverse-transform equation with the selected-index rule and prose."
   ],
   "limits": "No new model run or physics validation; this audit checks equations against source at the recorded commit, not exact training source-byte identity."
 }

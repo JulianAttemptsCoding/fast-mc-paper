@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_utc": "2026-09-23T00:00:00Z",
-  "manuscript_version": "0.11.0",
+  "manuscript_version": "0.11.1",
   "review_scope": "Every prose paragraph, equation, table caption, and figure caption",
   "sections": [
     {
@@ -35,7 +35,7 @@
     },
     {
       "section": "Generator and training procedure",
-      "sentence_basis": "Every response, reference-target, masked-flow, graph-message, perturbed top-k, decoder, and nine-term-loss equation is bound to an implementation source blob in the mathematical-exposition audit. Sampling and training statements distinguish provisional/final visibility, current-state numerical updates, teacher forcing, and exact decoder constraints; no physics-fidelity implication is inferred.",
+      "sentence_basis": "Every response, reference-target, masked-flow, graph-message, perturbed top-k, decoder, and nine-term-loss equation is bound to an implementation source blob in the mathematical-exposition audit. Each retained equation has a distinct reader purpose; notation for readout quantities, masks, flow context, graph functions, ranks, and losses is defined near use. Sampling and training statements distinguish provisional/final visibility, current-state numerical updates, teacher forcing, and exact decoder constraints; no physics-fidelity implication is inferred.",
       "evidence": [
         "audit/model_exposition_20260922.json",
         "data/provenance/source_evidence.json",

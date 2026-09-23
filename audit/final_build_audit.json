@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-09-23T16:35:41.334751+00:00",
-  "release": "v0.11.0",
+  "created_utc": "2026-09-23T18:45:48.708579+00:00",
+  "release": "v0.11.1",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; graph-component differences are partly confounded by empty layers.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "480433e8073bd767dea520208d1c79323e8410843afec3bc19046ba4a58540d9",
-    "bytes": 976438,
+    "sha256": "51749562918655f4a2305a73f908825c9e447bfa9e48f65b74fb9d5f53a1af81",
+    "bytes": 980634,
     "pages": 10
   },
   "current_qa": {
-    "record": "audit\\iterations\\iteration_60.json",
-    "sha256": "0dcd88d24cdd7660625ee637e32e1b007ede18bafa81a26478c847e27faa635e",
+    "record": "audit\\iterations\\iteration_67.json",
+    "sha256": "48a221b0a52ad8156c38870a0332398670237923699a71a64ec48b8cf128d10e",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -30,7 +30,7 @@
       "10-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_20260922.json",
-    "visual_sha256": "2bfe5a944c118734a41bca11d44cf3c1372dd2fdcb32ce0389bfc99d4c7e5bc7"
+    "visual_sha256": "5061c5ef302f16a9cbea79aafee80d99aff4ea9166db6adf8d8bebe0778cd06b"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -38,12 +38,12 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "420418dfb6170c788980edf5f01881e8b260777c091a87062a73a12e7df2a860",
+    "main.tex": "fc8cd845b37616b72e90d11258712772fe42eedf5ba752428fb209c880beb278",
     "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
-    "README.md": "7382485b8e35d5672a1112504cf4911c9c35de9b54443f10aa5dde24d2fc21a9",
-    "STATUS.md": "ca021c6b9c12706b6657cacf99c2a814acb68166374bae1e15552a17258c6475",
-    "CITATION.cff": "2cdc0f6a3fb3b0ab2801fcbe783a0a349f68f2681f4099175eaa70747f07b708",
+    "README.md": "d2b79ade5255cbc946401deccb21174b2f9669ced3fae88897b9e797a454c45e",
+    "STATUS.md": "aff010a05a917ef8c81d254bf54c7d3594164469aba130105454aceb50a67de8",
+    "CITATION.cff": "e98b2c099e456bd70b204c8302d2c30612e3f32e6f59fef10ebdb919aeea5b6f",
     "audit/claim_register_20260922.json": "d73da07229886caf7ff3c24dfa9d8c9db4b483148a50c5fd4d9050dcbe7810d1",
     "audit/claim_register_20260922.md": "229391dfbe011add8829718482cef71ee64524898b0e604a5fe5045d28157dc0",
     "audit/adversarial_revision_round4_20260923.json": "87a7221885cceb9cecc99b03738fee461150c8fa43483dfbaeb10cda67e0766a",
@@ -54,15 +54,15 @@
     "audit/adversarial_revision_round3_20260922.md": "f371fcf24dd7be8bbfc118573da4e5857eb1e2a87ca33d188cce9ef04c714fee",
     "audit/model_exposition_20260922.json": "36a8cfbc005387789c6029520be7bee58262eb2aefc826938db2dd4214f8c1ac",
     "audit/model_exposition_20260922.md": "d38e6e6ad8f694b613ecbc1c8db24d74c4fa259b87385c8c25de793ac1144ce2",
-    "audit/mathematical_exposition_20260923.json": "581b64a2604e41d303be9828caf052c3f0040106e9be9a4283c44760f30ecbe3",
-    "audit/mathematical_exposition_20260923.md": "c5d2ba22e979a7f4d6eff649653eca511a17a1e2fc915b2e0d9f6b71bbb869e5",
-    "audit/sentence_evidence_20260922.json": "6a2d474930be6d24d93634c1e36551c057e1ecc5ea1d204342e65ab74756ba0c",
-    "audit/sentence_evidence_20260922.md": "a9ba6d77fe977f07a8072de98ad1ed5c3d6b9b47bd13a1e8f87dee529e28d137",
+    "audit/mathematical_exposition_20260923.json": "3abcda19963b3a3d909429e8efb7526f4d37c1da14969e65c4d62babb952835d",
+    "audit/mathematical_exposition_20260923.md": "4421c3a53dda6bc3f319f4b01a4ee15cdb14aac88bcefe1e02c2ce83c4a4f1c2",
+    "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
+    "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
     "audit/literature_benchmark.md": "68565544cc8895729c71aa2c3d31e73eea7839b9321975f1dac5eaae4d7b9ee3",
     "scripts/build_figures.py": "4aebebc4c61749997fa5a1e5fce627719bd69e24f01e2793cb2c890b0278a038",
-    "scripts/full_manuscript_qa.py": "f7f5fc22e2fa1ebde599e2fd4fc17bd0fb6deb64a831ed60fcd0b154601c029e",
+    "scripts/full_manuscript_qa.py": "14f52ceab88bd9c5af0c003ce6554ab1e6d4238e6a0281d66b1ab8bc8e4276ce",
     "scripts/test_qa_guards.py": "e3c66c54b8321d7d4a8ae1c394f61beac277d5a449218c51aa8213c0be90c9dd",
-    "scripts/write_build_audit.py": "0e86a2ec0ed6a5acccf6ea0967f663b3638aa0d6de84d711629d99a138be446d",
+    "scripts/write_build_audit.py": "017ed0e4170c573c7c6b9b458ff0954cc9e26013b3c958c930c4dce2adebc7bb",
     "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
     "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
     "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",

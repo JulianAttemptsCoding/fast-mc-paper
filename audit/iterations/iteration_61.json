@@ -1,0 +1,60 @@
+{
+  "iteration": 61,
+  "created_utc": "2026-09-23T18:34:45.316529+00:00",
+  "result": "fail",
+  "full_suite": false,
+  "error": "required manuscript text missing: ['top-$K_\\\\ell$ selection enforce the count, but not connectivity']",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 548, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 536, in main\n    validate_tex_and_bib(checks)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 305, in validate_tex_and_bib\n    assert not missing, f\"required manuscript text missing: {missing}\"\n           ^^^^^^^^^^^\nAssertionError: required manuscript text missing: ['top-$K_\\\\ell$ selection enforce the count, but not connectivity']\n",
+  "source_sha256": {
+    "main.tex": "c16f209787c69da970b38826dac83f5906ed812bc190c91c46bb02e5b0e8aeb1",
+    "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+    "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
+    "README.md": "d2b79ade5255cbc946401deccb21174b2f9669ced3fae88897b9e797a454c45e",
+    "STATUS.md": "aff010a05a917ef8c81d254bf54c7d3594164469aba130105454aceb50a67de8",
+    "CITATION.cff": "e98b2c099e456bd70b204c8302d2c30612e3f32e6f59fef10ebdb919aeea5b6f",
+    "audit/claim_register_20260922.json": "d73da07229886caf7ff3c24dfa9d8c9db4b483148a50c5fd4d9050dcbe7810d1",
+    "audit/claim_register_20260922.md": "229391dfbe011add8829718482cef71ee64524898b0e604a5fe5045d28157dc0",
+    "audit/adversarial_revision_round4_20260923.json": "87a7221885cceb9cecc99b03738fee461150c8fa43483dfbaeb10cda67e0766a",
+    "audit/adversarial_revision_round4_20260923.md": "a8d972178ad19132cea8566dcd548fa7804d799d9634b9cbf3afa094f53dd83a",
+    "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
+    "audit/adversarial_revision_20260922.md": "242b9a9ea5e32edd2dfec801d225c98839787d34c9e18810e82dbfaefabb9346",
+    "audit/adversarial_revision_round3_20260922.json": "56001e050190edcd24b34f021677f1e4b5d262b7383f94e745e399c736b27c64",
+    "audit/adversarial_revision_round3_20260922.md": "f371fcf24dd7be8bbfc118573da4e5857eb1e2a87ca33d188cce9ef04c714fee",
+    "audit/model_exposition_20260922.json": "36a8cfbc005387789c6029520be7bee58262eb2aefc826938db2dd4214f8c1ac",
+    "audit/model_exposition_20260922.md": "d38e6e6ad8f694b613ecbc1c8db24d74c4fa259b87385c8c25de793ac1144ce2",
+    "audit/mathematical_exposition_20260923.json": "3abcda19963b3a3d909429e8efb7526f4d37c1da14969e65c4d62babb952835d",
+    "audit/mathematical_exposition_20260923.md": "4421c3a53dda6bc3f319f4b01a4ee15cdb14aac88bcefe1e02c2ce83c4a4f1c2",
+    "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
+    "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
+    "audit/literature_benchmark.md": "68565544cc8895729c71aa2c3d31e73eea7839b9321975f1dac5eaae4d7b9ee3",
+    "scripts/build_figures.py": "4aebebc4c61749997fa5a1e5fce627719bd69e24f01e2793cb2c890b0278a038",
+    "scripts/full_manuscript_qa.py": "0c5c4c6c8f203beb2c20e64991733b3a4a38dfaf05ddc0d0d267069fee1df8e1",
+    "scripts/test_qa_guards.py": "e3c66c54b8321d7d4a8ae1c394f61beac277d5a449218c51aa8213c0be90c9dd",
+    "scripts/write_build_audit.py": "017ed0e4170c573c7c6b9b458ff0954cc9e26013b3c958c930c4dce2adebc7bb",
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+    "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
+    "data/reports/condition_only_control.json": "8d9b1ec17e23a11233b0eac9e12de86dc834928d119ef38d97ff41d42de5619f",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
+    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+    "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
+  },
+  "executed_commands": [
+    {
+      "argv": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "build.ps1",
+        "-Python",
+        "C:\\Python313\\python.exe"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "b226ed246cddf53e0899d8cf4c1150f5e121bd99f068c74922b7d324aa0c58b7",
+      "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+    }
+  ]
+}

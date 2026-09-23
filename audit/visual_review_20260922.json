@@ -1,31 +1,51 @@
 {
   "result": "pass",
-  "reviewed_utc": "2026-09-23T16:35:18.843645+00:00",
-  "method": "Inspected iteration-60 pages 1, 2 and 6-10 at original render resolution; iteration-60 pages 3-5 are byte-identical to directly inspected iteration-59 pages. Checked equations, figure and table placement, paragraph continuity, declarations, and the complete bibliography.",
-  "pdf_sha256": "480433e8073bd767dea520208d1c79323e8410843afec3bc19046ba4a58540d9",
+  "reviewed_utc": "2026-09-23T18:45:16.083035+00:00",
+  "method": "Inspected iteration-67 pages 5-6 at original render resolution; pages 1-2 are byte-identical to directly inspected iteration-60 pages, and pages 3-4 and 7-10 are byte-identical to directly inspected iteration-65 pages. Checked all displayed mathematics, definitions, figure and table placement, section transitions, declarations and references.",
+  "pdf_sha256": "51749562918655f4a2305a73f908825c9e447bfa9e48f65b74fb9d5f53a1af81",
   "page_sha256": {
     "1": "fb99421fa4d3f61453fa37d919ff00d7a9ee179840c94da15adb36ad75ef1592",
     "2": "8d1122ccbdb70777df11f00ed474c3592719ab71d81c382a92afeb531fa962a4",
-    "3": "31b644d91db1cd61eeff3f39cfd12170955ee380d56938fb24facbc7e3a694ea",
-    "4": "fdbca195bc9246583d064c615100f003acebb3a4b54528cce30aa6a8173634f2",
-    "5": "842da310d3193b6ed470ae045140539aedf7c58ece1d7e0600139b0e46628a91",
-    "6": "b4f9e9a17cb1f178ef69b7f00b68adb16b41ca37fd1dcfefc928b7368f6be910",
-    "7": "c53624707cf614faa9cf4243701bba5e885d6e2bbc11d4ea1d23e8d9e80f11da",
-    "8": "5db147208475881bcbc1a489e2e3fb0084c00ea688c7d3bc952444c2019c431e",
-    "9": "99940022b6e8bd8ed12107b568cf5b88534dfd7fe528e6abddc5b48aabea9ef0",
-    "10": "cf96819d43b1e3985003e72dff298e31a728f46099594d599fba29a03de04637"
+    "3": "af97bbb5d1708bb9a137639e1456a8f38a732062ddf83de9208874380b7e45b0",
+    "4": "e37a3269f05b61bbb194f70e44eb10164572321b64d09ace2687d909a3caff50",
+    "5": "52634a415c6529c92562581e5b306dd5e223b24a36e3ba47a70cc1a7c3ae62b9",
+    "6": "d03b23ebacc2ca946f57935ff82708d7d8a4457bea588bfe3ab04c2d79ecc30c",
+    "7": "3dd6967db5aedc4ec027f5b0c98fd744a504e45ca03ee7e5cfdfd519593530fb",
+    "8": "bf7d54a195b718a55a80527ab84df4fdcbc178dae6aacfcbe8033a2e7fb04a4d",
+    "9": "8e968ba06da7b4414fa0f8c44d5e3534ed1fb877cb7b55316244033c5f17d117",
+    "10": "cdef2126588470c58d1c2208cdef218bc506b77383e59293eaaa066864e83805"
   },
   "observations": {
-    "1-2": "Title, abstract, simulation target, input equation, geometry figure, and population statement are legible without clipping.",
-    "3-5": "Architecture and new response, flow, graph, selection, decoder, and training equations remain legible; figures and paragraphs are intact.",
-    "6": "Training explanation and diagnostics equations read continuously; no broken paragraph or clipping.",
-    "7-8": "Results begins with its complete introduction; table, longitudinal figure, diagnostic findings, and Discussion remain intact.",
-    "9-10": "Conclusion and declarations are continuous; all 18 references appear together on page 10 without clipping."
+    "1-2": "Title, abstract, simulation target, input equation and geometry are legible.",
+    "3-4": "Model path, detector notation, response, activity, target and masked-flow equations are legible; subsection 3.1 begins together.",
+    "5": "Graph edge set is distinguished from incident energy; flow update, budgets, message passing, support selection and channel target are legible.",
+    "6-7": "The second-flow target is distinguished from the first; decoder, training objective, diagnostics and Results table render without broken sentences or clipping.",
+    "8-10": "Results figure, Discussion, conclusion, declarations and all 18 references remain intact."
   },
-  "iteration_findings": "Iterations 58-59 passed automated QA but visual review found a crowded response equation and split paragraphs/references. Iteration 60 passes the complete suite with those pagination issues resolved. No changed scientific result or additional physics validation is implied.",
-  "byte_identical_to_iteration_59": [
+  "iteration_findings": "Iteration 61 failed a stale wording assertion and was corrected without weakening the count-versus-connectivity check. Iterations 62-66 passed automated QA but visual and notation review led to pagination and symbol corrections. Iteration 67 passes the full suite and exact-page visual review. No additional physics validation is implied.",
+  "byte_identical_to_iteration_60": [
+    1,
+    2
+  ],
+  "byte_identical_to_iteration_65": [
+    1,
+    2,
     3,
     4,
-    5
+    7,
+    8,
+    9,
+    10
+  ],
+  "byte_identical_to_iteration_66": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
   ]
 }

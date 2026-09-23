@@ -79,7 +79,9 @@ All shower comparisons use a 10,000-condition sample from the canonical validati
 \section{Generator and training procedure}
 \label{sec:model}
 
-The generator has 2,082,507 trainable parameters. At generation it receives only the five features in Eq.~\eqref{eq:condition}. A two-block residual multilayer perceptron maps them to a 128-component representation $h_c$, which conditions each sampling stage. The discrete stages predict probability distributions for visibility, layer activity, and channel counts or selection. Two conditional flow-matching models transform independent Gaussian draws into continuous layer-energy and channel-energy allocations. The model has no learned shower encoder or common random latent vector: independent draws enter at the discrete heads and at the two flows.
+The generator has 2,082,507 trainable parameters. At generation it receives only the five features in Eq.~\eqref{eq:condition}. A two-block residual multilayer perceptron maps them to a 128-component representation $h_c$, which conditions each sampling stage. The discrete stages predict probability distributions for visibility, layer activity, and channel counts or selection. Two conditional flow-matching models transform independent Gaussian draws into continuous layer-energy and channel-energy allocations: one describes the longitudinal energy profile, the other the energy distribution among channels within each layer. The model has no learned shower encoder or common random latent vector: independent draws enter at the discrete heads and at the two flows.
+
+In the equations below, $\ell=0,\ldots,64$ labels depth, $i$ labels a readout channel in layer $\ell$, and $Y_{\ell i}$ is its stored deposit. A channel or layer is active when its deposit is strictly positive. The sampled total $T=\sum_{\ell i}Y_{\ell i}$ is a readout deposit, not the incident-neutron energy. Each layer receives a budget $B_\ell=\sum_iY_{\ell i}$ before that budget is divided among channels.
 
 Figure~\ref{fig:architecture} follows the sampling path. Each draw conditions later stages. Thus a change in total deposit can affect every later allocation, whereas the final channel-energy assignment cannot change a previously sampled layer budget or channel count.
 
@@ -92,14 +94,15 @@ Figure~\ref{fig:architecture} follows the sampling path. Each draw conditions la
 \end{minipage}
 \end{center}
 
+\Needspace{8\baselineskip}
 \subsection{Total deposit and longitudinal allocation}
 
-A Bernoulli head draws a provisional visibility flag $V_0$, and a second head specifies a four-component Gaussian mixture in transformed total deposit. With $\sigma$ the logistic function and $\pi_m$ softmax-normalized mixture weights, the two draws use
+A Bernoulli head draws a provisional visibility flag $V_0$, and a second head specifies a four-component Gaussian mixture in transformed total deposit. The conditioning vector $h_c$ comes from the incident neutron; $\theta$ denotes trained network parameters, and $a_\theta$, the mixture means $\mu_m$, widths $\sigma_m$, and softmax-normalized weights $\omega_m$ are learned functions of $h_c$. With $\sigma$ the logistic function, the two draws use
 \begin{equation}
  \begin{aligned}
  \Pr(V_0=1\mid h_c)&=\sigma(a_\theta(h_c)),
  &q_T&=\log(1+T/10\GeV),\\
- p_\theta(q\mid h_c)&=\sum_{m=1}^{4}\pi_m(h_c)
+ p_\theta(q\mid h_c)&=\sum_{m=1}^{4}\omega_m(h_c)
  \mathcal N\!\left(q;\mu_m(h_c),\sigma_m^2(h_c)\right).
  \end{aligned}
  \label{eq:response_transform}
@@ -114,9 +117,9 @@ The mixture widths are positive by construction. For a draw $q$, the implementat
  \end{aligned}
  \label{eq:cap}
 \end{equation}
-The cap becomes constant at 61.2338\,GeV for $\Kinc\gtrsim97.2\GeV$. Clipping a negative inverse-transform value sets $V=0$, so no layer is activated. The aggregate evaluation did not retain cap-activation or reference-exceedance counts, so the response tail near this boundary is untested.
+The cap becomes constant at 61.2338\,GeV for $\Kinc\gtrsim97.2\GeV$. Thus the Bernoulli draw alone does not determine whether the event has a deposit: a nonpositive inverse-transform value also sets $V=0$, in which case no layer is activated. The aggregate evaluation did not retain cap-activation or reference-exceedance counts, so the response tail near this boundary is untested.
 
-For $V=1$, a categorical head samples the first active layer, $F\sim\mathrm{Cat}[\operatorname{softmax}f_\theta(h_c,\log(1+T/\GeV))]$. Layers before $F$ are set inactive, layer $F$ is forced active, and a Bernoulli head samples the later activity indicators. These later draws are independent conditional on their inputs; the factorization cannot represent arbitrary conditional correlations between layer-activity patterns:
+For $V=1$, a categorical head samples the first active layer, $F\sim\mathrm{Cat}[\operatorname{softmax}f_\theta(h_c,\log(1+T/\GeV))]$. Here $\mathrm{Cat}$ means a draw from the 65 layer probabilities output by the head. Layers before $F$ are set inactive, layer $F$ is forced active, and a Bernoulli head samples the later activity indicators $A_\ell\in\{0,1\}$. These later draws are independent conditional on their inputs; the factorization cannot represent arbitrary conditional correlations between layer-activity patterns:
 \begin{equation}
  p(\mathbf A\mid h_c,T,F)=\prod_{\ell>F}^{64}p(A_\ell\mid h_c,T,F,\ell),
  \qquad A_F=1.
@@ -124,7 +127,7 @@ For $V=1$, a categorical head samples the first active layer, $F\sim\mathrm{Cat}
 \end{equation}
 This head does not require the active layers to be contiguous.
 
-The first conditional flow apportions $T$ among active layers. A star denotes a quantity derived from a reference shower. For a nonempty reference shower, its target is a centered log layer fraction, with inactive coordinates zero:
+The first conditional flow apportions $T$ among active layers. A star denotes a quantity derived from a reference shower: $B_\ell^\star=\sum_iY_{\ell i}^\star$, $T^\star=\sum_\ell B_\ell^\star$, and $A_\ell^\star=\mathbf 1_{B_\ell^\star>0}$. For a nonempty reference shower, the flow target is a centered log layer fraction, with inactive coordinates zero:
 \begin{equation}
  a_\ell^\star=\log\max\!\left(
  \frac{B_\ell^\star}{\max(T^\star,10^{-12}\GeV)},10^{-8}\right),
@@ -133,8 +136,8 @@ The first conditional flow apportions $T$ among active layers. A star denotes a 
  {\max(1,\sum_m A_m^\star)}\right).
  \label{eq:profile_target}
 \end{equation}
-For an empty reference shower, the target and mask are zero.
-For each training example, $x_0$ is a standard-normal draw on active coordinates and $t$ is uniform on $[0,1]$. With $M$ the active-coordinate mask, the straight-path flow-matching objective is
+For an empty reference shower, the target and mask are zero. Centering removes a common offset from the log fractions; the subsequent softmax depends only on their differences. The $10^{-8}$ and $10^{-12}\GeV$ floors prevent undefined logarithms and divisions during training. They are numerical conventions, not detector thresholds.
+For each training example, $x_0$ is a standard-normal draw on active coordinates, $x_1$ is the reference-derived target above, and $t$ is uniform on $[0,1]$. The interpolation $x_t$ moves from noise to that target. With $M_{bj}\in\{0,1\}$ indicating an active coordinate, the straight-path flow-matching objective is
 \begin{equation}
  x_t=(1-t)x_0+t x_1,\qquad
  \mathcal L_{\mathrm{FM}}=
@@ -143,7 +146,10 @@ For each training example, $x_0$ is a standard-normal draw on active coordinates
  {\max(1,\sum_{b,j}M_{bj})}.
  \label{eq:cfm}
 \end{equation}
-Here $b$ indexes examples in a minibatch and $j$ indexes layer or channel coordinates. The squared error trains the velocity field toward $x_1-x_0$ on the active coordinates~\cite{flowmatching}. Both flows use the same eight-step generation rule, with $M$ set to the active-layer or selected-channel mask:
+Here $b$ indexes examples in a minibatch and $j$ indexes layer or channel coordinates. The learned field $v_\theta$ takes the current state, time, and conditioning context $\mathrm{ctx}$ and predicts the change toward the reference target, $x_1-x_0$; inactive coordinates do not contribute to the loss~\cite{flowmatching}.
+
+\Needspace{8\baselineskip}
+During training the context uses reference values from preceding stages; during generation it uses sampled values. Both flows use the same eight-step generation rule, with $M$ set to the active-layer or selected-channel mask:
 \begin{equation}
  z_0=M\odot\varepsilon,\quad \varepsilon\sim\mathcal N(0,I),\qquad
  z_{n+1}=M\odot\left[z_n+\tfrac18
@@ -151,35 +157,33 @@ Here $b$ indexes examples in a minibatch and $j$ indexes layer or channel coordi
  \quad n=0,\ldots,7.
  \label{eq:flow_steps}
 \end{equation}
-The velocity is evaluated at the midpoint \emph{time} and the current state $z_n$. For a visible event, a masked softmax converts the final layer state to fractions. The layer budgets are
+The symbol $\odot$ denotes elementwise multiplication. Starting from fresh Gaussian noise $\varepsilon$, each update adds one-eighth of the predicted velocity and resets inactive coordinates to zero. The velocity is evaluated at the midpoint \emph{time} and the current state $z_n$; this is the implemented eight-step discretization, with no measured solver-convergence claim. For a visible event, a softmax over active layers converts the final state to fractions. The layer budgets are
 \begin{equation}
  \pi_\ell=\frac{A_\ell e^{z_{8,\ell}}}
  {\sum_{m:A_m=1}e^{z_{8,m}}},\qquad
  B_\ell=T\pi_\ell,\qquad \sum_{\ell=0}^{64}B_\ell=T.
  \label{eq:layer_budget}
 \end{equation}
-The velocity field uses a 128-component layer representation and two bidirectional transformer layers with four attention heads. Its context comprises $h_c$, $T$, the sampled activity mask, layer identity, and a sinusoidal encoding of flow time.
+The denominator runs only over active layers, so their budgets sum to the sampled readout total $T$ and inactive layers get zero. The velocity field uses a 128-component layer representation and two bidirectional transformer layers with four attention heads. Its context comprises $h_c$, $T$, the sampled activity mask, layer identity, and a sinusoidal encoding of flow time.
 
 \subsection{Channel count, support, and deposited energy}
 
 For each layer, a categorical head receives $(h_c,B_\ell,A_\ell)$ and a learned layer identifier, then samples the active-channel count $K_\ell$. Its feasibility mask forces $K_\ell=0$ in an inactive layer and $1\leq K_\ell\leq N_\ell$ in an active layer, where $N_\ell$ is that layer's channel count. The mask fixes a count but imposes no minimum energy per channel in this zero-threshold study.
 
-The support network scores every channel for selection. Its initial channel features are standardized $(x,y,z)$ coordinates, normalized layer index, ECAL/HCAL indicators, $h_c$, the layer budget $B_\ell$, and the requested occupancy fraction $K_\ell/N_\ell$. Three 96-component graph blocks pass messages along the frozen directed edges. Writing $e_{ji}$ for the five edge inputs (coordinate differences, distance, and edge type), a block has the form
+The support network scores every channel for selection. Its initial channel features are standardized $(x,y,z)$ coordinates, normalized layer index, ECAL/HCAL indicators, $h_c$, the layer budget $B_\ell$, and the requested occupancy fraction $K_\ell/N_\ell$. Three 96-component graph blocks pass messages along the frozen directed edges. Let $\mathcal E$ be that directed edge set, $h_i^{(r)}$ channel $i$'s learned representation entering block $r$, and $e_{ji}$ the five edge inputs (coordinate differences, distance, and edge type). A block has the form
 \begin{equation}
- m_i^{(r)}=\sum_{j:(j,i)\in E}
+ m_i^{(r)}=\sum_{j:(j,i)\in\mathcal E}
  \phi_r(h_j^{(r)},h_i^{(r)},e_{ji}),\qquad
  h_i^{(r+1)}=h_i^{(r)}+\psi_r(h_i^{(r)},m_i^{(r)}).
  \label{eq:message}
 \end{equation}
-Channel representations are then averaged within each layer. A two-layer, four-head bidirectional transformer exchanges information among the 65 layer summaries, and its output is broadcast back to the channels before scoring. For scores $s_{\ell i}$, the sampled support is
+The learned functions $\phi_r$ and $\psi_r$ first form a message from each incoming neighbor, then update the receiving channel. This lets a channel score depend on nearby readouts on the model graph; it does not force selected channels to be adjacent. Channel representations are then averaged within each layer. A two-layer, four-head bidirectional transformer exchanges information among the 65 layer summaries, and its output is broadcast back to the channels before scoring. For channel scores $s_{\ell i}$, the sampled support is
 \begin{equation}
- g_{\ell i}=-\log[-\log U_{\ell i}],\quad
- U_{\ell i}\sim\mathrm{Uniform}(0,1),\qquad
- S_\ell=\operatorname{TopK}_{K_\ell}
- \{s_{\ell i}/\tau+g_{\ell i}:i\in\mathcal N_\ell\},
+ S_\ell=\left\{i\in\mathcal N_\ell:
+ \operatorname{rank}_{\mathcal N_\ell}(s_{\ell i}/\tau+g_{\ell i})\leq K_\ell\right\},
  \label{eq:topk}
 \end{equation}
-where $\mathcal N_\ell$ is the set of valid channels in layer $\ell$ and $\tau>0$ is the fixed sampling temperature~\cite{gumbeltopk}. The implementation clips uniform draws away from zero and one before taking logarithms. Independent Gumbel perturbations and top-$K_\ell$ selection enforce the count, but not connectivity.
+where $\mathcal N_\ell$ is the set of valid channels in layer $\ell$, rank one is the highest noisy score, and $\tau>0$ is the fixed sampling temperature~\cite{gumbeltopk}. Each $g_{\ell i}$ is an independent Gumbel perturbation generated from a uniform draw clipped to $[10^{-7},1-10^{-7}]$ before the inverse transform. Selecting the $K_\ell$ highest noisy scores fixes the count, but not connectivity.
 
 The second conditional flow divides each sampled layer budget among its selected channels. For a reference layer with $K_\ell^\star>0$, define
 \begin{equation}
@@ -190,7 +194,9 @@ The second conditional flow divides each sampled layer budget among its selected
  \sum_{j\in S_\ell^\star}a_{\ell j}^\star\right).
  \label{eq:share_target}
 \end{equation}
-Inactive layers have zero target coordinates. This flow uses the masked objective and update in Eqs.~\eqref{eq:cfm} and \eqref{eq:flow_steps}, now with the reference or sampled channel set as the mask. Its velocity network has the support network's graph and layer-context structure, with the current flow state and a sinusoidal time encoding added at each channel. Unselected channels are masked before and after every graph block. At generation, the eight updates produce logits $r_{\ell i}$ on selected channels. The deterministic decoder computes
+Here $S_\ell^\star$ is the set of positive-deposit reference channels and $K_\ell^\star=|S_\ell^\star|$. The symbol $x_1$ now denotes the second flow's channel target, rather than the first flow's layer target. As for layer budgets, centering preserves relative channel shares, and the floors are numerical rather than detection thresholds. Inactive layers have zero target coordinates. This flow uses the masked objective and update in Eqs.~\eqref{eq:cfm} and \eqref{eq:flow_steps}, now with the reference or sampled channel set as the mask.
+
+Its velocity network has the support network's graph and layer-context structure, with the current flow state and a sinusoidal time encoding added at each channel. Unselected channels are masked before and after every graph block. At generation, the eight updates produce logits $r_{\ell i}$ on selected channels. The deterministic decoder computes
 \begin{equation}
  Y_{\ell i}=
  \begin{cases}
@@ -219,7 +225,7 @@ Training derives $V$, $T$, $F$, $A_\ell$, $B_\ell$, $K_\ell$, $S_\ell$, and both
  \label{eq:joint_loss}
 \end{equation}
 \Needspace{8\baselineskip}
-The response NLL includes the Jacobian $1/(T+10\GeV)$ from Eq.~\eqref{eq:response_transform}. The support-ranking term averages $\log[1+\exp(-(s_i-s_j))]$ over sampled occupied--unoccupied channel pairs. Superscripts $B$ and $Y$ name the layer-budget and channel-share flow losses; both use the masked squared error in Eq.~\eqref{eq:cfm}. The count loss downweights inactive-layer zero counts. Weights $w_j$ were obtained from gradient norms measured on training data. The response, layer-profile, and count weights reached the lower clipping bound, and the visibility weight reached the upper bound. These weights describe the optimization; they do not identify the source of the connectivity discrepancy.
+Binary cross entropy (BCE) trains yes/no decisions for event visibility, later-layer activity, and channel support; categorical cross entropy (CE) trains the first-layer and count choices. The negative log likelihood (NLL) trains the continuous total deposit. Because its density is defined in $q_T$, conversion to deposit units includes the Jacobian $1/(T+10\GeV)$ from Eq.~\eqref{eq:response_transform}. The support-ranking term favors occupied over unoccupied channels by averaging $\log[1+\exp(-(s_i-s_j))]$ over sampled such pairs. Superscripts $B$ and $Y$ name the layer-budget and channel-share flow losses; both use the masked squared error in Eq.~\eqref{eq:cfm}. The count loss downweights inactive-layer zero counts. Weights $w_j$ were obtained from gradient norms measured on training data. The response, layer-profile, and count weights reached the lower clipping bound, and the visibility weight reached the upper bound. These weights describe the optimization; they do not identify the source of the connectivity discrepancy.
 
 The selected checkpoint's training lineage used AdamW with a peak learning rate of $3\times10^{-4}$, batch size six, accumulation over four batches, gradient clipping at one, and seed 20260723. Epoch 90 has the lowest recorded validation objective among the 104 retained rows spanning epochs 11--114 and defines the checkpoint studied here. Validation objectives are lower than training objectives over much of this record. The retained aggregates do not identify why, so the ordering is not given a physical interpretation. Both flows use eight integration updates at evaluation; no solver-step comparison was retained.
 
@@ -329,7 +335,6 @@ Julian Juan: conceptualization, methodology, software, investigation, visualizat
 
 OpenAI Codex with GPT-5.6-Sol assisted with code and manuscript drafting, analysis and model-design proposals, literature searches, and editing. The author supplied the main research ideas, checked the resulting work, and is responsible for the scientific content and final manuscript.
 
-\clearpage
 \printbibliography
 
 \end{document}
