@@ -1,6 +1,6 @@
 # Scientific status
 
-Version 0.8.0 is an exploratory HEP/computational-physics case study: **for one pilot Zero-Degree Calorimeter checkpoint, similar mean occupancies coexist with a later longitudinal reach and a more disconnected strict-positive support on the model graph.**
+Version 0.9.0 is a case study of one pilot Zero-Degree Calorimeter checkpoint: **similar mean occupancy accompanies later, more interrupted longitudinal support.** Mean graph-component counts also differ, but the adjacent-layer graph turns interior empty-layer runs into disconnected components by construction.
 
 The manuscript now explains the implemented generator from input to output: five condition features feed a residual condition encoder; response, longitudinal profile, count, support, and share stages are sampled in sequence; graph message passing and layer attention score channels; and a deterministic softmax decoder closes each layer to its sampled budget. These are implementation statements verified against source blobs, not claims that the architecture is physically adequate or responsible for the measured discrepancy.
 
@@ -8,7 +8,7 @@ The manuscript now explains the implemented generator from input to output: five
 
 On the recorded 10,000-condition development bank, the generated sample has 0.25 more active layers but reaches 4.42 layers farther downstream, leaving 3.95 more inactive layers inside the occupied span. It has 28.7 fewer active channels but 35.97 more weak graph components and a 6.03-percentage-point lower largest-component fraction. Mean total deposit differs by 0.045 GeV, with opposing ECAL and HCAL shifts. These are descriptive aggregate differences restricted to the selected dicos-f-02 epoch 90 checkpoint trained on 26,624 pilot events.
 
-The batch-relative evaluator reports numerical validity. Its maximum layer residual exceeds the earlier absolute-only tolerance. The revision describes both policies without changing either. Raw-mode dust is a trivial zero-threshold counter. Aggregate records cannot independently reconstruct per-batch checks.
+The batch-relative evaluator reports numerical validity. Its maximum layer residual exceeds the earlier absolute-only tolerance. The revision describes both policies without changing either. Raw-mode dust is a trivial zero-threshold counter. Aggregate records cannot independently reconstruct per-batch checks. The report also retains a paired, energy-stratified 95% bootstrap percentile interval of +0.19 to +0.76 percentage points for the +0.49-point zero-deposit difference; repeated inspection prevents a confirmatory interpretation.
 
 ## Corrected provenance
 
@@ -16,7 +16,7 @@ The earlier v0.3.0 draft incorrectly attributed a later model's 551,234-event tr
 
 ## Limits of this draft
 
-The bank was repeatedly inspected, its overlap with pilot validation is unresolved, the checkpoint has one training seed, and event arrays are not available for uncertainty estimates, structural distributions, threshold scans, or graph sensitivity tests. The support definition uses energy greater than zero, the readout graph collapses ganged positions, and the graph is shared with the model. The manuscript makes no statistical-significance, post-digitization, physics-fidelity, speed, causal-mechanism, or architecture-superiority claim. Historical shower-aware classifier results remain excluded; condition-only AUROC 0.500 is not evidence of shower fidelity or complete leakage control.
+The bank was repeatedly inspected, its overlap with pilot validation is unresolved, and the checkpoint has one training seed. Event arrays are unavailable for structural uncertainty estimates, distributions, threshold scans, or graph sensitivity tests. The support definition uses energy greater than zero, the readout graph collapses ganged positions, and the graph is shared with the model. The manuscript makes no structural significance, post-digitization, physics-fidelity, speed, causal-mechanism, or architecture-superiority claim. Historical shower-aware classifier results remain excluded because their random row split can separate matched pairs; condition-only AUROC 0.500 is not evidence of shower fidelity.
 
 ## Work needed for broader claims
 

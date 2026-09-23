@@ -1,24 +1,34 @@
 {
   "result": "pass",
-  "reviewed_utc": "2026-09-22T20:36:07Z",
-  "method": "Direct inspection of all nine iteration-45 pages at original resolution and the contact sheet. Pages 6 and 8 were re-inspected after mean-level wording changed in iteration 46; the other seven rendered pages were byte-identical. All nine iteration-47 page renders are byte-identical to iteration 46. Checked title and abstract, target and geometry, complete generator schematic and equations, result table, longitudinal plot, captions, section transitions, bibliography, margins, glyphs, and links.",
-  "pdf_sha256": "99a057eb25a67728021e4fa2fbeb8e377b7e24266868319bf3d43a0d94d94284",
+  "reviewed_utc": "2026-09-23T00:08:48.085459+00:00",
+  "method": "Inspected all nine v0.9.0 pages at original render resolution. Page 7 was directly reinspected after the final edge-co-occupancy paragraph; pages 1-6 and 8-9 are byte-identical to directly inspected iteration-50 renders. Checked title, abstract, data roles, model schematic, equations, table, figures, captions, paragraph continuity, declarations, references, margins, glyphs and links.",
+  "pdf_sha256": "df61a74446ff368692f23e6e2c23e61565699bdfe39141bde6c878a25c6e50df",
   "page_sha256": {
-    "1": "cc8b6f400fa6116a3f9751eb6da71c806f51a23513ea5abcaccf47601c62b795",
-    "2": "884c906d82798f654bac1cbeaeb981b1788d75f19c5b51d447d7e6898fca3962",
-    "3": "c389827694e9936e13bde7814569db73e98238cfe5949160d280be48860e6ab6",
-    "4": "f2557829c8e819f2113fdd3a72b0caa7a7032befdc58587080284b16cb8adc8b",
-    "5": "710d1e78a4e3a5551bc6c9e13c5c5a333e4016855e94f11459f5711f0524fb71",
-    "6": "8c753b453b9be2c6d2e40ad26a0e10c14e20e0ad9f68e32e5731cbddd7d668fd",
-    "7": "a282a4e94f152f7eabfca75f05638b97e43f53f8b99e0882dd724a15cde492de",
-    "8": "e90d820c0930def7b31ab578f9da11e6a324a966862f31033cc9c7e991f90cac",
-    "9": "2b2e7cd7fe2650787f5d314f0c6e77f388e21e479f05dde96c3b2954a082bea7"
+    "1": "eb66974874192ee0579deaf9ce7c4c8318ba3e150cdc53f5970d3ef7150ec187",
+    "2": "9a85d2127d6441675b3fa8e6642745cfefa59a69ba2a7c9e3b1582366c08095d",
+    "3": "ae12283edfea6c0cde1bb363501fd17051f6798c4cd7e515e5c3005ffc459037",
+    "4": "5c61604763f942d596b846c3aac5937ac67d691183b75353c632afff41d67a65",
+    "5": "396742e7335c3f8a203d2873874137c7a963d83b6aba29ff04e3cf76caece554",
+    "6": "58811ab2deb5b4d14eb2bd8b769185f9f800d6e4e5373bfae94a07b2146ad293",
+    "7": "e038e4572fcee2afe4f7f16deeeef4a4779fbbb6711ca84f20b8650041be8475",
+    "8": "54a195bfd0c731e56fc1c544fd5c946d0a80281f338b5817df1772b43682f177",
+    "9": "ec4a58bd81ad6e11eba5ac41d7bd5de799f32c608b6d630862a58e3bc0b707c3"
   },
+  "byte_identical_to_iteration_50": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9
+  ],
   "observations": {
-    "1-2": "Title, abstract, literature framing, geometry after its first discussion, target definition, graph construction, and evaluation population are clear and unclipped.",
-    "3-5": "The compact generator schematic has larger print-scale labels contained within boxes. Its two flows, graph scorer, exact decoder, teacher forcing, equations, and diagnostics remain readable.",
-    "6-7": "The Results heading precedes the fixed table. Mean-level wording, longitudinal plot, numerical QA, and discussion are legible and contain no overlap or overflow.",
-    "8-9": "Conclusion, availability, declarations, and the complete 14-entry bibliography render cleanly. The reference continuation contains no isolated single-item spill."
+    "1-3": "Title and abstract read cleanly; geometry and generator labels are contained and legible; no paragraph or figure collision.",
+    "4-6": "Model equations and diagnostics are readable. The classifier paragraph begins intact on page 6, before Results and its table.",
+    "7": "The mean-profile figure follows its first mention; component, edge-co-occupancy, zero-fraction and decoder-QA paragraphs remain intact.",
+    "8-9": "Discussion paragraphs are not split mid-sentence; conclusion, source caveat, AI disclosure and complete 18-entry references render cleanly."
   },
-  "iteration_findings": "The first v0.8.0 build failed on an omitted closing math delimiter in the abstract; corrected. Iteration 42 failed five stale exact-phrase guards, replaced with equally strict new-phrase checks. Iteration 43 passed, then page review led to a more legible schematic; its first compact label was rejected by the new containment assertion and corrected. Iteration 44 passed, but direct review found two misplaced top floats, fixed for iteration 45. Iterations 45-47 passed the complete automated suite; the final iteration differs from 46 only in PDF container bytes, with identical rendered pages."
+  "iteration_findings": "Iterations 48-51 passed the full automated suite. Direct visual review after iteration 48 led to correcting a figure-sentence interruption, an unexplained plotted metric and cross-unit prose. Later passes fixed paragraph pagination and added the sourced local edge statistic. Seven QA guard tests passed."
 }

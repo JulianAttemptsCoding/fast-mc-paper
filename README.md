@@ -1,6 +1,6 @@
-# Connectivity Diagnostics in a Pilot Generative Surrogate of Zero-Degree Calorimeter Showers
+# Longitudinal Gaps and Readout Connectivity in a Pilot Generative Model of Zero-Degree Calorimeter Showers
 
-Version 0.8.0 is an exploratory HEP/computational-physics case study of one pilot-trained calorimeter surrogate. On the repeatedly inspected development bank, similar mean occupancies coexist with a later longitudinal reach and a more disconnected strict-positive readout support. The methods trace the complete generation path from the incident four-vector to the 6,790-channel energy vector, distinguishing learned draws, conditional flows, and deterministic decoding. The revised generator diagram has a checked label-to-box layout, and the prose defines the model stages in physical readout terms. The paper does not assert statistical significance, physical relevance after digitization, performance across retraining, causal attribution, acceleration, or detector readiness.
+Version 0.9.0 is a case study of one pilot-trained calorimeter model. On a repeatedly inspected validation bank, its showers extend farther downstream and contain more inactive layers within their occupied span than the Geant4 reference, despite similar mean active-layer counts. Mean graph-component counts also differ, but the adjacent-layer graph makes part of that difference inseparable from longitudinal gaps in the retained aggregates. The paper explains the generation path from incident four-vector to 6,790 deposited energies. It does not establish structural statistical significance, performance after digitization or retraining, acceleration, or detector readiness. A paired bootstrap interval is available for the separate zero-deposit fraction difference.
 
 ## Fixed case
 
@@ -32,7 +32,8 @@ Choose an unused iteration number; historical records cannot be overwritten. The
 - `scripts/build_figures.py`, `figures/manifest.json`: reproducible figures and input/output hashes.
 - `audit/revision_20260921.*`: corrections, failed attempts, research and decisions.
 - `audit/framing_revision_20260921.*`: HEP/computational-physics framing criteria and pre-November-2025 style references.
-- `audit/adversarial_revision_20260922.*`: disposition of the two supplied adversarial audits.
+- `audit/adversarial_revision_20260922.*`: historical disposition of the earlier supplied adversarial audits; its zero-uncertainty statement is superseded.
+- `audit/adversarial_revision_round3_20260922.*`: current disposition of the latest two audits, including the recovered zero-fraction interval and graph confound.
 - `audit/claim_register_20260922.*`: current claim-by-claim disposition and sources.
 - `audit/model_exposition_20260922.*`: source-hash-bound audit of the model mechanisms described in the manuscript.
 - `audit/sentence_evidence_20260922.*`: section-by-section evidence and clarity review for the complete manuscript.

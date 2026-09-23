@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "created_utc": "2026-09-22T17:42:45Z",
-  "manuscript_version": "0.8.0",
+  "manuscript_version": "0.9.0",
   "review_scope": "Every prose paragraph, equation, table caption, and figure caption",
   "sections": [
     {
       "section": "Abstract",
-      "sentence_basis": "Study identity, model order, sample sizes, reported differences, and evidence limits.",
+      "sentence_basis": "Study identity, sampling order, sample sizes, deposit and longitudinal differences, component confound, and retained-evidence boundary.",
       "evidence": [
         "data/reports/dicos-f-02_epoch90.json",
         "data/provenance/source_evidence.json",
@@ -16,7 +16,7 @@
     },
     {
       "section": "Introduction",
-      "sentence_basis": "Motivation and comparison to prior calorimeter-surrogate practice; each field statement carries a primary citation. The final paragraph states the exact question and evidence boundary.",
+      "sentence_basis": "Motivation and comparison to prior calorimeter-surrogate practice; external claims carry primary citations, including the 2025 ZDC journal study and 2026 co-activation study. The last paragraph specifies the measured quantities and development-bank role.",
       "evidence": [
         "references.bib",
         "audit/literature_benchmark.md",
@@ -45,7 +45,7 @@
     },
     {
       "section": "Diagnostics",
-      "sentence_basis": "Definitions are explicit equations or direct metric semantics; the classifier-control interpretation follows from its condition-only feature set.",
+      "sentence_basis": "Definitions are equations or metric semantics. The adjacent-layer graph implication follows from its edge construction. The zero-fraction interval is stored in the report; classifier-control limits follow from the feature set and original evaluator's row-wise split.",
       "evidence": [
         "data/reports/dicos-f-02_epoch90.json",
         "data/reports/condition_only_control.json",
@@ -55,25 +55,25 @@
     },
     {
       "section": "Results",
-      "sentence_basis": "Every number is reproduced from the immutable aggregate report. Statements about what the aggregates cannot determine follow from fields that were not retained.",
+      "sentence_basis": "Every number is reproduced from the immutable aggregate report, including the paired zero-fraction interval and all-event edge co-occupancy. The structural uncertainty, threshold sensitivity, gap-run count, and component energy are absent from retained fields.",
       "evidence": [
         "data/reports/dicos-f-02_epoch90.json",
         "audit/claim_register_20260922.json",
-        "audit/adversarial_revision_20260922.json"
+        "audit/adversarial_revision_round3_20260922.json"
       ]
     },
     {
       "section": "Discussion and conclusion",
-      "sentence_basis": "The central interpretation restates measured aggregate differences. Alternative explanations are labeled as untested; proposed studies are linked to the uncertainty or mechanism each would probe.",
+      "sentence_basis": "Longitudinal reach and gaps lead the interpretation; component counts are explicitly confounded by adjacent-layer geometry. Architectural and numerical explanations are possibilities, each paired with the experiment needed to test it.",
       "evidence": [
         "audit/claim_register_20260922.md",
-        "audit/adversarial_revision_20260922.md",
+        "audit/adversarial_revision_round3_20260922.md",
         "data/provenance/source_evidence.json"
       ]
     },
     {
       "section": "Availability, acknowledgments, contributions, and AI disclosure",
-      "sentence_basis": "Repository contents were checked directly. Authorship, acknowledgment, and tool-use sentences are declarations by the author rather than scientific inferences.",
+      "sentence_basis": "Repository contents were checked directly. The author confirmed substantial Codex/GPT-5.6-Sol roles and personal ownership of the main ideas and verification; authorship and acknowledgment remain author declarations.",
       "evidence": [
         "README.md",
         "STATUS.md",
@@ -95,7 +95,7 @@
     "policy": "Prefer named variables, operations, evidence, and limits over promotional or vague language."
   },
   "result": "pass",
-  "typeset_qa_iteration": 46,
-  "typeset_pdf_sha256": "7d66a900aa09c1d993c08f63dd020b1289df67bcd3fc66dd79184a06e0befdb4",
-  "visual_review": "All nine pages inspected in iteration 45; only pages 6 and 8 changed in iteration 46, and both were reinspected. The diagram has a source-level label-containment check. The geometry figure and results table were fixed at their explanatory text after page review found misplaced top floats."
+  "typeset_qa_iteration": 50,
+  "typeset_pdf_sha256": "85bd35b36f47befb36c19c6e59a04fd9e2fda30779db41c53f1acc2912610580",
+  "visual_review": "All iteration-50 pages were inspected at original render resolution, drawing on byte-identical earlier page renders where applicable. A later exact-PDF release review is recorded in audit/visual_review_20260922.json."
 }

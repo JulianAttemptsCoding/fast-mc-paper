@@ -35,8 +35,8 @@ def main():
     validate_binding(qa, visual, sources, sha256(PDF), sha256(FIGURE_MANIFEST))
     payload = {
         'schema_version': 4, 'created_utc': datetime.now(timezone.utc).isoformat(),
-        'release': 'v0.8.0', 'status': 'exploratory HEP/computational-physics case study',
-        'claim': 'On the specified development bank, one pilot checkpoint has similar mean occupancies but a later longitudinal reach and a more disconnected strict-positive support on the model graph.',
+        'release': 'v0.9.0', 'status': 'exploratory HEP/computational-physics case study',
+        'claim': 'On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; graph-component differences are partly confounded by empty layers.',
         'output': {'path': str(PDF.relative_to(ROOT)), 'sha256': sha256(PDF), 'bytes': PDF.stat().st_size, 'pages': qa['pdf']['pages']},
         'current_qa': {'record': str(latest.relative_to(ROOT)), 'sha256': sha256(latest), 'checks': qa['checks'],
                        'visual_record': str(visual_path.relative_to(ROOT)), 'visual_sha256': sha256(visual_path)},
@@ -47,12 +47,12 @@ def main():
         'remaining_publication_actions': ['Author/collaborator approval of authorship and acknowledgments', 'Confirm data-release permissions and immutable archival version'],
         'broader_claim_requirements': 'See STATUS.md; these do not negate the descriptive case-study observation.'}
     (ROOT / 'audit/final_build_audit.json').write_text(json.dumps(payload, indent=2)+'\n', encoding='utf-8')
-    text = ('# Final manuscript build audit\n\nVersion 0.8.0; '+payload['created_utc']+'.\n\n'
+    text = ('# Final manuscript build audit\n\nVersion 0.9.0; '+payload['created_utc']+'.\n\n'
             +'PDF: `'+payload['output']['path']+'`; '+str(payload['output']['pages'])+' pages.\n\n'
             +'SHA-256: `'+payload['output']['sha256']+'`.\n\n'
             +'The complete automated suite in `'+str(latest.relative_to(ROOT))+'` and an every-page visual review match the current PDF and source hashes. '
             +'Historical QA records are not counted as validation of this revision.\n\n'
-            +'The supported claim is that one pilot checkpoint has similar mean occupancies but a later longitudinal reach and a more disconnected strict-positive support on the model graph. '
+            +'The supported claim is that one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support. The graph-component difference is partly confounded by empty layers. '
             +'This build audit establishes document consistency and rendering checks, not statistical significance, physics fidelity, or submission approval. '
             +'See STATUS.md and the claim register for evidence boundaries.\n')
     (ROOT / 'audit/final_build_audit.md').write_text(text,encoding='utf-8')

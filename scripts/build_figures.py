@@ -172,7 +172,7 @@ def plot_geometry() -> None:
     axes[2].set_title("Readout ganging")
     axes[2].set_ylim(0, max(y) * 1.14)
     axes[2].set_axisbelow(True)
-    fig.suptitle("Frozen readout geometry; ganged locations are represented by one centroid", fontsize=11.5)
+    fig.suptitle("Readout centroids and ganging", fontsize=11.5)
     save(fig, "detector_geometry.png")
 
 
@@ -253,7 +253,7 @@ def plot_longitudinal(report: dict) -> None:
     axes[0].text(1, gen_total + 0.06, f"{gen_total:.3f}", ha="center", fontsize=9.5)
     for ax in axes[1:]:
         ax.plot(layers, truth, label="Geant4 reference", color=COLORS["Reference"], lw=1.8, ls="--")
-        ax.plot(layers, generated, label="accepted checkpoint", color=COLORS["Generator"], lw=1.7)
+        ax.plot(layers, generated, label="generator", color=COLORS["Generator"], lw=1.7)
         ax.set_xlabel("longitudinal layer")
         ax.set_axisbelow(True)
     axes[1].set_xlim(1, 30)
@@ -263,7 +263,7 @@ def plot_longitudinal(report: dict) -> None:
     axes[2].set_yscale("log")
     axes[2].set_title("HCAL tail (log scale)")
     axes[2].legend(frameon=False, fontsize=9.5)
-    fig.suptitle("Mean longitudinal energy allocation; relative $L^1$ discrepancy = 0.071", fontsize=11.5)
+    fig.suptitle("Mean longitudinal energy deposit", fontsize=11.5)
     save(fig, "longitudinal_profile.png")
 
 

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-09-22",
+  "inputs": [
+    {"path": "C:/Users/Julia/.codex/attachments/4b33c798-4004-425e-bb21-28e286c5dfd3/Pasted text.txt", "sha256": "d3f8299ce0cce0943f8b4dd0a3c2606bd7e26a38826e36a76fda6928c9a2a80e"},
+    {"path": "C:/Users/Julia/.codex/attachments/3c5694bb-0e2d-4dab-835d-7ea943fcb64d/Pasted text.txt", "sha256": "14e218b549471c08a4432eda47468910bab4ebf1a034bfa2a8b4ce608d6b87f4"}
+  ],
+  "corrected_v08_error": "The report contains a paired, energy-stratified 1000-resample zero-fraction bootstrap interval [0.0019, 0.0076]; structural intervals remain unavailable.",
+  "graph_confound": "Only adjacent-layer longitudinal edges; each contiguous inactive-layer run between occupied layers disconnects them, but retained mean_gaps counts layers rather than runs.",
+  "classifier": "Original shower-aware evaluator uses row-wise random train/test split that can separate paired samples; separately stored condition-only AUROC 0.500 is a pipeline control only.",
+  "split_provenance": "Pilot and canonical manifests have different hashes; preparation cross-tabulation confirms pilot train belongs to canonical train, while pilot-validation/bank overlap is unresolved.",
+  "source_provenance": "Audited local source tree was dirty; blob hashes are not proof of historical training-time bytes.",
+  "literature": ["10.1007/s41781-025-00130-x", "arXiv:2608.12795", "10.1016/S0168-9002(03)01368-8"],
+  "ai_disclosure": "Author says Codex/GPT-5.6-Sol assisted code and manuscript drafting and proposed analysis/model choices; author supplied main ideas and checked the work.",
+  "scientific_status": "Descriptive single-checkpoint result; structural uncertainty, causal attribution, threshold robustness and post-digitization relevance unestablished.",
+  "supersedes": "The zero-uncertainty conclusion in audit/adversarial_revision_20260922.*"
+}

@@ -31,6 +31,7 @@ def release_source_hashes() -> dict:
     paths += [ROOT / p for p in [
         "audit/claim_register_20260922.json", "audit/claim_register_20260922.md",
         "audit/adversarial_revision_20260922.json", "audit/adversarial_revision_20260922.md",
+        "audit/adversarial_revision_round3_20260922.json", "audit/adversarial_revision_round3_20260922.md",
         "audit/model_exposition_20260922.json", "audit/model_exposition_20260922.md",
         "audit/sentence_evidence_20260922.json", "audit/sentence_evidence_20260922.md",
         "audit/literature_benchmark.md",
@@ -194,6 +195,8 @@ def validate_evidence(checks: list[str]) -> dict:
     close(report["activity"]["generated"]["mean_last_active_layer"] - report["activity"]["truth"]["mean_last_active_layer"], 4.423773647160425, atol=1e-8)
     close(values["components_g"] - values["components_r"], 35.970332798618135, atol=1e-8)
     close(100 * (values["largest_g"] - values["largest_r"]), -6.029700995384565, atol=1e-8)
+    close(report["topology"]["generated"]["edge_cooccupancy_mean"], 0.137470797813195)
+    close(report["topology"]["truth"]["edge_cooccupancy_mean"], 0.14579406782802076)
     checks.append("Nonempty denominators; absolute table differences; span/gap/last-layer identities; no ratio-only headline")
 
     total = report["distribution_metrics"]["total_response_gev"]
@@ -214,7 +217,14 @@ def validate_evidence(checks: list[str]) -> dict:
     close(interval["low"], 0.0684143976088688)
     close(interval["high"], 0.19837148981439048)
     close(report["truth_half_floors"]["response_wasserstein_gev"], 0.1474655284291369)
-    checks.append("Response moments and energy-bin ranges; legacy Wasserstein/bootstrap fields verified as stored but excluded from the manuscript")
+    zero_interval = report["bootstrap"]["intervals"]["zero_fraction_difference"]
+    assert report["bootstrap"]["paired"] is True
+    assert report["bootstrap"]["stratified_by"] == "primary energy bin"
+    assert report["bootstrap"]["replicates"] == zero_interval["replicates"] == 1000
+    close(zero_interval["low"], 0.0019)
+    close(zero_interval["high"], 0.0076)
+    close(report["visibility_and_zero_response"]["generated"]["zero_fraction"] - report["visibility_and_zero_response"]["truth"]["zero_fraction"], 0.0049)
+    checks.append("Response moments and energy-bin ranges; paired stratified zero-fraction interval; excluded legacy response distance")
 
     profile = report["distribution_metrics"]["mean_longitudinal_profile"]
     g = np.asarray(profile["generated"], dtype=float)
@@ -248,19 +258,21 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     bib = (ROOT / "references.bib").read_text(encoding="utf-8")
     required = [
         "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
-        "exploratory computational-physics case study", "strict-positive readout support", "condition-only pipeline control has AUROC 0.500",
+        "These measurements describe the stored checkpoint and bank", "strict-positive support", "condition-only pipeline control has AUROC 0.500",
         "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
         "104 retained rows spanning epochs 11--114", "defines the checkpoint studied here",
         "four nearest centroids are selected", "stored in both directions", "107,920 in total",
         r"\prod_{\ell>F}^{64}", "The two energy features are deterministically related",
-        "Event-level arrays needed for uncertainty estimates", "end-to-end timing",
+        "structural difference's uncertainty", "end-to-end timing", "0.19--0.76 percentage points",
+        "a contiguous run of inactive layers", "do not establish an independent lateral-fragmentation effect",
         "This counts inactive layers, not contiguous runs.", "26,624 training events", "6,656 validation events", "76,158 validation", "76,300 nominal test",
-        "batch-wide absolute-plus-relative tolerance", "0.25 more active layers", "4.42 layers farther downstream",
-        "35.97 more weak components", "6.03-percentage-point reduction",
+        "batch-wide absolute-plus-relative tolerance", "mean active-layer counts differ by 0.25", "4.42 layers farther downstream",
+        "35.97 more weak components", "lower by 6.03 percentage points",
         "Zero-deposit events & 93 (0.93\\%) & 142 (1.42\\%)",
         "Mean last active layer & 56.20 & 60.62 & $+4.42$",
         "Mean weak graph components & 23.42 & 59.39 & $+35.97$",
         "Mean largest-component fraction & 94.90\\% & 88.87\\% & $-6.03$ pp",
+        "0.1375 for generated showers and 0.1458 for the reference",
         "no learned shower encoder", "independent draws enter at the discrete heads and at the two flows",
         "five edge inputs specify coordinate differences", "Selection has no constraint that would make those channels a connected set",
         "The nine losses are binary cross entropy", "These identities conserve the model's sampled readout budget",
@@ -272,7 +284,7 @@ def validate_tex_and_bib(checks: list[str]) -> None:
         "plotted error bars", "promotion criterion",
         "0.4636", "0.7748", "0.7785", "0.9330", "S2",
         "551,234-event", "76,160", "76,298", "Two declared continuations",
-        "gap runs", "gap-run", "inactive runs increase", "interior-gap runs",
+        "every inactive layer adds a component", "paired joint counts are required and unavailable",
         "Topology-Sensitive Validation", "The contribution is threefold", "Artifact identity and audit boundary",
         "response_energy_bins.png", "structure_ratio_summary.png", "training_history.png",
         "0.0727", "0.1475", "0.0684", "0.1984", "2.88", "2.54",
@@ -340,13 +352,13 @@ def validate_repository(checks: list[str]) -> None:
     model_audit = load_json(ROOT / "audit" / "model_exposition_20260922.json")
     sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.8.0" in status
-    assert "version: 0.8.0" in citation and "Connectivity Diagnostics" in citation
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.9.0" in status
+    assert "version: 0.9.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
     assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
     assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
     assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]
     assert len(model_audit["source_blob_sha256"]) == 14 and len(model_audit["claims"]) == 9
-    assert sentence_audit["manuscript_version"] == "0.8.0"
+    assert sentence_audit["manuscript_version"] == "0.9.0"
     assert sentence_audit["review_scope"] == "Every prose paragraph, equation, table caption, and figure caption"
     assert len(sentence_audit["sections"]) == 8
     assert all(token in response for token in ["reviews/review7.txt", "reviews/review8.txt", "reviews/review9.txt", "Findings resolved by removal"])
@@ -400,7 +412,7 @@ def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
     forbidden = ["??", "0.4636", "0.7748", "0.7785", "0.9330", "V3-SUP", "V3-S2", "M0", "S2"]
     found = [term for term in forbidden if term in pdf_text]
     assert not found, f"forbidden PDF text: {found}"
-    required = ["Connectivity Diagnostics", "Julian Juan", "Wen-Chen Chang", "References"]
+    required = ["Longitudinal Gaps and Readout Connectivity", "Julian Juan", "Wen-Chen Chang", "References"]
     assert all(term in pdf_text for term in required)
     log = (ROOT / "main.log").read_text(encoding="utf-8", errors="replace")
     problems = re.findall(r"LaTeX Warning|Undefined control sequence|Overfull|Underfull|Citation '.+?' undefined", log)
