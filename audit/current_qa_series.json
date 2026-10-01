@@ -1,6 +1,6 @@
 {
-  "series": "hep_readability_20261001",
-  "predecessor": "audit/qa_series/claude_integration_20261001/iteration_04.json",
-  "predecessor_sha256": "b3acd99cec8d363412a89cce87304f78b76f70e66fc845a96f9cad33ff03030f",
-  "reason": "Experimental HEP readability revision; numerical, split, source-binding and release guards retained."
+  "series": "hep_readability_followup_20261001",
+  "predecessor": "audit/qa_series/hep_readability_20261001/iteration_15.json",
+  "predecessor_sha256": "2d4d800dbf326a2b4b344825c612575a68ad165b62e4d91a84a698cc7c644d4e",
+  "reason": "Follow-up HEP reader audit; preserve numerical, split, source-binding and release guards while clarifying physical interpretation."
 }

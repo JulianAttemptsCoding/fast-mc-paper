@@ -43,6 +43,7 @@ def release_source_hashes() -> dict:
         "audit/physics_exposition_response_20261001.json", "audit/physics_exposition_response_20261001.md",
         "audit/claude_integration_response_20261001.json", "audit/claude_integration_response_20261001.md",
         "audit/hep_readability_response_20261001.json", "audit/hep_readability_response_20261001.md",
+        "audit/hep_readability_followup_response_20261001.json", "audit/hep_readability_followup_response_20261001.md",
     ]]
     paths += [ROOT / "audit/current_qa_series.json"] if (ROOT / "audit/current_qa_series.json").exists() else []
     paths += sorted((ROOT / "scripts").glob("*.py"))
@@ -453,8 +454,8 @@ def validate_repository(checks: list[str]) -> None:
     math_audit = load_json(ROOT / "audit" / "mathematical_exposition_20260923.json")
     sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.21.0" in status
-    assert "version: 0.21.0" in citation and "Longitudinal Gaps and Spatial Hit Connectivity" in citation
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.21.1" in status
+    assert "version: 0.21.1" in citation and "Longitudinal Gaps and Spatial Hit Connectivity" in citation
     assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
     assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
     assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]

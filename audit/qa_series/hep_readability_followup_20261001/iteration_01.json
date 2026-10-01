@@ -1,50 +1,12 @@
 {
-  "schema_version": 4,
-  "created_utc": "2026-10-01T18:09:03.290571+00:00",
-  "release": "v0.21.1",
-  "status": "exploratory HEP/computational-physics case study",
-  "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; at least 84.6% of the mean component excess remains beyond one component per occupied-layer run.",
-  "output": {
-    "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "04401ee2d9f737442029872ca904caa807a531e2369c940398cb7b73293e8c24",
-    "bytes": 1204247,
-    "pages": 14
-  },
-  "current_qa": {
-    "record": "audit\\qa_series\\hep_readability_followup_20261001\\iteration_06.json",
-    "sha256": "d670051b8f705ad706f9492ed2d81db56aca3230a615e43f3624603eb7c3b561",
-    "checks": [
-      "Clean end-to-end figure, bibliography, and LaTeX rebuild",
-      "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
-      "Aggregate invariant counters and historical batch-relative policy; legacy absolute-only countercheck fails as disclosed",
-      "Config-hash-bound pilot population, canonical preparation counts, and distinct training/diagnostic split provenance",
-      "Stored-ID geometry, position-multiplicity arithmetic, layer count, and explicitly reproduced directed-edge count",
-      "Nonempty denominators; absolute table differences; span/gap/last-layer identities; no ratio-only headline",
-      "Evaluator wall-time number includes topology and classifier analysis; generation-latency claim excluded",
-      "Response moments and bins; zero and hit-count bootstrap intervals; all original C2ST families and failed gate; separately labelled pair-grouped monitor",
-      "ECAL/HCAL cancellation and longitudinal-profile discrepancy",
-      "Hash-verified 104-row extract, contiguous unique epochs, one declared post-90 continuation, and epoch-90 objective minimum",
-      "Claim language, author/mentor metadata, scope statements, and stale-model exclusion",
-      "25 citation keys and 29 LaTeX labels/references",
-      "Four deterministic manuscript figures, source hashes, dimensions, and nonblank raster content",
-      "Appendix calibration arithmetic, every energy bin, all classifier seeds, historical-source hashes and author-supplied metadata",
-      "Second audit: hash-bound bin widths, pooled moments, ECAL-start fractions, selected/positive support equality and stored-ID scope; no inferred electronics or zero-cause result",
-      "Within-run component bounds from exact aggregate means; 1,023 masks and five analytic independence examples (algebra only)",
-      "Third audit: profile peak/ratios, energy-weighted depth, stored-ID periodicity check, physical-stage scope and synchronized sharper bound",
-      "Reader proposal: physical coordinate dimensions, paired normalized interval, deep-layer totals, timing accounting and independently counted schematic",
-      "Active-versus-archived evidence separation, 7 active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check",
-      "14-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
-    ],
-    "visual_record": "audit\\visual_review_finalization_20260930.json",
-    "visual_sha256": "0459fd4ccb87da93fff41f2a41d20e05f57e698b583ff4a740e64e74a7b498e5"
-  },
-  "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
-  "environment": {
-    "platform": "Windows-11-10.0.26200-SP0",
-    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
-  },
+  "iteration": 1,
+  "created_utc": "2026-10-01T17:23:10.362502+00:00",
+  "result": "fail",
+  "full_suite": false,
+  "error": "aggregate-only",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 667, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 650, in main\n    validate_second_audit(checks)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\second_audit_checks.py\", line 30, in validate_second_audit\n    assert text in tex,text\n           ^^^^^^^^^^^\nAssertionError: aggregate-only\n",
   "source_sha256": {
-    "main.tex": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
+    "main.tex": "43adb1f126f97fb80416183b163e075a7f9faa6ecdb074038ca8d4a8b9820b3e",
     "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
     "README.md": "090de88a7fe481575c105e8ff115cf068fd3888e330b24c045f43151e209393f",
@@ -65,7 +27,7 @@
     "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
     "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
     "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
-    "audit/finalization_20260930.json": "eeb8d92aeb444b018b071f0898c8fb9ff92dfbbbe64e63fc96682874c9fecb19",
+    "audit/finalization_20260930.json": "3b9a78e39629b268b85d95fb0568f0c31baaa085a4d6f55c774ae0999fb7a1be",
     "audit/finalization_20260930.md": "b2e0cf6c5feddef92f23d6b7adbc62c7054807e58f01109791b24a9f2e4a9c00",
     "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
     "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
@@ -73,7 +35,7 @@
     "audit/claude_integration_response_20261001.md": "66e5434666b8a2a4c3bbb5258704e1039ea326794db54c320bdab001b8d71505",
     "audit/hep_readability_response_20261001.json": "f296e40387b626f84b7c73688e1a2ff60ae6fde533c89cdeb56ab064261f3b40",
     "audit/hep_readability_response_20261001.md": "36306478c661fc73cfb1c4ec700b74b64077616237169644199eae32ef9f258f",
-    "audit/hep_readability_followup_response_20261001.json": "19a58ef3bb9f27b21a9d0aca16d876635f1bfa9a6d6b34651d0795d5d566bb61",
+    "audit/hep_readability_followup_response_20261001.json": "7335ee27cee1c3c4e3e23f1f961686e1edadc8cfcad5f8954425f998d287dd12",
     "audit/hep_readability_followup_response_20261001.md": "ead83a2434568a14695adfc88da2893b923eb4d318bb9f92a145aa8b1f7e2cb1",
     "audit/current_qa_series.json": "4577c382c43eb4b91d3a4bbc4702ab9f7ba5690b879c727e2271160357c502a4",
     "scripts/build_figures.py": "891b114016dbe7facbc6dcd8535a2f12859e45568747b3f57733450407e7ffd6",
@@ -83,7 +45,7 @@
     "scripts/physics_exposition_checks.py": "a2dd3ca33399af137cebda59de3033677c1e7d05140302228a16619a3be347a5",
     "scripts/qa_series.py": "e9694aefd12bcac2c59a784e3126cb2c296b7d928cd7fcf796aa293dbd2b86e4",
     "scripts/reader_figures.py": "56e7d2f5f2b4d5804be86f5d744150b0b82930c69195d18eaeb31dca6b63c24d",
-    "scripts/second_audit_checks.py": "3c516096e946c8b47e87d7f193a535c7ac4ea98e292ae57194519cb7ee1dbc4e",
+    "scripts/second_audit_checks.py": "2ab3c7628a92e9177f99b8e2d08d121c5245b142e994e0aa57a1d0f0535b007d",
     "scripts/test_qa_guards.py": "04e4012b2aa71a3987b1834321d9f507797df43561f3d5b9eba8118fade8feb9",
     "scripts/write_build_audit.py": "432ea9ab07fc044f7f87eafdc3031df9f804a88fbe85700f02f79056c71c64dd",
     "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
@@ -95,12 +57,21 @@
     "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
     "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
   },
-  "figures_manifest_sha256": "c0b75c2c471b5245f3582028c7a3e713a1177ed8527a3eb13951db569dbeae2e",
-  "research_boundary": "No new training, test-data use or model evaluation. Aggregate arithmetic, model implementation statements and source provenance were audited; physics fidelity was not established.",
-  "remaining_publication_actions": [
-    "Author reports data-owner permission; production geometry tag remains unspecified",
-    "GitHub publication authorized; see publication audit for commit identity",
-    "arXiv upload and server-rendered PDF inspection remain unperformed"
-  ],
-  "broader_claim_requirements": "See STATUS.md; these do not negate the descriptive case-study observation."
+  "executed_commands": [
+    {
+      "argv": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "build.ps1",
+        "-Python",
+        "C:\\Python313\\python.exe"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "f8a16378da7d741167842558574931d5c96230a1c747c4d150c6ce4f224404fe",
+      "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+    }
+  ]
 }

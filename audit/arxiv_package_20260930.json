@@ -1,9 +1,9 @@
 {
-  "created_utc": "2026-10-01T16:56:52.276054+00:00",
-  "revision": "0.21.0",
-  "sha256": "f34b329dfe89be3afbd4256061dcf392db9d6b43c4db20bfa68d78ae8ab83c31",
+  "created_utc": "2026-10-01T18:09:03.634842+00:00",
+  "revision": "0.21.1",
+  "sha256": "d2fc3300f006722372c95eb71287558240910045b8b811a2be3e1b471a9a0712",
   "members_sha256": {
-    "main.tex": "b9cdf72484b8577b1082000b5ad07ce2caeaeff8fff0f3714924cdaf2f621894",
+    "main.tex": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
     "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
     "main.bbl": "b66a5ab1a81942848dc66bdce817376736e30c2f38d2c6a7ea92c57ce7448cb3",
     "figures/detector_geometry.png": "0f96b74f9b18431509b71e9a6b7b4b4d20f50916f0252beeb4af5f81f506071a",
@@ -11,10 +11,10 @@
     "figures/longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
     "figures/support_summary.png": "dc8613229d85474c19e141743ca55c5521eee3ab7b1b41b8833d37223b820b5d"
   },
-  "pdf_sha256": "332c1212aa33d56115bc864999175bdc10d82a486e8f907e8aece2a01fcb9b7a",
+  "pdf_sha256": "04401ee2d9f737442029872ca904caa807a531e2369c940398cb7b73293e8c24",
   "status": "Seven-file source archive; CRC and exact bytes verified",
   "arxiv_server_compile": "Not performed",
-  "current_qa": "audit/qa_series/hep_readability_20261001/iteration_15.json",
+  "current_qa": "audit/qa_series/hep_readability_followup_20261001/iteration_06.json",
   "guidance_checked": [
     "https://info.arxiv.org/help/submit_tex.html",
     "https://info.arxiv.org/help/faq/texlive.html"

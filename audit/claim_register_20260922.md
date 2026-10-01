@@ -39,3 +39,5 @@ Current v0.20.0 correction: geometry counts describe stored ID groups. Electroni
 Current reader-proposal disposition: `claude_integration_response_20261001.md`. The normalized paired response interval, fixed-region late energy, geometry dimensions and timing arithmetic are verified in `claude_reader_derived_20261001.json`; they do not establish unnormalized covariance, extra-component energy or generation-only speed.
 
 Current v0.21.0 terminology: graph-connected hit groups are weak components of strictly positive stored-deposit channels on the fixed model graph. Contiguous active-layer segments replace ambiguous occupied-layer “runs” in the manuscript. Neither term implies reconstructed detector clusters or a verified transverse cause. See `hep_readability_response_20261001.md`.
+
+Current v0.21.1 reader clarification: the section-weighted reconstruction identity is illustrative, the classifier-control cause is unverified, and threshold effects can change both late occupancy and interior gaps. See `hep_readability_followup_response_20261001.md`.

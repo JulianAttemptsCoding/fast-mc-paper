@@ -1,0 +1,34 @@
+{
+  "created_utc": "2026-10-01T18:09:03.641120+00:00",
+  "revision": "0.21.1",
+  "status": "Local preprint revision and arXiv source-package QA complete",
+  "main_sha256": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
+  "pdf_sha256": "04401ee2d9f737442029872ca904caa807a531e2369c940398cb7b73293e8c24",
+  "zip_sha256": "d2fc3300f006722372c95eb71287558240910045b8b811a2be3e1b471a9a0712",
+  "checks": 20,
+  "visual_pages": 14,
+  "guard_tests": 10,
+  "current_qa": "audit/qa_series/hep_readability_followup_20261001/iteration_06.json",
+  "failed_attempts": [
+    1,
+    2,
+    5
+  ],
+  "failure_resolution": "Replaced a stale scope-wording guard with explicit equivalent assertions; condensed prose to retain the unchanged 14-page maximum; repaired two figure/page sentence interruptions. Every failed attempt is retained.",
+  "native_editor_compile": "Platform initialization failed: Unable to find standard directories for platform",
+  "local_build": "pdfLaTeX/Biber and all 20 QA groups passed",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "source_research": [
+    "https://arxiv.org/html/2406.12877v2",
+    "https://pdg.lbl.gov/2024/reviews/rpp2024-rev-particle-detectors-accel.pdf",
+    "https://info.arxiv.org/help/submit_tex.html",
+    "https://info.arxiv.org/help/faq/texlive.html"
+  ],
+  "new_event_or_test_data_access": false,
+  "new_training_or_model_changes": false,
+  "git_preflight": "The initial staged whitespace check found extra blank EOF lines in two failed-attempt Markdown notes. Their content was preserved and EOFs normalized. Final staged whitespace, helper syntax, and exact raw-byte identity for all 622 indexed files passed; the sealed main/PDF/ZIP SHA-256 hashes remained unchanged.",
+  "arxiv_uploaded": false
+}

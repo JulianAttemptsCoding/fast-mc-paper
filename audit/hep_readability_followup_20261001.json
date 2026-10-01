@@ -1,0 +1,20 @@
+{
+  "created_utc": "2026-10-01T17:15:22Z",
+  "status": "revision_0.21.1_complete",
+  "input_attachment": "C:/Users/Julia/.codex/attachments/c600ff66-74de-4165-849a-dbff9a8a07b5/Pasted text.txt",
+  "input_sha256": "1bea231a811e9c42b59ec04e0547206b1d6db0b6f2e4b01e910830df01c3aff8",
+  "base_commit": "fd66bce122c6314b0dbe8d9ad7a84339a89a4e01",
+  "base_main_sha256": "b9cdf72484b8577b1082000b5ad07ce2caeaeff8fff0f3714924cdaf2f621894",
+  "revised_main_sha256": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
+  "final_qa": "audit/qa_series/hep_readability_followup_20261001/iteration_06.json",
+  "final_pdf_sha256": "04401ee2d9f737442029872ca904caa807a531e2369c940398cb7b73293e8c24",
+  "completion": "audit/hep_readability_followup_completion_20261001.json",
+  "scope": "Surgical experimental-HEP readability review of the existing manuscript and rendered PDF; no event-level or model work",
+  "verification": "Read every manuscript section and the attached audit; visually inspected rendered pages 2, 3, 4, 5, 6, 7 and 13 for the reported notation and table faults",
+  "source_research": [
+    "https://arxiv.org/html/2406.12877v2",
+    "https://pdg.lbl.gov/2024/reviews/rpp2024-rev-particle-detectors-accel.pdf"
+  ],
+  "initial_disposition": "Several OCR-reported defects are absent from main.tex and visually rendered pages. The stronger causal, detector-calibration, threshold, timing and geometry claims exceed the available evidence. A small number of clarity edits are warranted.",
+  "new_training_or_data_access": false
+}

@@ -1,6 +1,6 @@
 # Scientific status
 
-Version 0.21.0 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
+Version 0.21.1 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
 
 ## Corrected central result
 
@@ -33,3 +33,7 @@ Version 0.20.0 incorporates verified improvements from the Claude proposal: dete
 ## Experimental HEP readability pass
 
 Version 0.21.0 clarifies the positive-deposit hit definition and connects graph quantities and model stages to detector observables while preserving the algebra and evidence limits. The term graph-connected hit group denotes a zero-threshold component on the model graph, not a reconstructed calorimeter cluster. See `audit/hep_readability_response_20261001.md`.
+
+## Follow-up HEP reader pass
+
+Version 0.21.1 clarifies the ePIC design context, the condition-only C2ST control, section-weighted calibration as an illustrative calculation, and the two possible directions of threshold effects. No reconstruction, threshold, training, or event-level study was performed. See `audit/hep_readability_followup_response_20261001.md`.

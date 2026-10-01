@@ -1,0 +1,39 @@
+{
+  "created_utc": "2026-10-01T17:15:22Z",
+  "revision": "0.21.1",
+  "input_sha256": "1bea231a811e9c42b59ec04e0547206b1d6db0b6f2e4b01e910830df01c3aff8",
+  "main_sha256": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
+  "adopted": [
+    "Identify the proposed ePIC SiPM-on-tile design at first mention and connect position-sensitive reconstruction to the raw hit pattern without claiming a measured reconstruction bias.",
+    "Define the three-momentum vector in the input-condition equation prose.",
+    "Give the measured 0.464 condition-only AUROC and pair-splitting risk in the abstract without assigning its unverified numerical cause.",
+    "Replace a self-minimizing study label with a plain statement of the actual sample and claim boundary.",
+    "Illustrate why unweighted section-deposit cancellation need not survive a linear two-section calibration; explicitly state that coefficients and reconstructed energy were not measured.",
+    "Explain the two possible directions of a positive-threshold effect: removal of downstream tiny deposits and creation of interior gaps. Both remain unmeasured."
+  ],
+  "already_correct_in_source_and_render": [
+    "50--250 GeV range typography and spacing",
+    "Equation 1 includes commas and unit spacing; target is nonnegative rather than positive-only",
+    "Equation 2 includes theta, sigma and p_theta; Equation 7 prose includes odot; Equation 8 has z_{8,m}",
+    "The edge feature and support symbols are present; Equation 12 has correct membership cases",
+    "The graph-component inequality is m >= R and Delta is generator minus reference",
+    "Table 1 has Gen. minus ref. and 2.10 without a stray period; Table 3 has mu_ref and 1,190",
+    "The physical meaning and noncausal limitation of Q, the 25-mrad comparison, threshold dependence, and timing residual were already explained"
+  ],
+  "unsupported_or_rejected": [
+    "Specific Geant4 cause of zero-deposit showers cannot be recovered from aggregate counts.",
+    "Nuclear interaction lengths and beam-axis identity cannot be inferred from a 1.57 m stored-centroid span without production materials and coordinate frame.",
+    "The 61.2338 GeV cap has no established ten-sigma margin from the available tail data.",
+    "Q=m-R does not prove purely lateral fragmentation or a causal fraction attributable to layer independence or Gumbel sampling.",
+    "The row split permits a C2ST bias, but memorization and the numerical cause of 0.464 have not been demonstrated.",
+    "Mean energy in fixed deep layers does not identify energy in additional late hits or guarantee threshold suppression.",
+    "No production calibration coefficients, reconstructed-energy shift, solver-only generation latency, or matched Geant4 speed benchmark are available.",
+    "A sequential layer model or spatial prior is a proposed controlled comparison, not a requirement proved by these aggregate results."
+  ],
+  "primary_sources": [
+    "https://arxiv.org/html/2406.12877v2",
+    "https://pdg.lbl.gov/2024/reviews/rpp2024-rev-particle-detectors-accel.pdf"
+  ],
+  "new_event_level_study": false,
+  "new_training": false
+}

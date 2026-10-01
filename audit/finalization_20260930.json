@@ -260,7 +260,7 @@
       "evidence": "plot_architecture rows and 2236x832 PNG: r is flow; Y_li is decode."
     }
   ],
-  "current_main_tex_sha256": "b9cdf72484b8577b1082000b5ad07ce2caeaeff8fff0f3714924cdaf2f621894",
+  "current_main_tex_sha256": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
   "changes": [
     "Independent researcher/contact metadata and mentor/lab thanks",
     "Precise primary-comparison bank scope",
@@ -346,6 +346,6 @@
     "authority": "Explicit user removal request",
     "history": "audit/source_snapshots/submission_preflight_20260930/audit/finalization_20260930.json"
   },
-  "current_revision": "0.21.0",
+  "current_revision": "0.21.1",
   "superseding_scientific_review": "audit/claude_integration_response_20261001.md"
 }

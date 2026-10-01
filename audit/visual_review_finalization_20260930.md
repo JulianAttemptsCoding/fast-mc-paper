@@ -1,3 +1,3 @@
 # Current every-page visual review
 
-All 14 pages were read. Final pages 9 and 10 were reinspected; all other page images match the inspected prior pass by SHA-256. Figures, tables, equations and references are legible. The exact PDF and page hashes are in the JSON twin.
+All 14 pages are bound by page-image hash. The six pages changed from the fully reviewed predecessor were directly inspected in the indicated QA attempts; unchanged pages match that review exactly. Figures, equations, tables and bibliography are legible; page 8–9 and 9–10 sentence interruptions were repaired. This is layout and language QA, not physics validation.
