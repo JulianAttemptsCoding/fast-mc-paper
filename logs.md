@@ -341,3 +341,51 @@ Initial publication byte check failed for older cached index entries. The shell 
 ## 2026-10-01: v0.20.0 GitHub publication
 
 Pushed release commit d5b16215f77066dd328cf1857be8fb97c4e6e9f2; verified remote main identity and clean working tree. PDF, seven-file source ZIP, proposal disposition and exact-byte evidence are published. See audit/publication_v020_20261001.json. No arXiv upload.
+
+
+## 2026-10-01: HEP readability audit opened
+
+Read all three supplied audits and v0.20.0 manuscript; checked implementation guide, focused rules, current graft graph and model evidence. Baseline source/PDF hashes and audit-input hashes saved at audit/hep_readability_20261001.json. Research in progress; no model or data change.
+
+
+## 2026-10-01: HEP readability source revision
+
+First exact-edit attempt failed because title appeared twice; corrected expected multiplicity, no main.tex write from failed attempt. Applied 34 exact prose replacements and ten local refinements; synchronized title, citation, version, QA semantic guards and new QA-series predecessor. Original equations and numerical tables intended unchanged; verification pending. Input and source hashes in audit/hep_readability_20261001.json; disposition in paper audit/hep_readability_response_20261001.md. No data/model change.
+
+
+## 2026-10-01: HEP readability QA attempt 01 failed
+
+Full QA iteration 01 stopped at two stale exact-phrase guards after prose had been clarified: generated-stage inputs/error propagation and exact top-K count/no connectivity constraint. Scientific requirements remain in source. Update the guard phrases to match the new wording, retain both checks, and rerun as attempt 02. Failure retained in QA series.
+
+QA attempt 02 also failed at the same two guards because an edit-helper assertion used an incorrectly escaped LaTeX backslash and did not save the guard changes before the shell continued. Corrected the escaping; both checks remain active. Attempts 01 and 02 are preserved.
+
+QA attempt 03 passed the first phrase gate but failed a historical second-audit gate tied to the removed expression “occupied-layer run counts.” Replaced that exact-phrase check with the preserved 30.45-of-35.97 bound statement; no arithmetic or scientific guard removed.
+
+QA attempt 04 passed scientific/numerical gates but failed git diff --check because this Windows checkout has CRLF and Git treated CR bytes as trailing whitespace under its default setting. Set repository-local core.whitespace=cr-at-eol, which recognizes CRLF while retaining actual trailing-space checks. git diff --check then passed; source/evidence bytes were not changed.
+
+QA attempt 05 passed the current wording and whitespace gates but exposed the stale current-main hash in the historical finalization index. Updated only its explicit current_main_tex_sha256 to the revised source; the archived review hashes and numerical checks remain intact.
+
+QA attempt 06 passed content/evidence/repository checks but failed the unchanged 14-page maximum: revised manuscript rendered at 16 pages. Condensed eleven expanded explanatory passages, retaining definitions, equations, caveats and numerical results; no margin/font/page-count guard changed. Rebuild pending.
+
+QA attempt 07 stopped at two required limitation phrases removed by condensation. Restored both in one compact sentence: threshold/timing scans and independently defined physical-neighbor graph remain mandatory for interpretation. No guard relaxed.
+
+QA attempt 08 passed source/evidence checks but still rendered 15 pages. Further condensed repeated metric explanations in evaluation and results, retaining the bound, zero-threshold definition, sample denominators, all intervals and causal limits. The page-count assertion remains unchanged.
+
+QA attempt 09 failed two stale exact-phrase checks after condensation of the same scientific cautions (gap layers versus regions; unverified C2ST cause). Updated guards to the shortened sentences without removing either constraint.
+
+QA attempt 10 passed earlier gates and failed a stale phrase in the component-bound checker. The manuscript still states the deterministic bound is neither a confidence interval nor causal attribution. Updated the semantic string, preserving numeric/algebraic assertions.
+
+QA attempt 11 passed source/evidence checks but still rendered 15 pages, with only four references on page 15. Condensed repeated appendix prose while retaining hashes, calibration provenance, test exposure, classifier settings and pair-split caveat; numerical tables unchanged.
+
+QA attempt 12 failed the appendix phrase check for the retained 100-iteration classifier maximum after compact wording. Updated its exact text guard to “at most 100 iterations”; numeric and seed checks remain unchanged.
+
+QA attempt 13 passed all 20 groups at 14 pages. Direct all-page visual review found one awkward paragraph carryover between pages 9 and 10 and a compressed Appendix B sentence that misstated the 70% per-row / 4,200-row expected-count relationship. Removed the redundant carryover sentence (threshold caveat remains in limits) and corrected the probability wording. Rebuild pending.
+
+QA attempt 14 passed 20 groups and 14 pages. Directly reinspected changed pages 9, 10 and 13; the probability explanation is corrected. A remaining sentence split across pages 9–10 motivated a paragraph break and four-line keep-together before the Wasserstein paragraph. Response twin updated with all audit dispositions; final source-bound QA pending.
+
+
+## 2026-10-01: HEP readability release sealed
+
+QA15 passed 20 groups on a 14-page PDF; 14 pages visually reviewed by exact rendered-page hash, 10 release-guard tests passed. Seven-file arXiv source ZIP bytes and CRC verified. Native editor compile failed at platform initialization; local pdfLaTeX/Biber succeeded. See audit/hep_readability_completion_20261001.json for hashes, commands and all failed attempts. No new empirical validation or arXiv upload.
+
+Git preflight found trailing spaces in the one-off edit helper and blank EOF lines in five failed-attempt notes. A first Python index probe failed from shell escaping; its cleanup inserted literal backslash-n at six audit-file EOFs, caught by AST parsing and byte inspection. Repaired the audit files. Final staged whitespace and AST checks passed; all 601 Git index blobs match the corresponding raw working-file bytes. The sealed main.tex/PDF/ZIP SHA-256 hashes are unchanged.

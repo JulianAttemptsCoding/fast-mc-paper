@@ -1,3 +1,3 @@
 # Current every-page visual review
 
-All 14 QA03 pages read. All QA04 page images match those reviewed images by SHA-256. No clipping, illegible plots, orphan headings or unexplained stage semantics found. The exact PDF and per-page hashes are in the JSON twin.
+All 14 pages were read. Final pages 9 and 10 were reinspected; all other page images match the inspected prior pass by SHA-256. Figures, tables, equations and references are legible. The exact PDF and page hashes are in the JSON twin.

@@ -1,6 +1,6 @@
 # Scientific status
 
-Version 0.20.0 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
+Version 0.21.0 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
 
 ## Corrected central result
 
@@ -29,3 +29,7 @@ Version 0.20.0 explains the physical observable represented by each architecture
 ## Final reader-proposal integration
 
 Version 0.20.0 incorporates verified improvements from the Claude proposal: detector context and stored-coordinate dimensions, clearer stage labels, an illustration of gaps/runs/components, normalized paired-response intervals and deep-layer energy totals. Proposal claims of independent paired samples, threshold irrelevance and guaranteed classifier lower bounds are not adopted. See `audit/claude_integration_response_20261001.md`.
+
+## Experimental HEP readability pass
+
+Version 0.21.0 clarifies the positive-deposit hit definition and connects graph quantities and model stages to detector observables while preserving the algebra and evidence limits. The term graph-connected hit group denotes a zero-threshold component on the model graph, not a reconstructed calorimeter cluster. See `audit/hep_readability_response_20261001.md`.

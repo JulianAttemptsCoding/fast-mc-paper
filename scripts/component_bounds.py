@@ -50,7 +50,7 @@ def validate_component_bounds(checks):
         assert math.isclose(ea,1+2*p,abs_tol=1e-12)
     tex=(ROOT/'main.tex').read_text(encoding='utf-8')
     for token in [r'\Delta\overline m-\overline G_{\rm gen}',r'\Delta\overline Q',
-                  r'84.6\%', '30.45','52.34','21.89','not a confidence interval or causal decomposition']:
+                  r'84.6\%', '30.45','52.34','21.89','neither a confidence interval nor causal attribution']:
         assert token in tex,token
     artifact={'source_report_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
               'bounds':b,'layer_masks_checked':cases,'toy_probabilities_checked':5,

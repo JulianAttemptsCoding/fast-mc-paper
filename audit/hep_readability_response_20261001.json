@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-10-01T16:39:42.769230+00:00",
+  "revision": "0.21.0",
+  "status": "prose_and_scientific_disposition_complete",
+  "input_audit_sha256": [
+    "5514f1a9afbc831edfa19430336be05c8432b9c8827cc1e42c5f89364c48861d",
+    "05f8ffceb524b9b536c03646383e583a3485bab618b292c7d4bc0edfd6d5d3c1",
+    "e6bfb28fd8cb58286f79d652b2dc43f4d4be069c0220f2055241e976c4231c33"
+  ],
+  "main_sha256": "b9cdf72484b8577b1082000b5ad07ce2caeaeff8fff0f3714924cdaf2f621894",
+  "response_md_sha256": "36306478c661fc73cfb1c4ec700b74b64077616237169644199eae32ef9f258f",
+  "source_research": [
+    "https://arxiv.org/html/2406.12877v2",
+    "https://eicrecon.epic-eic.org/doxygen/InclusiveKinematicsJB_8h_source.html"
+  ],
+  "claim_limits": [
+    "No reconstructed clusters, causal attribution, physical beam-axis identity, ganging, threshold outcome, reconstructed performance or generation-only timing claimed"
+  ],
+  "edits": "Exact replacement script audit/hep_readability_edit_20261001.py; failed first attempt due title occurring twice, fixed multiplicity check; 34 exact replacements then 10 focused polishing replacements.",
+  "qa": "See audit/current_qa_series.json; attempts 01-12 preserve failures, 13 and 14 pass; final source requires fresh QA."
+}

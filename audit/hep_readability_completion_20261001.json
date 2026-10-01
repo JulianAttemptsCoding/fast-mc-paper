@@ -1,0 +1,63 @@
+{
+  "created_utc": "2026-10-01T16:56:52.280284+00:00",
+  "revision": "0.21.0",
+  "status": "Local preprint revision and arXiv source-package QA complete",
+  "main_sha256": "b9cdf72484b8577b1082000b5ad07ce2caeaeff8fff0f3714924cdaf2f621894",
+  "pdf_sha256": "332c1212aa33d56115bc864999175bdc10d82a486e8f907e8aece2a01fcb9b7a",
+  "zip_sha256": "f34b329dfe89be3afbd4256061dcf392db9d6b43c4db20bfa68d78ae8ab83c31",
+  "checks": 20,
+  "visual_pages": 14,
+  "guard_tests": 10,
+  "current_qa": "audit/qa_series/hep_readability_20261001/iteration_15.json",
+  "failed_attempts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "failure_resolution": "Exact-phrase guards followed scientifically equivalent revised wording; current-source hash synchronized; CRLF recognized as an EOL in local Git configuration; prose condensed to satisfy the unchanged 14-page maximum. Every failed attempt preserved.",
+  "native_editor_compile": "Platform initialization failed: Unable to find standard directories for platform",
+  "local_build": "pdfLaTeX/Biber and all 20 QA groups passed",
+  "commands": [
+    [
+      "C:\\Python313\\python.exe",
+      "-X",
+      "utf8",
+      "scripts/write_build_audit.py"
+    ],
+    [
+      "C:\\Python313\\python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_qa_guards.py",
+      "-v"
+    ]
+  ],
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "source_research": [
+    "https://arxiv.org/html/2406.12877v2",
+    "https://eicrecon.epic-eic.org/doxygen/InclusiveKinematicsJB_8h_source.html"
+  ],
+  "new_event_or_test_data_access": false,
+  "new_training_or_model_changes": false,
+  "arxiv_uploaded": false,
+  "git_preflight": "Initial staged whitespace check found trailing spaces in the one-off edit helper and extra blank EOF lines in five failed-attempt notes. A first index probe failed from shell escaping; the first cleanup also inserted literal backslash-n at six audit-file EOFs, caught by AST parsing and byte inspection. Repaired these non-sourcebound records. Final staged whitespace, helper AST, all 601 Git-index raw-byte identities, and manuscript/PDF/ZIP SHA-256 checks passed.",
+  "remaining_empirical_studies": "Event-level threshold, time, graph and reconstruction sensitivity; paired structural intervals; independent generator fits."
+}

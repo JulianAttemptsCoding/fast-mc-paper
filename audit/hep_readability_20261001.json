@@ -1,0 +1,35 @@
+{
+  "created_utc": "2026-10-01T16:35:43.617396+00:00",
+  "revision_target": "0.21.0",
+  "status": "started",
+  "audit_input_sha256": [
+    "5514f1a9afbc831edfa19430336be05c8432b9c8827cc1e42c5f89364c48861d",
+    "05f8ffceb524b9b536c03646383e583a3485bab618b292c7d4bc0edfd6d5d3c1",
+    "e6bfb28fd8cb58286f79d652b2dc43f4d4be069c0220f2055241e976c4231c33"
+  ],
+  "baseline_sha256": {
+    "main.tex": "ddb1ae8b3607c45a8562522ea0cf76d3bb03b9e4c85cb3ae561ac5a91d9bd912",
+    "scripts/full_manuscript_qa.py": "ca4916e929c1c104528303c1b3063c9e3ef8e7f843c1d83923e5e238de603c58",
+    "scripts/write_build_audit.py": "a4e6e3d3fbb1c79a6996a08fa12a439a6c455caa226876ee88edf35938f3e13f",
+    "README.md": "40f85e2e06497cd186959526d4aa9695a3c8483be550e4ff9d8adef3834861ee",
+    "STATUS.md": "7ad032a945323ed6731870c7b31333694ce8ed5d2a8d3cf9c3c0e036d8d10d58",
+    "CITATION.cff": "c2ec662d1351d0bcfd2d77389b901fa9396a25cfdfa8fdd8199270740521bc9e",
+    "audit/current_qa_series.json": "21778dba4a87037b73798dc61de9a98087b6ba474182e2781ef5be7f7590bf74",
+    "audit/final_build_audit.json": "fd79d325fde0c00930362b34817df774f7150a6b7a8b5757443d23412715cf3b",
+    "output/fast_mc_zdc_manuscript.pdf": "14259865b931c2ce17f1a2abe3215cc5ec3d2698368fa876b32e949ff89e7598"
+  },
+  "baseline_commit": "627dae6ad4f4f97060923781516b27353d43b036",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "scope": "Manuscript HEP readability; source-bound QA and GitHub update; no event-level evaluation or training.",
+  "evidence_decision": "Adopt detector-facing terms where they denote the measured graph/readout quantities. Reject unmeasured causal, threshold, beam-frame, detector-clustering and reconstruction claims.",
+  "commands": [
+    "Read docs/IMPLEMENTATION_GUIDE.md and docs/FOCUSED_OPERATING_RULES.md",
+    "graft check; graft ask architecture/graph",
+    "Read all three supplied audits and full current main.tex",
+    "Research primary ePIC/EIC references"
+  ],
+  "graft_tokens_saved_estimate": 20092
+}

@@ -42,6 +42,7 @@ def release_source_hashes() -> dict:
         "audit/finalization_20260930.json", "audit/finalization_20260930.md",
         "audit/physics_exposition_response_20261001.json", "audit/physics_exposition_response_20261001.md",
         "audit/claude_integration_response_20261001.json", "audit/claude_integration_response_20261001.md",
+        "audit/hep_readability_response_20261001.json", "audit/hep_readability_response_20261001.md",
     ]]
     paths += [ROOT / "audit/current_qa_series.json"] if (ROOT / "audit/current_qa_series.json").exists() else []
     paths += sorted((ROOT / "scripts").glob("*.py"))
@@ -294,16 +295,16 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     bib = (ROOT / "references.bib").read_text(encoding="utf-8")
     required = [
         "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
-        "These aggregate-only results concern one training seed and a repeatedly inspected validation sample", "Support measurements use a strictly positive energy definition", "mean AUROCs of 0.775 for high-level shower summaries", "high-level score exceeds the recorded screening maximum of 0.65",
+        "These aggregate results use one training seed and a repeatedly inspected validation sample", "Hit-pattern measurements count every strictly positive stored deposit", "mean AUROCs of 0.775 for high-level shower summaries", "high-level score exceeds the recorded development-screening criterion of 0.65",
         "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
         "104 retained rows spanning epochs 11--114", "defines the checkpoint analyzed below",
         "selects four nearest centroids", "stored in both directions", "107,920 in total",
         r"\prod_{\ell>F}^{64}", "the two energy features carry the same physical information",
         "Intervals for the energy-bin differences, mean longitudinal profile, gaps, and graph components are unavailable", "end-to-end benchmark", "0.19--0.76 percentage points",
-        "Consecutive empty layers constitute one separation", "establishes a within-run graph-fragmentation discrepancy",
-        "This counts inactive layers, not contiguous runs.", "26,624 training", "6,656 validation events", "76,158 to validation", "76,300 to the nominal test",
+        "Consecutive empty layers constitute one separation", "establishes excess graph disconnection within contiguous active-layer segments",
+        "The longitudinal gap count $G$ counts skipped layers, not gap regions", "26,624 training", "6,656 validation events", "76,158 to validation", "76,300 to the nominal test",
         "largest sampled event total in each batch", "maximum layer residual exceeds the earlier fixed", "A difference of 0.25 active layers", "last active layer by $+4.42$",
-        "35.97 more weak components", r"88.87\% of occupied channels on average, versus 94.90\%",
+        "35.97 more graph-connected hit groups", r"88.87\% of occupied channels on average, versus 94.90\%",
         "Zero-deposit events & 93 (0.93\\%) & 142 (1.42\\%)",
         "Mean last active layer & 56.20 & 60.62 & $+4.42$",
         "Mean weak graph components & 23.42 & 59.39 & $+35.97$",
@@ -311,15 +312,15 @@ def validate_tex_and_bib(checks: list[str]) -> None:
         "0.1375 for the generator and 0.1458 for Geant4",
         "no learned shower encoder", "two conditional flow-matching models generate the continuous layer and channel energy shares from independent Gaussian draws",
         "its stochastic shower histories are independent",
-        "Members of a matched condition pair can enter opposite partitions",
+        "Members of a matched condition pair can enter opposite partitions", "though the cause is unverified", "These are zero-threshold graph groups, not reconstructed topological clusters", "Physical cascades correlate deposits across depth, but whether this assumption causes the observed gaps requires a controlled test",
         "Its different event sample precludes a direct comparison",
         "All quoted intervals describe resampling variation within the development bank",
         "Numerical checks test the generated deposits against the model's sampled budgets",
-        "During generation, it receives their sampled values, allowing errors to propagate",
+        "when generating a full shower, it receives the preceding stages' sampled values. Errors can therefore propagate",
         "an independently defined physical-neighbor graph",
-        "generated draws clipped by the cap and reference deposits above it",
+        "generated draws clipped by the cap and reference deposits above it", "Threshold and timing scans are therefore necessary",
         "generation latency was not isolated",
-        "five edge inputs", r"Selecting the top $K_\ell$ enforces the requested count exactly, but imposes no adjacency or connectivity constraint.",
+        "five edge inputs", r"Selecting the top $K_\ell$ enforces the requested count exactly, but imposes no adjacency or connectivity constraint:",
         "joint training objective combines nine weighted losses", "These are accounting identities for the model's sampled readout budget",
         r"\label{eq:profile_target}", r"\label{eq:flow_steps}", r"\label{eq:message}",
         r"\label{eq:topk}", r"\label{eq:share_target}", r"\label{eq:joint_loss}",
@@ -415,7 +416,7 @@ def validate_appendix(checks: list[str]) -> None:
     for phrase in ["juliansjuan08@gmail.com", "generous mentorship",
                    "laboratory community", "historical runtime configuration is unavailable",
                    "not independent generator-training seeds", "36,100--36,300",
-                   "14,000", "6,000", "maximum of 100 boosting iterations"]:
+                   "14,000", "6,000", "at most 100 iterations"]:
         assert phrase in tex, phrase
     audit = load_json(ROOT / "audit/finalization_20260930.json")
     for name, digest in audit["historical_source_sha256"].items():
@@ -452,8 +453,8 @@ def validate_repository(checks: list[str]) -> None:
     math_audit = load_json(ROOT / "audit" / "mathematical_exposition_20260923.json")
     sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.20.0" in status
-    assert "version: 0.20.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.21.0" in status
+    assert "version: 0.21.0" in citation and "Longitudinal Gaps and Spatial Hit Connectivity" in citation
     assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
     assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
     assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]
@@ -567,7 +568,7 @@ def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
     forbidden = ["??", "0.7785", "0.9330", "V3-SUP", "V3-S2", "M0", "S2"]
     found = [term for term in forbidden if term in pdf_text]
     assert not found, f"forbidden PDF text: {found}"
-    required = ["Longitudinal Gaps and Readout Connectivity", "Julian Juan", "Wen-Chen Chang", "References"]
+    required = ["Longitudinal Gaps and Spatial Hit Connectivity", "Julian Juan", "Wen-Chen Chang", "References"]
     assert all(term in pdf_text for term in required)
     log = (ROOT / "main.log").read_text(encoding="utf-8", errors="replace")
     problems = re.findall(r"LaTeX Warning|Undefined control sequence|Overfull|Underfull|Citation '.+?' undefined", log)

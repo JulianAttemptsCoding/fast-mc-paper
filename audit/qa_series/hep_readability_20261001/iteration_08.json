@@ -1,0 +1,107 @@
+{
+  "iteration": 8,
+  "created_utc": "2026-10-01T16:45:44.519114+00:00",
+  "result": "fail",
+  "full_suite": false,
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 666, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 657, in main\n    pdf, pages = validate_pdf(args.iteration, checks)\n                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 527, in validate_pdf\n    assert 6 <= pages <= 14\n           ^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "source_sha256": {
+    "main.tex": "e67b2a069c433dbd89944e64ac0713d94caa19aa570b7ac00f611ebe5850ecd2",
+    "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+    "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
+    "README.md": "ae3d66389ae419e4946096c8adebeaedb4032a56ab8452de988130a0febf0dce",
+    "STATUS.md": "d3a598e9cab7e2cce0a1c5e651c3b29fde77dd1ba9dc095d3d7f3af8c96b9c53",
+    "CITATION.cff": "523af3fb0e0a4bb17bd5048d24431a35f0565f232ad701e0488fb80cdde6ca4c",
+    "audit/claim_register_20260922.json": "7a77773c8c38996d7e4a35967acfa5b98a26b901f2cc284b09a47787bbdc6b4f",
+    "audit/claim_register_20260922.md": "692970a2fecb46b69f8ef8899029da63812d6cd8c091f5ef36314f6250438126",
+    "audit/adversarial_revision_round4_20260923.json": "87a7221885cceb9cecc99b03738fee461150c8fa43483dfbaeb10cda67e0766a",
+    "audit/adversarial_revision_round4_20260923.md": "a8d972178ad19132cea8566dcd548fa7804d799d9634b9cbf3afa094f53dd83a",
+    "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
+    "audit/adversarial_revision_20260922.md": "242b9a9ea5e32edd2dfec801d225c98839787d34c9e18810e82dbfaefabb9346",
+    "audit/adversarial_revision_round3_20260922.json": "56001e050190edcd24b34f021677f1e4b5d262b7383f94e745e399c736b27c64",
+    "audit/adversarial_revision_round3_20260922.md": "f371fcf24dd7be8bbfc118573da4e5857eb1e2a87ca33d188cce9ef04c714fee",
+    "audit/model_exposition_20260922.json": "36a8cfbc005387789c6029520be7bee58262eb2aefc826938db2dd4214f8c1ac",
+    "audit/model_exposition_20260922.md": "d38e6e6ad8f694b613ecbc1c8db24d74c4fa259b87385c8c25de793ac1144ce2",
+    "audit/mathematical_exposition_20260923.json": "3abcda19963b3a3d909429e8efb7526f4d37c1da14969e65c4d62babb952835d",
+    "audit/mathematical_exposition_20260923.md": "4421c3a53dda6bc3f319f4b01a4ee15cdb14aac88bcefe1e02c2ce83c4a4f1c2",
+    "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
+    "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
+    "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
+    "audit/finalization_20260930.json": "8f970051048e33851a4297de2c9fc5fc6565fa8bf897a451c260cad8529c0658",
+    "audit/finalization_20260930.md": "b2e0cf6c5feddef92f23d6b7adbc62c7054807e58f01109791b24a9f2e4a9c00",
+    "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
+    "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
+    "audit/claude_integration_response_20261001.json": "f47670843099d55734f13b7ef0d799683282bda0bc877c3ce2f9ab059a93a7d6",
+    "audit/claude_integration_response_20261001.md": "66e5434666b8a2a4c3bbb5258704e1039ea326794db54c320bdab001b8d71505",
+    "audit/hep_readability_response_20261001.json": "b0e61e2a8ddc11fddb0304b43cb16e39317a0fbe591abe7973ac3e77a76f9024",
+    "audit/hep_readability_response_20261001.md": "5ab5b08df90c2abda4167247988d7bd42a7583b21fe6a2c173e69a3db68b88ea",
+    "audit/current_qa_series.json": "e831717b373842ecc2a53fa0319aa4a3b10ef56484b5c8ab2f8cd9091239d157",
+    "scripts/build_figures.py": "891b114016dbe7facbc6dcd8535a2f12859e45568747b3f57733450407e7ffd6",
+    "scripts/claude_reader_checks.py": "a9990258576ee53403fab7bb237976922e825b49f2288eb12a862c8813b0a669",
+    "scripts/component_bounds.py": "9be89e3dfbe19fe8308af42999e4c9af4262e54789a4204e09e73488c0c80e94",
+    "scripts/full_manuscript_qa.py": "330b5f2bcfe8a489be6ad77cf7f3fab9efe27984932a44242241b77f5ddd6d35",
+    "scripts/physics_exposition_checks.py": "a2dd3ca33399af137cebda59de3033677c1e7d05140302228a16619a3be347a5",
+    "scripts/qa_series.py": "e9694aefd12bcac2c59a784e3126cb2c296b7d928cd7fcf796aa293dbd2b86e4",
+    "scripts/reader_figures.py": "56e7d2f5f2b4d5804be86f5d744150b0b82930c69195d18eaeb31dca6b63c24d",
+    "scripts/second_audit_checks.py": "2ab3c7628a92e9177f99b8e2d08d121c5245b142e994e0aa57a1d0f0535b007d",
+    "scripts/test_qa_guards.py": "04e4012b2aa71a3987b1834321d9f507797df43561f3d5b9eba8118fade8feb9",
+    "scripts/write_build_audit.py": "628501624fd9afde1f64a3667f3fc7e2b7c611647d40f011467fda7151fcedf4",
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+    "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
+    "data/reports/condition_only_control.json": "8d9b1ec17e23a11233b0eac9e12de86dc834928d119ef38d97ff41d42de5619f",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
+    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+    "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
+  },
+  "executed_commands": [
+    {
+      "argv": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "build.ps1",
+        "-Python",
+        "C:\\Python313\\python.exe"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "6df3fce18af8355b6e4c800828647fdad612f5c5447d9b31d2e556925afc6318",
+      "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+    },
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-m",
+        "py_compile",
+        "scripts/build_figures.py",
+        "scripts/full_manuscript_qa.py",
+        "scripts/write_build_audit.py"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdfinfo",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "117ff35c85f83f3aa42e7eee3e6d390781eec9b007f4f92fab55d69d07500577",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
