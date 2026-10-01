@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-10-01T18:15:07Z",
+  "revision": "0.21.1",
+  "repository": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+  "branch": "main",
+  "release_commit": "8dd04cada8fad79066ee8fc4f86c47528d07f8ce",
+  "remote_main_verified": true,
+  "main_sha256": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
+  "pdf_sha256": "04401ee2d9f737442029872ca904caa807a531e2369c940398cb7b73293e8c24",
+  "source_zip_sha256": "d2fc3300f006722372c95eb71287558240910045b8b811a2be3e1b471a9a0712",
+  "qa": "audit/qa_series/hep_readability_followup_20261001/iteration_06.json",
+  "qa_checks": 20,
+  "visually_reviewed_pdf_pages": 14,
+  "guard_tests": 10,
+  "native_editor_compile": "Failed at platform initialization: Unable to find standard directories for platform",
+  "local_latex_biber_build": "passed",
+  "arxiv_uploaded": false,
+  "new_physics_validation": false
+}

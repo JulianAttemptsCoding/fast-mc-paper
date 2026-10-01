@@ -410,3 +410,5 @@ Full QA follow-up attempt 05 again failed the unchanged 14-page cap after the su
 Follow-up HEP reader revision v0.21.1 sealed: QA06 passed 20 groups at 14 pages; all pages visually bound by hash; 10 guard tests passed. Seven-file source ZIP CRC and bytes verified. Native editor compiler failed at platform initialization; local LaTeX/Biber passed. See audit/hep_readability_followup_completion_20261001.json for exact hashes, environment and failed attempts. No new physics validation or arXiv upload.
 
 Git preflight initially flagged extra blank EOF lines in two immutable failed-attempt Markdown notes. Normalized only their trailing blank lines and retained their findings. Final staged whitespace, helper AST and exact raw-byte identity for all 622 indexed files passed. The sealed main.tex/PDF/ZIP SHA-256 hashes are unchanged.
+
+Follow-up HEP reader revision 0.21.1 committed as 8dd04cada8fad79066ee8fc4f86c47528d07f8ce and pushed to GitHub `main`. Verified the remote ref equals that commit and the working tree was clean before writing this publication record. See audit/publication_v0211_20261001.{json,md}; arXiv upload remains unperformed.
