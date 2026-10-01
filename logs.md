@@ -331,3 +331,8 @@ QA attempt 01 failed a required semantic wording check and produced 15 pages; re
 ## 2026-10-01: reader-proposal manuscript revision completed
 
 Final QA series claude_integration_20261001 attempt 04: 20 groups, 14 pages, exact rendered-page review binding; 10 release guards passed. Packaged v0.20.0 with seven exact-byte source files. Native editor initialization failure remains disclosed. No physics validation or external submission. See audit/claude_integration_completion_20261001.json for hashes, commands, failures and remaining work.
+
+
+## 2026-10-01: exact-byte Git index correction
+
+Initial publication byte check failed for older cached index entries. The shell continued to create an unpushed intermediate commit; no publication occurred. Forced rereading of tracked working bytes under * -text corrected the index. All 559 indexed files now pass exact blob comparison, with zero credential-pattern matches. See audit/git_prepublication_20261001.json.

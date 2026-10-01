@@ -1,0 +1,18 @@
+{
+  "revision": "0.20.0",
+  "indexed_files": 559,
+  "exact_blob_match": true,
+  "credential_pattern_hits": [],
+  "failure_and_correction": "Initial exact-byte index check failed for unchanged older files cached under autocrlf. PowerShell continued and created an unpushed release commit after the Python assertion. No push occurred. git add --renormalize . with * -text reread all existing working bytes without modifying files; full index check now passes. A second corrective commit preserves the failure and fix.",
+  "whitespace_check": "Initial default diff check treated preserved CRLF as trailing whitespace; CRLF-aware check passes with other whitespace checks retained.",
+  "commands": [
+    "git add --all",
+    "git ls-files -s -z; compare every blob to raw working bytes",
+    "git add --renormalize .",
+    "repeat full index exact-byte and credential-pattern checks"
+  ],
+  "qa": "claude_integration_20261001/iteration_04.json",
+  "pdf_sha256": "14259865b931c2ce17f1a2abe3215cc5ec3d2698368fa876b32e949ff89e7598",
+  "publication": "Authorized; not yet pushed",
+  "additional_check": "Full raw staged whitespace check flagged existing trailing spaces in immutable historical reviews because changing CRLF storage presents whole files as new lines. Content diff with --ignore-cr-at-eol passes while retaining trailing-space checks; no historical review was altered."
+}
