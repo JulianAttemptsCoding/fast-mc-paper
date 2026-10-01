@@ -336,3 +336,8 @@ Final QA series claude_integration_20261001 attempt 04: 20 groups, 14 pages, exa
 ## 2026-10-01: exact-byte Git index correction
 
 Initial publication byte check failed for older cached index entries. The shell continued to create an unpushed intermediate commit; no publication occurred. Forced rereading of tracked working bytes under * -text corrected the index. All 559 indexed files now pass exact blob comparison, with zero credential-pattern matches. See audit/git_prepublication_20261001.json.
+
+
+## 2026-10-01: v0.20.0 GitHub publication
+
+Pushed release commit d5b16215f77066dd328cf1857be8fb97c4e6e9f2; verified remote main identity and clean working tree. PDF, seven-file source ZIP, proposal disposition and exact-byte evidence are published. See audit/publication_v020_20261001.json. No arXiv upload.

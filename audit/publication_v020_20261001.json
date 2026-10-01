@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-10-01T15:52:58.841967+00:00",
+  "revision": "0.20.0",
+  "published_release_commit": "d5b16215f77066dd328cf1857be8fb97c4e6e9f2",
+  "remote_main_verified": "d5b16215f77066dd328cf1857be8fb97c4e6e9f2",
+  "remote": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+  "pdf_sha256": "14259865b931c2ce17f1a2abe3215cc5ec3d2698368fa876b32e949ff89e7598",
+  "zip_sha256": "eecd8b3c16c641fff498151a37c252c2f4ce267c4d27f2cef24fc40c7b0256df",
+  "status": "Release push succeeded; local HEAD and remote main matched; working tree clean before adding this publication record.",
+  "scope": "GitHub release artifacts only; no arXiv upload or physics validation.",
+  "commands": [
+    "git push origin main",
+    "git ls-remote origin refs/heads/main",
+    "git rev-parse HEAD",
+    "git status --porcelain"
+  ],
+  "checks": "20 automated groups; 14 directly read pages; 10 release guards; exact Git blob checks",
+  "followup": "This publication record is committed separately; final remote equality checked after its push."
+}
