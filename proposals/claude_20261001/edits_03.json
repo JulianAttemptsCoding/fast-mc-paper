@@ -1,0 +1,7 @@
+[
+ ["the generated mean profile is low by 9--12\\% in layers 9--16, including 8.6\\% at the Geant4 maximum in layer 9.",
+  "the generated mean profile is low by 8.6\\% at the Geant4 maximum in layer 9 and by up to 12\\% in layers 10--16."],
+ ["is 17.9\\,MeV per event for the generator and 17.2\\,MeV for Geant4",
+  "is 17.8\\,MeV per event for the generator and 17.2\\,MeV for Geant4"],
+ ["with $\\chi^2=12.9$ for eight bins", "with $\\chi^2=13.0$ for eight bins"]
+]

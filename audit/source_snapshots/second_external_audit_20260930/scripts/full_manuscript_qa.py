@@ -1,0 +1,664 @@
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import json
+import math
+import re
+import platform
+import traceback
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+import numpy as np
+from PIL import Image, ImageOps
+
+
+ROOT = Path(__file__).resolve().parents[1]
+PDF = ROOT / "output" / "fast_mc_zdc_manuscript.pdf"
+REPORT = ROOT / "data" / "reports" / "dicos-f-02_epoch90.json"
+PROVENANCE = ROOT / "data" / "reports" / "dicos-f-02_epoch90.provenance.json"
+HISTORY = ROOT / "data" / "training" / "calibrated_lr3e4_history.csv"
+FIGURE_MANIFEST = ROOT / "figures" / "manifest.json"
+COMMAND_RECORDS: list[dict] = []
+
+
+def release_source_hashes() -> dict:
+    paths = [ROOT / name for name in ["main.tex", "references.bib", "build.ps1", "README.md", "STATUS.md", "CITATION.cff"]]
+    paths += [ROOT / p for p in [
+        "audit/claim_register_20260922.json", "audit/claim_register_20260922.md",
+        "audit/adversarial_revision_round4_20260923.json", "audit/adversarial_revision_round4_20260923.md",
+        "audit/adversarial_revision_20260922.json", "audit/adversarial_revision_20260922.md",
+        "audit/adversarial_revision_round3_20260922.json", "audit/adversarial_revision_round3_20260922.md",
+        "audit/model_exposition_20260922.json", "audit/model_exposition_20260922.md",
+        "audit/mathematical_exposition_20260923.json", "audit/mathematical_exposition_20260923.md",
+        "audit/sentence_evidence_20260922.json", "audit/sentence_evidence_20260922.md",
+        "audit/literature_benchmark.md",
+        "audit/finalization_20260930.json", "audit/finalization_20260930.md",
+    ]]
+    paths += sorted((ROOT / "scripts").glob("*.py"))
+    paths += sorted(p for p in (ROOT / "data").rglob("*") if p.is_file())
+    return {str(p.relative_to(ROOT)).replace("\\", "/"): sha256(p) for p in paths}
+
+EXPECTED_FIGURES = {
+    "detector_geometry.png",
+    "generator_schematic.png",
+    "longitudinal_profile.png",
+    "support_summary.png",
+}
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def run(command: list[str], *, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
+    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    COMMAND_RECORDS.append({"argv": command, "returncode": result.returncode,
+                            "stdout_sha256": hashlib.sha256(result.stdout.encode()).hexdigest(),
+                            "stderr_sha256": hashlib.sha256(result.stderr.encode()).hexdigest()})
+    if result.returncode:
+        raise AssertionError(
+            f"command failed ({result.returncode}): {' '.join(command)}\n"
+            f"STDOUT:\n{result.stdout[-6000:]}\nSTDERR:\n{result.stderr[-6000:]}"
+        )
+    return result
+
+
+def close(actual: float, expected: float, *, atol: float = 1e-9) -> None:
+    assert math.isclose(float(actual), float(expected), rel_tol=1e-9, abs_tol=atol), (actual, expected)
+
+
+def load_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def validate_evidence(checks: list[str]) -> dict:
+    report = load_json(REPORT)
+    provenance = load_json(PROVENANCE)
+    geometry = load_json(ROOT / "data" / "geometry" / "geometry_summary.json")
+    control = load_json(ROOT / "data" / "reports" / "condition_only_control.json")
+
+    assert report["schema_version"] == 3
+    assert report["split"] == "validation"
+    assert report["test_events_used"] == 0
+    assert report["validation_events_used"] == 10_000
+    assert report["pairs"] == 10_000
+    assert report["identity"]["epoch"] == 90
+    assert report["identity"]["generator_seed"] == 20260723
+    assert report["identity"]["checkpoint_sha256"] == provenance["checkpoint_sha256"]
+    assert report["identity"]["frozen_config_sha256"] == provenance["frozen_config_sha256"]
+    assert provenance["report_sha256"] == sha256(REPORT)
+    assert provenance["selected_by"] == "lowest validation loss over the complete declared horizon"
+    close(provenance["selected_validation_loss"], 4.483767619419238)
+    assert control == {
+        "kind": "condition-only-pipeline-control",
+        "run_tag": "dicos-f-02",
+        "epoch": 90,
+        "source_split": "validation",
+        "condition_only_auroc": 0.5,
+        "interpretation": "pairing-pipeline sanity control only; contains no shower information",
+        "test_events_used": 0,
+    }
+    checks.append("Evidence identity, split roles, checkpoint/config hashes, and condition-only control")
+
+    invariants = report["structural_invariants"]
+    assert invariants["pass"] is True and invariants["reports"] == 1250
+    for key in [
+        "count_mismatch_max", "dust_cells", "negative", "nonfinite", "outside_valid_support",
+        "requested_realized_mismatch_max", "support_mask_mismatch",
+    ]:
+        assert invariants[key] == 0, key
+    close(invariants["event_closure_max_gev"], 1.1444091796875e-05)
+    close(invariants["layer_closure_max_gev"], 3.0517578125e-05)
+    close(invariants["closure_tolerance_effective_gev"], 0.0004941688537597657)
+    close(invariants["closure_tolerance_absolute_gev"], 2e-5)
+    close(invariants["closure_tolerance_relative"], 1e-5)
+    close(invariants["closure_tolerance_effective_gev"],
+          max(invariants["closure_tolerance_absolute_gev"],
+              invariants["closure_tolerance_relative"] * invariants["closure_scale_gev"]))
+    assert invariants["layer_closure_max_gev"] > invariants["closure_tolerance_absolute_gev"]
+    checks.append("Aggregate invariant counters and historical batch-relative policy; legacy absolute-only countercheck fails as disclosed")
+
+    source = load_json(ROOT / "data/provenance/source_evidence.json")
+    split_counts = source["canonical_preparation"]["split_counts"]
+    assert split_counts == {"train": 612482, "validation": 76158, "test": 76300}
+    assert sum(split_counts.values()) == source["canonical_preparation"]["entries"] == 764940
+    pilot = source["pilot_training"]
+    assert pilot["events"] == 26624 and pilot["pilot_validation_events"] == 6656
+    assert pilot["config_sha256"] == report["identity"]["frozen_config_sha256"]
+    assert pilot["splits_sha256"] == source["binding"]["splits_sha256"]
+    assert pilot["splits_sha256"] != report["identity"]["splits_sha256"]
+    assert source["candidate"]["checkpoint_sha256"] == report["identity"]["checkpoint_sha256"]
+    assert source["battery_contract"]["validation_manifest_sha256"] == report["identity"]["validation_manifest_sha256"]
+    assert source["battery_contract"]["splits_sha256"] == report["identity"]["splits_sha256"]
+    assert abs(100 * pilot["events"] / split_counts["train"] - 4.35) < 0.005
+    checks.append("Config-hash-bound pilot population, canonical preparation counts, and distinct training/diagnostic split provenance")
+
+    assert geometry["n_nodes"] == 6790
+    assert geometry["layer_counts"][0] == 400
+    assert sum(geometry["layer_counts"][1:]) == 6390
+    assert geometry["n_layers"] == 65
+    assert geometry["n_edges"] == 107920
+    assert 8 * 6790 + 2 * 4 * (400 + 63 * 100) == geometry["n_edges"]
+    gang = geometry["physical_position_count_histogram"]
+    assert sum(int(v) for v in gang.values()) == 6790
+    assert int(gang["1"]) == 4390 and int(gang["2"]) == 1950 and int(gang["3"]) == 444 and int(gang["4"]) == 6
+    assert 4390 - 400 == 3990 and 6390 - 3990 == 2400
+    checks.append("Readout geometry, ganging arithmetic, layer count, and explicitly reproduced directed-edge count")
+
+    zero_g = report["visibility_and_zero_response"]["generated"]["zero_fraction"]
+    zero_r = report["visibility_and_zero_response"]["truth"]["zero_fraction"]
+    ng, nr = 1 - zero_g, 1 - zero_r
+    values = {
+        "active_layers_g": report["activity"]["generated"]["mean_active_layers"] / ng,
+        "active_layers_r": report["activity"]["truth"]["mean_active_layers"] / nr,
+        "channels_g": report["counts"]["generated"]["mean_hit_count"] / ng,
+        "channels_r": report["counts"]["truth"]["mean_hit_count"] / nr,
+        "components_g": report["topology"]["generated"]["connected_components_mean"] / ng,
+        "components_r": report["topology"]["truth"]["connected_components_mean"] / nr,
+        "largest_g": report["topology"]["generated"]["largest_component_fraction_mean"] / ng,
+        "largest_r": report["topology"]["truth"]["largest_component_fraction_mean"] / nr,
+    }
+    for key, expected in {
+        "active_layers_g": 54.83495638060458,
+        "active_layers_r": 54.58302210558191,
+        "channels_g": 1588.8193345506188,
+        "channels_r": 1617.5679822347834,
+        "components_g": 59.38953134510042,
+        "components_r": 23.419198546482285,
+        "largest_g": 0.8887087677677027,
+        "largest_r": 0.9490057777215484,
+    }.items():
+        close(values[key], expected, atol=1e-8)
+    assert round(100 * (values["channels_g"] / values["channels_r"] - 1), 1) == -1.8
+    close(report["activity"]["generated"]["mean_gaps"], 6.048792858592006)
+    close(report["activity"]["truth"]["mean_gaps"], 2.1021499949530633)
+    close(report["activity"]["generated"]["mean_last_active_layer"], 60.61888821261919)
+    close(report["activity"]["truth"]["mean_last_active_layer"], 56.195114565458766)
+    close(report["activity"]["generated"]["mean_span"], 60.88374923919659)
+    close(report["activity"]["truth"]["mean_span"], 56.68517210053498)
+    close(report["activity"]["generated"]["gap_fraction"], 0.9352809900588355)
+    close(report["activity"]["truth"]["gap_fraction"], 0.5242757646108812)
+    close(report["first_layer"]["generated"]["ecal_start_prevalence"], 0.9253398255224183)
+    close(report["first_layer"]["truth"]["ecal_start_prevalence"], 0.9381245583930554)
+    close(report["first_layer"]["generated"]["mean_first_active_layer"], 0.7351389734226009)
+    close(report["first_layer"]["truth"]["mean_first_active_layer"], 0.5099424649237912)
+    for side, nonempty in [("generated", ng), ("truth", nr)]:
+        activity = report["activity"][side]
+        close(activity["mean_span"] - activity["mean_active_layers"] / nonempty,
+              activity["mean_gaps"], atol=1e-10)
+    close(values["active_layers_g"] - values["active_layers_r"], 0.2519342750226694, atol=1e-8)
+    close(report["activity"]["generated"]["mean_last_active_layer"] - report["activity"]["truth"]["mean_last_active_layer"], 4.423773647160425, atol=1e-8)
+    close(values["components_g"] - values["components_r"], 35.970332798618135, atol=1e-8)
+    close(100 * (values["largest_g"] - values["largest_r"]), -6.029700995384565, atol=1e-8)
+    close(report["topology"]["generated"]["edge_cooccupancy_mean"], 0.137470797813195)
+    close(report["topology"]["truth"]["edge_cooccupancy_mean"], 0.14579406782802076)
+    checks.append("Nonempty denominators; absolute table differences; span/gap/last-layer identities; no ratio-only headline")
+
+    total = report["distribution_metrics"]["total_response_gev"]
+    close(total["generated_mean"], 4.36936254901063)
+    close(total["truth_mean"], 4.324175614774786)
+    bins = report["positive_response"]["response_bins"]
+    assert sum(int(row["n"]) for row in bins) == 10_000
+    close(sum(row["n"] * row["generated_mean"] for row in bins) / 10_000, total["generated_mean"], atol=3e-7)
+    close(sum(row["n"] * row["truth_mean"] for row in bins) / 10_000, total["truth_mean"], atol=3e-7)
+    mean_diffs = [100 * row["mean_bias_fraction"] for row in bins]
+    width_diffs = [100 * row["resolution_difference_fraction"] for row in bins]
+    close(min(mean_diffs), -7.653090357780457, atol=1e-8)
+    close(max(mean_diffs), 7.735941559076309, atol=1e-8)
+    close(min(width_diffs), -10.88799312710762, atol=1e-8)
+    close(max(width_diffs), 9.582071751356125, atol=1e-8)
+    close(report["positive_response"]["response_wasserstein_gev"], 0.07272892743995106)
+    interval = report["bootstrap"]["intervals"]["response_wasserstein_gev"]
+    close(interval["low"], 0.0684143976088688)
+    close(interval["high"], 0.19837148981439048)
+    close(report["truth_half_floors"]["response_wasserstein_gev"], 0.1474655284291369)
+    zero_interval = report["bootstrap"]["intervals"]["zero_fraction_difference"]
+    assert report["bootstrap"]["paired"] is True
+    assert report["bootstrap"]["stratified_by"] == "primary energy bin"
+    assert report["bootstrap"]["replicates"] == zero_interval["replicates"] == 1000
+    close(zero_interval["low"], 0.0019)
+    close(zero_interval["high"], 0.0076)
+    close(report["visibility_and_zero_response"]["generated"]["zero_fraction"] - report["visibility_and_zero_response"]["truth"]["zero_fraction"], 0.0049)
+    close(report["distribution_metrics"]["hit_count"]["wasserstein"], 58.6837)
+    hit_interval = report["bootstrap"]["intervals"]["hit_count_wasserstein"]
+    assert hit_interval["replicates"] == 1000
+    close(hit_interval["low"], 51.4664)
+    close(hit_interval["high"], 66.9248)
+    c2st = report["c2st"]
+    for name, expected in [("high_level", 0.7747664074074074),
+                           ("low_level", 0.7910063148148149),
+                           ("profile_aware", 0.8564428148148148),
+                           ("condition_only", 0.4635906851851852)]:
+        assert len(c2st[name]["auroc_per_seed"]) == 3
+        close(c2st[name]["auroc_mean"], expected)
+    assert c2st["high_level"]["gate"] == "max_high_level_c2st_auc"
+    close(c2st["high_level"]["gate_value"], 0.65)
+    assert c2st["high_level"]["auroc_mean"] > c2st["high_level"]["gate_value"]
+    external = load_json(ROOT / "archive/excluded_screens/verified_condition_control.json")
+    assert external["source_split"] == "validation" and external["test_events_used"] == 0
+    assert external["current"]["epoch"] == 90 and external["current"]["run_tag"] == "dicos-f-02"
+    close(external["current"]["high_level_auroc"], 0.8928972222222222)
+    close(external["current"]["condition_only_auroc"], 0.5)
+    timing = report["timing"]
+    assert timing["events"] == 10_000
+    close(timing["seconds_per_event"], 0.34419262690750185)
+    close(timing["total_seconds"], timing["events"] * timing["seconds_per_event"], atol=1e-8)
+    assert timing["stage_seconds"]["topology generated"] > 0
+    assert timing["stage_seconds"]["c2st all families"] > 0
+    checks.append("Evaluator wall-time number includes topology and classifier analysis; generation-latency claim excluded")
+    checks.append("Response moments and bins; zero and hit-count bootstrap intervals; all original C2ST families and failed gate; separately labelled pair-grouped monitor")
+
+    profile = report["distribution_metrics"]["mean_longitudinal_profile"]
+    g = np.asarray(profile["generated"], dtype=float)
+    r = np.asarray(profile["truth"], dtype=float)
+    assert g.shape == r.shape == (65,)
+    close(g[0] / r[0] - 1, 0.083159, atol=2e-6)
+    close(g[1:].sum() / r[1:].sum() - 1, -0.058226, atol=2e-6)
+    close(np.abs(g - r).sum() / r.sum(), 0.070965, atol=2e-6)
+    checks.append("ECAL/HCAL cancellation and longitudinal-profile discrepancy")
+
+    with HISTORY.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    assert len(rows) == 104
+    epochs = [int(row["epoch"]) for row in rows]
+    losses = [float(row["validation_loss"]) for row in rows]
+    assert (min(epochs), max(epochs)) == (11, 114)
+    best = min(zip(losses, epochs, strict=True))
+    close(best[0], 4.483767619419238)
+    assert best[1] == 90
+    assert all(loss > best[0] for loss, epoch in zip(losses, epochs, strict=True) if epoch > 90)
+    assert len(set(epochs)) == len(epochs)
+    assert epochs == list(range(11, 115))
+    assert {row["run_tag"] for row in rows if int(row["epoch"]) > 90} == {"dicos-f-03"}
+    assert sha256(HISTORY) == load_json(ROOT / "data/training/calibrated_lr3e4_history.provenance.json")["sha256"]
+    checks.append("Hash-verified 104-row extract, contiguous unique epochs, one declared post-90 continuation, and epoch-90 objective minimum")
+    return report
+
+
+def validate_tex_and_bib(checks: list[str]) -> None:
+    tex = (ROOT / "main.tex").read_text(encoding="utf-8")
+    bib = (ROOT / "references.bib").read_text(encoding="utf-8")
+    required = [
+        "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
+        "These descriptive results concern one training seed and a repeatedly inspected development bank", "Support measurements use a strictly positive energy definition", "mean AUROCs of 0.775 for high-level shower summaries", "high-level score exceeds the recorded screening maximum of 0.65",
+        "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
+        "104 retained rows spanning epochs 11--114", "defines the checkpoint analyzed below",
+        "selects four nearest centroids", "stored in both directions", "107,920 in total",
+        r"\prod_{\ell>F}^{64}", "the two energy features carry the same physical information",
+        "Intervals for the energy-bin differences, mean longitudinal profile, gaps, and graph components are unavailable", "end-to-end benchmark", "0.19--0.76 percentage points",
+        "Consecutive empty layers constitute one separation", "establishes a within-run graph-fragmentation discrepancy",
+        "This counts inactive layers, not contiguous runs.", "26,624 training", "6,656 validation events", "76,158 to validation", "76,300 to the nominal test",
+        "largest sampled event total in each batch", "maximum layer residual exceeds the earlier fixed", "A difference of 0.25 active layers", "last active layer by $+4.42$",
+        "35.97 more weak components", r"88.87\% of occupied channels on average, versus 94.90\%",
+        "Zero-deposit events & 93 (0.93\\%) & 142 (1.42\\%)",
+        "Mean last active layer & 56.20 & 60.62 & $+4.42$",
+        "Mean weak graph components & 23.42 & 59.39 & $+35.97$",
+        "Mean largest-component fraction & 94.90\\% & 88.87\\% & $-6.03$ pp",
+        "0.1375 for the generator and 0.1458 for Geant4",
+        "no learned shower encoder", "two conditional flow-matching models generate the continuous layer and channel energy shares from independent Gaussian draws",
+        "its stochastic shower histories are independent",
+        "Members of a matched condition pair can enter opposite partitions",
+        "Its different event sample precludes a direct comparison",
+        "All quoted intervals describe resampling variation within the development bank",
+        "Numerical checks test the generated deposits against the model's sampled budgets",
+        "During generation, it receives their sampled values, allowing errors to propagate",
+        "an independently defined physical-neighbor graph",
+        "generated draws clipped by the cap and reference deposits above it",
+        "generation latency was not isolated",
+        "five edge inputs", r"Selecting the top $K_\ell$ enforces the requested count exactly, but imposes no adjacency or connectivity constraint.",
+        "joint training objective combines nine weighted losses", "These are accounting identities for the model's sampled readout budget",
+        r"\label{eq:profile_target}", r"\label{eq:flow_steps}", r"\label{eq:message}",
+        r"\label{eq:topk}", r"\label{eq:share_target}", r"\label{eq:joint_loss}",
+    ]
+    missing = [phrase for phrase in required if phrase not in tex]
+    assert not missing, f"required manuscript text missing: {missing}"
+    forbidden = [
+        "V3-SUP", "V3-S2", "M0", "B0", "epoch 12", "midpoint Euler",
+        "plotted error bars", "promotion criterion",
+        "0.7785", "0.9330", "S2",
+        "551,234-event", "76,160", "76,298", "Two declared continuations",
+        "every inactive layer adds a component", "paired joint counts are required and unavailable",
+        "Topology-Sensitive Validation", "The contribution is threefold", "Artifact identity and audit boundary",
+        "response_energy_bins.png", "structure_ratio_summary.png", "training_history.png",
+        "0.0727", "0.1475", "0.0684", "0.1984", "2.88", "2.54",
+        "delve", "foster", "leverage", "groundbreaking", "in the realm of",
+        "it is important to note", "underscores the importance",
+    ]
+    found = [phrase for phrase in forbidden if phrase in tex]
+    assert not found, f"stale or excluded manuscript language: {found}"
+    assert r'Kr{\"u}ger' in bib and 'Kr{"u}ger' not in bib
+    checks.append("Claim language, author/mentor metadata, scope statements, and stale-model exclusion")
+
+    bib_keys = set(re.findall(r"@\w+\{([^,]+),", bib))
+    citation_groups = re.findall(r"\\cite\{([^}]+)\}", tex)
+    cited = {key.strip() for group in citation_groups for key in group.split(",")}
+    missing_bib = sorted(cited - bib_keys)
+    assert not missing_bib, f"missing bibliography entries: {missing_bib}"
+    assert len(cited) >= 12
+    labels = set(re.findall(r"\\label\{([^}]+)\}", tex))
+    refs = set(re.findall(r"\\(?:ref|eqref)\{([^}]+)\}", tex))
+    assert not (refs - labels), f"undefined source refs: {sorted(refs-labels)}"
+    assert len(labels) == len(re.findall(r"\\label\{([^}]+)\}", tex)), "duplicate labels"
+    checks.append(f"{len(cited)} citation keys and {len(labels)} LaTeX labels/references")
+
+
+def validate_figures(checks: list[str]) -> None:
+    manifest = load_json(FIGURE_MANIFEST)
+    assert set(manifest["figures_sha256"]) == EXPECTED_FIGURES
+    assert manifest["test_events_used"] == 0
+    for name, digest in manifest["figures_sha256"].items():
+        path = ROOT / "figures" / name
+        assert path.exists() and sha256(path) == digest
+        with Image.open(path) as image:
+            assert image.width >= 1200 and image.height >= 500
+            gray = np.asarray(ImageOps.grayscale(image), dtype=np.uint8)
+            assert float((gray < 245).mean()) > 0.005
+    assert manifest["sources_sha256"]["data/reports/dicos-f-02_epoch90.json"] == sha256(REPORT)
+    checks.append("Four deterministic manuscript figures, source hashes, dimensions, and nonblank raster content")
+
+
+def validate_appendix(checks: list[str]) -> None:
+    """Bind every new table entry to retained evidence, including all seeds."""
+    tex = (ROOT / "main.tex").read_text(encoding="utf-8")
+    report = load_json(REPORT)
+    source = load_json(ROOT / "data/provenance/source_evidence.json")
+    weights = source["calibration"]["proposed_weights"]
+    mapping = [("V", "Visibility", "visible"), ("T", "Total deposit", "response"),
+               ("F", "First active layer", "first_layer"), ("A", "Layer activity", "active"),
+               ("B", "Layer-budget flow", "profile_flow"), ("K", "Channel count", "count"),
+               ("S", "Support BCE", "support_bce"), ("R", "Support ranking", "support_rank"),
+               ("Y", "Channel-share flow", "share_flow")]
+    for symbol, name, key in mapping:
+        assert f"$w_{{{symbol}}}$ & {name} & {weights[key]:.6f}" in tex
+    medians = source["calibration"]["gradient_norm_median"]
+    geometric = math.exp(sum(math.log(v) for v in medians.values()) / len(medians))
+    clipped = {k: min(4.0, max(0.25, geometric / v)) for k, v in medians.items()}
+    for key, value in weights.items():
+        close(value, clipped[key] * len(clipped) / sum(clipped.values()))
+    bins = report["positive_response"]["response_bins"]
+    assert len(bins) == 8 and sum(b["n"] for b in bins) == 10000
+    assert all(b["n"] >= 500 for b in bins)
+    for b in bins:
+        row = (f"{int(b['low'])}--{round(b['high'])} & {b['n']:,} & "
+               f"{b['truth_mean']:.3f} & {b['generated_mean']:.3f} & "
+               f"${100*b['mean_bias_fraction']:+.2f}$ & "
+               f"${100*b['resolution_difference_fraction']:+.2f}$")
+        assert row in tex, row
+    assert report["identity"]["evaluator_seeds"] == [20260804, 20260805, 20260806]
+    for label, key in [("Condition only", "condition_only"), ("High-level", "high_level"),
+                       ("Channel energies", "low_level"), ("Layer profile", "profile_aware")]:
+        c = report["c2st"][key]
+        row = label + " & " + " & ".join(f"{v:.4f}" for v in c["auroc_per_seed"]) + f" & {c['auroc_mean']:.4f}"
+        assert row in tex, row
+    # User explicitly removed the affiliation label on 2026-09-30.
+    # Enforce the replacement metadata contract; retain all scientific guards.
+    expected_author = r"\author{Julian Juan\\[3pt]\small\href{mailto:juliansjuan08@gmail.com}{juliansjuan08@gmail.com}}"
+    assert re.findall(r"^\\author.*$", tex, re.M) == [expected_author]
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    assert not re.search(r"^\s*affiliation\s*:", citation, re.M)
+    assert 'family-names: Juan' in citation and 'given-names: Julian' in citation
+    assert 'email: "juliansjuan08@gmail.com"' in citation
+    for phrase in ["juliansjuan08@gmail.com", "generous mentorship",
+                   "laboratory community", "historical runtime configuration is unavailable",
+                   "not independent generator-training seeds", "36,100--36,300",
+                   "14,000", "6,000", "maximum of 100 boosting iterations"]:
+        assert phrase in tex, phrase
+    audit = load_json(ROOT / "audit/finalization_20260930.json")
+    for name, digest in audit["historical_source_sha256"].items():
+        assert sha256(ROOT / "audit/source_snapshots/finalization_20260930" / name) == digest
+    checks.append("Appendix calibration arithmetic, every energy bin, all classifier seeds, historical-source hashes and author-supplied metadata")
+
+
+def validate_repository(checks: list[str]) -> None:
+    active_reports = {path.name for path in (ROOT / "data" / "reports").glob("*.json")}
+    assert active_reports == {
+        "condition_only_control.json",
+        "dicos-f-02_epoch90.json",
+        "dicos-f-02_epoch90.provenance.json",
+    }
+    archived_screens = {path.name for path in (ROOT / "archive" / "excluded_screens").glob("*")}
+    assert {
+        "frozen_v3-sup-portable.yaml", "screening_summary.json", "v3-m0-fresh_epoch19.json",
+        "v3-s2-response_epoch19.json", "v3-sup_epoch12.json", "verified_condition_control.json",
+    } <= archived_screens
+    json_paths = sorted((ROOT / "data").rglob("*.json")) + sorted((ROOT / "figures").glob("*.json"))
+    for path in json_paths:
+        load_json(path)
+    reviews = sorted((ROOT / "reviews").glob("review*.txt"))
+    substantive = [path for path in reviews if "headings" not in path.name]
+    assert len(substantive) == 9 and all(path.stat().st_size > 500 for path in substantive)
+    run([sys.executable, "-m", "py_compile", "scripts/build_figures.py", "scripts/full_manuscript_qa.py", "scripts/write_build_audit.py"])
+    diff = run(["git", "diff", "--check"])
+    assert not diff.stdout.strip()
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    status = (ROOT / "STATUS.md").read_text(encoding="utf-8")
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    literature = (ROOT / "audit" / "literature_benchmark.md").read_text(encoding="utf-8")
+    model_audit = load_json(ROOT / "audit" / "model_exposition_20260922.json")
+    math_audit = load_json(ROOT / "audit" / "mathematical_exposition_20260923.json")
+    sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
+    response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.17.0" in status
+    assert "version: 0.17.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
+    assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
+    assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
+    assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]
+    assert len(model_audit["source_blob_sha256"]) == 14 and len(model_audit["claims"]) == 9
+    assert math_audit["manuscript_version"] == "0.11.1"
+    assert math_audit["source_commit"] == model_audit["source_commit"]
+    assert math_audit["selected_config_sha256"] == model_audit["selected_config_sha256"]
+    assert len(math_audit["equation_sources"]) == 12
+    assert set(math_audit["reader_purpose"]) == set(math_audit["equation_sources"])
+    assert all(len(purpose) > 45 for purpose in math_audit["reader_purpose"].values())
+    tex = (ROOT / "main.tex").read_text(encoding="utf-8")
+    for label, source_paths in math_audit["equation_sources"].items():
+        assert rf"\label{{{label}}}" in tex
+        assert source_paths and all(path in math_audit["source_file_sha256"] for path in source_paths)
+    for path, digest in math_audit["source_file_sha256"].items():
+        assert re.fullmatch(r"[0-9a-f]{64}", digest), path
+        if path in model_audit["source_blob_sha256"]:
+            assert digest == model_audit["source_blob_sha256"][path], path
+    for phrase in [
+        r"A channel is active if $Y_{\ell i}>0$",
+        "The centering removes a common log offset",
+        "they are numerical conventions, not detector thresholds",
+        "Inactive coordinates do not contribute to the masked squared-error loss",
+        r"fixed directed edge set $\mathcal E$",
+        "but imposes no adjacency or connectivity constraint",
+        "Rank one denotes the largest noisy score",
+        "refers to the channel-flow target rather than the layer-flow target",
+        "Binary cross entropy (BCE)",
+    ]:
+        assert phrase in tex, f"missing reader explanation: {phrase}"
+    assert sentence_audit["manuscript_version"] == "0.11.1"
+    assert sentence_audit["review_scope"] == "Every prose paragraph, equation, table caption, and figure caption"
+    assert len(sentence_audit["sections"]) == 8
+    assert all(token in response for token in ["reviews/review7.txt", "reviews/review8.txt", "reviews/review9.txt", "Findings resolved by removal"])
+    mentor_audit = load_json(ROOT / "audit" / "mentor_finalization_20260929.json")
+    assert mentor_audit["status"] in {"source_review_complete", "finalized"}
+    assert len(mentor_audit["passes"]) >= 5
+    assert mentor_audit["reviewed_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_71.json")["source_sha256"]["main.tex"]
+    rhetoric_audit = load_json(ROOT / "audit/rhetoric_revision_20260929.json")
+    assert rhetoric_audit["status"] == "source_complete"
+    assert len(rhetoric_audit["passes"]) >= 12
+    assert rhetoric_audit["current_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_75.json")["source_sha256"]["main.tex"]
+    voice_audit = load_json(ROOT / "audit/research_voice_20260929.json")
+    assert voice_audit["status"] == "source_complete"
+    assert voice_audit["current_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_79.json")["source_sha256"]["main.tex"]
+    assert len(voice_audit["passes"]) >= 6
+    overall_audit = load_json(ROOT / "audit/overall_revision_20260929.json")
+    assert overall_audit["status"] == "source_review_complete"
+    assert overall_audit["current_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_82.json")["source_sha256"]["main.tex"]
+    finalization = load_json(ROOT / "audit/finalization_20260930.json")
+    assert finalization["current_main_tex_sha256"] == sha256(ROOT / "main.tex")
+    assert finalization["status"] in {"source_review_complete", "finalized"}
+    assert len(overall_audit["passes"]) >= 3
+    assert sha256(ROOT / "audit/source_snapshots/v014_main.tex") == voice_audit["current_main_tex_sha256"]
+    assert "the reported pass applies specifically to the batch-dependent criterion" in tex
+    assert "development sample" not in tex
+    assert all(name in tex for name in ["Readout target and conditioning", "Geometry and graph representation", "Training and evaluation populations"])
+    snapshot = ROOT / "audit/source_snapshots/v013_main.tex"
+    assert sha256(snapshot) == rhetoric_audit["current_main_tex_sha256"]
+    old_tex = snapshot.read_text(encoding="utf-8")
+    assert re.findall(r"\\begin\{equation\}.*?\\end\{equation\}", tex, re.S) == re.findall(r"\\begin\{equation\}.*?\\end\{equation\}", old_tex, re.S)
+    assert re.search(r"\\begin\{tabular\}.*?\\end\{tabular\}", tex, re.S).group() == re.search(r"\\begin\{tabular\}.*?\\end\{tabular\}", old_tex, re.S).group()
+    assert all(p["restart"] == i for i, p in enumerate(mentor_audit["passes"][:5], 1))
+    checks.append(f"Active-versus-archived evidence separation, {len(json_paths)} active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check")
+
+
+def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
+    info_text = run(["pdfinfo", str(PDF)]).stdout
+    pages = int(re.search(r"^Pages:\s+(\d+)", info_text, re.MULTILINE).group(1))
+    assert 6 <= pages <= 14
+    render_dir = ROOT / "audit" / "qa_runs" / f"iteration_{iteration:02d}"
+    render_dir.mkdir(parents=True, exist_ok=False)
+    run(["pdftoppm", "-png", "-r", "110", str(PDF), str(render_dir / "page")])
+    rendered = sorted(render_dir.glob("page-*.png"))
+    assert len(rendered) == pages
+    page_metrics: list[dict] = []
+    thumbs: list[Image.Image] = []
+    sizes: set[tuple[int, int]] = set()
+    for index, path in enumerate(rendered, start=1):
+        with Image.open(path) as source:
+            image = source.convert("RGB")
+        sizes.add(image.size)
+        gray = np.asarray(ImageOps.grayscale(image), dtype=np.uint8)
+        ink = gray < 248
+        fraction = float(ink.mean())
+        assert 0.005 < fraction < 0.45, (index, fraction)
+        ys, xs = np.where(ink)
+        margins = {
+            "left": int(xs.min()), "right": int(image.width - 1 - xs.max()),
+            "top": int(ys.min()), "bottom": int(image.height - 1 - ys.max()),
+        }
+        assert min(margins.values()) >= 8, (index, margins)
+        page_text = run(["pdftotext", "-f", str(index), "-l", str(index), str(PDF), "-"]).stdout
+        assert len(re.sub(r"\s+", "", page_text)) >= 120, f"page {index} has too little extractable text"
+        page_metrics.append({
+            "page": index, "sha256": sha256(path), "ink_fraction": fraction,
+            "ink_margins_px": margins, "text_characters": len(page_text),
+        })
+        thumb = image.copy()
+        thumb.thumbnail((390, 510))
+        thumbs.append(thumb)
+    assert len(sizes) == 1
+    cols = 3
+    rows = math.ceil(len(thumbs) / cols)
+    sheet = Image.new("RGB", (cols * 400, rows * 520), "white")
+    for i, thumb in enumerate(thumbs):
+        sheet.paste(thumb, ((i % cols) * 400, (i // cols) * 520))
+    sheet.save(render_dir / "contact.png", optimize=True)
+
+    pdf_text = run(["pdftotext", str(PDF), "-"]).stdout
+    forbidden = ["??", "0.7785", "0.9330", "V3-SUP", "V3-S2", "M0", "S2"]
+    found = [term for term in forbidden if term in pdf_text]
+    assert not found, f"forbidden PDF text: {found}"
+    required = ["Longitudinal Gaps and Readout Connectivity", "Julian Juan", "Wen-Chen Chang", "References"]
+    assert all(term in pdf_text for term in required)
+    log = (ROOT / "main.log").read_text(encoding="utf-8", errors="replace")
+    problems = re.findall(r"LaTeX Warning|Undefined control sequence|Overfull|Underfull|Citation '.+?' undefined", log)
+    assert not problems, problems
+    checks.append(f"{pages}-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks")
+    return {
+        "sha256": sha256(PDF), "bytes": PDF.stat().st_size, "pages": pages,
+        "page_size": next(line.split(":", 1)[1].strip() for line in info_text.splitlines() if line.startswith("Page size:")),
+        "contact_sheet": str((render_dir / "contact.png").relative_to(ROOT)).replace("\\", "/"),
+    }, page_metrics
+
+
+def write_report(iteration: int, focus: str, disposition: str, checks: list[str], pdf: dict, pages: list[dict]) -> None:
+    out_dir = ROOT / "audit" / "iterations"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    created = datetime.now(timezone.utc).isoformat()
+    payload = {
+        "schema_version": 1,
+        "iteration": iteration,
+        "created_utc": created,
+        "focus": focus,
+        "disposition": disposition,
+        "result": "pass",
+        "full_suite": True,
+        "checks": checks,
+        "pdf": pdf,
+        "page_metrics": pages,
+        "source_sha256": release_source_hashes(),
+        "figures_manifest_sha256": sha256(FIGURE_MANIFEST),
+        "environment": {"platform": platform.platform(), "python": sys.version},
+        "executed_commands": COMMAND_RECORDS,
+        "human_visual_review": "pending; render statistics are not visual inspection",
+        "commands": [
+            "powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1",
+            "python -m py_compile scripts/build_figures.py scripts/full_manuscript_qa.py scripts/write_build_audit.py",
+            "git diff --check",
+            f"pdftoppm -png -r 110 output/fast_mc_zdc_manuscript.pdf audit/qa_runs/iteration_{iteration:02d}/page",
+            "pdftotext output/fast_mc_zdc_manuscript.pdf -",
+        ],
+    }
+    json_path = out_dir / f"iteration_{iteration:02d}.json"
+    md_path = out_dir / f"iteration_{iteration:02d}.md"
+    json_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    lines = [
+        f"# Full manuscript QA iteration {iteration:02d}", "", f"Created: {created}", "",
+        f"**Focus:** {focus}", "", f"**Disposition:** {disposition}", "",
+        "**Result:** PASS", "", "## Full-suite checks", "",
+        *[f"- {item}: pass" for item in checks], "", "## Rendered artifact", "",
+        f"- PDF SHA-256: `{pdf['sha256']}`", f"- Size: {pdf['bytes']:,} bytes",
+        f"- Layout: {pdf['pages']} pages; {pdf['page_size']}",
+        f"- Every page was rasterized at 110 dpi and checked for blank content, edge clipping, and extractable text.",
+        f"- Contact sheet: `{pdf['contact_sheet']}` (local QA artifact; excluded from release).", "",
+        "This was a complete manuscript-wide pass. The focus names the adversarial reading lens; it does not limit the automated suite.", "",
+    ]
+    md_path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--iteration", type=int, required=True)
+    parser.add_argument("--focus", required=True)
+    parser.add_argument("--disposition", required=True)
+    args = parser.parse_args()
+    assert 1 <= args.iteration <= 99
+
+    record_path = ROOT / "audit/iterations" / f"iteration_{args.iteration:02d}.json"
+    if record_path.exists():
+        raise FileExistsError(f"Refusing to overwrite historical QA: {record_path}")
+    build = run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "build.ps1", "-Python", sys.executable])
+    checks: list[str] = ["Clean end-to-end figure, bibliography, and LaTeX rebuild"]
+    validate_evidence(checks)
+    validate_tex_and_bib(checks)
+    validate_figures(checks)
+    validate_appendix(checks)
+    from component_bounds import validate_component_bounds
+    validate_component_bounds(checks)
+    validate_repository(checks)
+    pdf, pages = validate_pdf(args.iteration, checks)
+    write_report(args.iteration, args.focus, args.disposition, checks, pdf, pages)
+    print(f"FULL QA iteration {args.iteration:02d}: PASS ({pdf['pages']} pages, {pdf['sha256']})")
+    if build.stdout.strip():
+        print(build.stdout.strip().splitlines()[-1])
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as error:
+        if "--iteration" in sys.argv:
+            number = int(sys.argv[sys.argv.index("--iteration") + 1])
+            failed_path = ROOT / "audit/iterations" / f"iteration_{number:02d}.json"
+            if not failed_path.exists():
+                payload = {"iteration": number, "created_utc": datetime.now(timezone.utc).isoformat(),
+                           "result": "fail", "full_suite": False, "error": str(error),
+                           "traceback": traceback.format_exc(), "source_sha256": release_source_hashes(),
+                           "executed_commands": COMMAND_RECORDS}
+                failed_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+                failed_path.with_suffix(".md").write_text(f"# QA attempt {number}: FAIL\n\n{error}\n", encoding="utf-8")
+        raise

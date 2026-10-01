@@ -1,0 +1,16 @@
+[
+ ["\\usepackage{placeins}", "\\usepackage{placeins}\n\\usepackage{float}"],
+
+ ["Third, after epoch 90 the training objective continues to fall while the validation objective does not, as expected for a model with two million parameters trained on 26,624 events.",
+  "Third, after epoch 90 the training objective continues to fall while the validation objective does not, which indicates the onset of overfitting of a model with two million parameters to 26,624 training events."],
+
+ ["equals the value expected for two uncorrelated samples with the per-bin standard deviations of Table~\\ref{tab:energy_bins} (0.046), so sharing the incident condition induces no measurable correlation between the two showers of a pair, and standard errors can be computed as for independent samples. For the mean total deposit this gives 0.068\\,GeV, so the observed difference is 0.7 standard errors.",
+  "equals the value expected for two uncorrelated samples with the per-bin standard deviations of Table~\\ref{tab:energy_bins} (0.046, taking the energy distribution within each bin as uniform). Sharing the incident condition therefore induces no measurable correlation between the two showers of a pair, and standard errors can be computed as for independent samples. For the difference of the mean total deposits the standard error is 0.068\\,GeV, so the observed difference is 0.7 standard errors."],
+
+ ["\\begin{table}[!htbp]\n\\centering\n\\caption{Stages of the generator", "\\begin{table}[H]\n\\centering\n\\caption{Stages of the generator"],
+ ["\\begin{table}[!htbp]\n\\centering\n\\caption{Generated and Geant4 showers at 10,000", "\\begin{table}[H]\n\\centering\n\\caption{Generated and Geant4 showers at 10,000"],
+ ["\\begin{table}[!htbp]\n\\centering\n\\caption{Event-level shower summaries", "\\begin{table}[H]\n\\centering\n\\caption{Event-level shower summaries"],
+ ["\\begin{table}[!htbp]\n\\centering\n\\caption{Loss weights of Eq.", "\\begin{table}[H]\n\\centering\n\\caption{Loss weights of Eq."],
+ ["\\begin{table}[!htbp]\n\\centering\n\\caption{Total deposit in bins", "\\begin{table}[H]\n\\centering\n\\caption{Total deposit in bins"],
+ ["\\begin{table}[!htbp]\n\\centering\n\\caption{Classifier AUROC on the 10,000 pairs", "\\begin{table}[H]\n\\centering\n\\caption{Classifier AUROC on the 10,000 pairs"]
+]

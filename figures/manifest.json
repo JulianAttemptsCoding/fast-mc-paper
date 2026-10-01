@@ -5,9 +5,10 @@
     "short_v3_screens": "removed from the main narrative because they are undercontrolled and use different analysis roles"
   },
   "figures_sha256": {
-    "detector_geometry.png": "b15b5a5a416e3d9864b011d155c8e8e0d2b3ceafb4c088cbf76ed36d245b7164",
-    "generator_schematic.png": "496ef134ca9d8a0c477ad807dc1a09f25fcae008f544980a1c76fe11dc26df77",
-    "longitudinal_profile.png": "a2a68ca16616e981281a397e57c182c719813274b5279439f77f2dd832812735"
+    "detector_geometry.png": "0f96b74f9b18431509b71e9a6b7b4b4d20f50916f0252beeb4af5f81f506071a",
+    "generator_schematic.png": "7286a3b17792d6b90790da56560ca74a712b3b215bb55ab53accc644d33d669f",
+    "longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
+    "support_summary.png": "dc8613229d85474c19e141743ca55c5521eee3ab7b1b41b8833d37223b820b5d"
   },
   "kind": "fast-mc-paper-development-figures",
   "scientific_status": "development-bank diagnostics; physics validation not established",

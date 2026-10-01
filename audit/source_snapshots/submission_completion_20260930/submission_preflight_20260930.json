@@ -1,0 +1,227 @@
+{
+  "created_utc": "2026-09-30T21:44:14.611763+00:00",
+  "status": "source_review_and_QA_complete_PDF_finalization_pending",
+  "request": "Ensure manuscript makes sense and belongs; finalize for submission; QA and iterate",
+  "input_sha256": {
+    "main.tex": "cd4a8322a449b86e4f6a67d55da252c847c167b0eca4a55a487efc8856aaf00d",
+    "CITATION.cff": "7dec446f1db13c9322beb9fbaf85ffe11e67e727618ae131515b1361a05dd67c",
+    "README.md": "1918103be4114fe60bb01d847453e320ef8e286080310679b6ffdd023b5fb299",
+    "STATUS.md": "7385fdd31d393afee19dd5870da646298a8a3518cd20015ba4587a51aecfc06f",
+    "scripts/full_manuscript_qa.py": "9cd8de5f2e9597968e4b5a3f1619e25b2a11dcf9fcfd4b7c676ecdcb5a67ef8b",
+    "audit/finalization_20260930.json": "783d9d28af81279cf792e75b7cd937b2b0f52062377892ab2e5cd558a44e965b",
+    "audit/final_build_audit.json": "1ab6181c9922d43db8c13f5f6fedaad9a6914647359c33b963911a8a1b343383"
+  },
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "commands": [
+    "C:\\Python313\\python.exe C:\\Users\\Julia\\OneDrive\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\audit\\prepare_manuscript_submission_20260930.py",
+    "Get-Content main.tex (complete source, with bounded rereads of truncated middle)",
+    "Get-Content references.bib, README.md, STATUS.md, CITATION.cff, QA source",
+    "view_image: all four current manuscript figure PNGs",
+    "compile_latex_document: existing main.tex",
+    "C:\\Users\\Julia\\OneDrive\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\audit\\record_manuscript_submission_pending_20260930.py"
+  ],
+  "failures": [
+    {
+      "operation": "built-in LaTeX compilation",
+      "diagnostic": "Unable to find standard directories for platform",
+      "scope": "Environment failure; no source-line diagnostic; current PDF unverified"
+    },
+    {
+      "operation": "read-only git status",
+      "diagnostic": "warning: could not open directory .pytest_cache/: Permission denied",
+      "scope": "Command exit 0; cache access warning; no changes made"
+    },
+    {
+      "operation": "web open DOI",
+      "url": "https://doi.org/10.1016/j.cpc.2025.109936",
+      "diagnostic": "Not accessible through web tool"
+    },
+    {
+      "operation": "web DOI open",
+      "url": "https://doi.org/10.1007/s41781-025-00130-x",
+      "diagnostic": "Tool could not access DOI endpoint; checked primary publisher/arXiv alternatives."
+    },
+    {
+      "operation": "web DOI open",
+      "url": "https://doi.org/10.1088/1361-6633/ae1304",
+      "diagnostic": "Tool could not access DOI endpoint; checked primary publisher/arXiv alternatives."
+    },
+    {
+      "operation": "web DOI open",
+      "url": "https://doi.org/10.1016/S0168-9002(03)01368-8",
+      "diagnostic": "Tool could not access DOI endpoint; checked primary publisher/arXiv alternatives."
+    },
+    {
+      "operation": "IOP search",
+      "diagnostic": "Publisher domain blocked by robots.txt; CaloChallenge primary arXiv record retrieved."
+    }
+  ],
+  "web_checks": [
+    {
+      "url": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+      "finding": "Public repository exists; retrieved page shows older v0.11.1. Current local v0.16.0 is not verified published."
+    },
+    {
+      "url": "https://arxiv.org/abs/2608.12795",
+      "finding": "Author, title, identifier, date and co-activation-metric relevance match introduction."
+    },
+    {
+      "url": "https://arxiv.org/abs/2508.20991",
+      "finding": "Author, title, identifier and mixture-of-generative-experts relevance match introduction."
+    },
+    {
+      "url": "https://arxiv.org/abs/2402.11575",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2308.03876",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2106.05285",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2405.09629",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2309.05704",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2211.10295",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2306.13606",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2406.03233",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/1610.06545",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2210.02747",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/1603.02934",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://arxiv.org/abs/2410.21611",
+      "finding": "Primary reference page retrieved; manuscript citation corresponds to the stated method or detector-study topic."
+    },
+    {
+      "url": "https://proceedings.mlr.press/v97/kool19a.html",
+      "finding": "Primary Gumbel-top-k proceedings entry retrieved."
+    },
+    {
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0010465525004370",
+      "finding": "Publisher search result confirms Faster ZDC title, volume 319, article 109936 and 2026 publication; DOI resolver failure did not imply a missing reference."
+    },
+    {
+      "url": "https://link.springer.com/article/10.1007/s41781-025-00130-x",
+      "finding": "Publisher entry confirms authors, title, volume 9 article 1 (2025) and VAE/GAN/diffusion study relevance."
+    },
+    {
+      "url": "https://www.sciencedirect.com/science/article/pii/S0168900203013688/pdfft?md5=dc5df0e4ef3f97635df576afc178b02c&pid=1-s2.0-S0168900203013688-main.pdf",
+      "finding": "Publisher entry confirms Geant4 toolkit title, journal volume 506, pages 250-303 and 2003."
+    }
+  ],
+  "changes": [
+    "Removed stale affiliation from CITATION.cff and synchronized README/STATUS; preserved historical records.",
+    "Replaced the obsolete affiliation-positive QA assertion with an exact name/email-only author-block assertion and checks against stale citation affiliation. Scientific guards unchanged.",
+    "Updated the current source pointer, with its previous record snapshotted; main.tex, numerical tables, equations and figures unchanged in this pass.",
+    "Explicitly marked the previous build audit stale; preserved its complete prior binding in snapshots. No historical pass is attributed to the current source."
+  ],
+  "review": {
+    "scope": "Complete current main.tex, bibliography and all four figure images",
+    "finding": "No further scientific prose edits warranted after the prior complete fresh-reader revision.",
+    "equations": "All 14 equations retain explicit variable definitions, units, masks and their place in the generation/evaluation procedure.",
+    "figures": "Geometry establishes centroid/ganging representation; schematic establishes generation order; profile exposes compensating response shifts; support figure isolates occupancy versus gaps. Captions agree with all four images.",
+    "sections": "Abstract states question, population, numerical result and limits; introduction motivates diagnostic question; data defines target, geometry and splits; model explains cascade/math/training; protocol defines observables/denominators; results quantify them; discussion separates mechanism hypotheses and needed studies; conclusion stays within descriptive scope; appendices preserve evidence and reproducibility limits.",
+    "scientific_limits": [
+      "One generator-training seed",
+      "Repeatedly inspected validation bank",
+      "No uncertainty for headline gap/component differences",
+      "No threshold/graph sensitivity or isolated generation timing",
+      "Incomplete historical runtime and production-simulation metadata"
+    ],
+    "venue": "Requested from user; no destination supplied yet",
+    "interpretation": "Editorial consistency is not physics validation or assurance of acceptance"
+  },
+  "pdf_status": "Existing PDF predates author removal; no alternate compile authorized under current editor instruction",
+  "output_sha256": {
+    "main.tex": "cd4a8322a449b86e4f6a67d55da252c847c167b0eca4a55a487efc8856aaf00d",
+    "CITATION.cff": "5b943f574d03cbd6f987b64879036bd53a680875222483a0d458b43d491d6b06",
+    "README.md": "966e3797eb29ae5a2241f4b19288c389a33bad04eddd4644a3a73909ea6495b0",
+    "STATUS.md": "e54e8e4cedcda5c39a36f42c4714dbf6eee98c7ad8de29766310be5cda6f4f5a",
+    "scripts/full_manuscript_qa.py": "6cf354482d28b366e21017aadc598b048498a3a06fe495f4a29b3d8a1c3e95ba",
+    "audit/finalization_20260930.json": "358e25c3bca407613c8317633df19536f9aa7f9d4894499db081404e5407921e",
+    "audit/final_build_audit.json": "3513f150b9403e612a3140ace782bd6f151212b73b38c893c9045faf7f5e0d2f"
+  },
+  "helper_sha256": "12949fc48e4b0866ca7383c94a1943ae18b6e79b128c6884a53a70754b24b76f",
+  "source_QA": {
+    "result": "pass",
+    "full_suite": false,
+    "checks": [
+      "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
+      "Aggregate invariant counters and historical batch-relative policy; legacy absolute-only countercheck fails as disclosed",
+      "Config-hash-bound pilot population, canonical preparation counts, and distinct training/diagnostic split provenance",
+      "Readout geometry, ganging arithmetic, layer count, and explicitly reproduced directed-edge count",
+      "Nonempty denominators; absolute table differences; span/gap/last-layer identities; no ratio-only headline",
+      "Evaluator wall-time number includes topology and classifier analysis; generation-latency claim excluded",
+      "Response moments and bins; zero and hit-count bootstrap intervals; all original C2ST families and failed gate; separately labelled pair-grouped monitor",
+      "ECAL/HCAL cancellation and longitudinal-profile discrepancy",
+      "Hash-verified 104-row extract, contiguous unique epochs, one declared post-90 continuation, and epoch-90 objective minimum",
+      "Claim language, author/mentor metadata, scope statements, and stale-model exclusion",
+      "18 citation keys and 29 LaTeX labels/references",
+      "Four deterministic manuscript figures, source hashes, dimensions, and nonblank raster content",
+      "Appendix calibration arithmetic, every energy bin, all classifier seeds, historical-source hashes and author-supplied metadata",
+      "Active-versus-archived evidence separation, 7 active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check"
+    ],
+    "commands": [
+      {
+        "argv": [
+          "C:\\Python313\\python.exe",
+          "-m",
+          "py_compile",
+          "scripts/build_figures.py",
+          "scripts/full_manuscript_qa.py",
+          "scripts/write_build_audit.py"
+        ],
+        "returncode": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "returncode": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "b243c83e2457e11f1b79758fe8918c4b0f30869ef1b43ca2aa2a8f5b51b5a4ee"
+      }
+    ],
+    "scope": "All five existing non-PDF validation functions; no rebuild or current-PDF claim"
+  },
+  "updated_utc": "2026-09-30T21:46:54.813196+00:00",
+  "followup_helper_sha256": "15e229f23e048005b07f85908f1d17b7caf052d69e6dd3d7d054e92c79c8681d",
+  "pending_user_input": [
+    "Submission venue requested; no answer received yet.",
+    "Permission requested to use existing repository build to refresh same submission PDF because user explicitly prohibited a separate PDF compile. No reply received; no alternate build run."
+  ],
+  "submission_ready": false,
+  "editor": "Existing main.tex editor retained; no new tab or replacement document."
+}

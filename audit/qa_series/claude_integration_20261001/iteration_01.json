@@ -1,0 +1,93 @@
+{
+  "iteration": 1,
+  "created_utc": "2026-10-01T09:31:51.722232+00:00",
+  "result": "fail",
+  "full_suite": false,
+  "error": "missing reader explanation: The centering removes a common log offset",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 662, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 652, in main\n    validate_repository(checks)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\full_manuscript_qa.py\", line 485, in validate_repository\n    assert phrase in tex, f\"missing reader explanation: {phrase}\"\n           ^^^^^^^^^^^^^\nAssertionError: missing reader explanation: The centering removes a common log offset\n",
+  "source_sha256": {
+    "main.tex": "180a2c03d01eae0f7ad488838969ee4e7ba9a164f817771e96fa3efd48ad7e60",
+    "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+    "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
+    "README.md": "566dc40e46e87aacab8ad1fcf969f773ce152566c7257d58c2b277154405ad1a",
+    "STATUS.md": "2b148ba53f5a4473041f6e0482dc17f7cbfd13025fced697c459ee1251c6cfbf",
+    "CITATION.cff": "c2ec662d1351d0bcfd2d77389b901fa9396a25cfdfa8fdd8199270740521bc9e",
+    "audit/claim_register_20260922.json": "a9e852f5cbbbcea2584c0df01386d2173e8c9541411f9d842271b887285976f5",
+    "audit/claim_register_20260922.md": "fbd8e766290bfa34c9ba5c5e6ad0863bf305f417d284e9c47825957ccfacf5f9",
+    "audit/adversarial_revision_round4_20260923.json": "87a7221885cceb9cecc99b03738fee461150c8fa43483dfbaeb10cda67e0766a",
+    "audit/adversarial_revision_round4_20260923.md": "a8d972178ad19132cea8566dcd548fa7804d799d9634b9cbf3afa094f53dd83a",
+    "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
+    "audit/adversarial_revision_20260922.md": "242b9a9ea5e32edd2dfec801d225c98839787d34c9e18810e82dbfaefabb9346",
+    "audit/adversarial_revision_round3_20260922.json": "56001e050190edcd24b34f021677f1e4b5d262b7383f94e745e399c736b27c64",
+    "audit/adversarial_revision_round3_20260922.md": "f371fcf24dd7be8bbfc118573da4e5857eb1e2a87ca33d188cce9ef04c714fee",
+    "audit/model_exposition_20260922.json": "36a8cfbc005387789c6029520be7bee58262eb2aefc826938db2dd4214f8c1ac",
+    "audit/model_exposition_20260922.md": "d38e6e6ad8f694b613ecbc1c8db24d74c4fa259b87385c8c25de793ac1144ce2",
+    "audit/mathematical_exposition_20260923.json": "3abcda19963b3a3d909429e8efb7526f4d37c1da14969e65c4d62babb952835d",
+    "audit/mathematical_exposition_20260923.md": "4421c3a53dda6bc3f319f4b01a4ee15cdb14aac88bcefe1e02c2ce83c4a4f1c2",
+    "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
+    "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
+    "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
+    "audit/finalization_20260930.json": "07c825a32c817b060bb69cfe3093018d0a01609c2bae9a6d0270e14dad88ecdc",
+    "audit/finalization_20260930.md": "b2e0cf6c5feddef92f23d6b7adbc62c7054807e58f01109791b24a9f2e4a9c00",
+    "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
+    "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
+    "audit/current_qa_series.json": "21778dba4a87037b73798dc61de9a98087b6ba474182e2781ef5be7f7590bf74",
+    "scripts/build_figures.py": "891b114016dbe7facbc6dcd8535a2f12859e45568747b3f57733450407e7ffd6",
+    "scripts/component_bounds.py": "9be89e3dfbe19fe8308af42999e4c9af4262e54789a4204e09e73488c0c80e94",
+    "scripts/full_manuscript_qa.py": "f46b14923c6c87e56f9769b51e0d2488ecfba51e78d11b774ed7010d3dbc6f74",
+    "scripts/physics_exposition_checks.py": "a2dd3ca33399af137cebda59de3033677c1e7d05140302228a16619a3be347a5",
+    "scripts/qa_series.py": "e9694aefd12bcac2c59a784e3126cb2c296b7d928cd7fcf796aa293dbd2b86e4",
+    "scripts/reader_figures.py": "3ba88510c3f2a4421e9c691eda13513748bd24df740f5d16e709bd301d8190b3",
+    "scripts/second_audit_checks.py": "3ebb3e06b99569fd611f22c67234163c6a344e4263f2f644b349e9955eb8fb76",
+    "scripts/test_qa_guards.py": "04e4012b2aa71a3987b1834321d9f507797df43561f3d5b9eba8118fade8feb9",
+    "scripts/write_build_audit.py": "9e47df8ff41822b8527947838bfe12b8b04c01386b7d77b41f9ddea0097e0f0c",
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+    "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
+    "data/reports/condition_only_control.json": "8d9b1ec17e23a11233b0eac9e12de86dc834928d119ef38d97ff41d42de5619f",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
+    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+    "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
+  },
+  "executed_commands": [
+    {
+      "argv": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "build.ps1",
+        "-Python",
+        "C:\\Python313\\python.exe"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e5068a0807e023ec74911f4f8d3cf0baa4be686ce1e7263b90d3dffeb8a030a4",
+      "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+    },
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-m",
+        "py_compile",
+        "scripts/build_figures.py",
+        "scripts/full_manuscript_qa.py",
+        "scripts/write_build_audit.py"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d9b419eaa5d59327fafa9d3e7b93b0ec59aac9d04d223ff098b88abbf7e1d22e"
+    }
+  ]
+}

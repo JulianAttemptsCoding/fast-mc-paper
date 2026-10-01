@@ -1,0 +1,95 @@
+{
+  "created_utc": "2026-10-01T01:59:19.381326+00:00",
+  "status": "arxiv_diagnostic_preprint_revision_complete",
+  "input_sha256": {
+    "main.tex": "cd4a8322a449b86e4f6a67d55da252c847c167b0eca4a55a487efc8856aaf00d",
+    "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+    "README.md": "966e3797eb29ae5a2241f4b19288c389a33bad04eddd4644a3a73909ea6495b0",
+    "STATUS.md": "e54e8e4cedcda5c39a36f42c4714dbf6eee98c7ad8de29766310be5cda6f4f5a",
+    "CITATION.cff": "5b943f574d03cbd6f987b64879036bd53a680875222483a0d458b43d491d6b06",
+    "scripts/build_figures.py": "3f37e00c1c784c363baeea0bc6e7096eea37ec2ed03d1b698aee12d1f5a30c51",
+    "scripts/full_manuscript_qa.py": "6cf354482d28b366e21017aadc598b048498a3a06fe495f4a29b3d8a1c3e95ba",
+    "scripts/write_build_audit.py": "8fb0bc4623e7a7267b77c4959b8e9f6f547cfeccbe99d4e28a1c65555861440a",
+    "audit/finalization_20260930.json": "358e25c3bca407613c8317633df19536f9aa7f9d4894499db081404e5407921e",
+    "audit/final_build_audit.json": "da276c7650b29b9ddb650edc17b029160e1d5ef44b70847e512fcb672dd54ccf",
+    "audit/final_build_audit.md": "680baffc90e7568fe9a91d6edac659f0c53cdbd887a69a066851c8ba6415024a",
+    "audit/visual_review_finalization_20260930.json": "6abd3e611614989ac1d736ec01156b512025176e84b469d9e13d20fa46a7a673",
+    "audit/visual_review_finalization_20260930.md": "f652baa9a343180a05e554623b487f7a19a9d06e2304ca52e649ba9972e18b2e",
+    "output/fast_mc_zdc_manuscript.pdf": "719aaf34380144fcae4fa37717b34e1b88f87f39ef609cca8838111473669ca0",
+    "output/fast_mc_zdc_submission_source.zip": "62edf4d5a48791175653d6b72d35301c33f1cdb6be906137d1b682349ab6b818"
+  },
+  "audit_sha256": "611bcdd8c81db16c485d1cf32de9b738b6140e635651a07a578557e80d367d05",
+  "author_confirmation": {
+    "venue": "arXiv",
+    "detector": "ePIC ZDC",
+    "data_owner_publication_permission": "User confirms data owner is fine with publication",
+    "geometry_tag": "not supplied"
+  },
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "evidence_search": "No matching epoch90 checkpoint or development-bank event arrays found in either local project root; smoke/soak checkpoint names and schema fixture are not substitutes. No raw/test data read.",
+  "search_failures": [
+    "Initial rg encountered access-denied .pytest_autopilot; second project search excluded cache/environment directories.",
+    "docs/PIPELINES.md absent in current workspace; historical retained evidence remains available.",
+    "graft check reported current wiring; graft ask returned no useful result or token-saving tally."
+  ],
+  "commands": [
+    "Read supplied audit and current source/evidence",
+    "graft check; graft ask for retained event/checkpoint artifacts",
+    "rg --files across both project roots excluding legacy",
+    "Read archived evaluator and current trainer spans",
+    "Primary-source web research: arXiv methods/design and official arXiv submission help",
+    "C:\\Users\\Julia\\OneDrive\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\audit\\revise_manuscript_external_audit_20260930.py",
+    "python -X utf8 -m unittest discover -s scripts -p test_qa_guards.py -v",
+    "python -X utf8 scripts/write_build_audit.py",
+    "python -X utf8 audit/complete_external_audit_revision_20260930.py"
+  ],
+  "sources": [
+    "https://arxiv.org/abs/2302.11594",
+    "https://arxiv.org/abs/2305.11934",
+    "https://arxiv.org/abs/2512.20346",
+    "https://arxiv.org/html/2608.12795v1",
+    "https://arxiv.org/abs/2406.12877",
+    "https://arxiv.org/abs/2603.14167",
+    "https://info.arxiv.org/help/submit_tex.html",
+    "https://info.arxiv.org/help/faq/texlive.html"
+  ],
+  "events": [
+    "Archived current source, PDF, source ZIP and supplied audit. B1 is a substantive mathematical omission; previous rendering QA did not establish completeness of scientific inference.",
+    "Corrected the component interpretation, conditional-independence discussion, detector/calibration/time-window scope, classifier caveats, reference-half scales, literature context and metadata. Preserved all 14 numbered equations and four data tables. Bumped current revision to 0.17.0; full QA pending.",
+    "Derived component lower bound 29.92153994 (83.18394%); verified all 1,023 nonempty ten-layer masks and five exact independence examples. These are algebra tests only.",
+    "QA93 failed unchanged 14-page maximum at 15 pages. Tightened redundant data/geometry and architecture-caption wording and reduced Figure 1 width to 94%; no scientific guard relaxed.",
+    "Two PDF text-inspection attempts failed Windows cp1252 decoding/encoding; corrected command uses Python -X utf8 and explicit UTF-8 subprocess decoding.",
+    "Built-in compiler still fails platform-directory initialization; existing repository compilation succeeds.",
+    "QA94 again exceeded 14 pages: author/AI declarations spilled onto a mostly empty page. Shortened repeated results/discussion and classifier/numerical prose, retaining all quantitative checks and failures. Page guard unchanged.",
+    "QA95 left only the AI declaration on page 12. Combined author/AI declarations under one heading and tightened availability/acknowledgments; kept mentorship, AI transparency and data restrictions. Synchronized canonical claim register with B1 correction and author detector/permission confirmation; historical register snapshotted.",
+    "QA96 passed 17 groups/14 pages; every page visually reviewed and seven release guards passed. Exact release binding and seven-file arXiv source ZIP integrity passed. Native editor compiler remains unavailable; local build succeeded. No event-level, test-data or external publication action."
+  ],
+  "output_sha256": {
+    "main.tex": "f1dfd9641f54fe1a18f0dc19ce2248d88e948c25e62dc9dc5264a2d54df356a4",
+    "references.bib": "c82866d86e43d493b0c885b6662c3aa90648d9a35af48c0b9c6cdd86a5c94958",
+    "README.md": "78879d16eb0e1594dc0259cd3fa2a8e1a0ffae63aa308ac1160d69955cd42b7a",
+    "STATUS.md": "e5a43310a9f1dd1cfa040770d723c2e160def9b64219d4c6d23c135a9b09bf9d",
+    "CITATION.cff": "5dd5bf19c1ef5dc46e811e8b897b59c79ae2cb3e889a7c55b1a6919719e66c9f",
+    "scripts/build_figures.py": "fe1c51c720fa1c2dc20ccc2581b6097426289b06f316fb1f3d5a5393af6f6ff9",
+    "scripts/full_manuscript_qa.py": "97fe3d24efbcdfae2cc6361e5e687121967060549543f4757b7277404256bcd0",
+    "scripts/write_build_audit.py": "570ebf6eccd723d61d9fcff5cb2f12618cb482a2bc5922a08a78300425a21a7f",
+    "audit/finalization_20260930.json": "22904962245ccf0474d08d272ae92a5ae88daa54908fccf16f24d1f20a21f7f8",
+    "audit/final_build_audit.json": "f99e621dfa5e6a2e1b73658576e0033ad5883270f8d0c3a7b75d2918a497b18f",
+    "audit/final_build_audit.md": "d7d97d57909c8b7abadfc46b6ae613e0c135e6d9acfd6824c15278ae2723c178",
+    "audit/visual_review_finalization_20260930.json": "f848b7e77290162d26efab6aa40e077dad9a95acb2f3200ae6b7d0a1ba085724",
+    "audit/visual_review_finalization_20260930.md": "49c0b32e3850109bdeda40101dd45c8c8bf0a0e440862e354d813813208774c3",
+    "output/fast_mc_zdc_manuscript.pdf": "896037ac8ca7e8429ee38d73e6314ee7ec81c529d6e6ef98a93da80603d517e7",
+    "output/fast_mc_zdc_submission_source.zip": "dcbf3e4c57607ec4949678db1500a48ea3854105a48fc4e424805bbc869aeaeb"
+  },
+  "tightening_input_sha256": "ba147d02e0103063c380694fe962284c2816a3e25b09ccbff16e3195aa7ed0ab",
+  "tightening_output_sha256": "8a804d6852c61370bbf5d4532aa24a14a1edd3fddf1da664725f02c1f8938d05",
+  "latest_failed_QA": "audit/iterations/iteration_95.json",
+  "compact_input_sha256": "8a804d6852c61370bbf5d4532aa24a14a1edd3fddf1da664725f02c1f8938d05",
+  "compact_output_sha256": "fb378fa1c8cc224e06b62749765cf9e6a167b664b7cd85f7559115daea0f2be8",
+  "current_source_sha256": "f1dfd9641f54fe1a18f0dc19ce2248d88e948c25e62dc9dc5264a2d54df356a4",
+  "updated_utc": "2026-10-01T02:14:12.560412+00:00",
+  "current_qa": "audit/iterations/iteration_96.json"
+}

@@ -1,0 +1,172 @@
+## Verdict
+
+- **Arithmetic is clean.** I recomputed every derived number I could (table at the end). All of them match, and the run-count bound in Sec. 4 is logically correct.
+- **It isn't submittable yet as an experimental HEP or computational-physics paper.** Four problems block submission. The headline discrepancy may live entirely in hits a real readout would discard. The "ganging" is probably a cell-ID artifact. The central result is a bound on a quantity you could compute exactly. And the evidence comes from a single undertrained fit that fails your own screening criterion.
+- **At a refereed venue** (CSBS, MLST, JINST, EPJ C), expect rejection or major revision. The manuscript doesn't say which venue it targets, so I've judged it against that tier.
+- **Most fixes are cheap** if you still have event-level access. Only seed replication needs real compute.
+
+---
+
+## S1: Blocking
+
+### 1. The discrepancy may live in hits a real readout throws away
+- You count any deposit above zero as a hit, with no time window. The reference itself already has interior gaps in 52% of events, 23 graph components, and a mean last active layer of 56 out of 64. My inference is that much of this is soft or late activity.
+- **Where the excess fragments sit** (approximate, because these are means of per-event ratios):
+  - Reference: about (1 − 0.949) × 1617.6 ≈ 83 hits fall outside the largest component, spread over about 22 fragments (≈3.7 hits each).
+  - Generator: about 177 hits over about 58 fragments (≈3.0 hits each).
+  - So the excess is roughly 94 hits, about 6% of all hits, in tiny fragments. Fig. 3 shows no visible deep-layer energy excess, even though the last active layer moves 4.42 layers deeper. The extra deep activity therefore carries little energy.
+- **You already have a working point.** Your own Ref. [16] defines a MIP of 0.5 MeV from muon simulation, keeps only hits above 0.5 MIP, and requires hit times below 275 ns. The claim that a MIP threshold "cannot be assigned" is weaker than written, apart from the unknown geometry tag.
+- **Fastest test:** recompute the support rows of Table 1 with a 0.25 MeV HCAL threshold (and a 275 ns window on the reference, if hit times exist). Also report the energy fraction outside the largest component. If the gap and component excess collapses, the headline finding is a raw-deposit artifact.
+
+### 2. The "ganging" is probably cell-ID aliasing
+- In the cited design, each 25 cm² hexagonal tile has its own central dimple coupled to a SiPM. Electronically combining 2–4 tiles into one channel contradicts that design.
+- **The counts fit aliasing:**
+  - HCAL physical positions = 3,990 + 2·1,950 + 3·444 + 4·6 = 9,246, which is 144.5 per layer.
+  - The cited face is 60 × 60 cm, and 3,600 cm² / 25 cm² = 144 tiles.
+  - Mean positions per ID = 1.447, almost exactly 144/100.
+  - Layers 1–63 all have exactly 100 IDs, even though the layers cycle through four staggered tile layouts.
+- **Hypothesis to verify:** a coarse ~10×10 segmentation, or a cell ID that doesn't encode the tile index. If that's right, your "readout channels" aren't physical channels, the stagger information is destroyed, and the graph, the component counts and the generator's target are all defined on an artifact.
+- **Test (minutes):** read the readout `<segmentation>`/`<id>` spec in the production compact XML, or check in any hits file whether one cell ID maps to distinct tile volumes.
+
+### 3. The central result bounds something you could compute directly
+- R (the number of occupied-layer runs per event) needs only the activity mask you already used to compute G. That gives Q exactly, so the 83.2% bound is unnecessary.
+- Counting components within each layer only (lateral edges) would also answer directly the lateral-versus-longitudinal question that Sec. 6.1 leaves open.
+- The list of "unavailable" items is long: intervals, R, energy spectra, pair-grouped C2ST, threshold scans. To a referee this reads as "the author lost access to the events." Either compute them, or say so explicitly in the data section. The second option caps the paper at a note.
+
+### 4. One undertrained fit that fails its own screen
+- The model saw 4.35% of the available training data, with one seed.
+- High-level C2ST AUROC is 0.775 in the row-split battery (biased downward) and 0.893 in the pair-grouped monitor. Your screening maximum is 0.65.
+- A referee's first question will be whether these are failure modes of the architecture or of undertraining. You need at least 3 seeds plus one full-data fit before the diagnosis generalizes.
+- The abstract should state that the model failed the screen.
+
+---
+
+## S2: Major
+
+### Mechanism tests are cheap and missing
+- **Activity factorization null (reference only, no model).** Within strata of (energy bin, angle bin, total deposit bin, first layer F), replace each reference event's later-layer activity with independent Bernoulli draws at the stratum's per-layer rates. Then recompute the mean last layer, mean gaps and gap fraction. If this reproduces about +4.4 layers and +3.95 gaps, the mechanism is established without touching the model. Your Sec. 6.1 toy calculation (gap probability p(1−p), mean last layer up by p(1−p)) is correct.
+- **Temperature sweep for channel selection**, τ ∈ {0.25, 0.5, 1}, on the existing checkpoint with no retraining. Report component count against τ.
+- **Cross-layer coherence.** There's no event latent, and the random channel selection in each layer is independent given deterministic scores. So the shower axis cannot wander coherently from layer to layer.
+  - Test: correlate per-layer transverse centroids between layers ℓ and ℓ+k, reference versus generated.
+- **Oracle swaps.** Feed the reference activity mask, then the reference channel counts, into the downstream stages.
+
+### The "1.0% total agreement" comes from summing raw deposits across sections
+- A cap at 0.63 × incident energy implies a homogeneous section absorbs most of some showers. That fits the ePIC ZDC layout of a crystal ECAL followed by a 64-layer steel/scintillator sampling HCAL. In the cited design, the electron-derived sampling fraction is 2.1%.
+- **Rough estimate under that weighting** (EM scale, ignoring the different response to hadronic and EM shower components):
+
+  | | Calibrated energy |
+  |---|---|
+  | Reference | 2.100 + 2.224/0.021 ≈ 108 GeV |
+  | Generator | 2.275 + 2.094/0.021 ≈ 102 GeV |
+  | Difference | **≈ −5.6%** |
+
+- **Sanity check:** 108 GeV out of a mean incident energy of 150 GeV is about 0.72. That matches [16]'s statement that the simple-sum reconstruction shows a scale offset of up to about −30%.
+- So drop "similar means" from the framing. The generator is plausibly biased by about −6% in any physically weighted sum.
+
+### Statistics
+- **No intervals on any headline structural quantity.** At n ≈ 10⁴, sampling noise is almost certainly not the problem; variation between seeds is. Report both.
+- **Mean total deposit:** σ_T isn't reported. If σ_T is about the size of the mean (plausible for a sum dominated by the crystal section), the standard error of the difference is about 0.06 GeV, larger than the 0.045 GeV difference. The 1% match may not even be resolved.
+- **Table 3 likely shows reference noise, not model bias.**
+  - Reference increments from 100 GeV upward are +0.32, +1.02, +0.16, +0.89, +0.17 GeV. The generator's increments are smoother.
+  - Adjacent bins flip from +7.7% to −7.7% (125–150 vs 150–175 GeV), which is the signature of reference sampling noise.
+  - Add σ and standard-error columns, or drop the "±7.7%" sentence.
+- **Separately nonempty samples:** compute support metrics on jointly nonempty pairs. That removes the composition difference you caveat repeatedly.
+- **Empty-shower excess:** the visibility loss weight sits at the clip ceiling (2.574 = 4 × 0.6436), yet the excess persists. That points to probability mass of the total-deposit mixture below zero leaking through the clamp in Eq. (3), which the visibility loss cannot fix. Split the 142 empty events into those with V0 = 0 and those with V0 = 1 but a zero candidate deposit.
+
+### Data hygiene
+- **Overlap with checkpoint selection:** the expected overlap between the 10,000-event development bank and the 6,656-event pilot validation set (which selected the checkpoint) is 10,000 × 6,656/76,158 ≈ 874 events. This assumes uniform, independent draws.
+- **Run on locked test events:** rerunning Table 1 on a subset of the 36,100+ uninspected test events, once their identities are recovered, removes the "repeatedly inspected" caveat from the abstract.
+- **C2ST leakage is worse than "42% of pairs".** A scored row's twin lands in the fitting set with probability 14,000/19,999 ≈ 0.70. So about 4,200 of the 6,000 scored rows have an opposite-label twin in training. Replace the row-split battery with a pair-grouped rerun on the same bank.
+
+### Missing physics content
+- **No generation-time benchmark.** The 0.344 s figure is evaluator time, not generation latency. A fast-simulation paper without speed against Geant4 will be flagged.
+- **No physical observables shown:** energy and angle reconstruction (the ZDC's purpose), radial profiles, distributions of transverse centroid and RMS, P(F = 0).
+- **No interaction lengths.** If the HCAL follows 64 layers of 2.0 cm Fe / 0.3 cm scintillator, about 8 interaction lengths, then one layer ≈ 0.125 λ_I. The +4.42-layer shift is then about 0.55 λ_I. Report this, with the caveat that the geometry tag is unverified.
+- **Partially verifiable frame.** Fig. 1 centroids near x ≈ −0.9 m fit ePIC global coordinates. With the ZDC at 35.8 m and the 25 mrad crossing angle, the offset is about 0.9 m.
+
+---
+
+## S3: Methods and specification
+
+- **Eq. (1):** the two energy features are redundant for E ≥ m_n. Justify keeping both or drop one.
+- **Eqs. (5)/(11):** centering puts the flow target on a sum-zero plane while the base noise is full rank. The softmax is shift-invariant, so centering is unnecessary.
+- **Floors and underflow:**
+  - Report the fraction of reference channel shares that hit the 10⁻⁸ floor.
+  - Confirm that every selected channel gives a nonzero deposit in FP32. The support metrics use deposits above zero, not the selected set, and the numerical-check section doesn't confirm this.
+- **Solver steps:** 8 steps with no step-count study. Rerunning at 16 and 32 steps is cheap.
+- **Numerical-check criterion was changed after the fact** (fixed 2×10⁻⁵ GeV to a batch-relative tolerance). The relative criterion is the right one for FP32. State it up front, drop the history, and move this accounting check to the appendix.
+- **Graph sensitivity:**
+  - k = 8 nearest neighbours reaches beyond true adjacency at ECAL edges and corners, and in the HCAL it is built on (likely aliased) centroids.
+  - Scan k ∈ {6, 8, 12}, try a radius graph, and build a physical-neighbour graph from tile geometry.
+- **Edge co-occupancy (0.1375 vs 0.1458):** normalize it as P(neighbour occupied | channel occupied) against the occupancy baseline. That is essentially [14]'s Jaccard co-activation, so you get a direct link to that literature.
+- **Training choices:**
+  - Three loss weights sit at the floor and one at the ceiling, so the calibration was saturated. Run at least one alternative weighting.
+  - An effective batch size of 24 is very small for this kind of training; justify it.
+
+## S4: Presentation
+
+- **Hedging is dense enough to bury the results.** Hashes, "retained record," "recovered evaluator specification" and timing of the screening criterion belong in a README or supplement. State each limitation once, in Sec. 6.2.
+- **Internal jargon:** "development bank," "retained aggregate report," "recorded screening maximum," "readout connectivity."
+- **Abstract:**
+  - Give the relative change in components (×2.54).
+  - Say the model failed the C2ST screen.
+  - "Subtract that unavoidable contribution" is imprecise. The bound subtracts the maximal possible difference in run counts.
+- **Sec. 6.1:** "Equation (4) removes residual activity dependence" should read "assumes conditional independence."
+- **Punctuation:** stray punctuation after Eqs. (10) and (12).
+- **Affiliation is missing.**
+- **Data governance:** the events are collaboration-owned. Confirm with your mentor whether ePIC permission or internal review is required before posting to arXiv. I don't know ePIC's policy.
+
+---
+
+## References
+
+**Checked against search results:**
+- **[14]** exists (August 2026). Authors are Majerz, Otwinowski, Dzwinel and Kitowski, and the paper introduces a Jaccard co-activation error, so your description is accurate.
+- **[13]** was a poster at the NeurIPS 2025 ML4PS workshop.
+- **[10]** is CPC vol. 319, art. 109936 (2026). Add the arXiv number: 2507.18811.
+- **[12]** is CSBS vol. 9, art. 1 (2025).
+- **[6]** Add arXiv:2410.21611.
+- **[11]** The authors' organization presents it as ECAI 2025 work. Check for a proceedings DOI.
+- **[16]** v2 is retitled "Design and Simulation of a SiPM-on-Tile ZDC…" and marked as submitted to NIM A. Check for a published version.
+- **[1]–[5], [7], [15], [17]–[22]** match my knowledge, but I didn't re-fetch them.
+
+**Should add:**
+- DD4hep and Paul & Arratia's staggered-tessellation paper, both cited in [16]. The latter directly concerns what a centroid representation throws away.
+- Straight-path flow matching: rectified flow and stochastic interpolants. Lipman's path uses a nonzero σ_min. I believe these are arXiv 2209.03003 and 2209.15571 but haven't verified them.
+- Precedents for drawing a hit count first and then placing hits (CaloClouds v1, CaloPointFlow). I haven't verified identifiers.
+- The simulation configuration. [16] used Geant4 11.0.p2 with FTFP_BERT. Yours is unrecorded, so say so.
+
+---
+
+## Numerical audit (all pass)
+
+| Check | Result |
+|---|---|
+| Splits sum to 764,940; pilot share 4.35% | ✓ |
+| Nonempty counts 9,907 and 9,858 | ✓ |
+| Span = L − F + 1; G = span − active (both samples); ΔG = 3.95 | ✓ |
+| Q ranges 20.32–22.42 and 52.34–58.39; ΔQ ∈ [29.92, 38.07]; 83.2% | ✓ |
+| ECAL + HCAL = total (both samples) | ✓ |
+| Table 3 bin counts sum to 10,000; n-weighted bin means give 4.324 / 4.369 | ✓ |
+| Table 2 weights sum to 9.000000; floor and ceiling equal 0.25 and 4 × 0.6436 | ✓ |
+| Edges: 54,320 + 53,600 = 107,920 | ✓ |
+| Cap saturates at 97.18 GeV | ✓ |
+| W₁ = 58.68 ≥ \|Δ all-event mean\| ≈ 36.3 | ✓ |
+| Test remainder 36,100–36,300 | ✓ |
+
+---
+
+## Fastest path, ranked by cost
+
+1. Check the segmentation in the compact XML (minutes).
+2. Compute exact R and Q, per-layer lateral components, and jointly nonempty pairs (minutes).
+3. Run the reference-only activity-factorization null (minutes).
+4. Redo Table 1 with a threshold and time window (under an hour).
+5. Sweep selection temperature and solver steps on the existing checkpoint (under an hour of GPU time).
+6. Bootstrap every Table 1 row; add σ columns to Table 3 (minutes).
+7. Rerun C2ST with matched pairs kept together, plus feature importance (under an hour).
+8. Benchmark generation latency (under an hour).
+9. Rerun on the locked test subset (after recovering event identities).
+10. Train at least 3 seeds plus one full-data fit (days). This is the only expensive item, and the one the paper's generality depends on.
+
+**Key question:** do you still have access to the event-level reference showers and the checkpoint? That decides whether items 2–9 are about a day of work, or whether the paper has to be reframed as an aggregate-only note.

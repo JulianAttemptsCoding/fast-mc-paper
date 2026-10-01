@@ -1,0 +1,596 @@
+# Third audit revision evidence
+
+{
+  "created_utc": "2026-10-01T07:48:04.060436+00:00",
+  "revision": "0.19.0",
+  "status": "revision_in_progress",
+  "input_audit_sha256": "c5187d83fcf8eefdcaca9c593d79b4231b686087f0808c9291a81a166bac6d59",
+  "input_sha256": {
+    "main.tex": "126de20896906f81dc4c66f505389892f7fda8d7d0e98e9a780284015ab36493",
+    "README.md": "5011b2fe70ef2e686dd10204854400246194069ef0fa97ce5acc556512834f03",
+    "STATUS.md": "68eca60504affe655eb5dce8c9ecd59a98d9053f3a4236cef96a33ab2b8d4d77",
+    "CITATION.cff": "40258a824db43b0e85e25d25d455f161ab4c0810d9546aca45066f49572f7bcf",
+    "audit/finalization_20260930.json": "5bc8507973f221d9cf350cbd0b06047e83841be8bdce6abda795e0be4adb29c0",
+    "audit/finalization_20260930.md": "b2e0cf6c5feddef92f23d6b7adbc62c7054807e58f01109791b24a9f2e4a9c00",
+    "audit/claim_register_20260922.json": "7e9f9c03aa5982480be71697df787f06f8d6a0e937fb91a68e993afc8e537448",
+    "audit/claim_register_20260922.md": "a05e15cd4a7247e8f698248ada47914d8bc1bf325eb85e719b6b3a163944e78a",
+    "audit/final_build_audit.json": "cf783b8196a0b0f321740f880d67de90fd5bb189c7bf8cfb6ad36888f3a6ad9a",
+    "audit/component_bound_20260930.json": "1cbe445a58c3298228b1700f092db495ffc313fb948abb50ecb10e6d817a89e4",
+    "audit/component_bound_20260930.md": "e1fe9d787e88b5fba24129ac6bd85075b8d8e475ee225c83ea296c85ea9385b2",
+    "audit/visual_review_finalization_20260930.json": "213990a99fc7de90c2be05ad1e739b22c1b81e580e8d7a5495b22ec59e3cde3a",
+    "scripts\\build_figures.py": "150699f3968ccc1ab3d5f510224740fe39e7cc56799da0df63a9fe3d363301c9",
+    "scripts\\component_bounds.py": "ef897cc32e702def8794efb03be62f1e5efcf9e9ce34bd0e39f586c51f0f9c20",
+    "scripts\\full_manuscript_qa.py": "b05dfcdc0e17e4fa742b74849892d64247b659cc7bbf076fb8238453d8298c1c",
+    "scripts\\qa_series.py": "e9694aefd12bcac2c59a784e3126cb2c296b7d928cd7fcf796aa293dbd2b86e4",
+    "scripts\\second_audit_checks.py": "3ebb3e06b99569fd611f22c67234163c6a344e4263f2f644b349e9955eb8fb76",
+    "scripts\\test_qa_guards.py": "e3c66c54b8321d7d4a8ae1c394f61beac277d5a449218c51aa8213c0be90c9dd",
+    "scripts\\write_build_audit.py": "4f2a2937ee2e02cc2c203490b76d6308e615395c75d09fd75a85bc5be8ec498d",
+    "figures\\detector_geometry.png": "296684aa8264da39332f23f04b3a9d56143fa2f5dcd1c0e68f1a595ff1776926",
+    "figures\\generator_schematic.png": "985074a390f000e670d078a48688d10d871842443c3034deafd15a6369db8213",
+    "figures\\longitudinal_profile.png": "9fa252851e95d9ac25bb956135f97c7ca2ce94cdaa7b4284a42c05c38596ad42",
+    "figures\\manifest.json": "f8c8f67747d0f1e29697edb0794d5ffc665066aaec01b81df94372158a5d3a0f",
+    "figures\\support_summary.png": "c95e74be2d021cf09090d05795ecd0ac76c66c0ceefef3250242cad2e5a53b8f",
+    "output\\arxiv_submission_notes.md": "1307b91a17ce25d00104e003c0668e03bfab63ea7bc7bffa5c883fd36b9c143d",
+    "output\\fast_mc_zdc_manuscript.pdf": "2f0de6dd3ebd24b72ed9bc2ad934b1cdb1cc9ea7d91a385c46f0caee418bf81b",
+    "output\\fast_mc_zdc_submission_source.zip": "e4b8b7377ad72e0869021781c41c2ecd9f5ece811a8a3a672ccdeab6a7f28192"
+  },
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "scope": "Aggregate manuscript revision only; no event/test access, training, frozen-config changes or external submission",
+  "navigation": "graft check current; ask contained legacy hits which were excluded from evidence; current source corroborated independently",
+  "commands": [
+    "Read supplied audit and complete current manuscript; inspect aggregate/model/evaluator sources",
+    "python -X utf8 audit/revise_physics_exposition_20261001.py"
+  ],
+  "research_sources": [
+    "https://arxiv.org/html/2608.12795v1",
+    "https://arxiv.org/html/2406.12877v2",
+    "https://proceedings.mlr.press/v97/kool19a.html"
+  ],
+  "bound": {
+    "lower": 30.445815704637013,
+    "upper": 37.13720180351237,
+    "lower_percent": 84.64146238259613
+  },
+  "output_main_sha256": "10153958e61f59199767eb40d06ad0c45f37ae5d850b74f77a1ab2735500cd9a",
+  "updated_utc": "2026-10-01T08:13:45.376043+00:00",
+  "current_main_sha256": "2a7d867b725480f98e35aa84e382df8117e6546f5719d7bb63673e6e794e6cba",
+  "native_compile": "Unable to find standard directories for platform; source preserved; local compiler used",
+  "guard_tests": "10 passed, including 3 new series namespace tests; synthetic release guards only",
+  "attempts": [
+    {
+      "record": "audit\\qa_series\\physics_exposition_20261001\\iteration_01.json",
+      "result": "fail",
+      "error": "command failed (1): powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1 -Python C:\\Python313\\python.exe\nSTDOUT:\n\nSTDERR:\nTraceback (most recent call last):\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\build_figures.py\", line 386, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\build_figures.py\", line 370, in main\n    plot_architecture()\n    ~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts\\build_figures.py\", line 139, in plot_architecture\n    raise ValueError(f\"Architecture label exceeds its box: {label_artist.get_text()}\")\nValueError: Architecture label exceeds its box: $c$\nenergy + direction\nC:\\Python313\\python.exe failed with exit code 1\nAt C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\build.ps1:9 char:9\n+         throw \"$Program failed with exit code $LASTEXITCODE\"\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (C:\\Python313\\py...ith exit code 1:String) [], RuntimeException\n    + FullyQualifiedErrorId : C:\\Python313\\python.exe failed with exit code 1\n \n",
+      "commands": [
+        {
+          "argv": [
+            "powershell",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "build.ps1",
+            "-Python",
+            "C:\\Python313\\python.exe"
+          ],
+          "returncode": 1,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "0fc44ffd7c9b06b6de1dace168e0e9a52f0ec586707de93c54da436fbb6e49fa"
+        }
+      ]
+    },
+    {
+      "record": "audit\\qa_series\\physics_exposition_20261001\\iteration_02.json",
+      "result": "fail",
+      "error": "required manuscript text missing: ['generation latency was not isolated', 'Selecting the top $K_\\\\ell$ enforces the requested count exactly, but imposes no adjacency or connectivity constraint.', \"These are accounting identities for the model's sampled readout budget\"]",
+      "commands": [
+        {
+          "argv": [
+            "powershell",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "build.ps1",
+            "-Python",
+            "C:\\Python313\\python.exe"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "14147b390135f89de7048e8d886a2183b4a4e52eb7264c56cfd80c3125c01682",
+          "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+        }
+      ]
+    },
+    {
+      "record": "audit\\qa_series\\physics_exposition_20261001\\iteration_03.json",
+      "result": "fail",
+      "error": "command failed (2): git diff --check\nSTDOUT:\nscripts/full_manuscript_qa.py:588: trailing whitespace.\n+        \"series_directory\": str(ITERATION_DIR.relative_to(ROOT)), \n\nSTDERR:\nwarning: in the working copy of 'logs.md', LF will be replaced by CRLF the next time Git touches it\n",
+      "commands": [
+        {
+          "argv": [
+            "powershell",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "build.ps1",
+            "-Python",
+            "C:\\Python313\\python.exe"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "d92ec670e7dffa185b51f6d9f93d1305757807b58b998091e13892a9fd51282f",
+          "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+        },
+        {
+          "argv": [
+            "C:\\Python313\\python.exe",
+            "-m",
+            "py_compile",
+            "scripts/build_figures.py",
+            "scripts/full_manuscript_qa.py",
+            "scripts/write_build_audit.py"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "returncode": 2,
+          "stdout_sha256": "3cd4fc840dd2938d0af7b366cd1b40f06fca3eba06b40aa922d111efc62dd9a9",
+          "stderr_sha256": "f18b93e5b7c568f55ac9bf54e2b439ad63165640aa831e43e7dae419e0c3da05"
+        }
+      ]
+    },
+    {
+      "record": "audit\\qa_series\\physics_exposition_20261001\\iteration_04.json",
+      "result": "fail",
+      "error": "",
+      "commands": [
+        {
+          "argv": [
+            "powershell",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "build.ps1",
+            "-Python",
+            "C:\\Python313\\python.exe"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "3ab3944d8c19b0dabd1764ff36ab123fc038fc7635b0bfa7d4bac54861b1af00",
+          "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+        },
+        {
+          "argv": [
+            "C:\\Python313\\python.exe",
+            "-m",
+            "py_compile",
+            "scripts/build_figures.py",
+            "scripts/full_manuscript_qa.py",
+            "scripts/write_build_audit.py"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "f18b93e5b7c568f55ac9bf54e2b439ad63165640aa831e43e7dae419e0c3da05"
+        },
+        {
+          "argv": [
+            "pdfinfo",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "c6448067f7c7d0d4195d60a8bc95c74d03c72f62ebd7a46bc862c4890042c6f4",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "record": "audit\\qa_series\\physics_exposition_20261001\\iteration_05.json",
+      "result": "fail",
+      "error": "",
+      "commands": [
+        {
+          "argv": [
+            "powershell",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "build.ps1",
+            "-Python",
+            "C:\\Python313\\python.exe"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "84634fda3bfcaddcc89f549cdaeedee692423d05770c28146081e812e2a05796",
+          "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+        },
+        {
+          "argv": [
+            "C:\\Python313\\python.exe",
+            "-m",
+            "py_compile",
+            "scripts/build_figures.py",
+            "scripts/full_manuscript_qa.py",
+            "scripts/write_build_audit.py"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "f18b93e5b7c568f55ac9bf54e2b439ad63165640aa831e43e7dae419e0c3da05"
+        },
+        {
+          "argv": [
+            "pdfinfo",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "0bda49759ec8b3d2a3871bc134840952dd10bd643a76b8cbc2819dc4c6d7a8eb",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "record": "audit\\qa_series\\physics_exposition_20261001\\iteration_06.json",
+      "result": "fail",
+      "error": "",
+      "commands": [
+        {
+          "argv": [
+            "powershell",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "build.ps1",
+            "-Python",
+            "C:\\Python313\\python.exe"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "aa96e94befc869a41c12eca4caec55b6b347fe33032dd6ddfee3c48d7c979271",
+          "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+        },
+        {
+          "argv": [
+            "C:\\Python313\\python.exe",
+            "-m",
+            "py_compile",
+            "scripts/build_figures.py",
+            "scripts/full_manuscript_qa.py",
+            "scripts/write_build_audit.py"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "0839653a5023ac562563e610017e8a70dea98829ca3453958b74a7a6e1293f93"
+        },
+        {
+          "argv": [
+            "pdfinfo",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "63957f0ee354f2c6d4f4e8483ea0517d0792dd92d8592e87bdf96e4e9eb2c88a",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "record": "audit\\qa_series\\physics_exposition_20261001\\iteration_07.json",
+      "result": "pass",
+      "error": null,
+      "commands": [
+        {
+          "argv": [
+            "powershell",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "build.ps1",
+            "-Python",
+            "C:\\Python313\\python.exe"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "56c270067a552bf378557ffda073f8ee3844a02cb4ccc7ab9e1552447b52bed3",
+          "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+        },
+        {
+          "argv": [
+            "C:\\Python313\\python.exe",
+            "-m",
+            "py_compile",
+            "scripts/build_figures.py",
+            "scripts/full_manuscript_qa.py",
+            "scripts/write_build_audit.py"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "0839653a5023ac562563e610017e8a70dea98829ca3453958b74a7a6e1293f93"
+        },
+        {
+          "argv": [
+            "pdfinfo",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "9551d02c9eba466bccb1ef23c9e075e702aef50c1df98b57f9b9a75846d062dd",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftoppm",
+            "-png",
+            "-r",
+            "110",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\audit\\qa_runs\\physics_exposition_20261001\\iteration_07\\page"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "1",
+            "-l",
+            "1",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "197eb0c9533ee771f3c6bdc1ad4a92230b52d712fbc3e45e1f79fe8dace8e9f5",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "2",
+            "-l",
+            "2",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "f7742af78258b772bd1a429e6c5cb69f8ede888d9b523e5ef6f660e5ea7dbaa3",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "3",
+            "-l",
+            "3",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "011d65a86d2d7e1c9989bc671230dca9bb4dec5b3b8fe74262ed8c1657058adb",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "4",
+            "-l",
+            "4",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "c829cf6ae02c60ff926b8126739980a2f0f5e733940d7f031ec0164b843b8bb5",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "5",
+            "-l",
+            "5",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e0cd36126c88c2dd79af2f5da8f4825954cb4ea862bd97438d95ee259494acd7",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "6",
+            "-l",
+            "6",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "66b4c1c80cc31d98302320c678ee1cccadcc0ef6f3af2de32403709dee55ef6c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "7",
+            "-l",
+            "7",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "c69ca74dff94875f35c6d00248f0280ecd396edf1db3afc790efd52184e7405e",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "8",
+            "-l",
+            "8",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "e5a5a736b51812f99fe24430af3c3fbde816ad758fe7e21f10b1932bca05ddeb",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "9",
+            "-l",
+            "9",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "eb4360ad28980b9e21a55664a0572701d8f037285a000cd25bf90aa1027d646c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "10",
+            "-l",
+            "10",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "318d7e87a9a2aadf278ab4a64c5e6de204f585764a97cf22bab96411a51aa7fc",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "11",
+            "-l",
+            "11",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "d0760cd5160522e98d104b686edd46a29efbb017006975b05bce145bcd703ed7",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "12",
+            "-l",
+            "12",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "5ade682ec0e0303d3528d6ed87b2953dbe79afb994d7b932418502ad3b3b7148",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "13",
+            "-l",
+            "13",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "25d9409c2c1dd478e63dcf38b7dfb6bc6ed0e7850eed1b0d16a3244feb088539",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "-f",
+            "14",
+            "-l",
+            "14",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "2d894250a014bff2019b53c858b648de499390331f2c4fa4d1db5d116406edb2",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "argv": [
+            "pdftotext",
+            "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+            "-"
+          ],
+          "returncode": 0,
+          "stdout_sha256": "cc4d069e2948c4bc3287539a68ce79407c01134c2f63d2e2e0ca4ff419686e6c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "corrections": [
+    "Architecture label overflow: shorten labels, retain fit guard",
+    "Required semantic-contract wording restored while preserving added physical interpretation",
+    "Remove accidental trailing whitespace",
+    "Retain 14-page guard: improve figure placement, natural appendix/reference pagination, trim repetition",
+    "Mean-profile ratio 1.2304 exceeded initial chosen axis maximum 1.2: axis corrected to .75..1.3 and all bins explicitly checked"
+  ],
+  "failed_edit": "First apply_patch label edit had an escape mismatch and made no changes; subsequent exact text replacement succeeded."
+}

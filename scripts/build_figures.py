@@ -71,21 +71,21 @@ def save(fig: plt.Figure, filename: str) -> None:
 
 
 def plot_architecture() -> None:
-    fig, ax = plt.subplots(figsize=(8.6, 3.2), layout="constrained")
+    fig, ax = plt.subplots(figsize=(8.6, 2.8), layout="constrained")
     ax.set_xlim(0, 13.4)
     ax.set_ylim(0, 3.35)
     ax.axis("off")
     x_positions = [0.15, 2.85, 5.55, 8.25, 10.95]
     rows = [
-        [(x_positions[0], "$c$\n5 input features", "input"),
-         (x_positions[1], "$h_c$\nencoding", "learned"),
-         (x_positions[2], "$V,\\,T$\nevent response", "learned"),
-         (x_positions[3], "$F,\\,A_\\ell$\nlayer activity", "learned"),
-         (x_positions[4], "$B_\\ell$\nlayer budgets", "flow")],
-        [(x_positions[4], "$K_\\ell$\nchannel counts", "learned"),
-         (x_positions[3], "$S_\\ell$\nchannel set", "learned"),
-         (x_positions[2], "$r_{\\ell i}$\nenergy logits", "flow"),
-         (x_positions[1], "$Y_{\\ell i}$\nchannel deposits", "decode"),
+        [(x_positions[0], "$c$\nkinematics", "input"),
+         (x_positions[1], "$h_c$\nembedding", "learned"),
+         (x_positions[2], "$V,\\,T$\nstored response", "learned"),
+         (x_positions[3], "$F,\\,A_\\ell$\noccupied depth", "learned"),
+         (x_positions[4], "$B_\\ell$\ndepth energy", "flow")],
+        [(x_positions[4], "$K_\\ell$\nhit counts", "learned"),
+         (x_positions[3], "$S_\\ell$\nhit placement", "learned"),
+         (x_positions[2], "$r_{\\ell i}$\nenergy shares", "flow"),
+         (x_positions[1], "$Y_{\\ell i}$\nsoftmax decoder", "decode"),
          (x_positions[0], "$\\mathbf{Y}$\n6,790 deposits", "output")],
     ]
     width, height = 2.25, 0.80
@@ -127,6 +127,8 @@ def plot_architecture() -> None:
         ax.text(x0 + 0.45, 0.24, label, ha="left", va="center", fontsize=10.2,
                 color="#344c65")
         x0 += 2.95
+    ax.text(5.6, 1.66, "Training: reference upstream states | Generation: sampled upstream states",
+            ha="center", va="center", fontsize=8.5, color="#344c65")
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
     for label_artist, box in labels_and_boxes:
@@ -139,41 +141,8 @@ def plot_architecture() -> None:
 
 
 def plot_geometry() -> None:
-    geometry = np.load(GEOMETRY_DATA)
-    summary = json.loads(GEOMETRY_SUMMARY.read_text(encoding="utf-8"))
-    positions = geometry["positions_mm"]
-    layers = geometry["layer_index"]
-    multiplicity = geometry["physical_position_count"]
-    fig, axes = plt.subplots(1, 3, figsize=(8.6, 3.55), layout="constrained")
-
-    for ax, layer, title in [(axes[0], 0, "ECAL layer 0"), (axes[1], 1, "HCAL layer 1")]:
-        select = layers == layer
-        scatter = ax.scatter(
-            positions[select, 0], positions[select, 1], c=multiplicity[select],
-            cmap="viridis", vmin=1, vmax=4, s=18 if layer == 0 else 34, edgecolors="none",
-        )
-        ax.set_aspect("equal", adjustable="box")
-        ax.set_xlabel("readout-centroid x (mm)")
-        ax.set_ylabel("readout-centroid y (mm)")
-        ax.set_title(title)
-        ax.set_axisbelow(True)
-    colorbar = fig.colorbar(scatter, ax=axes[:2], shrink=0.82, pad=0.02)
-    colorbar.set_label("physical positions / readout ID")
-
-    histogram = {int(k): int(v) for k, v in summary["physical_position_count_histogram"].items()}
-    x = np.array(sorted(histogram))
-    y = np.array([histogram[k] for k in x])
-    axes[2].bar(x, y, color="#4c78a8", width=0.65)
-    for xi, yi in zip(x, y, strict=True):
-        axes[2].text(xi, yi + 70, f"{yi:,}", ha="center", fontsize=9.5)
-    axes[2].set_xticks(x)
-    axes[2].set_xlabel("positions per readout ID")
-    axes[2].set_ylabel("all-detector readout channels")
-    axes[2].set_title("Readout ganging")
-    axes[2].set_ylim(0, max(y) * 1.14)
-    axes[2].set_axisbelow(True)
-    fig.suptitle("Readout centroids and ganging", fontsize=11.5)
-    save(fig, "detector_geometry.png")
+    from reader_figures import plot_detector_layout
+    plot_detector_layout()
 
 
 def plot_training_history() -> None:
@@ -232,39 +201,47 @@ def plot_response_bins(report: dict) -> None:
 
 def plot_longitudinal(report: dict) -> None:
     profile = report["distribution_metrics"]["mean_longitudinal_profile"]
-    truth = np.asarray(profile["truth"])
-    generated = np.asarray(profile["generated"])
+    truth, generated = np.asarray(profile["truth"]), np.asarray(profile["generated"])
+    if not (np.all(truth > 0) and np.all(np.isfinite(generated))):
+        raise ValueError("Mean-profile ratios require finite means and positive reference bins")
     layers = np.arange(len(truth))
-    truth_total, gen_total = truth.sum(), generated.sum()
-    truth_parts = [truth[0], truth[1:].sum()]
-    gen_parts = [generated[0], generated[1:].sum()]
-    fig, axes = plt.subplots(1, 3, figsize=(8.6, 3.45), width_ratios=[0.8, 1.35, 1.35], layout="constrained")
-    x = np.arange(2)
-    axes[0].bar(x, [truth_parts[0], gen_parts[0]], color=[COLORS["Reference"], COLORS["Generator"]],
-                width=0.68, label="ECAL")
-    axes[0].bar(x, [truth_parts[1], gen_parts[1]], bottom=[truth_parts[0], gen_parts[0]],
-                color=["#8c8c8c", "#7fa6c2"], width=0.68, label="HCAL")
-    axes[0].set_xticks(x, ["reference", "generator"])
-    axes[0].set_ylabel("mean deposit / event (GeV)")
-    axes[0].set_title("Subsystem cancellation")
-    axes[0].text(0, truth_parts[0] / 2, "ECAL", color="white", ha="center", va="center", fontsize=9.5)
-    axes[0].text(0, truth_parts[0] + truth_parts[1] / 2, "HCAL", color="white", ha="center", va="center", fontsize=9.5)
-    axes[0].text(0, truth_total + 0.06, f"{truth_total:.3f}", ha="center", fontsize=9.5)
-    axes[0].text(1, gen_total + 0.06, f"{gen_total:.3f}", ha="center", fontsize=9.5)
-    for ax in axes[1:]:
-        ax.plot(layers, truth, label="Geant4 reference", color=COLORS["Reference"], lw=1.8, ls="--")
-        ax.plot(layers, generated, label="generator", color=COLORS["Generator"], lw=1.7)
-        ax.set_xlabel("longitudinal layer")
-        ax.set_axisbelow(True)
-    axes[1].set_xlim(1, 30)
-    axes[1].set_ylim(0, 0.13)
-    axes[1].set_title("HCAL development")
-    axes[2].set_xlim(1, 64)
-    axes[2].set_yscale("log")
-    axes[2].set_title("HCAL tail (log scale)")
-    axes[2].legend(frameon=False, fontsize=9.5)
-    fig.suptitle("Mean longitudinal energy deposit", fontsize=11.5)
-    save(fig, "longitudinal_profile.png")
+    fig = plt.figure(figsize=(8.6, 3.65), layout="constrained")
+    grid = fig.add_gridspec(2, 3, width_ratios=[0.8, 1.35, 1.35], height_ratios=[2.2, 1])
+    bar = fig.add_subplot(grid[:, 0])
+    parts = np.array([[truth[0], truth[1:].sum()], [generated[0], generated[1:].sum()]])
+    bar.bar([0,1], parts[:,0], color=[COLORS["Reference"], COLORS["Generator"]], width=.68)
+    bar.bar([0,1], parts[:,1], bottom=parts[:,0], color=["#8c8c8c", "#7fa6c2"], width=.68)
+    for i, total in enumerate(parts.sum(axis=1)):
+        bar.text(i,total+.06,f"{total:.3f}",ha="center",fontsize=9)
+    for y,label in [(parts[0,0]/2,"ECAL"),(parts[0,0]+parts[0,1]/2,"HCAL")]:
+        bar.text(0,y,label,ha="center",va="center",color="white",fontsize=9)
+    bar.set_xticks([0,1],["reference","generator"],fontsize=9)
+    bar.set_ylabel("mean deposit / event (GeV)")
+    bar.set_title("ECAL + HCAL")
+    for col, low, high, logarithmic in [(1,1,30,False),(2,0,64,True)]:
+        ax=fig.add_subplot(grid[0,col]); ratio=fig.add_subplot(grid[1,col],sharex=ax)
+        use=slice(low,high+1)
+        ax.plot(layers[use],truth[use],ls="--",lw=1.6,color=COLORS["Reference"],label="Geant4")
+        ax.plot(layers[use],generated[use],lw=1.6,color=COLORS["Generator"],label="generator")
+        ax.set_ylabel("mean layer deposit (GeV)",fontsize=9)
+        ax.tick_params(labelbottom=False,labelsize=8.5)
+        ax.set_xlim(low,high)
+        if logarithmic:
+            ax.set_yscale("log"); ax.set_title("All layers (0 = ECAL)")
+            ax.legend(frameon=False,fontsize=8,loc="upper right")
+        else:
+            ax.set_ylim(0,.11);ax.set_title("HCAL layers 1–30")
+        ratio.plot(layers[use],(generated/truth)[use],lw=1.2,color=COLORS["Generator"])
+        ratio.axhline(1,color="#333333",ls=":",lw=.9)
+        ratio.set_ylim(.75,1.3);ratio.set_yticks([.8,1.0,1.2]);ratio.tick_params(labelsize=8.5)
+        ratio.set_xlabel("longitudinal layer",fontsize=9);ratio.set_ylabel("gen. / ref.",fontsize=9)
+    fig.suptitle("Mean longitudinal energy deposit; ratios have no uncertainty bands",fontsize=11)
+    save(fig,"longitudinal_profile.png")
+
+
+def plot_support_summary(report: dict) -> None:
+    from reader_figures import plot_observable_definitions
+    plot_observable_definitions()
 
 
 def plot_structure_ratios(report: dict) -> None:
@@ -327,6 +304,7 @@ def write_manifest() -> None:
                 "detector_geometry.png",
                 "generator_schematic.png",
                 "longitudinal_profile.png",
+                "support_summary.png",
             ]
         },
     }
@@ -339,6 +317,7 @@ def main() -> None:
     plot_architecture()
     plot_geometry()
     plot_longitudinal(report)
+    plot_support_summary(report)
     for stale_name in [
         "zero_response_validation.png", "topology_validation.png",
         "training_history.png", "response_energy_bins.png", "structure_ratio_summary.png",
@@ -347,7 +326,7 @@ def main() -> None:
         if stale.exists():
             stale.unlink()
     write_manifest()
-    print(f"Wrote three manuscript figures to {OUTPUT_DIR}")
+    print(f"Wrote four manuscript figures to {OUTPUT_DIR}")
 
 
 if __name__ == "__main__":

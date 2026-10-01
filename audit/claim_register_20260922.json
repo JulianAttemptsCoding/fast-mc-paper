@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "created_utc": "2026-09-22T08:00:00Z",
-  "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later and more interrupted longitudinal support; graph-component counts also differ, partly confounded by empty layers.",
+  "claim": "On the pilot development bank, the within-run component excess is at least 30.44581570, or 84.64146% of the mean component excess. This is an algebraic sample bound, not an uncertainty or detector-performance claim.",
   "values": {
     "active_layers_difference": 0.2519342750226694,
     "last_active_layer_difference": 4.423773647160425,
@@ -30,7 +30,9 @@
     "original_c2st_condition_only_auroc": 0.4635906851851852,
     "original_c2st_high_level_gate_max": 0.65,
     "separate_pair_grouped_monitor_high_level_auroc": 0.8928972222222222,
-    "separate_pair_grouped_monitor_condition_only_auroc": 0.5
+    "separate_pair_grouped_monitor_condition_only_auroc": 0.5,
+    "within_run_component_excess_lower_bound": 30.445815704637013,
+    "within_run_lower_fraction_of_mean_excess": 0.8464146238259613
   },
   "scope": {
     "checkpoint": "dicos-f-02 epoch 90",
@@ -43,7 +45,8 @@
     ],
     "threshold": "stored energy > 0",
     "graph": "frozen model graph",
-    "test_events_used": 0
+    "test_events_used": 0,
+    "detector_identity": "Author-confirmed ePIC ZDC simulation; production geometry tag unverified"
   },
   "not_established": [
     "structural statistical significance",
@@ -55,11 +58,11 @@
     "independent lateral fragmentation after accounting for empty-layer runs"
   ],
   "method_boundaries": {
-    "graph": "Only adjacent-layer longitudinal edges; a contiguous empty-layer run separates occupied sides, but the aggregate gap count counts layers rather than runs.",
+    "graph": "Same/adjacent-layer edges imply 1+I[G>0]<=R<=G+1 and m>=R. Gap fractions sharpen sample bounds; pure lateral or physical-cluster interpretation is not established.",
     "bootstrap": "The stored interval resamples pairs within incident-energy bins; repeated inspection of the validation bank precludes confirmatory interpretation.",
     "split_hashes": "Pilot and canonical split manifests differ; the exact pilot-validation/bank overlap is unresolved.",
     "ai_use": "Author states Codex/GPT-5.6-Sol assisted code and manuscript drafting and analysis/model proposals; author supplied main ideas and checked the work.",
-    "c2st": "Original three-seed shower-aware scores exceed the declared high-level gate but use row-wise matched-pair splitting; separate pair-grouped validation monitor has its own bank. Neither is an untouched test.",
+    "c2st": "Row-split opposite-label twins and failed condition control preclude calibrated fidelity interpretation. The 0.65 threshold is recorded but its declaration timing is not independently established.",
     "response_clip": "The response cap and possible clipping to zero follow implementation; aggregate clipping frequencies were not retained."
   },
   "model_description": {
@@ -76,5 +79,11 @@
     "layer_attention_heads": 4,
     "mechanism_claim_boundary": "implementation behavior only; no adequacy, convergence, causal, or architecture-superiority claim",
     "mathematical_audit": "audit/mathematical_exposition_20260923.json"
-  }
+  },
+  "updated_utc": "2026-10-01T02:08:15.623660+00:00",
+  "revision": "0.17.0",
+  "response": "audit/external_audit_response_20260930.md",
+  "current_geometry_scope": "Stored-ID grouping only; physical electronics interpretation unresolved; electronic ganging not established.",
+  "current_revision": "0.20.0",
+  "current_reader_revision": "audit/claude_integration_response_20261001.md"
 }

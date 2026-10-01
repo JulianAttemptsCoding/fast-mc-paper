@@ -1,0 +1,22 @@
+{
+  "created_utc": "2026-10-01T07:25:23.778789+00:00",
+  "revision": "0.18.0",
+  "main_sha256": "126de20896906f81dc4c66f505389892f7fda8d7d0e98e9a780284015ab36493",
+  "response_sha256": "7a7d2bcaf716760556aed01bebe0d202b1fe6e9b59b72b451b5a1e6494458748",
+  "status": "document_revision_complete; empirical limitations remain",
+  "items": [
+    "S1.1 \u2014 Threshold and timing sensitivity",
+    "S1.2 \u2014 Stored ID grouping versus electronic ganging",
+    "S1.3 \u2014 Exact runs versus aggregate bound",
+    "S1.4 \u2014 Single fit and failed screening",
+    "S2 \u2014 Mechanism and calibration",
+    "S2 \u2014 Statistics recovered from the existing report",
+    "S2 \u2014 Data hygiene and physical observables",
+    "S3 \u2014 Methods and numerical specification",
+    "S4 \u2014 Presentation, affiliation and references",
+    "Completion boundary"
+  ],
+  "no_new_test_or_training": true,
+  "current_qa": "audit/iterations/iteration_99.json",
+  "pdf_sha256": "2f0de6dd3ebd24b72ed9bc2ad934b1cdb1cc9ea7d91a385c46f0caee418bf81b"
+}

@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-10-01T09:41:47.860860+00:00",
+  "revision": "0.20.0",
+  "status": "Manuscript revision and local submission-package QA complete; empirical limits remain",
+  "main_sha256": "ddb1ae8b3607c45a8562522ea0cf76d3bb03b9e4c85cb3ae561ac5a91d9bd912",
+  "pdf_sha256": "14259865b931c2ce17f1a2abe3215cc5ec3d2698368fa876b32e949ff89e7598",
+  "zip_sha256": "eecd8b3c16c641fff498151a37c252c2f4ce267c4d27f2cef24fc40c7b0256df",
+  "automated_check_groups": 20,
+  "visual_pages": 14,
+  "guard_tests": 10,
+  "current_qa": "audit\\qa_series\\claude_integration_20261001\\iteration_04.json",
+  "failed_attempts": [
+    1
+  ],
+  "failed_attempt_resolution": "Attempt 1: semantic wording guard failed and PDF had 15 pages. Restored precise wording, reduced repetition and geometry figure height. Attempts 2, 3 and 4 passed at 14 pages. No guard relaxed.",
+  "native_compile": "Two platform-directory initialization failures; no source diagnostics available from editor",
+  "local_build": "pdfLaTeX/Biber, all 20 check groups, exact source/PDF/figure/every-page binding passed",
+  "commands": [
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/write_build_audit.py"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "9937c141373c3ebde047ba2b71ebbf4d2f853f8dc922660fa5cdf1c689568c89",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "publication_integrity": "Added .gitattributes * -text because core.autocrlf=true would otherwise change source/evidence bytes on Git publication; verify every staged blob against working bytes.",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "new_event_or_test_data_access": false,
+  "external_submission": false,
+  "remaining": "New event-level evaluation with verified identities, production segmentation, paired structural intervals, threshold/graph/timing, solver and repeated-fit studies.",
+  "evidence": "claude_integration_response_20261001.md; claude_integration_20261001.json; claude_reader_derived_20261001.json",
+  "graft_tokens_saved_estimate": 16736
+}

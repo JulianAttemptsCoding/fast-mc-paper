@@ -1,0 +1,149 @@
+{
+  "created_utc": "2026-09-30T22:11:43.311392+00:00",
+  "status": "general_manuscript_finalization_complete",
+  "authorization": "User explicitly granted ability to recompile and repeated request to finalize with QA.",
+  "source_sha256": "cd4a8322a449b86e4f6a67d55da252c847c167b0eca4a55a487efc8856aaf00d",
+  "input_pdf_sha256": "c5d166fec9118bf1bafcebc0704edf33da4b554eb4632e024a2fe507b06504a7",
+  "helper_sha256": "f843a697a137601b9c4be0927a233a4c77a83083073f57a994ea406fc3646333",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "native_editor_compile": {
+    "result": "failed",
+    "diagnostic": "Unable to find standard directories for platform"
+  },
+  "venue": "Unspecified; general manuscript QA only, no journal-format compliance claim",
+  "scientific_boundary": "Descriptive pilot case study; no new training, test evaluation or scientific results.",
+  "earlier_source_preflight": "audit/submission_preflight_20260930.json",
+  "updated_utc": "2026-09-30T22:14:42.472969+00:00",
+  "events": [
+    {
+      "utc": "2026-09-30T22:11:43.602965+00:00",
+      "message": "User authorized existing PDF rebuild; native editor compiler still fails at environment setup; existing editor remains open."
+    },
+    {
+      "utc": "2026-09-30T22:12:35.941269+00:00",
+      "message": "full_QA: exit 0"
+    },
+    {
+      "utc": "2026-09-30T22:12:35.971669+00:00",
+      "message": "Full automated QA passed; every-page visual review pending for this exact PDF."
+    },
+    {
+      "utc": "2026-09-30T22:14:39.847227+00:00",
+      "message": "Every current PDF page visually reviewed; no clipping, overlap, broken references, table or figure legibility defects found."
+    },
+    {
+      "utc": "2026-09-30T22:14:41.423436+00:00",
+      "message": "release_guard_tests: exit 0"
+    },
+    {
+      "utc": "2026-09-30T22:14:42.387988+00:00",
+      "message": "exact_release_binding: exit 0"
+    },
+    {
+      "utc": "2026-09-30T22:14:42.467957+00:00",
+      "message": "Submission source ZIP assembled; all ten members verified by CRC and exact byte comparison."
+    },
+    {
+      "utc": "2026-09-30T22:14:42.472986+00:00",
+      "message": "General manuscript finalization complete: full automated QA, every-page visual review, seven release-guard tests and exact source/PDF/figure binding passed. Venue-specific checks and public release remain separate."
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "scripts/full_manuscript_qa.py",
+        "--iteration",
+        "92",
+        "--focus",
+        "Submission candidate: exact current metadata, scientific consistency and all-page rendering",
+        "--disposition",
+        "Complete suite with unchanged scientific guards; source-only preflight already passed; visual review follows"
+      ],
+      "returncode": 0,
+      "output": "audit\\submission_completion_20260930_full_QA.txt",
+      "output_sha256": "bae48d0f1682c3685e40b330a72bbfd27a7229430ec6f1b9186fb6e9d0716be4"
+    },
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_qa_guards.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "output": "audit\\submission_completion_20260930_release_guard_tests.txt",
+      "output_sha256": "0536b2af8877f1849ba939b3e37f7b105d5e0393e884db25ade963d5db67600a"
+    },
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "scripts/write_build_audit.py"
+      ],
+      "returncode": 0,
+      "output": "audit\\submission_completion_20260930_exact_release_binding.txt",
+      "output_sha256": "a2a2758890c3f1d33f5a0245439317aa17586185753a76aadafd48a41ddedbad"
+    }
+  ],
+  "automated_QA": {
+    "record": "audit/iterations/iteration_92.json",
+    "sha256": "d7f894bd4a94f3bd61e76a3548177a3c8203b2066c076416531a63568051fc28",
+    "check_groups": 16,
+    "pdf": {
+      "sha256": "719aaf34380144fcae4fa37717b34e1b88f87f39ef609cca8838111473669ca0",
+      "bytes": 1164111,
+      "pages": 14,
+      "page_size": "612 x 792 pts (letter)",
+      "contact_sheet": "audit/qa_runs/iteration_92/contact.png"
+    }
+  },
+  "visual_review": {
+    "path": "audit\\visual_review_finalization_20260930.json",
+    "sha256": "6abd3e611614989ac1d736ec01156b512025176e84b469d9e13d20fa46a7a673",
+    "pages": 14
+  },
+  "source_package": {
+    "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_submission_source.zip",
+    "sha256": "62edf4d5a48791175653d6b72d35301c33f1cdb6be906137d1b682349ab6b818",
+    "members": 10,
+    "verification": "CRC and byte comparison of every member to verified inputs",
+    "member_sha256": {
+      "main.tex": "cd4a8322a449b86e4f6a67d55da252c847c167b0eca4a55a487efc8856aaf00d",
+      "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+      "main.bbl": "73deb97dcb191d9e0be1d57cd3771d39984a940f09f0e04b995bfdcc0f5de27f",
+      "figures/detector_geometry.png": "b15b5a5a416e3d9864b011d155c8e8e0d2b3ceafb4c088cbf76ed36d245b7164",
+      "figures/generator_schematic.png": "985074a390f000e670d078a48688d10d871842443c3034deafd15a6369db8213",
+      "figures/longitudinal_profile.png": "9fa252851e95d9ac25bb956135f97c7ca2ce94cdaa7b4284a42c05c38596ad42",
+      "figures/support_summary.png": "b59afa10f959fb7f4a39eb60d6730aeb7700b27ab46ab58b4d129ce9e92ea279",
+      "audit/final_build_audit.json": "da276c7650b29b9ddb650edc17b029160e1d5ef44b70847e512fcb672dd54ccf",
+      "README_SUBMISSION.txt": "fe45579bf6eb7bd5e1a576eae66916769569765d096589e4466d5ab7c8a1ed9c"
+    }
+  },
+  "final_helper_sha256": "65d5398ff359bf86b470b82871200c13ca6fa8f861d2bff95211b583b66d59c8",
+  "output": {
+    "path": "output\\fast_mc_zdc_manuscript.pdf",
+    "sha256": "719aaf34380144fcae4fa37717b34e1b88f87f39ef609cca8838111473669ca0",
+    "bytes": 1164111,
+    "pages": 14
+  },
+  "final_build_audit_sha256": "da276c7650b29b9ddb650edc17b029160e1d5ef44b70847e512fcb672dd54ccf",
+  "remaining_venue_actions": [
+    "Identify destination and apply its submission-specific requirements",
+    "Confirm collaboration release permissions before public redistribution",
+    "Publish an immutable archival package when authorized"
+  ],
+  "scientific_limits": [
+    "One generator-training seed",
+    "Repeatedly inspected validation bank",
+    "Headline structural uncertainties and threshold/graph sensitivity unavailable",
+    "Incomplete historical runtime/production metadata; no isolated generation timing"
+  ]
+}

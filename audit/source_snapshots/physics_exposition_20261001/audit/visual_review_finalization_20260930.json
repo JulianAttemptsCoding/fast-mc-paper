@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-10-01T07:29:51.693158+00:00",
+  "result": "pass",
+  "iteration": 99,
+  "pdf_sha256": "2f0de6dd3ebd24b72ed9bc2ad934b1cdb1cc9ea7d91a385c46f0caee418bf81b",
+  "page_sha256": {
+    "1": "fb77ed31b09fd064acf12ef00f21a47b2f1cec62907d0730afd9060cb2bf223d",
+    "2": "f17669581fe5619e1e2fe7776d2763ef33d1da52caf457c4faee7a904db55a1c",
+    "3": "c71aec192636dc2204a9da6493d0e135a32d815ce6c4467b85a8307ea03be890",
+    "4": "e57a2f814c5dfd82714d5219967f8998725e697a9f779dcfae0b26bc268ed318",
+    "5": "c7c3e76e288b797c09dc7547e91952c181f2f13f05ba18818f775031d05c9a75",
+    "6": "3385922eb1db445ed80ccddcc4f3fb9fcac66dcc7440c6aa99af6b585f815280",
+    "7": "9a073e3c590dc8e9e858800fa91c5c9ba432a87ee204954c0781c5e18057c6b8",
+    "8": "6a2ae1ded9f91b37680977d0eff563dd2bbc03b3fed327b06e33246ddb90718d",
+    "9": "316124037517e2f0b4feac8f0b9b75cac5b5ae8113ad3888a2c79bb19eea4428",
+    "10": "2962294cc30630653d9a9d61e145ba430c15dc54697ae8d8cf9cdb22958dbdef",
+    "11": "3abd6e786ce0744135e46a918ed9e82f68779746a66ea7bc13c78772de3163bb",
+    "12": "7c9b7cc09b53b94c1ad95789efe52e5ddc7b9c102fe4c2c844cb070b85be2e24",
+    "13": "66fc5d566aa54bc08be1548a0b70da67284a58db64295baf942c687bb379d767",
+    "14": "f6003d20fedde8ff0d15091525532f6341db8b1b69c55d02357845daf814f184"
+  },
+  "review_method": "All 14 QA98 pages directly inspected; all 14 QA99 rendered-page SHA-256 values identical to those inspected pages. README-only change; full suite rerun.",
+  "page_notes": {
+    "1": "Abstract gives aggregate-only scope, absolute component means, bounded run-count difference and failed classifier screen; clean title/author and introduction.",
+    "2": "Stored-ID grouping and unresolved electronics semantics explicit. Revised geometry figure, labels and caption fit; no electronic-ganging inference.",
+    "3": "Population/access limitations and full architecture diagram readable; all stage arrows and caption visible.",
+    "4": "Response, activity and flow equations fit; floor distortion and centered target/common-offset noise distinction stated.",
+    "5": "Solver and graph/count/sampler equations readable; no overflow.",
+    "6": "Decoder and training/loss/checkpoint explanations complete; mathematical identities and seed/batch values intact.",
+    "7": "Run-bound derivation, exact-event alternative, uncertainty and classifier protocol clearly connected.",
+    "8": "All original aggregate rows preserved; mean longitudinal figure and caption fit.",
+    "9": "Pooled widths, empty-cause ambiguity and ECAL-start rates fit with algebraic-bounds figure; ranges are not confidence intervals.",
+    "10": "Failed screens and numerical history retained. FP32 support equality explicit; three-layer example and correlated-upstream distinction legible.",
+    "11": "Threshold/timing applicability caveat, performance limits, conclusion, availability, acknowledgment and author/AI declarations all fit.",
+    "12": "Appendix A hashes, calibration weights and historical split/reproducibility limits readable.",
+    "13": "Expanded eight-column energy table legible; all bins/SDs and classifier seeds intact; scored-row twin probability stated.",
+    "14": "All 25 citations and new publication metadata fit without clipped bibliography text."
+  },
+  "boundary": "Document/rendering/algebra QA only; no new event-level or physical validation."
+}

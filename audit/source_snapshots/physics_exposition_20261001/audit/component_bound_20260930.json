@@ -1,0 +1,24 @@
+{
+  "source_report_sha256": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+  "bounds": {
+    "r": {
+      "m": 23.419198546482285,
+      "G": 2.1021499949530633,
+      "Q_low": 20.317048551529222,
+      "Q_high": 22.419198546482285
+    },
+    "g": {
+      "m": 59.38953134510042,
+      "G": 6.048792858592006,
+      "Q_low": 52.340738486508414,
+      "Q_high": 58.38953134510042
+    },
+    "delta_m": 35.97033279861814,
+    "delta_Q_low": 29.92153994002613,
+    "delta_Q_high": 38.0724827935712,
+    "lower_fraction": 0.83183939685917
+  },
+  "layer_masks_checked": 1023,
+  "toy_probabilities_checked": 5,
+  "interpretation": "Deterministic sample-mean bounds. Enumerations test algebra only; no model/data-generation experiment or significance claim."
+}

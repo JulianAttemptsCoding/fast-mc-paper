@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "reviewed_utc": "2026-09-30T02:39:47.221794+00:00",
+  "method": "Direct inspection of all twelve iteration-78 pages, followed by direct inspection of final iteration-79 pages 8 and 9. The other ten rendered pages are byte-identical. Checked all figures, table, equations, captions, prose, page endings and references.",
+  "pdf_sha256": "404c2627e6c577067611f16db0939d9e615af3e85cfff49097d0c216259b48b7",
+  "page_sha256": {
+    "1": "d832b9db05c5176ffa676472109753a032582e461159f76e4dcbf8476d5733fb",
+    "2": "303f7ac224765e66781f7e3db77a300b9667c3ff3c1bd7abeb00ff86115529a9",
+    "3": "2e1d81760b8f5bcbbece6de1cab46948fb29683d11bf556db2bbc92019fe895d",
+    "4": "2bbd503a8b0f1d3d111fe8c639ab884577a9976fba0c6c847e945ad81166f6f1",
+    "5": "e62ce25181d19f45c601542bb56e37661de47df173512e0a4666cd965df003fc",
+    "6": "20ff0792707090b413ea9e74865606f125927cda4ca3f5d50cd681051be8537c",
+    "7": "77347abae195c30c94b3fa6856aeff55951c241227c0ffd5530177b9fb30980c",
+    "8": "15788ed28e8d32ec8da2b2a723397844d60f11035cf19f0f96b47eb2f5ca995a",
+    "9": "c43a30c6049a01ea3c147ddcae9dd9d6098697bbefbd4741a45a7b917a687d2f",
+    "10": "f67a55bc111477926905fe19ac936e5fc3030789a1efb67077dde90295572dc6",
+    "11": "049f3f50ca881618808054393d33adc1f55f8589eaac3e4968dba545c02a5d23",
+    "12": "1e98478831470ac3b0ba80833c8c736853c137f0e623e88d61dcfe3700933df9"
+  },
+  "pages_directly_inspected": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "changed_pages_directly_inspected": [
+    8,
+    9
+  ],
+  "unchanged_pages_bound_to_iteration_78": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    10,
+    11,
+    12
+  ],
+  "observations": {
+    "pages_1_3": "Question-led abstract and introduction; target, inputs, geometry and cascade legible. Geometry dimensions, ganging counts and schematic order agree with source.",
+    "pages_4_6": "All model/input equations and definitions legible. Flow transport precedes objective; solver evaluates current state at midpoint time. Loss terms and stage order retained.",
+    "page_7": "Gap equation, populations, graph-run lower bound, resampling and classifier split limits legible.",
+    "page_8": "Table values and denominators preserved. Figure 3 has HCAL-only log scaling, explicit layer-energy units and distinct 1\u201330/1\u201364 descriptions. Legend clear of data.",
+    "page_9": "Support panels have independent zero-based axes and correct units. All-event W1 population distinguished from nonempty means. Paragraph ends before page turn.",
+    "page_10": "Tolerance policy and earlier fixed-tolerance exceedance disclosed. Discussion fits as six complete paragraphs.",
+    "pages_11_12": "Conclusion, availability, declarations and all 18 references readable; no orphan heading or overlapping text."
+  },
+  "layout_failures": [],
+  "scientific_scope": "Document consistency and rendering review; not physics validation."
+}

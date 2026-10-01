@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-10-01T02:14:12.560412+00:00",
+  "result": "pass",
+  "iteration": 96,
+  "pdf_sha256": "896037ac8ca7e8429ee38d73e6314ee7ec81c529d6e6ef98a93da80603d517e7",
+  "page_sha256": {
+    "1": "4bd6acc9fd8e9174f9b7d8ce6b39912d57c14be88f6ab57201b4b704241a15f0",
+    "2": "c1ecbf30ad3c86e21440a18078d39599ea299603908b10fa606724b6bcabea00",
+    "3": "88a71642ef17b5b63ab7d10e8cd89073e7ef97c4629c30bfdd214e65bf08fd1f",
+    "4": "54943ce7ad3ffabed729968860b36e6614742e51af02765bc6812d07b58eae1f",
+    "5": "c06adfbedbb976af5ff3ac94944f5f2a81f956e7e9d7b0f21893b591973ebe15",
+    "6": "3385922eb1db445ed80ccddcc4f3fb9fcac66dcc7440c6aa99af6b585f815280",
+    "7": "74ab8337c467fd0ba460583a88eb9a73b51aa25cdda02c04e06033c95cbe7e50",
+    "8": "6a2ae1ded9f91b37680977d0eff563dd2bbc03b3fed327b06e33246ddb90718d",
+    "9": "e1d42015d6d0a82d6e5ac5921564b6297550be4834e91573e91bc3b173f66752",
+    "10": "76c1d56d9b7e389fa3e36a8eab7619b05a2ecaab1936aa6bf8e1b7a4fdfe1562",
+    "11": "d745454330bbb854fe2ad04a18662ababe8dc7386754bdf0f5c3eef31deb32eb",
+    "12": "7c9b7cc09b53b94c1ad95789efe52e5ddc7b9c102fe4c2c844cb070b85be2e24",
+    "13": "00a16b76a389ecd6c4eab7ebb96855709508afc101743bcea1813425d2a9497a",
+    "14": "5216cc22e6ae457b06f1045d953a8a8057e857e0ce97eae0d4c46f6656326f5c"
+  },
+  "review_method": "Direct inspection of all fourteen full-page 110-dpi renders using view_image; manuscript read in full.",
+  "page_notes": {
+    "1": "Title/name/email, revised abstract and motivation fit cleanly; no unsupported calibrated-performance claim.",
+    "2": "Condition equation, ePIC scope and geometry graph/counts checked; geometry panels and caption legible.",
+    "3": "Training/development populations and architecture cascade clear; arrows and stage colors match caption.",
+    "4": "Response/activity/flow equations 2-6 fit; numerical floors and raw-deposit meaning explained.",
+    "5": "Solver, budget, graph message passing and fixed-count sampler equations 7-10 legible.",
+    "6": "Channel flow, decoder, losses and checkpoint selection clear; all equations fit.",
+    "7": "Gap/run/component definitions and aggregate bound verified; uncertainty and C2ST limitations stated.",
+    "8": "All 14 aggregate table rows and longitudinal-energy panels/caption fit without clipping.",
+    "9": "Component-bound figure and labels clear; algebraic ranges explicitly distinguished from confidence intervals.",
+    "10": "Failed classifier/tolerance findings retained; mechanism hypothesis and physical-sensitivity limits clear.",
+    "11": "Conclusion consistent with bounds; availability, mentorship, author and AI declarations all fit on page.",
+    "12": "Appendix A hashes, calibration weights, settings and reproducibility/test-history limits legible.",
+    "13": "Appendix B includes every energy bin and all classifier seeds, plus split caveat; no table overflow.",
+    "14": "All 22 bibliography entries and links fit; no missing references or clipped lines."
+  },
+  "scientific_boundary": "Document and algebra review, not new event-level validation or a journal-readiness certification."
+}

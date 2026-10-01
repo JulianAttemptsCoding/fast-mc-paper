@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "reviewed_utc": "2026-09-30T07:15:21.230467+00:00",
+  "method": "Direct inspection of all twelve QA80 pages; direct reinspection of changed QA81 pages1,2,3,4,8,9,10; unchanged QA81 pages5,6,7,11,12 match QA80. Every final QA82 page is byte-identical to QA81. Reviewed prose, equations, table, all four figures/captions, section boundaries and all references.",
+  "pdf_sha256": "ab20192c4d29df50f3313ce1272aad0b04bb4c9e29ebaf34883c58f7c681a8c2",
+  "page_sha256": {
+    "1": "4a53fb2fa504b07b3ff61b7388eb1829e37d14945d218e61eedb3422cb589996",
+    "2": "93889b25b49d08db87f402b5277d2f89888260feb4739246edd73295c42c4f35",
+    "3": "f47b56ff5021dea029537201a98a559f12586c40510d4eac41f1df63eb4b2f13",
+    "4": "20addb7c17978c4da30de79dfecf3ca6cb13899a68b456a3497bdfc19df6ddd8",
+    "5": "84a082101eb4aa9886e4a4ce7de090e2bc7581e883c275a3daf1a0beab51b58a",
+    "6": "da72456ced19e96970a0f140972634876e04ae4de451d8f14d525860f4d907e8",
+    "7": "5988f2e9567a914dfb665be090183f436ea0c60a682542453381316a5167b857",
+    "8": "f1948afa42f811630acf52e1fc253388f9e5af98b9f6e4601b96913d1f5e4404",
+    "9": "1eb718a0657a5910dd4efbbf3cb2826cd0f7ec2560206929beeec21083f76931",
+    "10": "283f9d7f30f17d4e3b6bda56b78b06278d497facfc817191879daf7184510752",
+    "11": "5805b7ba9bfaadf7ca5ebe87f31a28b99fe5b2b70c8b253c5bc71d2fcbd8b86c",
+    "12": "ba94721d1135ec513bc1deca8bf6c42d9da2561b13a301e1e6362fc9bc9436fe"
+  },
+  "pages_directly_inspected": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "final_pages_bound_to_iteration_81": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "iteration_81_pages_directly_inspected": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    9,
+    10
+  ],
+  "iteration_81_pages_bound_to_iteration_80": [
+    5,
+    6,
+    7,
+    11,
+    12
+  ],
+  "observations": {
+    "pages_1_3": "Question-led abstract, clear graph-gap statement, precise uncertainty scope; three data subsections readable. Empty shower and development bank defined. Overlap antecedent explicit. Geometry and cascade labels/captions legible.",
+    "pages_4_6": "Model/input equations and all nearby definitions legible. Graph operations explained before Eq.9. Top-K, masking, flow-time, decoding and training roles preserved. No equation clipped or divided across pages.",
+    "page_7": "Metric populations, graph-run argument, uncertainties and distinct classifier split protocols remain readable and self-contained.",
+    "page_8": "Table values/units/signs preserved. Section means and HCAL linear/log profiles legible; every plotted panel correctly described.",
+    "page_9": "Figure4 difference annotations +0.25,+4.42,+3.95,+35.97 are derived from unrounded report values and fit without overlap. Units and separate zero-based axes clear. Conditional means distinguished from all-event W1.",
+    "page_10": "Batch-dependent numerical pass clearly separated from earlier fixed-criterion exceedance. Discussion subsections and paragraphs readable; cap and solver needs explained directly.",
+    "pages_11_12": "Computational-performance subsection visible at page11 opening; conclusion restricted to longitudinal organization. Availability and declarations legible. All18 references complete, with no orphan heading or clipping."
+  },
+  "layout_failures": [],
+  "scientific_scope": "Document and rendering QA; no physics validation or statistical-significance claim."
+}

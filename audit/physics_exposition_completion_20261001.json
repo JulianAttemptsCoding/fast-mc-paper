@@ -1,0 +1,45 @@
+{
+  "created_utc": "2026-10-01T08:18:02.618469+00:00",
+  "revision": "0.19.0",
+  "status": "Manuscript revision and local submission-package QA complete; empirical limits remain",
+  "main_sha256": "d6ecda6718789571b4d87872e881601173db1ff16048a9dd2ac18614da45e423",
+  "pdf_sha256": "aae417e83afb71fd95ff3c410b950247654a0cf72e89ceab6a0b64b76bab278f",
+  "zip_sha256": "ec93e8e1c7771867c422e2c206845763bae08c39dcbe11c7db93ef61aaabb621",
+  "automated_check_groups": 19,
+  "visual_pages": 14,
+  "guard_tests": 10,
+  "current_qa": "audit\\qa_series\\physics_exposition_20261001\\iteration_08.json",
+  "failed_attempts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "failed_attempt_resolution": "Label fit corrected; required semantic wording preserved; whitespace fixed; pagination corrected by layout and repetition edits. All original guards retained. Attempt 7 passed; final changed source passed attempt 8.",
+  "native_compile": "Two platform-directory initialization failures; no source diagnostics available from editor",
+  "local_build": "pdfLaTeX/Biber, all 19 check groups, exact source/PDF/figure/every-page binding passed",
+  "commands": [
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/write_build_audit.py"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "9937c141373c3ebde047ba2b71ebbf4d2f853f8dc922660fa5cdf1c689568c89",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "new_event_or_test_data_access": false,
+  "external_submission": false,
+  "remaining": "Event/checkpoint recovery, production segmentation, paired structural intervals, threshold/graph/timing, solver and repeated-fit studies.",
+  "evidence": "physics_exposition_response_20261001.md; physics_exposition_20261001.json; physics_exposition_derived_20261001.json",
+  "graft_tokens_saved_estimate": 19282
+}

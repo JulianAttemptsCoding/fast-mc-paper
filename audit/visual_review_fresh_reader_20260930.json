@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "reviewed_utc": "2026-09-30T20:56:32.841286+00:00",
+  "pdf_sha256": "c5d166fec9118bf1bafcebc0704edf33da4b554eb4632e024a2fe507b06504a7",
+  "page_sha256": {
+    "1": "4cdd6228e7517f3960f3ca31ccba7cdd923b7415f30eadf2dbad2a4561a40f70",
+    "2": "cd19f5c5f7c88761e0b88f7b69824dfe8364b5b65d1c487ea905f20796ee5b88",
+    "3": "e8632bcd04ff1d6b939759bcc388ae5d614237f52593de56ce2c48ee45a0bc53",
+    "4": "0e94f90c045d8478d74515b2d2e02080fe7b930123ecbbabefd951a820cb033a",
+    "5": "cfd4bf1a2e5675dc3296070d093ef8ce00fd9921f5c60559cc5826573546b41f",
+    "6": "8220c56934e4e240f8a4953835906de147c25d38a06785014da2d16da32b7711",
+    "7": "632436848500b25501c50d5fd3365871921bb79212fa943955743de9bc3e6543",
+    "8": "0cc6c4972937848645f7deab45e9d33b062797055988d7056589fa7d1a533d92",
+    "9": "426a574c74b8b195a3bea8dcf38aac695fa017c8aa73cb14d6c574b489f1b164",
+    "10": "f4e516ee03f4d34a76722a615a4c674833e91d25daca58425d9cbf25a1e63a26",
+    "11": "b266a5f87cf70f5351b251e8ee778fdfb75f02e217f2b2735c315cdc9340a5c3",
+    "12": "656e0a53849d0f4a6871442fe0a81128ac38fb267b6505733050c18a58c8eb1b",
+    "13": "eb52fe8a7a574641dae044b51f2f5b42cdf37a3cc6da4e67974729f360f12c73",
+    "14": "3f03782390f1c628c0ed8417a427b7766235cf6a4392ced6dfa98cb0f4c6bea0"
+  },
+  "method": "Every QA90 page (1-14) directly read and visually inspected. QA91 changed pages 6 and 7 directly read and inspected; the remaining twelve final page PNGs are byte-identical to QA90. All QA91 PDF text reread in page order, including appendices and references.",
+  "directly_reviewed_pages_by_iteration": {
+    "87": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "90": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "91": [
+      6,
+      7
+    ]
+  },
+  "previous_exact_visual_record": "audit/source_snapshots/fresh_reader_20260930/visual_review_finalization_20260930.json",
+  "layout_failures": [],
+  "observations": {
+    "figures": "Four figures legible, correct color semantics and retained dimensions; captions state sample/role/limits.",
+    "equations": "Fourteen equations legible and unchanged; flow time, masks, budgets and graph roles interpreted in prose.",
+    "tables": "Four numerical tables unchanged, units and populations explicit.",
+    "pagination": "Concise captions restore 14 pages. Final training paragraph is wholly on page 6; evaluation begins page 7.",
+    "scientific_scope": "Descriptive pilot, failed classifier screening, fixed-tolerance exceedance, and missing evidence all retained."
+  },
+  "scientific_status": "Document review only; no physics validation",
+  "native_editor_compilation": {
+    "result": "platform_error",
+    "message": "Unable to find standard directories for platform",
+    "source_unchanged": true,
+    "editor_kept_open": true
+  }
+}

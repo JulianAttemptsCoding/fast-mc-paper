@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-10-01T09:41:47.200131+00:00",
+  "result": "pass",
+  "series": "claude_integration_20261001",
+  "iteration": 4,
+  "pdf_sha256": "14259865b931c2ce17f1a2abe3215cc5ec3d2698368fa876b32e949ff89e7598",
+  "page_sha256": {
+    "1": "8cae50bdee42c82e9925ce51d9a0c3888ec31abf79775f648db61480dec8d6c9",
+    "2": "92e03e5ee713a260131499ddda262ec90043948597d720f97545c76f74c5a41f",
+    "3": "c5d03dd9d5310454fc9ce442633516a6d5878a45ca290403412ebe27c90bc334",
+    "4": "6964b531ed67b2ed8527113338142dfa6a58a189e07a9ae27dae275013b4d071",
+    "5": "e95c6a09b4e3714c2ab16130ba362ef6e4918f9b400614b86de36f7ac2aedb64",
+    "6": "56856bf2bf9b37f9f5145773c92267fd1b75ef05217d182a7c754e7f6833aa24",
+    "7": "b9513ceb74eb27271a4247d180e4e18e15c44210cfa632dbcee9331fad15abfe",
+    "8": "e3fc364a15b515b119ed34093f8f3dab5703278ecc3512ecf725014111735576",
+    "9": "033cca2b2ca26c3bc2c5d8f904b9fed61401de8d3b1b943fcdb6a7244d8ffdb4",
+    "10": "0fd8d05b2f2ff2f2e280c54ce1b14146827c67eda87d4ecec66137d199e5b5da",
+    "11": "4d8a617168f82c372f03b0dbdded37907e922667747b22cc11d1eec060d8976c",
+    "12": "a6804a979b0f579aa31d4bc24210eb4b80b60069a438c1e1ea63c44031d156ae",
+    "13": "077e2649979f6f7cacbe56caf13823a566f504ee922c537c58e4aecca5949ed4",
+    "14": "25d6825af9b82233010430a554ee11575f763dedbcf7c15ce840fba2a48b8faa"
+  },
+  "review_method": "Direct full-page visual reading of Claude integration QA03 pages 1-14. All fourteen QA04 rendered pages independently hash-identical to those reviewed images.",
+  "page_notes": {
+    "1": "Title, abstract, physics motivation and scope read; clean layout.",
+    "2": "Stored-coordinate geometry figure and caveats read; axes, captions and dimensions legible.",
+    "3": "Population definitions and architecture diagram read; physical stages and dependencies clear.",
+    "4": "Response, activity and centered-log target read; equations and units checked.",
+    "5": "Solver, layer allocation, counts, graph and support sampling read; physical limits explicit.",
+    "6": "Channel energy, budget closure and teacher-forced training read; no incident-energy conservation claim.",
+    "7": "Checkpoint choice, observables, deterministic bound and paired intervals read; controls disclosed.",
+    "8": "Primary results table and energy profiles read; ratios and section compensation clear.",
+    "9": "Normalized paired interval, fixed-region energy and illustrative support figure read; count definitions accurate.",
+    "10": "Classifier and numerical failures, activity null and causal limits read.",
+    "11": "Limitations, timing scope, conclusion, availability and acknowledgments read; no affiliation label.",
+    "12": "AI declaration, provenance and calibration table read; scientific responsibility and runtime limits explicit.",
+    "13": "Energy-bin means/widths, classifier seeds and evaluator details read; tables legible.",
+    "14": "Classifier partition caveat and all 25 references read; links, margins and typography clear."
+  },
+  "scientific_scope": "Document and numerical evidence review; not physics validation."
+}

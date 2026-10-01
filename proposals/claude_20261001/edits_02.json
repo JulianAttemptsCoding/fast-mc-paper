@@ -1,0 +1,49 @@
+[
+ ["The ECAL lies 35.7\\,m from the coordinate origin and the detector axis points at $-25.0$\\,mrad in the horizontal plane.",
+  "The ECAL lies 35.7\\,m from the coordinate origin and the detector axis points at $-25.0$\\,mrad in the horizontal plane, consistent with a frame centred on the interaction point and the 25\\,mrad beam-crossing angle of the EIC."],
+
+ ["The cap was derived from the training sample to exclude unphysical tail draws and saturates at 61.2338\\,GeV above $\\Kinc\\approx97.2\\GeV$; it lies far above the mean deposit of a few GeV and is not a response model.",
+  "The cap is a safeguard against extreme draws from the tail of the mixture. Its constants were derived from the training sample, it saturates at 61.2338\\,GeV above $\\Kinc\\approx97.2\\GeV$, and it lies far above the mean deposit of a few GeV; it is not a model of the response."],
+
+ ["Response & visibility $V$, total $T$ & --- & Bernoulli; 4-component Gaussian mixture & $V$, $T$ \\\\",
+  "Response & visibility $V$, total $T$ & --- & Bernoulli; Gaussian mixture & $V$, $T$ \\\\"],
+
+ ["Channel selection & $S_\\ell$ & $\\mathbf B$, $\\mathbf K$ & graph network scores, Gumbel top-$K$ & $\\mathbf S$ (two terms) \\\\",
+  "Channel selection & $S_\\ell$ & $\\mathbf B$, $\\mathbf K$ & graph-network scores; Gumbel top-$K$ & $\\mathbf S$ \\\\"],
+
+ ["Every stage is also conditioned on $h_c$. The last column names the loss term in Eq.~\\eqref{eq:joint_loss}.",
+  "Every stage is also conditioned on $h_c$. The last column names the argument of the corresponding loss term in Eq.~\\eqref{eq:joint_loss}; channel selection has two terms."],
+
+ ["Dotted lines separate consecutive training runs, each continued from the preceding one; the loss rises at each boundary, and a learning-rate restart is documented for the boundary between epochs 70 and 71.",
+  "Dotted lines separate consecutive training runs, each continued from the preceding one. The objective jumps upward when a new run starts at epochs 17, 48, 71 and 91; a learning-rate restart is documented for the boundary between epochs 70 and 71."],
+
+ ["All structural observables call a channel or layer active if its deposit is strictly positive.",
+  "All structural observables call a channel or layer active if its deposit is strictly positive. Subscripts ``ref'' and ``gen'' denote the Geant4 (reference) and generated samples."],
+
+ ["This difference is not resolved from zero: the paired residual $(T_{\\rm gen}-T_{\\rm ref})/\\Kinc$ has a mean of $2.9\\times10^{-5}$ with a bootstrap interval of $[-8.5,\\,9.3]\\times10^{-4}$ and a root-mean-square of 0.046. The distribution of $T$ also agrees within sampling noise, with $W_1=0.073$\\,GeV against half-split values of 0.135 and 0.147\\,GeV.",
+  "This difference is not statistically significant. The paired residual $(T_{\\rm gen}-T_{\\rm ref})/\\Kinc$ has a mean of $2.9\\times10^{-5}$ with a bootstrap interval of $[-8.5,\\,9.3]\\times10^{-4}$, which contains zero. Its root-mean-square, 0.046, equals the value expected for two uncorrelated samples with the per-bin standard deviations of Table~\\ref{tab:energy_bins} (0.046), so sharing the incident condition induces no measurable correlation between the two showers of a pair, and standard errors can be computed as for independent samples. For the mean total deposit this gives 0.068\\,GeV, so the observed difference is 0.7 standard errors. The distribution of $T$ also agrees within sampling noise, with $W_1=0.073$\\,GeV against half-split values of 0.135 and 0.147\\,GeV."],
+
+ ["Because the two sections would enter a calibrated energy with different weights, the cancellation in the unweighted sum should not be expected to survive calibration.",
+  "The shift between sections is not a sampling fluctuation: the distribution of the ECAL energy fraction differs by 9.5 times the half-split scale (Table~\\ref{tab:distances}). Because the two sections would enter a calibrated energy with different weights, the cancellation in the unweighted sum should not be expected to survive calibration."],
+
+ ["With about 1,250 events per bin and a spread of $T$ as large as its mean, the standard error of the difference of the two bin means is 4--5\\% of the mean if the two samples are treated as independent. The binned differences are then at most two standard errors and do not establish an energy-dependent bias. A paired interval per bin was not computed.",
+  "With about 1,250 events per bin and a spread of $T$ as large as its mean, the standard error of the difference of the two bin means is 4--5\\% of the mean. The binned differences are at most 2.0 standard errors, with $\\chi^2=12.9$ for eight bins, and do not establish an energy-dependent bias."],
+
+ ["The gap excess of the previous subsection and the fragmentation excess are therefore two distinct discrepancies, and repairing the first would not remove the second.",
+  "The fragmentation excess is therefore not simply the splitting of showers by additional empty layers. Whether the two discrepancies share a cause further upstream in the generator is a separate question (Sec.~\\ref{sec:interpretation})."],
+
+ ["The two evaluations use different events and cannot be combined, but both lie well above the criterion and the pair-grouped value is the more reliable of the two.",
+  "The two evaluations use different events and cannot be combined. Both lie well above the criterion; the pair-grouped one has the sounder design and the larger value."],
+
+ ["if the gap excess disappears but the fragmentation excess remains, the two discrepancies have separate origins, as the bound of Eq.~\\eqref{eq:qresult} suggests.",
+  "if the gap excess disappears but the fragmentation excess remains, the two discrepancies have separate origins."],
+
+ ["The generated and Geant4 nonempty subsets are selected separately and differ by 49 events.",
+  "The generated and Geant4 nonempty subsets are selected separately and differ in size by 49 events."],
+
+ ["A bound derived from sample means shows that at least 30.45 of the 35.97 additional components arise within contiguous active layers, so the fragmentation is not a by-product of the additional empty layers.",
+  "A bound derived from sample means shows that at least 30.45 of the 35.97 additional components arise within contiguous active layers, so the fragmentation is not simply the splitting of showers by the additional empty layers."],
+
+ ["The durations of the single-stage phases, the remaining optimiser settings and the software environment are not part of the paper repository.",
+  "The durations of the single-stage phases, the remaining optimiser settings and the software environment are not part of the paper repository. Training ran on a single NVIDIA RTX~4090 (24\\,GB) at about 13 minutes per epoch."]
+]

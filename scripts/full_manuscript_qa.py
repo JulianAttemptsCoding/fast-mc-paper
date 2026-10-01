@@ -24,6 +24,8 @@ PROVENANCE = ROOT / "data" / "reports" / "dicos-f-02_epoch90.provenance.json"
 HISTORY = ROOT / "data" / "training" / "calibrated_lr3e4_history.csv"
 FIGURE_MANIFEST = ROOT / "figures" / "manifest.json"
 COMMAND_RECORDS: list[dict] = []
+from qa_series import series_paths
+ITERATION_DIR, RENDER_ROOT = series_paths(ROOT)
 
 
 def release_source_hashes() -> dict:
@@ -37,7 +39,11 @@ def release_source_hashes() -> dict:
         "audit/mathematical_exposition_20260923.json", "audit/mathematical_exposition_20260923.md",
         "audit/sentence_evidence_20260922.json", "audit/sentence_evidence_20260922.md",
         "audit/literature_benchmark.md",
+        "audit/finalization_20260930.json", "audit/finalization_20260930.md",
+        "audit/physics_exposition_response_20261001.json", "audit/physics_exposition_response_20261001.md",
+        "audit/claude_integration_response_20261001.json", "audit/claude_integration_response_20261001.md",
     ]]
+    paths += [ROOT / "audit/current_qa_series.json"] if (ROOT / "audit/current_qa_series.json").exists() else []
     paths += sorted((ROOT / "scripts").glob("*.py"))
     paths += sorted(p for p in (ROOT / "data").rglob("*") if p.is_file())
     return {str(p.relative_to(ROOT)).replace("\\", "/"): sha256(p) for p in paths}
@@ -46,6 +52,7 @@ EXPECTED_FIGURES = {
     "detector_geometry.png",
     "generator_schematic.png",
     "longitudinal_profile.png",
+    "support_summary.png",
 }
 
 
@@ -150,7 +157,7 @@ def validate_evidence(checks: list[str]) -> dict:
     assert sum(int(v) for v in gang.values()) == 6790
     assert int(gang["1"]) == 4390 and int(gang["2"]) == 1950 and int(gang["3"]) == 444 and int(gang["4"]) == 6
     assert 4390 - 400 == 3990 and 6390 - 3990 == 2400
-    checks.append("Readout geometry, ganging arithmetic, layer count, and explicitly reproduced directed-edge count")
+    checks.append("Stored-ID geometry, position-multiplicity arithmetic, layer count, and explicitly reproduced directed-edge count")
 
     zero_g = report["visibility_and_zero_response"]["generated"]["zero_fraction"]
     zero_r = report["visibility_and_zero_response"]["truth"]["zero_fraction"]
@@ -246,6 +253,13 @@ def validate_evidence(checks: list[str]) -> dict:
     assert external["current"]["epoch"] == 90 and external["current"]["run_tag"] == "dicos-f-02"
     close(external["current"]["high_level_auroc"], 0.8928972222222222)
     close(external["current"]["condition_only_auroc"], 0.5)
+    timing = report["timing"]
+    assert timing["events"] == 10_000
+    close(timing["seconds_per_event"], 0.34419262690750185)
+    close(timing["total_seconds"], timing["events"] * timing["seconds_per_event"], atol=1e-8)
+    assert timing["stage_seconds"]["topology generated"] > 0
+    assert timing["stage_seconds"]["c2st all families"] > 0
+    checks.append("Evaluator wall-time number includes topology and classifier analysis; generation-latency claim excluded")
     checks.append("Response moments and bins; zero and hit-count bootstrap intervals; all original C2ST families and failed gate; separately labelled pair-grouped monitor")
 
     profile = report["distribution_metrics"]["mean_longitudinal_profile"]
@@ -280,24 +294,33 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     bib = (ROOT / "references.bib").read_text(encoding="utf-8")
     required = [
         "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
-        "These measurements describe the stored checkpoint and bank", "strict-positive support", "high-level classifier two-sample test gives AUROC 0.775", "high-level value exceeds the predeclared maximum of 0.65",
+        "These aggregate-only results concern one training seed and a repeatedly inspected validation sample", "Support measurements use a strictly positive energy definition", "mean AUROCs of 0.775 for high-level shower summaries", "high-level score exceeds the recorded screening maximum of 0.65",
         "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
-        "104 retained rows spanning epochs 11--114", "defines the checkpoint studied here",
-        "four nearest centroids are selected", "stored in both directions", "107,920 in total",
-        r"\prod_{\ell>F}^{64}", "The two energy features are deterministically related",
-        "structural difference's uncertainty", "end-to-end timing", "0.19--0.76 percentage points",
-        "a contiguous run of inactive layers", "do not establish an independent lateral-fragmentation effect",
-        "This counts inactive layers, not contiguous runs.", "26,624 training events", "6,656 validation events", "76,158 validation", "76,300 nominal test",
-        "batch-wide absolute-plus-relative tolerance", "mean active-layer counts differ by 0.25", "4.42 layers farther downstream",
-        "35.97 more weak components", "lower by 6.03 percentage points",
+        "104 retained rows spanning epochs 11--114", "defines the checkpoint analyzed below",
+        "selects four nearest centroids", "stored in both directions", "107,920 in total",
+        r"\prod_{\ell>F}^{64}", "the two energy features carry the same physical information",
+        "Intervals for the energy-bin differences, mean longitudinal profile, gaps, and graph components are unavailable", "end-to-end benchmark", "0.19--0.76 percentage points",
+        "Consecutive empty layers constitute one separation", "establishes a within-run graph-fragmentation discrepancy",
+        "This counts inactive layers, not contiguous runs.", "26,624 training", "6,656 validation events", "76,158 to validation", "76,300 to the nominal test",
+        "largest sampled event total in each batch", "maximum layer residual exceeds the earlier fixed", "A difference of 0.25 active layers", "last active layer by $+4.42$",
+        "35.97 more weak components", r"88.87\% of occupied channels on average, versus 94.90\%",
         "Zero-deposit events & 93 (0.93\\%) & 142 (1.42\\%)",
         "Mean last active layer & 56.20 & 60.62 & $+4.42$",
         "Mean weak graph components & 23.42 & 59.39 & $+35.97$",
         "Mean largest-component fraction & 94.90\\% & 88.87\\% & $-6.03$ pp",
-        "0.1375 for generated showers and 0.1458 for the reference",
-        "no learned shower encoder", "independent draws enter at the discrete heads and at the two flows",
-        "five edge inputs", r"Selecting the $K_\ell$ highest noisy scores fixes the count, but not connectivity.",
-        "weighted joint objective contains nine component losses", "These identities conserve the model's sampled readout budget",
+        "0.1375 for the generator and 0.1458 for Geant4",
+        "no learned shower encoder", "two conditional flow-matching models generate the continuous layer and channel energy shares from independent Gaussian draws",
+        "its stochastic shower histories are independent",
+        "Members of a matched condition pair can enter opposite partitions",
+        "Its different event sample precludes a direct comparison",
+        "All quoted intervals describe resampling variation within the development bank",
+        "Numerical checks test the generated deposits against the model's sampled budgets",
+        "During generation, it receives their sampled values, allowing errors to propagate",
+        "an independently defined physical-neighbor graph",
+        "generated draws clipped by the cap and reference deposits above it",
+        "generation latency was not isolated",
+        "five edge inputs", r"Selecting the top $K_\ell$ enforces the requested count exactly, but imposes no adjacency or connectivity constraint.",
+        "joint training objective combines nine weighted losses", "These are accounting identities for the model's sampled readout budget",
         r"\label{eq:profile_target}", r"\label{eq:flow_steps}", r"\label{eq:message}",
         r"\label{eq:topk}", r"\label{eq:share_target}", r"\label{eq:joint_loss}",
     ]
@@ -345,7 +368,59 @@ def validate_figures(checks: list[str]) -> None:
             gray = np.asarray(ImageOps.grayscale(image), dtype=np.uint8)
             assert float((gray < 245).mean()) > 0.005
     assert manifest["sources_sha256"]["data/reports/dicos-f-02_epoch90.json"] == sha256(REPORT)
-    checks.append("Three deterministic manuscript figures, source hashes, dimensions, and nonblank raster content")
+    checks.append("Four deterministic manuscript figures, source hashes, dimensions, and nonblank raster content")
+
+
+def validate_appendix(checks: list[str]) -> None:
+    """Bind every new table entry to retained evidence, including all seeds."""
+    tex = (ROOT / "main.tex").read_text(encoding="utf-8")
+    report = load_json(REPORT)
+    source = load_json(ROOT / "data/provenance/source_evidence.json")
+    weights = source["calibration"]["proposed_weights"]
+    mapping = [("V", "Visibility", "visible"), ("T", "Total deposit", "response"),
+               ("F", "First active layer", "first_layer"), ("A", "Layer activity", "active"),
+               ("B", "Layer-budget flow", "profile_flow"), ("K", "Channel count", "count"),
+               ("S", "Support BCE", "support_bce"), ("R", "Support ranking", "support_rank"),
+               ("Y", "Channel-share flow", "share_flow")]
+    for symbol, name, key in mapping:
+        assert f"$w_{{{symbol}}}$ & {name} & {weights[key]:.6f}" in tex
+    medians = source["calibration"]["gradient_norm_median"]
+    geometric = math.exp(sum(math.log(v) for v in medians.values()) / len(medians))
+    clipped = {k: min(4.0, max(0.25, geometric / v)) for k, v in medians.items()}
+    for key, value in weights.items():
+        close(value, clipped[key] * len(clipped) / sum(clipped.values()))
+    bins = report["positive_response"]["response_bins"]
+    assert len(bins) == 8 and sum(b["n"] for b in bins) == 10000
+    assert all(b["n"] >= 500 for b in bins)
+    for b in bins:
+        row = (f"{int(b['low'])}--{round(b['high'])} & {b['n']:,} & "
+               f"{b['truth_mean']:.3f} & {b['generated_mean']:.3f} & "
+               f"${100*b['mean_bias_fraction']:+.2f}$ & "
+               f"${100*b['resolution_difference_fraction']:+.2f}$")
+        assert row + f" & {b['truth_std']:.3f} & {b['generated_std']:.3f}" in tex, row
+    assert report["identity"]["evaluator_seeds"] == [20260804, 20260805, 20260806]
+    for label, key in [("Condition only", "condition_only"), ("High-level", "high_level"),
+                       ("Channel energies", "low_level"), ("Layer profile", "profile_aware")]:
+        c = report["c2st"][key]
+        row = label + " & " + " & ".join(f"{v:.4f}" for v in c["auroc_per_seed"]) + f" & {c['auroc_mean']:.4f}"
+        assert row in tex, row
+    # User explicitly removed the affiliation label on 2026-09-30.
+    # Enforce the replacement metadata contract; retain all scientific guards.
+    expected_author = r"\author{Julian Juan\\[3pt]\small\href{mailto:juliansjuan08@gmail.com}{juliansjuan08@gmail.com}}"
+    assert re.findall(r"^\\author.*$", tex, re.M) == [expected_author]
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    assert not re.search(r"^\s*affiliation\s*:", citation, re.M)
+    assert 'family-names: Juan' in citation and 'given-names: Julian' in citation
+    assert 'email: "juliansjuan08@gmail.com"' in citation
+    for phrase in ["juliansjuan08@gmail.com", "generous mentorship",
+                   "laboratory community", "historical runtime configuration is unavailable",
+                   "not independent generator-training seeds", "36,100--36,300",
+                   "14,000", "6,000", "maximum of 100 boosting iterations"]:
+        assert phrase in tex, phrase
+    audit = load_json(ROOT / "audit/finalization_20260930.json")
+    for name, digest in audit["historical_source_sha256"].items():
+        assert sha256(ROOT / "audit/source_snapshots/finalization_20260930" / name) == digest
+    checks.append("Appendix calibration arithmetic, every energy bin, all classifier seeds, historical-source hashes and author-supplied metadata")
 
 
 def validate_repository(checks: list[str]) -> None:
@@ -377,8 +452,8 @@ def validate_repository(checks: list[str]) -> None:
     math_audit = load_json(ROOT / "audit" / "mathematical_exposition_20260923.json")
     sentence_audit = load_json(ROOT / "audit" / "sentence_evidence_20260922.json")
     response = (ROOT / "audit" / "reviewer_response_round3.md").read_text(encoding="utf-8")
-    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.11.1" in status
-    assert "version: 0.11.1" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
+    assert "dicos-f-02" in readme and "epoch 90" in readme and "Version 0.20.0" in status
+    assert "version: 0.20.0" in citation and "Longitudinal Gaps and Readout Connectivity" in citation
     assert literature.count("https://") >= 8 and "CaloChallenge" in literature and "ZDC" in literature
     assert model_audit["source_commit"] == "e039841404fc442c7496383d20a8566ac589eea3"
     assert model_audit["selected_config_sha256"] == load_json(REPORT)["identity"]["frozen_config_sha256"]
@@ -398,14 +473,14 @@ def validate_repository(checks: list[str]) -> None:
         if path in model_audit["source_blob_sha256"]:
             assert digest == model_audit["source_blob_sha256"][path], path
     for phrase in [
-        "A channel or layer is active when its deposit is strictly positive",
-        "Centering removes a common offset from the log fractions",
-        "They are numerical conventions, not detector thresholds",
-        "inactive coordinates do not contribute to the loss",
-        r"Let $\mathcal E$ be that directed edge set",
-        "it does not force selected channels to be adjacent",
-        "rank one is the highest noisy score",
-        "now denotes the second flow's channel target",
+        r"A channel is active if $Y_{\ell i}>0$",
+        "The centering removes a common log offset",
+        "they are numerical conventions, not detector thresholds",
+        "Inactive coordinates do not contribute to the masked squared-error loss",
+        r"fixed directed edge set $\mathcal E$",
+        "but imposes no adjacency or connectivity constraint",
+        "Rank one denotes the largest noisy score",
+        "refers to the channel-flow target rather than the layer-flow target",
         "Binary cross entropy (BCE)",
     ]:
         assert phrase in tex, f"missing reader explanation: {phrase}"
@@ -413,6 +488,35 @@ def validate_repository(checks: list[str]) -> None:
     assert sentence_audit["review_scope"] == "Every prose paragraph, equation, table caption, and figure caption"
     assert len(sentence_audit["sections"]) == 8
     assert all(token in response for token in ["reviews/review7.txt", "reviews/review8.txt", "reviews/review9.txt", "Findings resolved by removal"])
+    mentor_audit = load_json(ROOT / "audit" / "mentor_finalization_20260929.json")
+    assert mentor_audit["status"] in {"source_review_complete", "finalized"}
+    assert len(mentor_audit["passes"]) >= 5
+    assert mentor_audit["reviewed_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_71.json")["source_sha256"]["main.tex"]
+    rhetoric_audit = load_json(ROOT / "audit/rhetoric_revision_20260929.json")
+    assert rhetoric_audit["status"] == "source_complete"
+    assert len(rhetoric_audit["passes"]) >= 12
+    assert rhetoric_audit["current_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_75.json")["source_sha256"]["main.tex"]
+    voice_audit = load_json(ROOT / "audit/research_voice_20260929.json")
+    assert voice_audit["status"] == "source_complete"
+    assert voice_audit["current_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_79.json")["source_sha256"]["main.tex"]
+    assert len(voice_audit["passes"]) >= 6
+    overall_audit = load_json(ROOT / "audit/overall_revision_20260929.json")
+    assert overall_audit["status"] == "source_review_complete"
+    assert overall_audit["current_main_tex_sha256"] == load_json(ROOT / "audit/iterations/iteration_82.json")["source_sha256"]["main.tex"]
+    finalization = load_json(ROOT / "audit/finalization_20260930.json")
+    assert finalization["current_main_tex_sha256"] == sha256(ROOT / "main.tex")
+    assert finalization["status"] in {"source_review_complete", "finalized"}
+    assert len(overall_audit["passes"]) >= 3
+    assert sha256(ROOT / "audit/source_snapshots/v014_main.tex") == voice_audit["current_main_tex_sha256"]
+    assert "the reported pass applies specifically to the batch-dependent criterion" in tex
+    assert "development sample" not in tex
+    assert all(name in tex for name in ["Readout target and conditioning", "Geometry and graph representation", "Training and evaluation populations"])
+    snapshot = ROOT / "audit/source_snapshots/v013_main.tex"
+    assert sha256(snapshot) == rhetoric_audit["current_main_tex_sha256"]
+    old_tex = snapshot.read_text(encoding="utf-8")
+    assert re.findall(r"\\begin\{equation\}.*?\\end\{equation\}", tex, re.S) == re.findall(r"\\begin\{equation\}.*?\\end\{equation\}", old_tex, re.S)
+    assert re.search(r"\\begin\{tabular\}.*?\\end\{tabular\}", tex, re.S).group() == re.search(r"\\begin\{tabular\}.*?\\end\{tabular\}", old_tex, re.S).group()
+    assert all(p["restart"] == i for i, p in enumerate(mentor_audit["passes"][:5], 1))
     checks.append(f"Active-versus-archived evidence separation, {len(json_paths)} active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check")
 
 
@@ -420,7 +524,7 @@ def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
     info_text = run(["pdfinfo", str(PDF)]).stdout
     pages = int(re.search(r"^Pages:\s+(\d+)", info_text, re.MULTILINE).group(1))
     assert 6 <= pages <= 14
-    render_dir = ROOT / "audit" / "qa_runs" / f"iteration_{iteration:02d}"
+    render_dir = RENDER_ROOT / f"iteration_{iteration:02d}"
     render_dir.mkdir(parents=True, exist_ok=False)
     run(["pdftoppm", "-png", "-r", "110", str(PDF), str(render_dir / "page")])
     rendered = sorted(render_dir.glob("page-*.png"))
@@ -477,12 +581,13 @@ def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
 
 
 def write_report(iteration: int, focus: str, disposition: str, checks: list[str], pdf: dict, pages: list[dict]) -> None:
-    out_dir = ROOT / "audit" / "iterations"
+    out_dir = ITERATION_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
     created = datetime.now(timezone.utc).isoformat()
     payload = {
         "schema_version": 1,
         "iteration": iteration,
+        "series_directory": str(ITERATION_DIR.relative_to(ROOT)),
         "created_utc": created,
         "focus": focus,
         "disposition": disposition,
@@ -500,7 +605,7 @@ def write_report(iteration: int, focus: str, disposition: str, checks: list[str]
             "powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1",
             "python -m py_compile scripts/build_figures.py scripts/full_manuscript_qa.py scripts/write_build_audit.py",
             "git diff --check",
-            f"pdftoppm -png -r 110 output/fast_mc_zdc_manuscript.pdf audit/qa_runs/iteration_{iteration:02d}/page",
+            f"pdftoppm -png -r 110 output/fast_mc_zdc_manuscript.pdf {(RENDER_ROOT / f"iteration_{iteration:02d}" / "page").relative_to(ROOT).as_posix()}",
             "pdftotext output/fast_mc_zdc_manuscript.pdf -",
         ],
     }
@@ -528,8 +633,9 @@ def main() -> None:
     parser.add_argument("--disposition", required=True)
     args = parser.parse_args()
     assert 1 <= args.iteration <= 99
+    ITERATION_DIR.mkdir(parents=True, exist_ok=True)
 
-    record_path = ROOT / "audit/iterations" / f"iteration_{args.iteration:02d}.json"
+    record_path = ITERATION_DIR / f"iteration_{args.iteration:02d}.json"
     if record_path.exists():
         raise FileExistsError(f"Refusing to overwrite historical QA: {record_path}")
     build = run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "build.ps1", "-Python", sys.executable])
@@ -537,6 +643,15 @@ def main() -> None:
     validate_evidence(checks)
     validate_tex_and_bib(checks)
     validate_figures(checks)
+    validate_appendix(checks)
+    from second_audit_checks import validate_second_audit
+    validate_second_audit(checks)
+    from component_bounds import validate_component_bounds
+    validate_component_bounds(checks)
+    from physics_exposition_checks import validate_physics_exposition
+    validate_physics_exposition(checks)
+    from claude_reader_checks import validate_reader_revision
+    validate_reader_revision(checks)
     validate_repository(checks)
     pdf, pages = validate_pdf(args.iteration, checks)
     write_report(args.iteration, args.focus, args.disposition, checks, pdf, pages)
@@ -551,7 +666,7 @@ if __name__ == "__main__":
     except Exception as error:
         if "--iteration" in sys.argv:
             number = int(sys.argv[sys.argv.index("--iteration") + 1])
-            failed_path = ROOT / "audit/iterations" / f"iteration_{number:02d}.json"
+            failed_path = ITERATION_DIR / f"iteration_{number:02d}.json"
             if not failed_path.exists():
                 payload = {"iteration": number, "created_utc": datetime.now(timezone.utc).isoformat(),
                            "result": "fail", "full_suite": False, "error": str(error),

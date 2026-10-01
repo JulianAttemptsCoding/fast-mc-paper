@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-10-01T02:14:12.560412+00:00",
+  "status": "arxiv_diagnostic_preprint_revision_complete",
+  "version": "0.17.0",
+  "venue": "arXiv",
+  "main_sha256": "f1dfd9641f54fe1a18f0dc19ce2248d88e948c25e62dc9dc5264a2d54df356a4",
+  "pdf_sha256": "896037ac8ca7e8429ee38d73e6314ee7ec81c529d6e6ef98a93da80603d517e7",
+  "zip_sha256": "dcbf3e4c57607ec4949678db1500a48ea3854105a48fc4e424805bbc869aeaeb",
+  "automated_checks": 17,
+  "visual_pages": 14,
+  "release_guard_tests": 7,
+  "previous_failed_document_qa": [
+    93,
+    94,
+    95
+  ],
+  "corrected_failure": "15-page layout; unchanged 14-page maximum now met",
+  "native_editor_compile": {
+    "result": "failed",
+    "reason": "Unable to find standard directories for platform"
+  },
+  "local_compile": "passed; source/PDF/figures/visual records bound by SHA-256",
+  "helper_sha256": "12d9fd42ae2f4439a9f20f3bcdab1138854054b3cc3dca2b1105e153aff61e83",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "release_audit_sha256": "f99e621dfa5e6a2e1b73658576e0033ad5883270f8d0c3a7b75d2918a497b18f",
+  "remaining_research": "Event-level conditional nulls/oracles, calibration, thresholds/time windows, physical adjacency, grouped same-bank C2ST, solver and three-fit robustness remain unperformed.",
+  "supersedes": "v0.16.0 and submission_completion_20260930; prior source/PDF/ZIP preserved in source_snapshots/external_audit_revision_20260930",
+  "external_submission": "not performed"
+}

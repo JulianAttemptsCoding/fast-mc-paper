@@ -1,0 +1,20 @@
+{
+  "report_sha256": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+  "population_moments_from_bins": {
+    "truth": {
+      "n": 10000,
+      "mean": 4.324175429105758,
+      "population_std": 4.759442787252805,
+      "marginal_iid_mean_se": 0.04759680777241566
+    },
+    "generated": {
+      "n": 10000,
+      "mean": 4.369362531423569,
+      "population_std": 4.830262871190763,
+      "marginal_iid_mean_se": 0.04830504402449318
+    }
+  },
+  "hcal_position_count": 9246,
+  "hcal_positions_per_id": 1.4469483568075117,
+  "scope": "Aggregate arithmetic only; no paired covariance, electronics mapping or model mechanism inferred."
+}

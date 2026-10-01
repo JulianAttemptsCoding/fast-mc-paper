@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this manuscript artifact, please cite it using the metadata below."
+title: "Longitudinal Gaps and Readout Connectivity in a Pilot Generative Model of Zero-Degree Calorimeter Showers"
+type: article
+authors:
+  - family-names: Juan
+    given-names: Julian
+version: 0.15.0
+date-released: 2026-09-30
+repository-code: "https://github.com/JulianAttemptsCoding/fast-mc-paper"

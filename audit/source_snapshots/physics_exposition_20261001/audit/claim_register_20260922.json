@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-22T08:00:00Z",
+  "claim": "On the specified pilot development bank, longitudinal gaps and within-run graph fragmentation both differ. After subtracting one unavoidable component per occupied run, the mean component excess is at least 29.92154, or 83.18% of the total excess; this is an algebraic bound, not a causal or detector-performance claim.",
+  "values": {
+    "active_layers_difference": 0.2519342750226694,
+    "last_active_layer_difference": 4.423773647160425,
+    "inactive_layers_in_span_difference": 3.946642863638943,
+    "active_channels_difference": -28.7486476841646,
+    "weak_components_difference": 35.97033279861814,
+    "largest_component_fraction_difference_percentage_points": -6.029700995384565,
+    "total_deposit_difference_gev": 0.045186934235844,
+    "zero_event_count_reference": 93,
+    "zero_event_count_generated": 142,
+    "zero_fraction_difference": 0.0049,
+    "zero_fraction_paired_stratified_bootstrap_95_percentile_interval": [
+      0.0019,
+      0.0076
+    ],
+    "directed_edge_cooccupancy_generated": 0.137470797813195,
+    "directed_edge_cooccupancy_reference": 0.14579406782802076,
+    "hit_count_wasserstein_channels": 58.683699999999995,
+    "hit_count_wasserstein_paired_bootstrap_95_percentile_interval": [
+      51.4664,
+      66.9248
+    ],
+    "original_c2st_high_level_auroc": 0.7747664074074074,
+    "original_c2st_low_level_auroc": 0.7910063148148149,
+    "original_c2st_profile_aware_auroc": 0.8564428148148148,
+    "original_c2st_condition_only_auroc": 0.4635906851851852,
+    "original_c2st_high_level_gate_max": 0.65,
+    "separate_pair_grouped_monitor_high_level_auroc": 0.8928972222222222,
+    "separate_pair_grouped_monitor_condition_only_auroc": 0.5,
+    "within_run_component_excess_lower_bound": 29.92153994002613,
+    "within_run_lower_fraction_of_mean_excess": 0.83183939685917
+  },
+  "scope": {
+    "checkpoint": "dicos-f-02 epoch 90",
+    "training_events": 26624,
+    "training_seed": 20260723,
+    "development_pairs": 10000,
+    "incident_kinetic_energy_gev": [
+      50,
+      250
+    ],
+    "threshold": "stored energy > 0",
+    "graph": "frozen model graph",
+    "test_events_used": 0,
+    "detector_identity": "Author-confirmed ePIC ZDC simulation; production geometry tag unverified"
+  },
+  "not_established": [
+    "structural statistical significance",
+    "post-digitization physical relevance",
+    "general physics fidelity",
+    "persistence across sampling or training seeds",
+    "causal mechanism",
+    "speed or detector readiness",
+    "independent lateral fragmentation after accounting for empty-layer runs"
+  ],
+  "method_boundaries": {
+    "graph": "Same/adjacent-layer edges imply 1<=R<=G+1 and m>=R. Within-run fragmentation is established in these samples, but pure lateral or physical-cluster interpretation is not.",
+    "bootstrap": "The stored interval resamples pairs within incident-energy bins; repeated inspection of the validation bank precludes confirmatory interpretation.",
+    "split_hashes": "Pilot and canonical split manifests differ; the exact pilot-validation/bank overlap is unresolved.",
+    "ai_use": "Author states Codex/GPT-5.6-Sol assisted code and manuscript drafting and analysis/model proposals; author supplied main ideas and checked the work.",
+    "c2st": "Row-split opposite-label twins and failed condition control preclude calibrated fidelity interpretation. The 0.65 threshold is recorded but its declaration timing is not independently established.",
+    "response_clip": "The response cap and possible clipping to zero follow implementation; aggregate clipping frequencies were not retained."
+  },
+  "model_description": {
+    "source_audit": "audit/model_exposition_20260922.json",
+    "condition_features": 5,
+    "condition_embedding": 128,
+    "parameter_count": 2082507,
+    "response_components": 4,
+    "profile_flow_steps": 8,
+    "share_flow_steps": 8,
+    "graph_message_blocks": 3,
+    "graph_hidden_width": 96,
+    "layer_transformer_layers": 2,
+    "layer_attention_heads": 4,
+    "mechanism_claim_boundary": "implementation behavior only; no adequacy, convergence, causal, or architecture-superiority claim",
+    "mathematical_audit": "audit/mathematical_exposition_20260923.json"
+  },
+  "updated_utc": "2026-10-01T02:08:15.623660+00:00",
+  "revision": "0.17.0",
+  "response": "audit/external_audit_response_20260930.md",
+  "current_geometry_scope": "Stored-ID grouping only; physical electronics interpretation unresolved; electronic ganging not established.",
+  "current_revision": "0.18.0"
+}

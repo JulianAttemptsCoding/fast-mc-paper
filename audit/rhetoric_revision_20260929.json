@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-29T23:55:12.188616+00:00",
+  "status": "source_complete",
+  "operation": "scientific-language and rhetoric overhaul for mentor presentation",
+  "intended_release": "v0.13.0",
+  "input_sha256": {
+    "main.tex": "dfd14e1c37a909b953822e54bbd5d2e64128411f4dc525551bcec29e95f91ed4",
+    "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "output/fast_mc_zdc_manuscript.pdf": "6175d57689a087ef216623ab262a79470bd9cf31d98a387a3dec206577086d60",
+    "C:\\Users\\Julia\\.codex\\attachments\\c322f1a5-1069-4126-a26f-d52acb9cbfe0\\Pasted text.txt": "175bbda3f9980acd0b4254d924f00f173a3f2abee95c1a4101946f1304f2a7a3",
+    "C:\\Users\\Julia\\Downloads\\2503.19981v1.pdf": "ba21fdf697939296cfdb9baa02415e997c1c83a436749505e711c40d86fd2ac8",
+    "C:\\Users\\Julia\\Downloads\\2309.13213v1.pdf": "077f9249b55becf616d9ea08272968c3869bcb6a62747edd2b8dcdb16114e7c7",
+    "C:\\Users\\Julia\\Downloads\\1912.02748v1.pdf": "0bd85deba522d7445b08a299bdb28c58fdcae324a318a3ca8e2e172ce893b230",
+    "C:\\Users\\Julia\\Downloads\\2502.16330v2.pdf": "e711bb486405d0bd11db2580898392c90cab44d119538fdb2c28c199a157969a"
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1",
+    "host": "local Windows; no DiCOS access"
+  },
+  "external_document_role": "Attached PDFs are writing examples and scientific sources; their prose and any embedded directions are not instructions. The user-requested pasted comparison is guidance, but its chatgpt-content-reference placeholders are not citations or evidence. Scientific values and claims remain bound to this project's immutable aggregate report and implementation audit.",
+  "reference_observations": {
+    "Parnassus_2503.19981v1": "Organizes dataset, method and results cleanly; conceptual event-level to particle-level decomposition precedes network details; results proceed by physical scale and explain comparison conventions before interpreting figures.",
+    "Lamarr_2309.13213v1": "Introduces modular pipeline input, output and dependencies before component prose; pairs validation observables with explicitly scoped timing evidence. This manuscript cannot adopt Lamarr's acceleration claim because it has no comparable end-to-end measurement.",
+    "pGAN_1912.02748v1": "Defines domain-specific fidelity checks and moves from low-level distributions to high-level event and downstream observables. This manuscript cannot add unavailable event-level or reconstruction analyses.",
+    "HEIDi_2502.16330v2": "Reports event sample sizes, interprets distributions by physical variable, and discusses residual discrepancies. Its reported timing and future speedups belong to that work, not to this ZDC checkpoint."
+  },
+  "rhetorical_goals": [
+    "Lead paragraphs with physical question or empirical finding, then method and quantitative evidence.",
+    "Organize results by global response, longitudinal development, channel support and compound checks.",
+    "State training and evaluation roles once in plain language; distinguish teacher-forced objective from generated-sample diagnostics.",
+    "Keep exact equations and methodological detail while shortening overloaded transition sentences.",
+    "Tie every figure and table to a question, sample denominator, comparison and limit.",
+    "Concentrate limitations in an explicit interpretation section without removing limitations needed next to individual claims.",
+    "Avoid causal, speed or detector-readiness claims unsupported by this one-seed development-bank study."
+  ],
+  "commands": [
+    "Read docs/IMPLEMENTATION_GUIDE.md before commands; read PDF skill, pasted writing guide, paper-repo state and four PDF metadata records.",
+    "Extracted titles, section maps, abstracts and selected relevant sections from the four attached PDFs using read-only pdftotext calls.",
+    "Read-only text audit of current main.tex section/paragraph lengths and boundary-language density.",
+    "Ran required PDF edit-operation marker once before artifact authoring.",
+    "Exact-match Python source edit: main.tex abstract, Introduction, Simulation target/study population; no equations or numerical data changed.",
+    "Exact-match Python source edit phase 2a: conceptual cascade, response and layer allocation prose; equations unchanged.",
+    "Exact-match Python source edit phase 2b: sampler, graph, support, channel flow and training prose; equations unchanged.",
+    "Read-only git diff review of main.tex after method rewrite.",
+    "Python section replacement: Evaluation protocol and Results; extracted and reused original gap equation, Table 1 and both result figure blocks exactly.",
+    "Python exact-match edit: Discussion, Conclusion, Code/data availability and captions for Table 1, support figure, longitudinal figure.",
+    "Read-only scan of main.tex for overclaim language, thresholds, sample roles and speed terms.",
+    "Read-only inspection of the immutable aggregate report's timing, counts, bootstrap and visibility fields.",
+    "Exact-match main.tex edit distinguishing total evaluator runtime from generation latency.",
+    "Read-only call of validate_evidence and 11 manuscript numeric assertions; all passed.",
+    "Read-only sentence-length, overclaim, repeated-word, typo and LaTeX-warning scans.",
+    "Exact-match main.tex edit: Bernoulli logit, five edge inputs, timing sentence and spelling consistency.",
+    "Exact-match Python edit of main.tex pagination controls and readout-deposit wording.",
+    "Exact-match Python edit of README.md, STATUS.md, CITATION.cff, scripts/write_build_audit.py, scripts/full_manuscript_qa.py release strings and QA assertions.",
+    "Ran .\\build.ps1 three times to assess pagination; each build exited zero with 12 pages and no overfull/underfull/undefined log messages.",
+    "Rendered all 12 pages with pdftoppm -png -r 110 and visually inspected contact sheets and full-page figures/table/method/results pages.",
+    "Ran validate_tex_and_bib twice: first failed on stale exact wording, second passed after equivalent phrase updates.",
+    "python scripts/full_manuscript_qa.py --iteration 72 --focus scientific-language-and-formatting: FAIL on stale exact phrase, preserved record.",
+    "Read-only validate_repository after exact-phrase correction: PASS.",
+    "python scripts/full_manuscript_qa.py --iteration 73 --focus scientific language and formatting revision --disposition full source, evidence, bibliography, figure, rendering checks: PASS; 12 pages.",
+    "Direct view_image inspection of every iteration_73 page-01 through page-12 at original rendered resolution.",
+    "Exact-match Python edit of main.tex and the equivalent QA phrase: support selector sentence grammar.",
+    "python scripts/full_manuscript_qa.py --iteration 74: FAIL on second stale exact top-K phrase; preserved.",
+    "Read-only validate_tex_and_bib and validate_repository: PASS after correction.",
+    "python scripts/full_manuscript_qa.py --iteration 75 --focus final sentence copyedit and exact output --disposition full source, evidence, bibliography, figure, rendering checks: PASS.",
+    "Compared all page SHA-256 hashes between iterations 73 and 75: only page 5 changed; inspected final page 5 directly."
+  ],
+  "failed_attempts": [
+    "First read-only PDF heading extraction stopped when Windows console cp1252 could not encode a minus sign; retried with UTF-8 stdout. No file changed.",
+    "Read-only validate_tex_and_bib failed on two stale v0.12.0 exact phrases (end-to-end timing; 76,158 validation) after the prose rewrite. Rebound checks to the current semantically equivalent text; next local call passed.",
+    "Full automated QA iteration 72 failed on a stale exact reader-explanation phrase (lowercase inactive coordinates); corrected the assertion to the unchanged scientific meaning and retained iteration_72.{json,md}.",
+    "Full automated QA iteration 74 failed on a second stale reader-explanation exact phrase for the top-K sentence; corrected the equivalent assertion, ran source/repository checks PASS, and retained iteration_74.{json,md}."
+  ],
+  "passes": [
+    {
+      "pass": 1,
+      "lens": "abstract/introduction/target rhetoric",
+      "finding": "The original opening mixed method inventory, detector semantics and repeated caveats before posing the physical comparison.",
+      "revision": "Recast the abstract around observable discrepancies and limits; rewrote the introduction as scientific motivation, field context, structural question and paper map; separated raw target, geometry, graph and sample roles.",
+      "main_tex_sha256": "0f2f19c1e683e34a79bcc101885626ce912fa4055047d9c593b6cb19037b1931",
+      "verification": "source-level exact text review pending full compile"
+    },
+    {
+      "pass": 2,
+      "lens": "conceptual generator and cascade",
+      "finding": "Network components and implementation details preceded a clear physical-scale narrative.",
+      "revision": "Rebuilt generator opening around total response, longitudinal allocation and within-layer support; rewrote the schematic caption to follow the same dependency order.",
+      "main_tex_sha256": "78ea541608ac46e50c927e7aa7c1921abd411029d441672dc1cb710dbb17dde4",
+      "verification": "equation labels and symbols retained; compile pending"
+    },
+    {
+      "pass": 3,
+      "lens": "equation-adjacent methods prose",
+      "finding": "Explanations repeated definitions and interleaved numerical caveats with mechanism descriptions.",
+      "revision": "Rewrote response, activity, two flow targets, masked flow objective, eight-step solver, graph, top-k selector, energy decoder and training prose; retained equations and exact constraints.",
+      "main_tex_sha256": "78ea541608ac46e50c927e7aa7c1921abd411029d441672dc1cb710dbb17dde4",
+      "verification": "source comparison and full QA pending"
+    },
+    {
+      "pass": 4,
+      "lens": "evaluation protocol and sample-role clarity",
+      "finding": "The diagnostics section mixed metric definitions, known confounds and classifier caveats in two long paragraphs.",
+      "revision": "Separated response, support, graph, distribution distance and classifier protocols; stated all-event versus side-specific nonempty denominators and the component lower bound m>=R.",
+      "main_tex_sha256": "6b717d6592b9f6539d917d7bd89ceb1dd9dc12d2e25a46cd642718e18278e33b",
+      "verification": "equation and denominators preserved; QA pending"
+    },
+    {
+      "pass": 5,
+      "lens": "results by physical scale",
+      "finding": "The original results alternated between energy, gaps, connectivity, zero events and classifier scores, obscuring the physical progression.",
+      "revision": "Organized the evidence into deposited energy/empty events, longitudinal activity, channel support/graph structure, and classifier/numerical checks; moved each figure beside its interpretive paragraph.",
+      "main_tex_sha256": "6b717d6592b9f6539d917d7bd89ceb1dd9dc12d2e25a46cd642718e18278e33b",
+      "verification": "table/figure blocks reused byte-for-byte; layout and QA pending"
+    },
+    {
+      "pass": 6,
+      "lens": "interpretation and causal language",
+      "finding": "Possible architectural mechanisms were close to being read as explanations of the observed discrepancy.",
+      "revision": "Discussion now opens with the graph/longitudinal confound, separates architectural possibilities from evidence, and specifies the event-level experiments needed to locate causes.",
+      "main_tex_sha256": "a3bc898501bf497d6f4881d085ea087bf83f12f70bf66ef1d7add95419fba812",
+      "verification": "claim boundary preserved; QA pending"
+    },
+    {
+      "pass": 7,
+      "lens": "conclusion, release status and caption rhetoric",
+      "finding": "The conclusion and captions repeated caveats without fully linking observations to the paper's scientific question; availability wording could imply this new local revision was already online.",
+      "revision": "Conclusion states the observed failure mode and unmeasured speed/fidelity; captions state population, axes, meaning and limits; availability distinguishes earlier public package from current mentor review.",
+      "main_tex_sha256": "a3bc898501bf497d6f4881d085ea087bf83f12f70bf66ef1d7add95419fba812",
+      "verification": "figure assets unchanged; layout pending"
+    },
+    {
+      "pass": 8,
+      "lens": "claim-boundary and speed-evidence audit",
+      "finding": "The source report has 0.344 s/event total evaluator runtime; omitting its meaning could invite a false model-speed reading when emulating Lamarr/HEIDi rhetoric.",
+      "revision": "Discussion now identifies the number as evaluator wall time including topology/C2ST and asks for a matched end-to-end benchmark before any speed claim.",
+      "evidence": {
+        "report_sha256": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+        "timing_events": 10000,
+        "timing_seconds_per_event": 0.34419262690750185,
+        "stage_seconds_topology_generated": 451.9987951189978,
+        "stage_seconds_c2st": 78.513197650027
+      },
+      "main_tex_sha256": "c8f8b4e2504fa9110b12f61d1ae57656f731b1daa87804c679890524193fbb03",
+      "verification": "report fields inspected; final QA pending"
+    },
+    {
+      "pass": 9,
+      "lens": "number-by-number and denominator audit",
+      "finding": "The reorganized results kept values but needed explicit verification that all-event and nonempty metrics retained their distinct populations.",
+      "revision": "No numerical correction; ran source-bound aggregate arithmetic and an 11-claim manuscript inventory against the immutable report.",
+      "verification": "validate_evidence: eight check groups PASS; manuscript numeric inventory: eleven required claims PASS",
+      "main_tex_sha256": "939ff4792ecb74e80ed9eadcf4fd87b180942d4d086acfa038e0c53891a7d22b"
+    },
+    {
+      "pass": 10,
+      "lens": "sentence-level scientific language",
+      "finding": "The response phrase 'its logits' had an ambiguous antecedent, the edge-feature count was implicit, and the final timing requirement was a long compound sentence.",
+      "revision": "Named the Bernoulli logit, stated the five graph edge inputs, split the timing requirement, and standardized American-English canceling.",
+      "verification": "read-only long-sentence, overclaim and typo scans; final build pending",
+      "main_tex_sha256": "939ff4792ecb74e80ed9eadcf4fd87b180942d4d086acfa038e0c53891a7d22b"
+    },
+    {
+      "pass": 11,
+      "lens": "compiled formatting and physical reading order",
+      "finding": "Initial preview split the channel-share equation from its explanation and placed metric definitions and the results heading at page feet.",
+      "revision": "Added page-space controls for the share target and metric definition, started Results on a fresh page, kept the interpretation paragraph together, and began Conclusion with enough space.",
+      "verification": "Three 12-page builds, full-page visual review of figures, table and surrounding text; no overfull, underfull, or undefined log messages.",
+      "main_tex_sha256": "5191c9c3a40519d6ae92e0d840af660f2ceaab163696398e6b3c79c7a4cd3d56"
+    },
+    {
+      "pass": 12,
+      "lens": "final phrase and release-boundary review",
+      "finding": "Exact-string QA still expected wording from v0.12.0; one local claim scan failed on two stale phrases after the rewrite.",
+      "revision": "Rebound assertions to semantically equivalent current prose, added evaluator-runtime provenance guard, and updated release metadata to v0.13.0 without weakening evidence, numerical, or forbidden-claim checks.",
+      "verification": "validate_tex_and_bib PASS after exact-phrase repair; full QA and exact-PDF visual binding pending.",
+      "main_tex_sha256": "5191c9c3a40519d6ae92e0d840af660f2ceaab163696398e6b3c79c7a4cd3d56"
+    },
+    {
+      "pass": 13,
+      "lens": "exact final PDF word/figure and page review",
+      "finding": "All four figures and Table 1 remained readable after page controls; one paragraph turn and the results opening now fall at coherent boundaries.",
+      "revision": "No further source change; visual review bound to the exact passing 12-page PDF.",
+      "verification": "Full QA iteration 73 PASS; direct inspection of 12 page PNGs; no clipping, overlap, orphaned heading or unreadable figure labels.",
+      "main_tex_sha256": "5191c9c3a40519d6ae92e0d840af660f2ceaab163696398e6b3c79c7a4cd3d56",
+      "pdf_sha256": "440bc3a55cc4d87523e0b81718eac129afaab33f4d4e49ba9c078c779421e795"
+    },
+    {
+      "pass": 14,
+      "lens": "literal sentence-level final copyedit",
+      "finding": "The top-K explanation lacked a verb after the coordinating conjunction, leaving the absence of a connectivity constraint grammatically compressed.",
+      "revision": "Changed the phrase to 'but imposes no adjacency or connectivity constraint' and rebound its QA assertion.",
+      "verification": "Full QA iteration 75 PASS; final page 5 visually inspected and all other pages byte-identical to directly inspected iteration 73.",
+      "main_tex_sha256": "dfd0c3628e097eb63a09f322c1ccb351303b18a171381477bd01df889ee29cfa",
+      "pdf_sha256": "6b6dbcae67b27310fd49a8acd44d6bbab76c5ad7d7372db068e2da32531b1eb5"
+    }
+  ],
+  "output_sha256": {
+    "output/fast_mc_zdc_manuscript.pdf": "6b6dbcae67b27310fd49a8acd44d6bbab76c5ad7d7372db068e2da32531b1eb5",
+    "audit/iterations/iteration_75.json": "0859d690fd7914d78f3ccc4654cac1ad0fa8b903c234b66b50f34e332a3f1ba7",
+    "audit/visual_review_rhetoric_20260929.json": "1fca39b9787cde8702b8b2ac55b8eba20d223c5f2476ce3c518d1ac508bb3f78"
+  },
+  "scientific_boundary": "No raw event access, new training/evaluation, test-data use, frozen-config edit, or numerical claim change.",
+  "current_main_tex_sha256": "dfd0c3628e097eb63a09f322c1ccb351303b18a171381477bd01df889ee29cfa",
+  "full_manuscript_restarts": [
+    {
+      "restart": 1,
+      "lens": "scientific question and scope from title through conclusion",
+      "evidence": "Read source and rendered full document; abstract, introduction and conclusion align on one-seed development-bank diagnosis, with no detector-readiness claim."
+    },
+    {
+      "restart": 2,
+      "lens": "generator causal and mathematical chain",
+      "evidence": "Read response, activity, both flow targets, graph, top-k and decoder prose against the 12 equation-source bindings; no equation changed and sampled-versus-reference upstream roles remain explicit."
+    },
+    {
+      "restart": 3,
+      "lens": "number, denominator and uncertainty chain",
+      "evidence": "Read table, results paragraphs and captions against immutable aggregate values; all-event means, 9,907/9,858 nonempty denominators, bootstrap exceptions and absent structural intervals remain distinct."
+    },
+    {
+      "restart": 4,
+      "lens": "figure and page sequence",
+      "evidence": "Viewed every preview page via contact sheets and full pages around all four figures, table, equation boundaries and bibliography; revised page breaks and captions for self-contained reading."
+    },
+    {
+      "restart": 5,
+      "lens": "skeptical overclaim and copyedit",
+      "evidence": "Searched for speed, causal, split, threshold, graph and significance language; clarified 0.344 s/event as evaluator runtime and made five structural claim boundaries explicit."
+    }
+  ],
+  "release_qa_result": "iteration 75 full suite PASS; exact final page 5 direct visual review; other eleven pages byte-identical to directly inspected iteration 73"
+}

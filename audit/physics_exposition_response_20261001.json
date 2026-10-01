@@ -1,0 +1,8 @@
+{
+  "revision": "0.19.0",
+  "response_markdown_sha256": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
+  "input_audit_sha256": "c5187d83fcf8eefdcaca9c593d79b4231b686087f0808c9291a81a166bac6d59",
+  "dispositions": "See Markdown twin for adopted corrections, rejected inferences and unavailable empirical work",
+  "new_event_data_access": false,
+  "external_submission": false
+}

@@ -1,0 +1,7 @@
+[
+ ["The evaluation uses 10,000 incident neutrons drawn from the validation partition with $50\\leq\\Kinc\\leq250\\GeV$.",
+  "The evaluation uses 10,000 incident neutrons drawn from the validation partition with $50\\leq\\Kinc\\leq250\\GeV$, spread approximately uniformly in energy (1,182 to 1,310 events in each 25\\,GeV bin)."],
+
+ ["\\item[Conditioning.] The condition has no impact position. If neutrons of the same direction strike the detector at different points, the model cannot learn the dependence of containment and acceptance on position, which may contribute to the excess of empty showers.",
+  "\\item[Conditioning.] The condition has no impact position. If neutrons of the same direction strike the detector at different points, the model cannot learn the dependence of containment and acceptance on position, which may contribute to the excess of empty showers. Acceptance is likely to matter: the Geant4 empty fraction of 0.93\\% is about ten times the probability, $e^{-7}\\approx0.1\\%$, that a neutron crosses seven interaction lengths without interacting."]
+]

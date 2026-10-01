@@ -1,0 +1,22 @@
+{
+  "excluded_from_claims": {
+    "all_shower_aware_c2st_results": "reported as development-bank screening scores with the row-wise matched-pair split limitation",
+    "condition_only_c2st": "sanity control only; not plotted because it contains no shower information",
+    "short_v3_screens": "removed from the main narrative because they are undercontrolled and use different analysis roles"
+  },
+  "figures_sha256": {
+    "detector_geometry.png": "296684aa8264da39332f23f04b3a9d56143fa2f5dcd1c0e68f1a595ff1776926",
+    "generator_schematic.png": "985074a390f000e670d078a48688d10d871842443c3034deafd15a6369db8213",
+    "longitudinal_profile.png": "9fa252851e95d9ac25bb956135f97c7ca2ce94cdaa7b4284a42c05c38596ad42",
+    "support_summary.png": "c95e74be2d021cf09090d05795ecd0ac76c66c0ceefef3250242cad2e5a53b8f"
+  },
+  "kind": "fast-mc-paper-development-figures",
+  "scientific_status": "development-bank diagnostics; physics validation not established",
+  "sources_sha256": {
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f"
+  },
+  "test_events_used": 0
+}

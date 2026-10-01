@@ -1,0 +1,14 @@
+
+STDERR:
+test_changed_figure_manifest_rejected (test_qa_guards.ReleaseBindingTests.test_changed_figure_manifest_rejected) ... ok
+test_changed_pdf_rejected (test_qa_guards.ReleaseBindingTests.test_changed_pdf_rejected) ... ok
+test_changed_source_rejected (test_qa_guards.ReleaseBindingTests.test_changed_source_rejected) ... ok
+test_current_exact_binding (test_qa_guards.ReleaseBindingTests.test_current_exact_binding) ... ok
+test_failed_latest_suite_rejected (test_qa_guards.ReleaseBindingTests.test_failed_latest_suite_rejected) ... ok
+test_native_build_failure_preserves_deliverable (test_qa_guards.ReleaseBindingTests.test_native_build_failure_preserves_deliverable) ... ok
+test_partial_visual_review_rejected (test_qa_guards.ReleaseBindingTests.test_partial_visual_review_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.724s
+
+OK

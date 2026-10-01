@@ -1,3 +1,9 @@
+# Current claim register: v0.17.0 correction
+
+The prior graph-confounding inference is superseded. With Q=m-R, delta mean Q >=30.44582 (84.64% of the mean component excess). A within-run graph discrepancy is established; purely lateral, causal and detector-performance interpretations remain unestablished. The author confirms ePIC ZDC identity and data-owner publication permission; the geometry tag remains unspecified. The historical classifier threshold is recorded, not independently verified as predeclared. See `external_audit_response_20260930.md`.
+
+## Historical claim rows (interpret with the correction above)
+
 # Current claim register
 
 | ID | Claim | Evidence and boundary |
@@ -27,3 +33,7 @@
 | C23 | The all-event hit-count Wasserstein distance is 58.68 channels. | Stored report and paired energy-stratified 1,000-resample bootstrap interval of 51.47--66.92 channels; this is a development-bank interval, not a clean test-set performance interval. |
 | C24 | The total-deposit cap is 61.2338 GeV above approximately 97.2 GeV incident kinetic energy; a positive-hurdle draw can be clipped to zero and reset visibility. | Frozen response implementation and cap formula. The aggregate evaluator did not record the frequency of lower or upper clipping, so no claim is made about their prevalence. |
 | C25 | The response, log-fraction target, masked flow, graph-message, Gumbel top-k, decoder, and joint-loss equations describe the selected generator implementation. | The mathematical-exposition audit binds each equation to source at the recorded commit. Equations describe computation and constraints; they do not establish physics fidelity or exact training-time source-byte identity. |
+
+Current v0.20.0 correction: geometry counts describe stored ID groups. Electronic ganging and physical-neighbor interpretation are unverified. Historical ganging labels do not establish electronics semantics.
+
+Current reader-proposal disposition: `claude_integration_response_20261001.md`. The normalized paired response interval, fixed-region late energy, geometry dimensions and timing arithmetic are verified in `claude_reader_derived_20261001.json`; they do not establish unnormalized covariance, extra-component energy or generation-only speed.

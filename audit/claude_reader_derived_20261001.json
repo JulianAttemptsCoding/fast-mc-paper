@@ -1,0 +1,36 @@
+{
+  "source_sha256": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+  "late_energy_mev": {
+    "truth": 17.192190563298514,
+    "generated": 17.84932717176195
+  },
+  "paired_normalized_response": {
+    "events_included": 10000,
+    "interpretation": "paired stochastic response residual; not downstream reconstruction",
+    "kind": "paired_detector_response_residual",
+    "mean_kinetic_gev": 149.9007264076233,
+    "normalization": "incident_kinetic_energy_gev",
+    "response_delta_over_kinetic_mean": 2.935218067806149e-05,
+    "response_delta_over_kinetic_median_absolute": 0.008817313002724488,
+    "response_delta_over_kinetic_rmse": 0.04598280936800564,
+    "zero_truth_events": 93
+  },
+  "paired_normalized_mean_interval": {
+    "confidence": 0.95,
+    "high": 0.0009337960509583354,
+    "low": -0.0008513053762726486,
+    "mean": 1.2739479291496992e-05,
+    "replicates": 1000
+  },
+  "timed_analysis_seconds": 1009.1368546590093,
+  "remaining_evaluation_seconds": 2432.789414416009,
+  "geometry": {
+    "ecal_x_pitch_mm": 30.29099999999994,
+    "hcal_median_z_pitch_mm": 24.892851562501164,
+    "hcal_z_span_mm": 1570.0524305555518,
+    "ecal_mean_z_mm": 35725.8328125
+  },
+  "toy_graph_components": 3,
+  "toy_layer_runs": 1,
+  "scope": "Aggregate arithmetic and schematic validation only; no new event-level physics evaluation."
+}

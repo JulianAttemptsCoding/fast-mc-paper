@@ -1,0 +1,22 @@
+{
+  "created_utc": "2026-10-01T02:14:12.560412+00:00",
+  "revision": "0.17.0",
+  "status": "source_package_integrity_pass",
+  "archive": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_submission_source.zip",
+  "sha256": "dcbf3e4c57607ec4949678db1500a48ea3854105a48fc4e424805bbc869aeaeb",
+  "bytes": 667994,
+  "members_sha256": {
+    "main.tex": "f1dfd9641f54fe1a18f0dc19ce2248d88e948c25e62dc9dc5264a2d54df356a4",
+    "references.bib": "c82866d86e43d493b0c885b6662c3aa90648d9a35af48c0b9c6cdd86a5c94958",
+    "main.bbl": "14f791b3e97a8aba53165bb4da05ebd722f30cd625aa904d6d84b994e9b32be4",
+    "figures/detector_geometry.png": "b15b5a5a416e3d9864b011d155c8e8e0d2b3ceafb4c088cbf76ed36d245b7164",
+    "figures/generator_schematic.png": "985074a390f000e670d078a48688d10d871842443c3034deafd15a6369db8213",
+    "figures/longitudinal_profile.png": "9fa252851e95d9ac25bb956135f97c7ca2ce94cdaa7b4284a42c05c38596ad42",
+    "figures/support_summary.png": "c95e74be2d021cf09090d05795ecd0ac76c66c0ceefef3250242cad2e5a53b8f"
+  },
+  "current_pdf_sha256": "896037ac8ca7e8429ee38d73e6314ee7ec81c529d6e6ef98a93da80603d517e7",
+  "bbl_format": "3.3",
+  "engine": "pdfLaTeX",
+  "arxiv_server_compile": "not performed",
+  "boundary": "Only seven required source assets included; author upload, server preview, category and license remain submission steps."
+}

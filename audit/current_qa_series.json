@@ -1,0 +1,6 @@
+{
+  "series": "claude_integration_20261001",
+  "predecessor": "audit/qa_series/physics_exposition_20261001/iteration_08.json",
+  "predecessor_sha256": "5d07cdd0a7159c81bee5991d209dc866a603dd1c0cee8ad9337c00a2833a1b46",
+  "reason": "New revision integrating the independently reviewed proposal, with unchanged safety and scientific guards."
+}

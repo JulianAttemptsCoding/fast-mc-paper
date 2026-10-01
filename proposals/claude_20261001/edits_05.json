@@ -1,0 +1,12 @@
+[
+ ["Generative surrogates for calorimeter simulation are usually judged first on energy response and occupancy. We ask whether agreement in the means of those quantities implies agreement in how a shower is organised in space. The test case is a hierarchical generator,",
+  "A generative calorimeter surrogate can reproduce the mean energy response and the mean occupancy of the reference simulation and still organise its showers differently in space. We quantify this for a hierarchical generator,"],
+
+ ["\\begin{table}[H]\n\\centering\n\\caption{Event-level shower summaries", "\\begin{table}[!htbp]\n\\centering\n\\caption{Event-level shower summaries"],
+
+ ["The generated ECAL deposit is higher by 0.175\\,GeV (8.3\\%) and the HCAL deposit lower by 0.129\\,GeV (5.8\\%).",
+  "The generated ECAL deposit is higher by 0.175\\,GeV (8.3\\%) and the HCAL deposit lower by 0.129\\,GeV (5.8\\%); in the generator this split is set by the layer-energy flow of Eq.~\\eqref{eq:layer_budget}."],
+
+ ["Generated showers put a larger fraction of their energy in the ECAL (0.263 against 0.235 on average), are narrower by about 3\\% in transverse RMS, and concentrate more energy in their highest-energy channel.",
+  "Generated showers put a larger fraction of their energy in the ECAL (0.263 against 0.235 on average), are narrower by about 3\\% in transverse RMS, and concentrate more energy in their highest-energy channel. In terms of the stages of Table~\\ref{tab:stages}, the first of these is a property of the layer-energy flow, and the other two of the channel selection and the channel-energy flow."]
+]

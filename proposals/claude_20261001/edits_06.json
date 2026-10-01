@@ -1,0 +1,10 @@
+[
+ ["It is a first-order (Euler) step with a midpoint time, not the second-order midpoint rule. The dependence of the results on the number of steps was not studied.",
+  "It is a first-order (Euler) step with a midpoint time, not the second-order midpoint rule."],
+
+ ["The weights $w_j$ (Appendix~\\ref{app:reproducibility}) were set once so that the nine terms have comparable gradient norms; their influence on the results was not studied.",
+  "The weights $w_j$ (Appendix~\\ref{app:reproducibility}) were set once so that the nine terms have comparable gradient norms."],
+
+ ["The cap is a safeguard against extreme draws from the tail of the mixture. Its constants were derived from the training sample, it saturates at 61.2338\\,GeV above $\\Kinc\\approx97.2\\GeV$, and it lies far above the mean deposit of a few GeV; it is not a model of the response.",
+  "The cap is a safeguard against extreme draws from the tail of the mixture. Its constants were derived from the training sample, it saturates at 61.2338\\,GeV above $\\Kinc\\approx97.2\\GeV$, and it lies far above the mean deposit of a few GeV."]
+]

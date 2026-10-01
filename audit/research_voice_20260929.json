@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "version": "0.14.0",
+  "status": "source_complete",
+  "created_utc": "2026-09-30T01:39:34.415950+00:00",
+  "request": "Research-paper voice revision informed by supplied critique",
+  "input_sha256": {
+    "main.tex": "dfd0c3628e097eb63a09f322c1ccb351303b18a171381477bd01df889ee29cfa",
+    "critique": "3533c2b533f98438aa33008ab4e7a6e7953d4658bcf9764b7e8dc4c7ede8bf0b",
+    "report": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5"
+  },
+  "current_main_tex_sha256": "b8b1c491fd282315e48681fa56cf8d1adf523039ec678780b4873b9da06db00c",
+  "environment": {
+    "python": "3.13.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "host": "local; no DiCOS access"
+  },
+  "decisions": [
+    "Center the longitudinal result in the abstract and contribution paragraph.",
+    "Consolidate scope in Evaluation and Discussion; make Results observational.",
+    "Retain complete architecture, all equations, and numerical table.",
+    "Treat critique ratings and content-reference placeholders as commentary, not evidence."
+  ],
+  "retained_boundaries": [
+    "raw energy and ganged-centroid representation",
+    "matched conditions with independent histories",
+    "pilot/canonical split roles and unresolved validation overlap",
+    "one training seed and repeated development inspection",
+    "side-specific nonempty denominators",
+    "unavailable structural/profile/bin intervals",
+    "row-wise C2ST and separate grouped monitor",
+    "graph-run confounding",
+    "unmeasured cap, solver, training variation, timing, reconstruction"
+  ],
+  "verification": {
+    "displayed_equations_unchanged": 14,
+    "table_unchanged": true,
+    "automated_qa_iterations": [
+      76,
+      77,
+      78,
+      79
+    ],
+    "final_iteration": 79,
+    "full_suite": "pass",
+    "check_groups": 15,
+    "pages": 12,
+    "visual_review": "pass",
+    "guard_tests": 7
+  },
+  "passes": [
+    {
+      "pass": 1,
+      "focus": "abstract and contribution"
+    },
+    {
+      "pass": 2,
+      "focus": "methods and repeated qualifications"
+    },
+    {
+      "pass": 3,
+      "focus": "results and captions"
+    },
+    {
+      "pass": 4,
+      "focus": "discussion and limits"
+    },
+    {
+      "pass": 5,
+      "focus": "conclusion and voice"
+    },
+    {
+      "pass": 6,
+      "focus": "definition coverage and literal scientific precision",
+      "corrections": [
+        "restored loss explanations after block replacement",
+        "defined ECAL/HCAL at first body use",
+        "named four-vector reference ambiguity",
+        "used clipped rather than truncated for response clamp",
+        "removed metatextual contribution wording"
+      ]
+    },
+    {
+      "pass": 7,
+      "focus": "rendered narrative and paragraph endings",
+      "finding": "QA76 passed, but the final Discussion sentence left one line on the next page. Its first paragraph also overstated what an averaged profile can conceal.",
+      "correction": "Clarified eventwise gap information versus an averaged profile, consolidated repeated support definitions, and shortened Discussion to improve its final page break."
+    },
+    {
+      "pass": 8,
+      "focus": "fresh literature comparison and concept-first methods",
+      "sources": [
+        "https://arxiv.org/html/2405.09629v1",
+        "https://arxiv.org/html/2402.11575v1",
+        "https://arxiv.org/abs/2106.05285"
+      ],
+      "correction": "Explained flow transport, conditioning and artificial time before the masked objective; expanded AUROC at first use."
+    },
+    {
+      "pass": 9,
+      "focus": "figure-to-data and population audit",
+      "corrections": [
+        "Distinguished center layers 1\u201330 (linear) from right layers 1\u201364 (log) in Fig. 3 caption.",
+        "Added explicit mean-layer-deposit units to both longitudinal axes and neutralized panel titles.",
+        "Specified the all-event count population before W1, distinct from conditional support means."
+      ]
+    },
+    {
+      "pass": 10,
+      "focus": "numerical-policy precision",
+      "finding": "Absolute-plus-relative could imply addition, while the evaluator uses a maximum. The earlier fixed-tolerance failure was not stated in the revised manuscript.",
+      "correction": "Gave exact batch-maximum tolerance recipe and disclosed the earlier fixed-tolerance exceedance without altering any guard."
+    },
+    {
+      "pass": 11,
+      "focus": "complete QA78 page-by-page scientific and layout reread",
+      "coverage": "All 12 pages directly inspected; every equation, table, figure, caption, discussion paragraph and bibliography page reviewed.",
+      "findings": [
+        "Hidden ECAL layer 0 stretched HCAL log-panel autoscaling.",
+        "A sentence juxtaposed conditional mean-count differences with an all-event Wasserstein distance as though populations matched."
+      ],
+      "corrections": [
+        "Plot only HCAL layers in both HCAL panels; retain all input values in the section bars.",
+        "State the different populations explicitly instead of inferring shape mismatch from those two statistics."
+      ],
+      "layout": "No clipping, overlap, orphaned heading or incomplete equation observed. Final changed pages require inspection."
+    },
+    {
+      "pass": 12,
+      "focus": "final word, notation, figure and output verification",
+      "coverage": "Final pages 8 and 9 reread directly; other ten pages proved identical to fully inspected QA78 output. Rechecked section conclusions and population definitions; no further source correction needed.",
+      "result": "QA79 full suite passed, 12 pages, 15 check groups; seven stale-evidence/native-build guard tests passed; git diff --check passed."
+    }
+  ],
+  "commands": [
+    "Read guide, focused rules, critique, PDF skill, source and QA; ran PDF edit marker.",
+    "Saved v0.13 source snapshot; guarded paragraph replacements; exact equation/table comparison.",
+    "Updated current release metadata to v0.14.0; preserved v0.13 audit binding to QA75; mapped prose assertions to equivalent current wording; added nine scope/mechanism assertions and exact equation/table snapshot guards.",
+    "Reviewed full current manuscript in sections and figure builder; checked closure_rule and aggregate invariant record.",
+    "Guarded source replacements; added explicit figure ordinate units; preserved all 14 displayed equations and table.",
+    "QA76 and QA77 passed; all twelve QA77 pages directly inspected before subsequent research-driven edits.",
+    "QA78 full suite PASS, 12 pages, PDF b919e9f48c798ef049ad25166b6a94a0169d2f27f4b1587bc64bceb28f0b1db8; direct view_image review pages 1\u201312; guarded plot-input and population-sentence corrections.",
+    "python scripts/full_manuscript_qa.py --iteration 79 --focus \"final figure and population corrections\" --disposition \"full source evidence numerical and every-page rendering QA\"",
+    "Directly inspected QA79 pages 8 and 9; compared all page hashes with QA78.",
+    "python scripts/test_qa_guards.py: 7/7 PASS; intentional failed native build left final PDF unchanged.",
+    "git diff --check: PASS."
+  ],
+  "failures": [
+    "First in-memory edit attempt stopped at paragraph-boundary lookup after saving the source snapshot; main.tex remained unchanged. Corrected lookup and retried.",
+    "Source review caught the loss-definition paragraph being included in a replaced paragraph block. Restored every loss definition and weight-calibration detail from the input snapshot before build.",
+    "Visual QA78 found excess HCAL log-axis whitespace caused by hidden ECAL input. Corrected HCAL slice and verified QA79 figure.",
+    "Scientific reread found a comparison across different count populations. Removed inference and stated populations explicitly.",
+    "Final audit-writing tool call failed JavaScript parsing before execution because of an unescaped Markdown backtick in embedded Python. Removed backticks and retried; no filesystem change from the failed call."
+  ],
+  "outputs": {
+    "main.tex": "b8b1c491fd282315e48681fa56cf8d1adf523039ec678780b4873b9da06db00c",
+    "scripts/build_figures.py": "c44efff44216a0bfd9e16e55b5793ddc556bbeea05d2c312b521d50e47cda8a6",
+    "scripts/full_manuscript_qa.py": "cf50371eb28c2ab6b27a749db1bb4a0a0dd25ab6a35a64897021d4836c5f5f1e",
+    "output/fast_mc_zdc_manuscript.pdf": "404c2627e6c577067611f16db0939d9e615af3e85cfff49097d0c216259b48b7",
+    "figures/manifest.json": "ce3ad41c7788f1753b722a504b941f941d61efebbaa2b36c9727a8dabef21d0d",
+    "audit/iterations/iteration_79.json": "dcb4cc0ddb5190a120db9bc8c6fa260b62f9e407dfc06c928d7afc7135501e76",
+    "audit/visual_review_research_voice_20260929.json": "82bee33d37a436818eb28216de441ba753cda3750ab7ec0d7e87cbd6ef6dece7"
+  },
+  "wording_inventory": {
+    "input_words_including_latex": 4735,
+    "current_words_including_latex": 4647,
+    "input_report_centered_phrases": 12,
+    "current_report_centered_phrases": 0,
+    "note": "Counts describe prose form; they are not a measure of scientific rigor."
+  },
+  "research": [
+    {
+      "paper": "CaloDREAM v1",
+      "date": "2024-05-15",
+      "url": "https://arxiv.org/html/2405.09629v1",
+      "sections": "2 preprocessing; 3 and 3.1",
+      "observation": "Introduces factorized energy and shape sampling before individual networks, then defines noise-to-data transport before the training objective.",
+      "application": "Added the physical meaning of the velocity field and its artificial time coordinate before the existing flow loss. The present model and numerical solver remain unchanged."
+    },
+    {
+      "paper": "CaloGraph v1",
+      "date": "2024-02-18",
+      "url": "https://arxiv.org/html/2402.11575v1",
+      "sections": "II.1, III, IV",
+      "observation": "Defines graph construction before network operations, introduces generation conceptually, and interprets shower observables before a classifier test.",
+      "application": "Retained geometry-before-model order, physical-scale results, and a separate graph-run confound discussion. Explicit figure axes and sample definitions improve standalone interpretation."
+    },
+    {
+      "paper": "CaloFlow",
+      "date": "2021-06-09",
+      "url": "https://arxiv.org/abs/2106.05285",
+      "scope": "Abstract cross-check; prior detailed benchmark retained in audit/literature_benchmark.md."
+    }
+  ],
+  "release_state": "complete",
+  "completed_utc": "2026-09-30T02:39:47.221794+00:00"
+}

@@ -1,0 +1,247 @@
+**Verdict:** This is not ready for a physics journal such as CSBS, JINST, NIM A or CPC. The arithmetic is clean. I re-derived about 40 numbers and found no internal errors. The problems are in physics definitions and inference:
+
+1. Your own Table 1 contradicts your interpretation of the component counts. At least 83% of the component excess cannot come from gaps.
+2. The gap discrepancy you call unexplained is what your own Eq. (4) predicts.
+3. The observable is not a detector observable: zero threshold, no time window, unknown physics list, and an uncalibrated ECAL+HCAL sum. The "1.0% total-deposit agreement" is not a statement about detector response.
+4. Most checks a referee would ask for are listed as "unavailable." Without event-level access, the paper cannot survive a revision.
+5. The detector is never named, and the data are "collaboration-owned," which raises a clearance question.
+
+---
+
+## 0. What checks out
+
+- **Splits and pilot size:** 612,482 + 76,158 + 76,300 = 764,940, and the pilot is 26,624 / 612,482 = 4.35%.
+- **Channel counts:** the ganging histogram gives 4,390 + 1,950 + 444 + 6 = 6,790, with 2,400 ganged.
+- **Graph edges:** 54,320 + 53,600 = 107,920 directed edges.
+- **Span identities:**
+  - Reference: 56.20 − 0.510 + 1 = 56.69 and G = 2.11.
+  - Generator: 60.62 − 0.735 + 1 = 60.885 and G = 6.055.
+  - ΔG = 3.945.
+- **Energy bins:** the bin-weighted means reproduce 4.3242 and 4.3693 exactly, and every relative bin difference matches.
+- **Table 2 weights:** they sum to 9.000000. The clipped entries equal 0.25 × 0.6436 and 4 × 0.6436, as your appendix says.
+- **Cap:** the knee is at 97.18 GeV.
+- **W₁:** 58.68 is at least the all-event mean gap of |1566.2 − 1602.6| = 36.3, which is consistent.
+- **Empty-shower interval:** a binomial 95% CI on the empty-fraction difference is 0.19–0.79 pp. Your paired bootstrap gives 0.19–0.76 pp, which is consistent.
+
+---
+
+## 1. Blocking issues
+
+### B1. The component excess mostly does *not* come from longitudinal gaps
+
+This contradicts the abstract and §6.1. Using only your definitions and Table 1:
+
+```
+Per nonempty event:  m ≥ R  (your §4)   and   R − 1 ≤ G  (each run boundary needs ≥1 empty layer)
+
+Generator:  E[m − R] ≥ 59.39 − (1 + 6.05) = 52.34
+Reference:  E[m − R] ≤ 23.42 − 1         = 22.42
+⇒ Δ E[m − R] ≥ 29.92  of the +35.97  (≥ 83%)
+⇒ Δ E[R]     ≤ 6.05                  (≤ 17%)
+```
+
+- §6.1 says the aggregates "do not establish an independent lateral-fragmentation effect." That is false; they do.
+- The abstract sentence saying the component count "cannot be interpreted independently of the gaps" must go.
+- The title and framing are inverted. The dominant structural failure is fragmentation *within* occupied runs.
+- Call it "within-run" rather than "lateral." A break inside a run can also come from the 4-NN longitudinal edges failing to link adjacent occupied layers.
+- The largest-component fraction points the same way. 11.1% of 1588.8 is about 177 channels spread over about 58 other components, roughly 3 channels each. These are many small islands.
+
+### B2. The gap discrepancy follows directly from Eq. (4)
+
+- **What the model assumes:** A_ℓ is conditionally independent given (h_c, T, F, ℓ), and there is no event latent (§3).
+- **What that predicts:** Independent Bernoullis with correct marginals reproduce E[#active] = Σp_ℓ, which is your +0.25. When real activity is positively dependent (showers end early or late as a whole), independence pushes the last active layer outward and punches interior holes. That matches your +4.42 last-layer shift and the 93.5% gap fraction.
+- **The physics:** Longitudinal fluctuations in hadronic showers are driven mainly by the depth of the first inelastic interaction. No variable in your model carries that depth.
+  - F cannot carry it. At zero threshold, F records the first deposit of *any* kind (soft scatters, backsplash into the ECAL), not where the cascade starts.
+  - T correlates with depth only weakly.
+- **Why the oracle cascade won't settle it:** The test proposed in §6.1 will not isolate the cause. Teacher-forcing T and F still leaves Eq. (4) independent.
+- **Decisive test:** This needs no checkpoint, only reference events.
+
+```python
+# reference nonempty showers: A (n×65 bool), T, F, Kinc
+# 1. bin by (Kinc bin, T quantile, F); p[bin, l] = A[bin, l].mean() for l > F
+# 2. A_null[e, l] ~ Bernoulli(p[bin(e), l]) for l > F;  A_null[e, F] = 1;  A_null[e, l<F] = 0
+# 3. compute L, span, G, gap fraction on A_null; compare to Table 1 generator column
+```
+
+- **What a positive result gives you:** If the null reproduces roughly +4 layers and roughly 90% gap fraction, "does not identify the cause" becomes a result.
+- **Fix class:** make activity Markov or autoregressive in ℓ, or add an explicit shower-start or shower-end latent. This is the motivation behind layer-to-layer designs: L2LFlows trains one flow per calorimeter layer, conditioned on the preceding five layers, specifically to learn layer-to-layer correlations.
+
+### B3. Zero threshold with no time window is not a readout observable
+
+- The reference averages 1617.6 of 6,790 channels active and 54.6 of 65 layers active per shower.
+- At zero threshold, these counts are dominated by sub-MIP deposits: elastic neutron scatters, capture gammas and late hits. Their number depends on exactly the metadata you lack: physics list (including high-precision neutron transport), production cuts, and a time window, which is never mentioned.
+- Your gap, last-layer and component observables are therefore the most metadata-sensitive quantities in the paper.
+- Your intro's premise ("readout properties relevant to detector studies") requires a physics threshold and an integration window.
+- **Fix:** make the primary analysis use a threshold appropriate to each technology, for example 0.5 MIP-equivalent in the tiles, plus a realistic time cut. Keep zero threshold as a sensitivity row. The result could change qualitatively in either direction.
+- **Missing plot:** the most diagnostic figure for this is absent. Show the per-hit energy spectrum (log x-axis) for generator vs reference, split by ECAL/HCAL and by depth.
+
+### B4. "1.0% mean total deposit" is not a statement about detector response
+
+- I believe the ECAL is a homogeneous crystal and the HCAL a steel/scintillator sampling stack (see B5). Summing raw deposits across them adds quantities with very different visible fractions.
+- You give no sampling fraction. For a steel/scintillator stack it is typically a few percent. In that case:
+  - −0.129 GeV visible in the HCAL corresponds to O(GeV) of incident-equivalent energy.
+  - +0.175 GeV in a crystal is about +0.175 GeV.
+- The "partly canceling" shifts are therefore an artifact of the unweighted sum.
+- **Fix, with no metadata needed:**
+  - Fit K_inc ≈ a·E_ECAL + b·E_HCAL (+ c) on Geant4 training events.
+  - Apply the same weights to both samples.
+  - Report linearity and σ(E)/E per energy bin.
+  - Remove the 1.0% figure from the abstract.
+
+### B5. The detector is unnamed and the data are collaboration-owned
+
+The geometry matches the ePIC ZDC:
+- The ePIC ZDC HCAL is a 64-layer SiPM-on-tile iron sampling calorimeter with 8096 channels (121/132 per layer), with alternate layers shifted by half a cell.
+- The Academia Sinica ZDC group describes a crystal ECAL plus a steel/scintillator-tile HCAL with 64 layers, and refers to the ZDC in the ePIC official MC.
+- Your centroids sit near x ≈ −0.9 m. That fits a detector positioned at z = 35 m along the hadron beam's crossing-angle direction. This last step is my inference.
+- Your 100 channels per layer does not match the current 121/132, which suggests an older geometry version.
+
+Consequences:
+- **Naming:** name the detector and state the geometry tag.
+- **Clearance:** a single-author paper using a "collaboration-owned" event file generally needs collaboration clearance before submission. Confirm this.
+- **Metadata:** "unavailable" to you is not the same as unavailable. Geant4 version, physics list and materials exist in the production-campaign records.
+
+### B6. The paper cannot survive a revision as it stands
+
+- Items the paper lists as unavailable or unknown:
+  - Intervals: energy-bin, profile, gap and component intervals.
+  - Geant4 setup: version, physics list, cuts and materials.
+  - Four-vector recording point.
+  - Runtime configuration and software environment.
+  - Performance: clipped-draw counts, a solver-step study, and generation latency.
+  - Robustness: threshold scans and alternative graphs.
+- If you lack event-level access, you cannot answer a referee's first-round requests.
+- Appendix A says 36,100–36,300 test events remain uninspected. That is a ready-made locked evaluation bank, if you can run on it.
+
+---
+
+## 2. Major issues
+
+**M1. The energy-bin claim is unsupported.**
+- The reference bin means themselves zigzag. Successive increments are +0.49, +0.64, +0.32, +1.02, +0.16, +0.89 and +0.17 GeV.
+- The spread of these increments is about 1.8× the generator's.
+- The largest generator-minus-reference differences (±7.7%) fall where the reference jumps. That pattern is what reference statistical noise would produce.
+- "Agreement… does not imply comparable agreement within each bin" needs intervals, and your bootstrap code already computes them.
+
+**M2. "Unquantified" overstates the uncertainty problem.** Treating the two samples as independent:
+
+```
+Gap fraction (binomial): SE = sqrt(.5243·.4757/9907 + .9353·.0647/9858) = 0.0056
+  → Δ = 41.1 ± 1.1 pp (95%)
+Worst-case variance (Popoviciu, Var ≤ (b−a)²/4):
+  last layer L∈[0,64]:  SE(Δ) ≤ 32·sqrt(1/9907 + 1/9858) = 0.46 → +4.42 is ≥ 9.7σ
+  gaps G∈[0,63]:        SE(Δ) ≤ 0.45                      → +3.95 is ≥ 8.8σ
+```
+
+Sampling noise within the bank is not the open question. Variation across training seeds, thresholds and graphs is. Rewrite the abstract's uncertainty sentence to say so.
+
+**M3. The below-chance condition-only C2ST score is a leakage signature.**
+
+```
+H0 SE for AUROC with 3000 vs 3000 scoring rows ≈ sqrt(6001/(12·3000·3000)) = 0.0075
+seeds 0.4739 / 0.4624 / 0.4545 → 3.5σ / 5.0σ / 6.1σ below 0.5
+```
+
+- **Mechanism:** about 42% of matched pairs are split across partitions (2 × 0.7 × 0.3). Each split pair has identical K_inc and opposite labels, so a partly memorizing classifier mislabels the held-out twin.
+- **Effect on other scores:** the same bias affects every feature family that carries information correlated with the condition.
+- **Grouped monitor:** it gives 0.893 against your 0.775 for high-level features. That suggests the row-split scores are biased low, though the different banks prevent proof.
+- **Action:** remove the row-split battery from the main text and rerun a grouped split on D_dev.
+- **"Predeclared" maximum:** say where 0.65 was declared. If it is in your 23 July CBSC-ZDC specification, cite that document with a timestamp.
+
+**M4. The channel sampler is miscalibrated, and its noise is spatially incoherent.**
+- The support logits are trained with BCE (marginal inclusion) plus a ranking loss. They are then used as Plackett–Luce weights in Gumbel-top-K at τ = 1.
+- Successive sampling with weights e^s does not in general reproduce σ(s) as inclusion probabilities. Conditional-Poisson sampling with odds e^s does, approximately.
+- Separately, the Gumbel noise is i.i.d. per channel and there is no event latent. Nothing makes the fluctuations coherent across neighbours or layers. This is a direct mechanism for the within-run fragmentation in B1.
+- **Tests:**
+  - Plot per-channel occupancy calibration (generator vs reference) conditioned on layer and K bin.
+  - Build a null with occupancy matched to the reference marginals and i.i.d. placement noise.
+
+**M5. The conditioning may be incomplete.**
+- The four-vector carries no impact position. If it is recorded at calorimeter entry (you say this is unknown), the transverse location is not determined by the condition.
+- The generator would then sample from a blurred score map with i.i.d. noise, which again produces fragmentation.
+- **Test on reference data alone:** regress the energy-weighted centroid on (u_x, u_y) and compare the residual RMS with the cell size.
+
+**M6. Report the paired table for empty showers.**
+- 0.93% empty showers at 50–250 GeV in a deep calorimeter is most likely geometric acceptance, which should be nearly deterministic in direction.
+- Report the 2×2 counts: both empty, reference-only, generator-only, neither. This shows directly whether the visibility head learned the acceptance.
+
+**M7. Standard HEP validation is missing.**
+- Calibrated linearity and resolution.
+- Reconstructed position or angular resolution. This is the key ZDC metric: the design talk ranks angular (position) resolution as more critical than energy resolution.
+- Per-hit energy spectrum.
+- Radial profiles.
+- Per-layer occupancy histograms.
+- Full distributions of L, G, m and R rather than means.
+- Event displays.
+- A reference-vs-reference W₁ baseline, for example by splitting the reference into halves. Without it, W₁ = 58.68 cannot be interpreted.
+
+**M8. There is no timing number.**
+- 0.344 s per event is evaluator wall time.
+- For comparison, Wojnar's flow-matching ALICE ZN model reports 0.46 ms inference per sample.
+- Without generation-only latency and Geant4 CPU time per shower, the intro's cost motivation is unsupported.
+
+**M9. The connectivity metric uses the model's own graph.**
+- The HCAL layers are staggered, and ganged centroids can sit between tiles. kNN-8 on such a layout is not physical adjacency.
+- Make geometric overlap or shared-edge adjacency primary, and keep kNN as the sensitivity check.
+
+**M10. Novelty and significance are thin.**
+- The idea that matching means does not imply matching structure is already the thesis of Kansal et al. [7]. CaloChallenge likewise stresses that showers carry correlations between voxels across several layers.
+- Majerz et al. [13] introduce a Jaccard co-activation error, which is conceptually adjacent to your support metrics. Discuss it rather than only citing it.
+- With one seed, 4.35% of the data and no baseline, the result reads as "a pilot model with a factorization defect behaves as the factorization predicts."
+- Your legacy recurrent HurdleGraph model is the natural contrast if its recurrence runs over layers. Evaluating it on the same gap metrics would turn the diagnosis into a comparison.
+
+---
+
+## 3. Minor and technical
+
+- **Eq. (7):** the state is taken at t_n while the velocity is evaluated at t_n + h/2. That is neither Euler nor the midpoint method; it is a first-order scheme. Name it and run a step-count convergence check.
+- **§5.4 tolerance:** the fixed 2×10⁻⁵ criterion fails at 3.05×10⁻⁵, and a batch-relative criterion replaces it. This reads as post hoc. The section only verifies softmax accounting identities; move it to an appendix.
+- **Cap C(K) = 0.63·K:** Table 3 shows visible fractions of about 2.6–3.8%, so explain where 63% comes from. Counting clipped draws is cheap; report it.
+- **Loss weights:** 4 of the 9 weights sit at the clipping bounds, so the bounds, not the gradient heuristic, set them.
+- **Checkpoint selection:** epoch 90 was chosen on teacher-forced loss. There is no reason to expect it is best on the free-running metrics you report.
+- **Validation loss below training loss:** first check whether training loss is epoch-averaged while validation is measured at epoch end, before listing it as unexplained.
+- **Edge co-occupancy:** it is not normalized for occupancy. The channel-count difference alone predicts about a 3.5% relative drop, against the observed 5.7% (rough estimate). Report it against a count-matched null.
+- **Figure 4:** means on independent axes add nothing beyond Table 1. Replace them with distributions.
+- **Physical scale:** layer depth in λ_I or X₀ is not given, so "4.42 layers" has no physical meaning. The coordinate frame is also unstated.
+- **Reference [14]:** the Geant4 core paper does not define your per-ID hit summation. Cite the simulation framework or digitization instead.
+- **Availability section:** there is no repository URL or DOI. Move internal names (dicos-f-02, calibrated_lr3e4), "version 0.16.0" and the audit JSON to a README.
+- **Front matter:** there is no affiliation line, although the acknowledgments place the work at ASIoP. The abstract's first sentence is a truism.
+- **Seeds:** the generation seed equals the training seed. This is harmless, but state it.
+
+---
+
+## 4. Reference check
+
+- **Verified in this session:**
+  - [6] Reports on Progress in Physics 88(11), 116201.
+  - [10] CPC 2026, vol. 319, art. 109936.
+  - [12] CSBS (2025) 9:1.
+  - [13] arXiv 2608.12795, authors as cited.
+- **Not verified in this session:** [1]–[5], [7]–[9], [11] and [14]–[18]. They look standard; spot-check them before submission.
+- **Missing references:**
+  - L2LFlows, JINST 18 (2023), DOI 10.1088/1748-0221/18/10/P10017.
+  - iCaloFlow, which generates each layer conditioned on the previous one (arXiv 2305.11934).
+  - Majerz et al., Inverse Autoregressive Flows for ZDC fast simulation, arXiv:2512.20346.
+  - ePIC ZDC design and prototype papers.
+  - Bengio et al. 2015 on scheduled sampling, for your teacher-forcing argument.
+  - Chen, Dempster & Liu 1994 on conditional-Poisson sampling, if you change the sampler.
+
+---
+
+## 5. Fastest tests, ranked
+
+1. **B1 component bound** — no compute. Rewrite the abstract and §6.1.
+2. **M2 intervals** — no compute.
+3. **B2 independence null** — minutes, reference data only.
+4. **Per event R and within-run component count** — minutes.
+5. **Hit-energy spectrum plus a threshold scan of Table 1 (0 / 0.1 / 0.5 MIP-eq)** — reference side in minutes; the generator side needs the checkpoint.
+6. **B4 calibrated response and resolution** — minutes.
+7. **Grouped C2ST on D_dev.**
+8. **Locked evaluation on the uninspected test remainder, with 3 training seeds.**
+
+---
+
+**Questions:**
+1. What is the target venue? The bar differs a lot between a workshop and CSBS or JINST.
+2. Do you still have the event file and checkpoint, so you can regenerate?
+3. Is this the ePIC ZDC, which geometry tag, and has the collaboration cleared publication?

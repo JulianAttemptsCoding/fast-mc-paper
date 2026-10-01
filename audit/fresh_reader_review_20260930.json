@@ -1,0 +1,519 @@
+{
+  "status": "review_complete; repository_build_verified; native_editor_preview_unverified",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "input_sha256": {
+    "main.tex": "844c00be0f102bf527aa75cc252c1906de6dac90bc70b15ff4da540af2ad2c5b",
+    "output/fast_mc_zdc_manuscript.pdf": "9434ab3053d991fea020ea0556a732b1b0220a346ba334ee91ce72d6c490e583",
+    "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+    "scripts/full_manuscript_qa.py": "9cd8de5f2e9597968e4b5a3f1619e25b2a11dcf9fcfd4b7c676ecdcb5a67ef8b",
+    "scripts/build_figures.py": "3f37e00c1c784c363baeea0bc6e7096eea37ec2ed03d1b698aee12d1f5a30c51",
+    "audit/finalization_20260930.json": "a41ea69988b5757818078b36efc73306b4a0ba6f51d11e3f61528487c7d005d6",
+    "audit/final_build_audit.json": "a7272b686b70237cfc7c5e8b5724ec51be817152a98fbd8dfb36ba610409bed8",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f"
+  },
+  "scope": "Full manuscript, appendices, all four figures, all four tables and all fourteen equations; fresh-reader judgment with evidence checks, not independent human peer review.",
+  "data_access": "Local aggregate reports and source/provenance only; no raw, remote, or new test data access.",
+  "initial_checks": [
+    "Complete source read in order, lines 1-486",
+    "All fourteen QA87 rendered pages directly read and visually inspected",
+    "Existing dirty state preserved",
+    "Guide and focused operating rules read",
+    "Graft advertised legacy results despite freshness pass; not trusted or used as scientific evidence"
+  ],
+  "failed_attempts": [
+    "Initial path-discovery command exit 1: absent alternate OneDrive paper path and absent paper AGENTS.md; active paper discovered successfully.",
+    "Search queries did not return the two requested arXiv pages; direct URL opens verified them.",
+    "QA88 compiled 15 pages and failed unchanged maximum-14-page guard.",
+    "QA89 still compiled 15 pages and failed unchanged maximum-14-page guard.",
+    "Native compile_latex_document failed before source diagnostics: Unable to find standard directories for platform."
+  ],
+  "external_checks": [
+    "https://arxiv.org/abs/2210.02747",
+    "https://proceedings.mlr.press/v97/kool19a.html",
+    "https://arxiv.org/abs/2410.21611",
+    "https://arxiv.org/abs/2608.12795"
+  ],
+  "changes": [
+    {
+      "purpose": "Scope at first contact",
+      "old": "a 6,790-channel Zero-Degree Calorimeter readout.",
+      "new": "a 6,790-channel Zero-Degree Calorimeter readout, using raw deposited energies without a threshold."
+    },
+    {
+      "purpose": "Define support before relying on it",
+      "old": "For sparse showers, the occupied layers and channels, their correlations, and their spatial organization are part of that target.",
+      "new": "For sparse showers, the occupied layers and channels, their correlations, and their spatial organization are part of that target. Here, support means the set of channels with positive deposit; occupancy counts its members."
+    },
+    {
+      "purpose": "State the study contribution without a novelty or superiority claim",
+      "old": "It provides a pilot case study of the generator and its diagnostics.",
+      "new": "The contribution is a concrete diagnostic case: near-agreement in marginal means can coexist with a different organization of occupied layers. The architecture supplies the test case, rather than a demonstrated improvement over competing generators."
+    },
+    {
+      "purpose": "Explain ganging in detector language",
+      "old": "Of the HCAL IDs, 2,400 each gang two to four stable physical positions.",
+      "new": "Of the HCAL IDs, 2,400 combine deposits from two to four stable physical positions into one readout channel (ganging)."
+    },
+    {
+      "purpose": "Give geometry figure a stated purpose",
+      "old": "its first bar contains 400 ECAL and 3,990 HCAL channels.}",
+      "new": "its first bar contains 400 ECAL and 3,990 HCAL channels. The centroid representation defines the spatial information available to both the model and the graph diagnostic.}"
+    },
+    {
+      "purpose": "Place estimand limitation beside the sampling design",
+      "old": "No nominal test event is used here.",
+      "new": "No nominal test event is used here. The comparison tests distributions over this bank, not reproduction of a particular Geant4 shower; one draw per condition cannot determine the full conditional shower distribution."
+    },
+    {
+      "purpose": "Distinguish data dependencies from particle transport in architecture figure",
+      "old": "Training uses reference-derived upstream quantities; sampling uses generated upstream quantities.}",
+      "new": "Arrows show generation order, not every conditioning connection or particle transport. Training uses reference-derived upstream quantities; sampling uses generated upstream quantities.}"
+    },
+    {
+      "purpose": "Introduce starred reference notation explicitly",
+      "old": "For a reference shower, let $B_\\ell^\\star=",
+      "new": "A star denotes a reference-derived quantity. For a reference shower, let $B_\\ell^\\star="
+    },
+    {
+      "purpose": "Qualify fraction floors mathematically",
+      "old": "they are numerical conventions, not detector thresholds.",
+      "new": "they are numerical conventions, not detector thresholds. Fractions below the floor are modified before centering, so these targets do not preserve arbitrarily small shares exactly."
+    },
+    {
+      "purpose": "Explain why attention is used without a causal claim",
+      "old": "Its context includes $h_c$, the total $T$, layer identity, the activity mask, and a sinusoidal flow-time encoding.",
+      "new": "Its context includes $h_c$, the total $T$, layer identity, the activity mask, and a sinusoidal flow-time encoding. Bidirectional attention lets each layer use information from all other layers; it is a statistical dependency, not backward particle transport."
+    },
+    {
+      "purpose": "Disambiguate shared design versus shared parameters",
+      "old": "The channel-flow velocity network shares the support network's graph and layer-context design",
+      "new": "The channel-flow velocity network follows the support network's graph and layer-context design"
+    },
+    {
+      "purpose": "Calibrate main-text certainty to available provenance",
+      "old": "Training-data gradient norms set the weights $w_j$. Response, layer-profile, and count weights hit the lower clipping bound; the visibility weight hit the upper bound.",
+      "new": "The retained calibration proposal uses training-data gradient norms to set $w_j$. In that proposal, response, layer-profile, and count weights hit the lower clipping bound; the visibility weight hit the upper bound."
+    },
+    {
+      "purpose": "Explain why frozen intermediate encoder matters",
+      "old": "Each stage inherited the preceding checkpoint.",
+      "new": "Each stage inherited the preceding checkpoint; freezing the encoder kept the inputs to previously trained heads fixed during intermediate stages."
+    },
+    {
+      "purpose": "Translate gradient accumulation",
+      "old": "batches of six accumulated over four steps,",
+      "new": "batches of six accumulated over four steps (24 events per optimizer update),"
+    },
+    {
+      "purpose": "Make connected-component observable accessible",
+      "old": "These support metrics condition on nonempty readout, leaving 9,907 reference and 9,858 generated showers.",
+      "new": "A component is a group of occupied channels joined by paths using only occupied channels. These support metrics condition on nonempty readout, leaving 9,907 reference and 9,858 generated showers. The two nonempty subsets need not contain the same incident conditions."
+    },
+    {
+      "purpose": "Explain graph confounding with a small algebraic example",
+      "old": "Consecutive empty layers constitute one separation, so $G$ alone specifies neither $R$ nor lateral fragmentation.",
+      "new": "Consecutive empty layers constitute one separation, so $G$ alone specifies neither $R$ nor lateral fragmentation. For example, occupied layers $1,2,5$ have span five, $G=2$, and $R=2$, whereas $1,3,5$ has the same span and $G$ but $R=3$."
+    },
+    {
+      "purpose": "Explain C2ST failure scale rather than treating AUROC as percent fidelity",
+      "old": "Its high-level score exceeds the predeclared maximum of 0.65.",
+      "new": "Its high-level score exceeds the predeclared maximum of 0.65. This is a classifier discrimination score, not a percentage of physically incorrect showers."
+    },
+    {
+      "purpose": "Make the support figure self-contained about uncertainty",
+      "old": "components use the same readout graph as the generator.}",
+      "new": "components use the same readout graph as the generator. Uncertainty intervals for these means are unavailable.}"
+    },
+    {
+      "purpose": "Limit interpretation of a mean energy profile",
+      "old": "These event averages do not resolve individual interior gaps.}",
+      "new": "These event averages expose section-level compensation but do not resolve individual interior gaps.}"
+    },
+    {
+      "purpose": "Avoid implying independence between gaps and graph effects",
+      "old": "The larger component count can therefore include both longitudinal separations and fragmentation within occupied layers.",
+      "new": "The larger component count can therefore include both longitudinal separations and disconnected regions within an occupied run."
+    },
+    {
+      "purpose": "Prioritize a specific evidence-resolving next step",
+      "old": "Within that scope, it demonstrates the value of resolving longitudinal support when assessing a generator whose mean response and occupancy appear similar to the reference.",
+      "new": "Within that scope, it demonstrates the value of resolving longitudinal support when assessing a generator whose mean response and occupancy appear similar to the reference. Event-level run counts with paired uncertainty estimates and threshold scans are the next tests needed to establish the robustness and origin of this pattern."
+    },
+    {
+      "purpose": "Tighten repetition and avoid causal implication in next-step wording",
+      "old": "Agreement in mean deposited energy and occupancy can conceal differences in the spatial structure of generated calorimeter showers. We investigate this problem with a hierarchical model of single-neutron showers in a 6,790-channel Zero-Degree Calorimeter readout, using raw deposited energies without a threshold.",
+      "new": "Mean deposited energy and occupancy can agree while spatial shower structure differs. We study a hierarchical single-neutron generator for a 6,790-channel Zero-Degree Calorimeter using raw deposited energies without a threshold."
+    },
+    {
+      "purpose": "Tighten repetition and avoid causal implication in next-step wording",
+      "old": "Conditioned on the incident four-vector, the model generates a total readout deposit, distributes it among active layers, and selects and energizes channels within each layer.",
+      "new": "Conditioned on the incident four-vector, it samples total deposit, active layers, channel support, and energy shares."
+    },
+    {
+      "purpose": "Tighten repetition and avoid causal implication in next-step wording",
+      "old": "Detailed particle transport provides the reference description of calorimeter showers, but producing large simulated samples can be computationally costly. A useful surrogate must reproduce the aspects of the readout that matter for detector studies, not only its mean deposited energy.",
+      "new": "Detailed particle transport provides the reference calorimeter showers but can be computationally costly. A useful surrogate must reproduce readout properties relevant to detector studies beyond mean deposited energy."
+    },
+    {
+      "purpose": "Tighten repetition and avoid causal implication in next-step wording",
+      "old": "The contribution is a concrete diagnostic case: near-agreement in marginal means can coexist with a different organization of occupied layers. The architecture supplies the test case, rather than a demonstrated improvement over competing generators.",
+      "new": "This is a diagnostic case study; no architecture-superiority comparison is performed."
+    },
+    {
+      "purpose": "Tighten repetition and avoid causal implication in next-step wording",
+      "old": "The centroid representation defines the spatial information available to both the model and the graph diagnostic.",
+      "new": "These centroids define the spatial representation for the model and connectivity diagnostic."
+    },
+    {
+      "purpose": "Tighten repetition and avoid causal implication in next-step wording",
+      "old": "The comparison tests distributions over this bank, not reproduction of a particular Geant4 shower; one draw per condition cannot determine the full conditional shower distribution.",
+      "new": "One draw per condition tests bank-level distributions, not the full shower distribution at a fixed condition."
+    },
+    {
+      "purpose": "Tighten repetition and avoid causal implication in next-step wording",
+      "old": "Event-level run counts with paired uncertainty estimates and threshold scans are the next tests needed to establish the robustness and origin of this pattern.",
+      "new": "Event-level run counts, paired uncertainty estimates, and threshold scans would clarify its robustness and interpretation."
+    }
+  ],
+  "updated_utc": "2026-09-30T20:56:34.600686+00:00",
+  "events": [
+    {
+      "utc": "2026-09-30T15:59:32.057826+00:00",
+      "summary": "Baseline source and all 14 rendered pages read completely; input hashes and historical release/visual records snapshotted. Editorial corrections planned; no equations, results, data or guards changed."
+    },
+    {
+      "utc": "2026-09-30T15:59:32.099116+00:00",
+      "summary": "Applied 21 reader-oriented prose/caption corrections. All 14 equation blocks and all four numerical tables remain identical. Current-source provenance pointer updated with preserved historical snapshot. Full build pending.",
+      "command": "python audit/fresh_reader_revision_20260930.py edit",
+      "output_sha256": {
+        "main.tex": "d9c94d146dcc6d8ba055fef23f2ef8451bf65cbd0c19da9117141bf1ab0e59d0",
+        "audit/finalization_20260930.json": "1ee0267a2e9e8c7a643ad99ea1ef8d0ec9911e95e3fc8925fe8338879f1cd1cb"
+      }
+    },
+    {
+      "utc": "2026-09-30T16:00:21.096381+00:00",
+      "summary": "QA88 failed its unchanged 14-page maximum: the first copyedit compiled to 15 pages. All preceding evidence/source checks completed. This PDF is provisional and not approved for delivery; fix prose/layout rather than relax the guard.",
+      "command": "python scripts/full_manuscript_qa.py --iteration 88"
+    },
+    {
+      "utc": "2026-09-30T16:01:15.095165+00:00",
+      "summary": "QA88 retained as failed page-count attempt. Tightened seven passages, including abstract and repeated introduction scope; replaced origin with interpretation in conclusion. No guard, equation, result, figure, or scientific threshold changed.",
+      "command": "python audit/tighten_fresh_reader_20260930.py"
+    },
+    {
+      "utc": "2026-09-30T16:01:52.160233+00:00",
+      "summary": "QA89 also failed the unchanged page-count guard at 15 pages. Retained attempt; investigate figure placement and unused page space before another full QA.",
+      "command": "python scripts/full_manuscript_qa.py --iteration 89"
+    },
+    {
+      "utc": "2026-09-30T16:02:34.381454+00:00",
+      "summary": "Pagination diagnosis: an extra caption line made Figure 3 move to a new page and displaced Figure 4. Shortened both captions while retaining populations, axes, purpose and uncertainty caveat; kept figure size and all guards unchanged.",
+      "command": "apply_patch main.tex captions; update current-source hash"
+    },
+    {
+      "utc": "2026-09-30T16:05:25.060471+00:00",
+      "summary": "Created complete section-by-section assessment, fourteen-equation purpose map, four-figure/four-table review and prioritized unresolved scientific work. Read complete baseline source, all baseline pages and complete first-revision PDF text (retrieved truncated middle separately).",
+      "command": "apply_patch audit/fresh_reader_assessment_20260930.md"
+    },
+    {
+      "utc": "2026-09-30T16:05:47.355207+00:00",
+      "summary": "QA90 PASS: 14 pages, all 16 check groups. PDF SHA256 89b54c6abc9345f7278efdb397b3961ffab81f9b1840bacc90fe44d75b1c05a3. Guard script hash unchanged from baseline; QA88/89 page-limit failures preserved. Direct final-page reading underway.",
+      "command": "python scripts/full_manuscript_qa.py --iteration 90"
+    },
+    {
+      "utc": "2026-09-30T16:07:05.557461+00:00",
+      "summary": "Completed direct reading and visual inspection of all fourteen QA90 pages. Last copyedit specifies effective batch size rather than asserting every update contains 24 events; channel-target prose now explicitly says floored shares. README/STATUS point to fresh-reader assessment. Equations and numerical tables unchanged.",
+      "command": "apply_patch main.tex README.md STATUS.md; update current-source hash"
+    },
+    {
+      "utc": "2026-09-30T20:53:37.770509+00:00",
+      "summary": "Completed sixth full reading: final QA91 PDF text, all pages 1-14 including references. QA91 PASS (16 groups, 14 pages). Built-in editor compile requested after user continued: FAIL with platform error Unable to find standard directories for platform; no source-line diagnostic. Editor remains open; no separate build/export performed after the new user instruction. Final pages 6 and 7 directly inspected; all other final page hashes equal fully reviewed QA90 pages.",
+      "command": "compile_latex_document main.tex; pdftotext/read final text; view_image QA91 pages 6,7"
+    },
+    {
+      "utc": "2026-09-30T20:56:34.600686+00:00",
+      "summary": "Six complete readings and twelve focused checks finished. QA90/91 PASS (16 groups); final 14-page PDF and source/figures visually bound; six existing binding guard tests PASS. All equations/tables, data and guards unchanged. Native editor compiler platform error remains. No new raw/test access, training, publication or separate build after latest user instruction.",
+      "command": "python audit/finish_fresh_reader_20260930.py"
+    }
+  ],
+  "current_source_sha256": "26915b58d2798b675aae581bb5e054c78a35c7ff6bcf011af28b0151be4b53a5",
+  "full_readings": [
+    {
+      "number": 1,
+      "artifact": "Baseline main.tex, all lines 1-486 plus references.bib",
+      "focus": "Fresh-reader argument and definitions",
+      "result": "Identified missing first-use explanations and provenance certainty mismatch."
+    },
+    {
+      "number": 2,
+      "artifact": "Baseline QA87 pages 1-14",
+      "focus": "Every-page visual and prose reading",
+      "result": "Verified original colors; identified caption-purpose improvements; no baseline visual defect."
+    },
+    {
+      "number": 3,
+      "artifact": "First-revision QA88 full PDF text; middle pages 6-9 retrieved separately after output truncation",
+      "focus": "End-to-end explanatory logic after edits",
+      "result": "Improved definitions; tightened verbosity and next-step causal wording. QA page-count failure retained."
+    },
+    {
+      "number": 4,
+      "artifact": "QA90 pages 1-14",
+      "focus": "Complete rendered reading after pagination fix",
+      "result": "No visual defects; refined nominal effective batch and floored-share language."
+    },
+    {
+      "number": 5,
+      "artifact": "Final main.tex lines 1-486; bibliography unchanged from fully read baseline",
+      "focus": "Complete source reading against section purposes and inference limits",
+      "result": "No new actionable editorial inconsistency."
+    },
+    {
+      "number": 6,
+      "artifact": "QA91 PDF text pages 1-14, with final changed pages 6 and 7 inspected",
+      "focus": "Complete final reader pass including declarations, appendices and references",
+      "result": "No new actionable editorial inconsistency; scientific gaps remain explicitly unresolved."
+    }
+  ],
+  "focused_checks": [
+    {
+      "topic": "Section purpose",
+      "evidence": "Every section/subsection mapped in fresh_reader_assessment_20260930.md",
+      "result": "Descriptive case study succeeds; full reproducibility and validation incomplete."
+    },
+    {
+      "topic": "First-use terminology",
+      "evidence": "Support, occupancy, ganging, component, reference-star definitions",
+      "result": "Clarified in source."
+    },
+    {
+      "topic": "Architecture and physical meaning",
+      "evidence": "Generation order, conditional context, attention, graph and decoder prose",
+      "result": "Distinguished learned dependencies from particle transport."
+    },
+    {
+      "topic": "All fourteen equations",
+      "evidence": "Equation-purpose map and exact block comparison",
+      "result": "Equations unchanged; floor qualification corrected."
+    },
+    {
+      "topic": "Dimensions and exact/numerical distinctions",
+      "evidence": "GeV/mm, sampled-budget identities, midpoint time update, batch-dependent residual criterion",
+      "result": "No new numerical/physical claim."
+    },
+    {
+      "topic": "Populations and estimands",
+      "evidence": "10,000 conditions; 9,907/9,858 nonempty subsets; pilot/canonical partitions",
+      "result": "Nonempty selection and fixed-condition limits explicit."
+    },
+    {
+      "topic": "All four figures",
+      "evidence": "Direct baseline/final raster inspection and caption review",
+      "result": "Purpose and uncertainty limits clarified; pixels unchanged."
+    },
+    {
+      "topic": "All four tables and reported arithmetic",
+      "evidence": "QA90/91 full evidence checks and exact table-block comparison",
+      "result": "Preserved and verified against retained aggregates."
+    },
+    {
+      "topic": "Graph confounding",
+      "evidence": "G/R example, m>=R, component interpretation",
+      "result": "No unsupported independent lateral-fragmentation or causal claim."
+    },
+    {
+      "topic": "Historical provenance",
+      "evidence": "Calibration proposal, source/config/checkpoint hashes, runtime caveats and test-use disclosure",
+      "result": "Main-text certainty aligned with appendix."
+    },
+    {
+      "topic": "Literature scope",
+      "evidence": [
+        "https://arxiv.org/abs/2210.02747",
+        "https://proceedings.mlr.press/v97/kool19a.html",
+        "https://arxiv.org/abs/2410.21611",
+        "https://arxiv.org/abs/2608.12795"
+      ],
+      "result": "Primary-source spot checks; no exhaustive new literature audit claimed."
+    },
+    {
+      "topic": "Conclusion and presentation",
+      "evidence": "Complete final readings, QA91 renders and unchanged guard checks",
+      "result": "Conclusion bounded; layout passes; native editor platform error disclosed."
+    }
+  ],
+  "qa": {
+    "successful_iterations": [
+      90,
+      91
+    ],
+    "failed_iterations": [
+      88,
+      89
+    ],
+    "check_groups": 16,
+    "pages": 14,
+    "binding_guard_tests_passed": 6,
+    "exact_release_binding": "pass",
+    "native_editor_compilation": {
+      "result": "platform_error",
+      "message": "Unable to find standard directories for platform",
+      "source_unchanged": true,
+      "editor_kept_open": true
+    }
+  },
+  "final_commands": [
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-m",
+        "unittest",
+        "test_qa_guards.ReleaseBindingTests.test_current_exact_binding",
+        "test_qa_guards.ReleaseBindingTests.test_changed_source_rejected",
+        "test_qa_guards.ReleaseBindingTests.test_changed_pdf_rejected",
+        "test_qa_guards.ReleaseBindingTests.test_changed_figure_manifest_rejected",
+        "test_qa_guards.ReleaseBindingTests.test_partial_visual_review_rejected",
+        "test_qa_guards.ReleaseBindingTests.test_failed_latest_suite_rejected"
+      ],
+      "cwd": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\scripts",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "scripts/write_build_audit.py"
+      ],
+      "cwd": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper",
+      "returncode": 0,
+      "stdout": "Release audit: exact source/PDF/figure and every-page visual binding PASS\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'STATUS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'logs.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'main.tex', LF will be replaced by CRLF the next time Git touches it\n"
+    }
+  ],
+  "operations_index": {
+    "initial_reads": [
+      "Get-Content docs/IMPLEMENTATION_GUIDE.md (complete, missing output ranges 440..620 and 618..672 recovered)",
+      "Get-Content docs/FOCUSED_OPERATING_RULES.md; Get-Content docs/GRAFT_SETUP.md; git status --short",
+      "graft check",
+      "graft ask \"manuscript paper source figures build review scientific results\" --source",
+      "Read project manuscript_finalization, prefinal_review and mentor_manuscript audit Markdown",
+      "Read PDF SKILL.md; Get-Item both candidate paper paths; attempted Get-Content paper AGENTS.md",
+      "Get-ChildItem paper root; git status --short; read README and final_build_audit",
+      "Read paper build.ps1, STATUS, finalization and visual audits; rg symbol/assertion locations in QA and release scripts",
+      "Read full main.tex and references.bib; read mathematical/model exposition audits",
+      "Get-Command python,pdflatex,pdftoppm; python runtime/library version probe",
+      "rg --files runtime for mark_artifact_operation_started.mjs; read exhibition/visual_layout.json"
+    ],
+    "render_inspections": {
+      "87": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "90": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "91": [
+        6,
+        7
+      ]
+    },
+    "authoring": [
+      "PDF mark_artifact_operation_started.mjs --operation-kind edit --expected-output-count 1 --output-format pdf (exit 0)",
+      "apply_patch and python audit/fresh_reader_revision_20260930.py edit",
+      "apply_patch and python audit/tighten_fresh_reader_20260930.py",
+      "apply_patch concise figure captions",
+      "apply_patch final floor/batch wording; README/STATUS pointers",
+      "apply_patch fresh_reader_assessment_20260930.md",
+      "Update finalization current-source hash with prior exact record snapshotted"
+    ],
+    "full_build_commands": "Exact argv, outputs and return codes preserved in audit/iterations/iteration_88.json through iteration_91.json; builds preceded latest editor-only user instruction.",
+    "text_reads": [
+      "pdftotext -layout output/fast_mc_zdc_manuscript.pdf audit/fresh_reader_first_revision.txt",
+      "pdftotext -layout output/fast_mc_zdc_manuscript.pdf audit/fresh_reader_second_revision.txt",
+      "pdftotext -layout output/fast_mc_zdc_manuscript.pdf audit/fresh_reader_final_text.txt",
+      "Get-Content of full first-revision text plus separately retrieved pages 6-9; final source read 1-242 and 243-486; final PDF text read pages 1-7 then 8-14"
+    ],
+    "app_tools": [
+      "load_workspace_dependencies",
+      "open_in_codex existing main.tex (queued)",
+      "compile_latex_document existing main.tex (platform error)"
+    ],
+    "web_tools": "Primary URLs in external_checks; initial search had no matching return for two arXiv queries, corrected by direct open.",
+    "logging": "Each meaningful edit, failure, correction and verification appended using audit/fresh_reader_revision_20260930.py event to both logs.md files."
+  },
+  "graft": {
+    "freshness": "reported OK but graph advertised legacy matches; not relied upon",
+    "query_count": 1,
+    "reported_tokens_saved": 26664
+  },
+  "unchanged": {
+    "equations": 14,
+    "numerical_tables": 4,
+    "guard_script": "9cd8de5f2e9597968e4b5a3f1619e25b2a11dcf9fcfd4b7c676ecdcb5a67ef8b",
+    "experiment_data_and_settings": true,
+    "figure_builder": "3f37e00c1c784c363baeea0bc6e7096eea37ec2ed03d1b698aee12d1f5a30c51"
+  },
+  "output_sha256": {
+    "main.tex": "26915b58d2798b675aae581bb5e054c78a35c7ff6bcf011af28b0151be4b53a5",
+    "output/fast_mc_zdc_manuscript.pdf": "c5d166fec9118bf1bafcebc0704edf33da4b554eb4632e024a2fe507b06504a7",
+    "README.md": "1918103be4114fe60bb01d847453e320ef8e286080310679b6ffdd023b5fb299",
+    "STATUS.md": "7385fdd31d393afee19dd5870da646298a8a3518cd20015ba4587a51aecfc06f",
+    "audit/fresh_reader_assessment_20260930.md": "c68be7805fab321effdefdee4357a27ff9a06227cc62ce0fca664dec19123097",
+    "audit/final_build_audit.json": "1ab6181c9922d43db8c13f5f6fedaad9a6914647359c33b963911a8a1b343383",
+    "audit/visual_review_fresh_reader_20260930.json": "36e69839c165a6ddbaef319cef2d07ef9d70808b971574b0ad3d35e6cdec2960",
+    "audit/iterations/iteration_88.json": "eb2cb87af4a0202ab117481bf1874358901795c86c47f0ce984810bbcbae0ac6",
+    "audit/iterations/iteration_89.json": "084f090c1dda81584802f614eec9c007ffe5ddd75b74b04cbb2f988d90aa0187",
+    "audit/iterations/iteration_90.json": "0da8208e84b99bc2f1934a1df3a85571d6f472ab68e6ffbe8c9cf10b949ba5e1",
+    "audit/iterations/iteration_91.json": "a472e508344c851000509e45f22b77fe069e9ae0d714c016b2ebc2316af4aa75",
+    "audit/fresh_reader_revision_20260930.py": "bf9273d546912c808ae371098fdff0483dc526c56dc56abe535f27c04e8ad190",
+    "audit/tighten_fresh_reader_20260930.py": "a1667d2731f6ae34db3609c8abed2ed956922e34f6dc918345de86608057a91e",
+    "audit/finish_fresh_reader_20260930.py": "11221c8fb7be25c991e7f1a8e41e180634a2931ebc26f0c80428356853cc9a12"
+  },
+  "operating_rule_sha256": {
+    "AGENTS.md": "322e22509e5a47e3f45740876620b4307383e24f20f8c50779c75b699235a6ce",
+    "docs/IMPLEMENTATION_GUIDE.md": "ccbd2bad099e56b605b823fce65054b76b09f650765b1cea0cbe9bb442a21b07",
+    "docs/FOCUSED_OPERATING_RULES.md": "1a3efe90c6a523e63e484dfc986824ba72c612dc102d189a8a518c7f2cb73dae",
+    "docs/GRAFT_SETUP.md": "0c7b2f196170fb03b4a89ae3d617f626fe45dd2f3a27919715bf841abc2ec172"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "series": "physics_exposition_20261001",
+  "predecessor": "audit/iterations/iteration_99.json",
+  "predecessor_sha256": "13931d5bd1bc25586f31f0a2d967583f5dc7512efc3d5788df34ef0eb063d7d7",
+  "reason": "New source revision after the closed historical QA series; all historical attempts retained."
+}

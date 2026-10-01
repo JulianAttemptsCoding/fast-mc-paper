@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "reviewed_utc": "2026-09-29T20:56:12.237632+00:00",
+  "method": "Direct original-resolution inspection of final iteration-71 pages 1, 5, 6, 7, 8 and 11; remaining pages 2, 3, 4, 9 and 10 have byte-identical render hashes to directly inspected iteration-69 pages. Checked every equation, four figures, table, captions, paragraph breaks, section transitions, declarations, references and page margins.",
+  "pdf_sha256": "6175d57689a087ef216623ab262a79470bd9cf31d98a387a3dec206577086d60",
+  "page_sha256": {
+    "1": "aa79601e6976301503b96ec1672e9ccf70e063e4234e45eb1e5d1564de10ac36",
+    "2": "eb718c0b3183b4731a1daede686fbfe0e879552a2400fdda9e99d12ffa3abc5a",
+    "3": "43746e404d91380c7ac859a9ecf33bdd66b29ecd085805b6c8a9df15e813ff02",
+    "4": "e37a3269f05b61bbb194f70e44eb10164572321b64d09ace2687d909a3caff50",
+    "5": "ac1e173f645ede01d807acf94c1a938a3105d9d3c94fbe0e239a232b62b810a8",
+    "6": "240e8249aafc69108198d5fb4e1ea667b68ee06b2f85a71c44b0341c8b5b6519",
+    "7": "9e00ab3a09729f45b48196ae192ceab0833fbf76044944c0d6f5ae83a068599e",
+    "8": "99465811ee2a232b88bb5a49160d5c764d1379ea6025c1595e1809f3caf909eb",
+    "9": "b3582b2763b28f2846349fd5df9128d9eb6ba8434504d006b5a6ea2e5b22b829",
+    "10": "1156d36045c2ad9de5619c4afa3b5696bcf8e6babdd40516a5ea6447cbae4c9e",
+    "11": "b88d9faf2467652777d216d02d8362f335dcea102b6bf20738690bc7545a4af1"
+  },
+  "changed_pages_directly_inspected": [
+    1,
+    5,
+    6,
+    7,
+    8,
+    11
+  ],
+  "unchanged_pages_bound_to_iteration_69": [
+    2,
+    3,
+    4,
+    9,
+    10
+  ],
+  "observations": {
+    "page_1": "Abstract and introduction legible; revised wording and citations intact.",
+    "page_5": "Flow equations, graph message rule, top-K selector, and channel target legible; S* and K* defined before Eq. 11.",
+    "page_6": "Decoder, training loss, staged protocol and diagnostics opening legible.",
+    "page_7": "Diagnostics, graph-run confound, C2ST limitation and Results opening legible; Table 1 follows on next page.",
+    "page_8": "Table and support-summary figure legible; rounded-source difference note and conditional denominators clear.",
+    "page_11": "Declarations and all 18 references legible.",
+    "unchanged": "Geometry/schematic and energy figure on pages 2, 3 and 9 previously inspected at original resolution; pages 4 and 10 also hash-identical."
+  },
+  "layout_failures": [],
+  "scientific_scope": "Visual and document QA only; no physics validation."
+}

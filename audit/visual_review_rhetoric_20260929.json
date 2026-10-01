@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "reviewed_utc": "2026-09-30T00:20:53.868281+00:00",
+  "method": "Direct original-resolution inspection of changed final iteration-75 page 5; pages 1--4 and 6--12 have byte-identical render hashes to iteration 73, when all twelve pages were directly inspected. Checked exact equation/figure/table/caption/pagination and bibliography rendering.",
+  "pdf_sha256": "6b6dbcae67b27310fd49a8acd44d6bbab76c5ad7d7372db068e2da32531b1eb5",
+  "page_sha256": {
+    "1": "21922fb3e07ccd65dd8d379eedd62fbedc397b05b687cb0c36372d256f1a234b",
+    "2": "3cdc0d389194320402aec80f668167c9b04ef983e3366708c2d9cec03e8319c4",
+    "3": "d45b823ea251e1bd6f09f78921e83efeb30ea0a30c3bc747746ad903bbb7cb41",
+    "4": "01151212f72af7033cadc594ea180d76db5975b734ee9d7c4ed5a087acc4cc2e",
+    "5": "aee10a937a3469ae6d2cb0c46a5e8e3ea1cf4cc9c857daffa701990d025c0d99",
+    "6": "c753edb05607ab4d13ba41bdd27f342e7d8aea9daf19182daff34b4a4606c6a7",
+    "7": "cff43f9f0cb93638f9fff756e16ce34239d188a988054fff9c8b6e93be1e9d6b",
+    "8": "cd8795f5b460c423ab3dd8f3206c5133b4cf53da4c3f3aa51d1619a175748c55",
+    "9": "d9dc2cfe4640986f8041054bf0003ecb42bc148ef65d77aefc942e28b06d99af",
+    "10": "cc737ee331c37e3c23ab02588c0639bb5d691618df7382ce1d281774216743aa",
+    "11": "8b1785562a67df6297d707a5ae130c0d4da944f5f946f649a9b6aace1d6e8ee8",
+    "12": "85464d3485d1f1fa65e778e310dd488829241a9a4cdddd38da39974a89c07466"
+  },
+  "pages_directly_inspected": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "observations": {
+    "pages_1_3": "Title, abstract, literature framing, raw target, frozen geometry and generator schematic are legible. Figure 1 and Figure 2 labels and captions can be read; no clipping.",
+    "pages_4_6": "Response, profile, flow, graph, selector, decoder and training equations are legible. The second-flow target and its explanation begin together on page 6. Training subsection remains coherent.",
+    "page_7": "Evaluation definitions, graph-run lower bound and classifier split caveat remain together; Results begins on page 8.",
+    "pages_8_9": "Table 1, energy profile and support figure legible. Denominators, units and uncertainty limitations are visible in captions. The channel-support paragraph ends before the page turn.",
+    "pages_10_12": "Graph confound, classifier/numerical checks, Discussion, Conclusion, declarations and all 18 references are legible. No orphaned heading, text overlap or clipping.",
+    "page_5_final": "Corrected top-K sentence reads grammatically and remains on page 5 with Eq. 10. No clipping or overlap."
+  },
+  "layout_failures": [],
+  "scientific_scope": "Visual and document QA only; no physics validation.",
+  "changed_pages_directly_inspected": [
+    5
+  ],
+  "unchanged_pages_bound_to_iteration_73": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ]
+}

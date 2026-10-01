@@ -119,3 +119,215 @@ Reframed as close mean counts with fragmented support; corrected pilot size, gap
 - 2026-09-23: Final v0.11.1 checks passed for iteration 67: seven release-guard tests, JSON parsing, git whitespace check, and exact source/PDF/figure/every-page visual binding via scripts/write_build_audit.py. The guard test's deliberate native-build failure preserved the deliverable PDF and is a synthetic software check, not physics validation. Final PDF SHA-256 is 51749562918655f4a2305a73f908825c9e447bfa9e48f65b74fb9d5f53a1af81. No raw or nominal test events were read, and no training or frozen configuration changed. GitHub publication pending.
 
 - 2026-09-23: Published v0.11.1 reader-oriented model exposition and 10-page PDF in commit 8236556cfa4a1724c273e4dd280d67c91f61f902 on origin/main. git push origin main returned 0; independent git ls-remote origin refs/heads/main matched the local commit. This publication log was appended after the immutable release audit and changes no release-bound source, figure, or PDF byte.
+
+- [2026-09-29T20:38:37.344124+00:00] MENTOR MANUSCRIPT FINALIZATION START: read binding guide and focused rules; identified active fast-mc-paper v0.11.1, audited source/report/figures/QA and pre-2024-11 primary literature. Input hashes and command inventory in audit/mentor_finalization_20260929.json. Initial audit-writing attempt failed at JavaScript parsing and made no change; corrected. No training or event data access.
+
+- [2026-09-29T20:40:04.481309+00:00] MENTOR MANUSCRIPT SOURCE REVISION: clarified method taxonomy, paired conditions, side-specific nonempty denominators, occupied-layer-run graph confound and staged training; added a report-bound four-panel support figure to builder and tightened figure QA inventory. Intermediate source hashes and decisions in audit/mentor_finalization_20260929.json. Build pending; no evidence values or scientific thresholds changed.
+
+- [2026-09-29T20:43:03.843416+00:00] MENTOR MANUSCRIPT RESTART 1: complete claim/data-role reread; build and QA iteration 68 passed (11 pages, four figures, PDF SHA-256 1bbfd37c56826401448f40299ee046dd64763642f2ed778905e505dac7b75007). All-page contact sheet and new figure inspected; no clipping. Results transition flagged for layout pass. Evidence in audit/mentor_finalization_20260929.json.
+
+- [2026-09-29T20:44:32.504147+00:00] MENTOR MANUSCRIPT RESTART 2: equation-by-equation source comparison to recorded commit; added explicit tau=1 for the hard Gumbel top-K selector. First source-query JS syntax attempt failed before any nested command and was corrected. No model/config/data/threshold change. Evidence in audit/mentor_finalization_20260929.json.
+
+- [2026-09-29T20:46:41.613558+00:00] MENTOR MANUSCRIPT RESTART 3: pre-2024-11 primary-literature reader audit found and corrected zero-momentum condition equation (source clamps denominator to 1e-12 GeV), added mass, W1/AUROC and teacher-forced selection explanations. Literature audit now distinguishes pre-cutoff versions from later context. Full rebuild pending. No data/model/config/threshold change.
+
+- [2026-09-29T20:48:30.561834+00:00] MENTOR MANUSCRIPT RESTART 4: QA iteration 69 passed (11 pages); direct inspection covered every page, four figures and Table 1. Corrected Eq.11 symbol-definition order across a page turn. No plot values or claims changed. Rebuild pending after this source edit.
+
+- [2026-09-29T20:53:43.055640+00:00] MENTOR MANUSCRIPT RESTART 5: sentence/word pass completed across all sections, equations, table, figures and declarations. Corrected abstract wording, clarified that table differences use unrounded values, updated AI-use statement and v0.12.0 metadata. Exact main.tex SHA-256 dfd14e1c37a909b953822e54bbd5d2e64128411f4dc525551bcec29e95f91ed4. Failed attempts and source-weight limitation recorded in audit/mentor_finalization_20260929.json. Final build pending.
+
+- [2026-09-29T20:54:35.185244+00:00] MENTOR QA FAILURE 70: full suite stopped on stale literal abstract wording assertion after intentional clarity edit; report retained in audit/iterations/iteration_70. Updated assertion to require the new uncertainty wording, preserving the guard's meaning. Rebuild/QA pending.
+
+- [2026-09-29T20:56:12.265764+00:00] MENTOR MANUSCRIPT RESTART 6: exact-output audit of QA iteration 71 passed (11 pages, 14 check groups, PDF SHA-256 6175d57689a087ef216623ab262a79470bd9cf31d98a387a3dec206577086d60). Directly inspected changed pages 1,5,6,7,8,11 at original resolution; pages 2,3,4,9,10 byte-identical to inspected iteration 69. Four figures, Table 1, equations and references legible; no clipping. Recorded exact page hashes in audit/visual_review_20260929.json and six-pass audit twin. This is document QA, not physics validation.
+
+- [2026-09-29T20:56:56.463254+00:00] MENTOR MANUSCRIPT FINAL HANDOFF: seven release-guard tests passed; exact source/PDF/figure/every-page visual release binding passed. v0.12.0 final PDF SHA-256 6175d57689a087ef216623ab262a79470bd9cf31d98a387a3dec206577086d60; 11 pages. Separate active paper repository and evidence hashes recorded in audit/mentor_manuscript_20260929.json. QA failure 70 retained; corrected iteration 71 passed. No raw/test event or DiCOS access.
+
+- [2026-09-29T23:55:12.188616+00:00] RHETORIC OVERHAUL START: read binding guide, pasted comparison and four user-supplied PDFs as writing references; input hashes and source observations in audit/rhetoric_revision_20260929.json. PDF edit-operation marker completed. First read-only PDF extraction failed on cp1252 minus sign and was retried with UTF-8. No model/data/config/test access or scientific claim change.
+
+- [2026-09-29T23:56:33.842792+00:00] RHETORIC PASS 1: rewrote abstract, Introduction, target, geometry, graph and population prose around the physical comparison. No equation, evidence value, raw data or config changed. main.tex SHA-256 0f2f19c1e683e34a79bcc101885626ce912fa4055047d9c593b6cb19037b1931. Audit twin updated; build pending.
+
+- [2026-09-29T23:58:31.430105+00:00] RHETORIC PASSES 2–3: rewrote generator overview, schematic caption and prose around response, flows, graph, selector, decoder, training and checkpoint. Math expressions/data unchanged; source-level diff reviewed. main.tex SHA-256 78ea541608ac46e50c927e7aa7c1921abd411029d441672dc1cb710dbb17dde4. Full QA pending.
+
+- [2026-09-29T23:59:46.195336+00:00] RHETORIC PASSES 4–5: reorganized evaluation definitions and results by physical scale, reusing the exact gap equation, Table 1 and figure blocks. All-event and side-specific nonempty denominators explicit. main.tex SHA-256 6b717d6592b9f6539d917d7bd89ceb1dd9dc12d2e25a46cd642718e18278e33b; build/QA pending.
+
+- [2026-09-30T00:00:45.986482+00:00] RHETORIC PASSES 6–7: revised Discussion, Conclusion, availability statement and three result captions. Causal hypotheses, threshold/graph dependence and lack of end-to-end timing remain explicit. main.tex SHA-256 a3bc898501bf497d6f4881d085ea087bf83f12f70bf66ef1d7add95419fba812. Build pending.
+
+- [2026-09-30T00:04:00.000193+00:00] RHETORIC PASS 8: overclaim and timing audit found report total evaluator time 0.3441926269 s/event across 10,000 events, including analysis stages; manuscript now distinguishes it from generation latency. Report SHA-256 0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5; main.tex SHA-256 c8f8b4e2504fa9110b12f61d1ae57656f731b1daa87804c679890524193fbb03. No speedup claim made.
+
+- [2026-09-30T00:06:18.953901+00:00] RHETORIC PASSES 9–10: eight aggregate evidence checks and eleven prose number/role assertions passed. Sentence pass clarified Bernoulli logit and five edge inputs, split speed-benchmark requirement, and standardized spelling. main.tex SHA-256 939ff4792ecb74e80ed9eadcf4fd87b180942d4d086acfa038e0c53891a7d22b. Formatting review next.
+
+2026-09-29 manuscript v0.13 rhetoric/format phase: exact-match source and release edits, three 12-page LaTeX builds (exit 0, no overfull/underfull/undefined log findings), 110-dpi page renders and direct figure/table/method inspection. Read-only text assertion initially failed on two stale v0.12 phrases; corrected equivalent assertions and reran PASS. Current main.tex SHA-256 5191c9c3a40519d6ae92e0d840af660f2ceaab163696398e6b3c79c7a4cd3d56. Source audit twin audit/rhetoric_revision_20260929.{json,md} updated; full exact-PDF QA pending.
+
+2026-09-29 manuscript v0.13 QA: iteration 72 FAIL (stale reader-explanation exact wording), assertion corrected without changing its meaning; validate_repository PASS. Full QA iteration 73 PASS, 12 pages, PDF SHA-256 440bc3a55cc4d87523e0b81718eac129afaab33f4d4e49ba9c078c779421e795. Directly inspected all twelve exact rendered pages; visual review twin audit/visual_review_rhetoric_20260929.{json,md} PASS. No clipping/overlap/unreadable figures or orphaned heading.
+
+2026-09-29 manuscript release binding: python scripts/write_build_audit.py PASS on exact v0.13.0 source/PDF/figure/visual hashes; python scripts/test_qa_guards.py 7/7 PASS with intentional failed native build and unchanged PDF. Active project audit/mentor_manuscript_20260929.{json,md} pointer synchronized; previous v0.12 identity preserved.
+
+2026-09-29 manuscript final copyedit: top-K sentence now explicitly says selection imposes no adjacency or connectivity constraint. QA exact-language assertion updated equivalently. Final build/QA rerun pending. main.tex SHA-256 dfd0c3628e097eb63a09f322c1ccb351303b18a171381477bd01df889ee29cfa.
+
+2026-09-29 manuscript final copyedit QA: iteration 74 FAIL due to second stale exact top-K assertion; corrected and retained. Source/repository checks PASS; iteration 75 full QA PASS, 12 pages, PDF 6b6dbcae67b27310fd49a8acd44d6bbab76c5ad7d7372db068e2da32531b1eb5. Page 5 direct visual inspection PASS; other 11 page render hashes identical to fully inspected iteration 73. Final visual review twin updated.
+
+2026-09-29 final manuscript binding: iteration 75 PDF 6b6dbcae67b27310fd49a8acd44d6bbab76c5ad7d7372db068e2da32531b1eb5; release audit exact source/PDF/figure/every-page visual PASS; seven guard tests PASS; git diff --check PASS. Project mentor pointer synchronized to QA75. Source, numerical report and figure data unchanged after QA.
+
+2026-09-29 research voice v0.14: read attached critique; saved v0.13 source; revised narrative, methods prose, Results, captions, Discussion and conclusion. Exact 14-equation and table comparison PASS. Initial in-memory paragraph lookup failed without changing source; corrected retry succeeded. main.tex SHA-256 adc20b5543f99af047d4926101e1275ab3e6d468b9f82828a878bc85276c5ad1. Audit twin research_voice_20260929 created; compile pending.
+
+2026-09-30T02:34:05.806311+00:00 research voice passes 8–10: pre-Nov2024 CaloDREAM/CaloGraph comparison; flow concept and AUROC defined; Fig.3 axes/caption corrected; all-event W1 clarified; exact max-based closure tolerance and earlier fixed-tolerance exceedance disclosed. Main SHA-256 18b8a88c6d9d5e2917d1ce909f41e0d2039c5e0d59997b31ebb8ea01000410c0; figure-builder SHA-256 fe850b453920bc5867ada6efe08f72cd16380e9dd8ee0f05ceab501aa2899c0b; full QA pending. Prior QA76/77 PASS; QA77 all twelve pages inspected. No data or numerical guard changes.
+
+2026-09-30T02:36:20.134224+00:00 research voice pass 11: QA78 full suite PASS and every page inspected. Corrected hidden ECAL contribution to HCAL log autoscaling and removed mixed-population inference for W1 versus conditional means. Main SHA-256 b8b1c491fd282315e48681fa56cf8d1adf523039ec678780b4873b9da06db00c; figure-builder SHA-256 c44efff44216a0bfd9e16e55b5793ddc556bbeea05d2c312b521d50e47cda8a6. Final corrected build pending.
+
+2026-09-30T02:39:47.221794+00:00 research voice final pass 12: QA79 PASS (12 pages, 15 check groups), changed pages 8–9 inspected; other ten page hashes identical to inspected QA78. All 14 displayed equations and Table 1 preserved; seven release guards PASS including synthetic native failure preserving PDF. PDF SHA-256 404c2627e6c577067611f16db0939d9e615af3e85cfff49097d0c216259b48b7. Audit-writing tool parse failure occurred before execution and was corrected; audit and visual twins completed. Release binding next.
+
+2026-09-30T02:40:31.505781+00:00 manuscript v0.14.0 handoff complete: release audit exact source/PDF/figure/visual binding PASS; project pointer synchronized to QA79, 12 pages, PDF SHA-256 404c2627e6c577067611f16db0939d9e615af3e85cfff49097d0c216259b48b7. Audit twins and historical v0.13 pointer retained. No source/data changes after QA79.
+
+2026-09-30T03:04:44.338637+00:00 overall manuscript audit passes1–3: attached critique read and compared with primary literature/evidence; source, navigation, tolerance explanation and support-figure annotations revised. Main SHA-256 3ee963fa0cee0e7e9e03b663768bcd218a7db0b920d324bbe323c67a4afd5b65. Exact14 equations and numerical table preserved. Audit twin overall_revision_20260929 created; full QA pending.
+
+2026-09-30T03:05:39.687046+00:00 v0.15 metadata and evidence binding synchronized. Added Discussion subsection navigation; current source SHA-256 2ad96d82e513fb82d381e45e1f7cfe4fd89e3461269c5fe16c8d228fe09b56da. Historical v0.14 audit bound to QA79 and original source snapshot. Equivalent prose assertions updated; stronger explicit tolerance and terminology assertions added.
+
+2026-09-30T03:09:50.138393+00:00 overall passes4–5: QA80 and all12page visual review complete. Fixed pronoun and explanatory terminology; source SHA-256 715c1b07f7ab88d2a48ba9fe3b8b7574f18144af7bdb646e716fe734ac1aa20c. Historical evaluator blob hash matches provenance; confirms all-event energy bins and exact empirical W1. Incorrect read-only cwd lookups recorded and corrected; no source/data mutation in those attempts. Corrected full QA pending.
+
+2026-09-30T07:13:16.786118+00:00 overall passes6–7: QA81 complete suite PASS; seven changed pages directly inspected and other five bound to fully inspected QA80. All42 critique points have dispositions in audit twin. CITATION.cff date updated to2026-09-30 (SHA-256 7929e661752747ad7d6cf39d7e7d8d3630305bf71757bc7598a1d72bd382835b); final source/PDF binding QA pending.
+
+2026-09-30T07:15:21.230467+00:00 overall pass8 final: QA82 PASS, 12pages/15check groups; every final rendered page identical to reviewed QA81 output. Seven release guards PASS including intentional failed native build preserving PDF. Final SHA-256 ab20192c4d29df50f3313ce1272aad0b04bb4c9e29ebaf34883c58f7c681a8c2; visual and overall audit twins complete. Release binding next.
+
+2026-09-30T07:16:18.121067+00:00 manuscript v0.15.0 finalized for mentor review: QA82, exact-source/PDF/figure/visual release binding PASS; project handoff synchronized.12pages; PDF SHA-256 ab20192c4d29df50f3313ce1272aad0b04bb4c9e29ebaf34883c58f7c681a8c2.42-point critique disposition in overall audit. No manuscript or figure change after final QA.
+
+
+## 2026-09-30 finalization started
+
+User requested extensive word-by-word and whole-document iterative review. Baseline v0.15.0 PDF ab20192c4d29df50f3313ce1272aad0b04bb4c9e29ebaf34883c58f7c681a8c2. Original source snapshots in audit/source_snapshots/prefinal_20260930. Existing dirty work preserved. Audit twin: audit/finalization_20260930.{json,md}. No training, raw/test access, threshold edits or publication.
+
+Finalization source review: eight focused passes recorded; three historical source blobs read with git show at e0398414 and saved with hashes. F1 from prior review retracted after full-resolution inspection. User-supplied independent-researcher metadata accepted. No experiment or data changes.
+
+Finalization v0.16 source revision applied via audit/finalize_revision_20260930.py. Added two appendices from retained aggregates and historical source, author-approved metadata and acknowledgments. Main source SHA256 0a1c0288efa35931a6fe7929ae4651bf7a7c65facf1dfe9d0f34d8c59d5aefc2. Fourteen equations and original numerical table remain unchanged; strict audit pointers updated to preserve historical binding and require the new source review.
+
+QA83 failed before PDF replacement: bundled Python lacked matplotlib. Failed iteration retained; switching to established project Python C:/Python313/python.exe. No guard changed.
+
+QA84 passed 16 check groups on 14 pages. Directly reviewed all pages. Twelve further focused reading passes found two precision improvements (Jacobian wording and normalized-feature denominator scope), weight-symbol alignment and acknowledgment polish. Corrected source, preserved all 14 equations and main numerical table. Historical failed QA83 remains retained. Main SHA256 95fa603d553a331fa4f3797615cbf20193b7444b7231463314c9fee723d0541d.
+
+Final source review complete: 24 documented passes and three full-manuscript readings. QA85 passes 16 groups on 14 pages; seven release safety tests pass. Email, repository links, embedded fonts, unchanged equations and original result table verified. Metadata synchronized including CFF. Final QA86 will bind completed review records; no further prose edits pending.
+
+QA86 final full suite PASS: 16 check groups, 14 pages, PDF 8e01eb2f3f5608df8f0d265380b5b3a7a5ff52fd09bc16d9bb681bc74d4aa804. Every final render equals QA85; final visual record written to audit/visual_review_finalization_20260930.{json,md}. Three successful complete builds (84,85,86), one retained dependency failure (83), and seven guard tests. No physics-validation or public-release claim.
+
+Final release binding independently rechecked: current PDF/source hashes all match audit/final_build_audit.json. Primary-workspace handoff written to C:\Users\Julia\OneDrive\Desktop\coding\ASIoP\Fast MC CBSC\audit\manuscript_finalization_20260930.json. No source changes after final QA86.
+
+### Author-requested AI disclosure wording
+
+Replaced "analysis and model-design proposals" with "reviewing the model specifications" only. Source reviewed; full QA iteration 87 pending.
+
+Input main.tex SHA256: 95fa603d553a331fa4f3797615cbf20193b7444b7231463314c9fee723d0541d
+Output main.tex SHA256: 844c00be0f102bf527aa75cc252c1906de6dac90bc70b15ff4da540af2ad2c5b
+
+QA87 full suite PASS, 14 pages. Changed page 11 visually inspected, remaining pages byte-identical. Current PDF SHA256 9434ab3053d991fea020ea0556a732b1b0220a346ba334ee91ce72d6c490e583. Command: python -X utf8 scripts/write_build_audit.py (exact release binding).
+[2026-09-30] Fresh-reader manuscript review started. Located active v0.16.0 paper at C:/Users/Julia/Desktop/coding/ASIoP/fast-mc-paper using project handoff. Read implementation guide and focused rules; preexisting dirty files preserved. Graft check returned OK but ask advertised legacy matches (1269 nodes versus documented 1140); graph is not trusted for scientific evidence and no legacy source used. Read-only discovery Get-Item/Get-Content returned exit 1 because alternate OneDrive paper path and paper AGENTS.md do not exist. Full review and manuscript changes, if warranted, pending; no data/remote access. Command transcript will be preserved in review audit.
+
+[2026-09-30T15:59:32.057826+00:00] Fresh-reader manuscript review: Baseline source and all 14 rendered pages read completely; input hashes and historical release/visual records snapshotted. Editorial corrections planned; no equations, results, data or guards changed. Source SHA256 844c00be0f102bf527aa75cc252c1906de6dac90bc70b15ff4da540af2ad2c5b.
+
+[2026-09-30T15:59:32.099116+00:00] Fresh-reader manuscript review: Applied 21 reader-oriented prose/caption corrections. All 14 equation blocks and all four numerical tables remain identical. Current-source provenance pointer updated with preserved historical snapshot. Full build pending. Source SHA256 d9c94d146dcc6d8ba055fef23f2ef8451bf65cbd0c19da9117141bf1ab0e59d0.
+
+[2026-09-30T16:00:21.096381+00:00] Fresh-reader manuscript review: QA88 failed its unchanged 14-page maximum: the first copyedit compiled to 15 pages. All preceding evidence/source checks completed. This PDF is provisional and not approved for delivery; fix prose/layout rather than relax the guard. Source SHA256 d9c94d146dcc6d8ba055fef23f2ef8451bf65cbd0c19da9117141bf1ab0e59d0.
+
+[2026-09-30T16:01:15.095165+00:00] Fresh-reader manuscript review: QA88 retained as failed page-count attempt. Tightened seven passages, including abstract and repeated introduction scope; replaced origin with interpretation in conclusion. No guard, equation, result, figure, or scientific threshold changed. Source SHA256 80b51587fe23a50f2cb90b3967c385eac2c202c102ff57d81cfafacb8bcbd7c0.
+
+[2026-09-30T16:01:52.160233+00:00] Fresh-reader manuscript review: QA89 also failed the unchanged page-count guard at 15 pages. Retained attempt; investigate figure placement and unused page space before another full QA. Source SHA256 80b51587fe23a50f2cb90b3967c385eac2c202c102ff57d81cfafacb8bcbd7c0.
+
+[2026-09-30T16:02:34.381454+00:00] Fresh-reader manuscript review: Pagination diagnosis: an extra caption line made Figure 3 move to a new page and displaced Figure 4. Shortened both captions while retaining populations, axes, purpose and uncertainty caveat; kept figure size and all guards unchanged. Source SHA256 a5c4e60d6b504750fd178ccf0850256bef5799de703b44bd43b36ee31b1d73b7.
+
+[2026-09-30T16:05:25.060471+00:00] Fresh-reader manuscript review: Created complete section-by-section assessment, fourteen-equation purpose map, four-figure/four-table review and prioritized unresolved scientific work. Read complete baseline source, all baseline pages and complete first-revision PDF text (retrieved truncated middle separately). Source SHA256 a5c4e60d6b504750fd178ccf0850256bef5799de703b44bd43b36ee31b1d73b7.
+
+[2026-09-30T16:05:47.355207+00:00] Fresh-reader manuscript review: QA90 PASS: 14 pages, all 16 check groups. PDF SHA256 89b54c6abc9345f7278efdb397b3961ffab81f9b1840bacc90fe44d75b1c05a3. Guard script hash unchanged from baseline; QA88/89 page-limit failures preserved. Direct final-page reading underway. Source SHA256 a5c4e60d6b504750fd178ccf0850256bef5799de703b44bd43b36ee31b1d73b7.
+
+[2026-09-30T16:07:05.557461+00:00] Fresh-reader manuscript review: Completed direct reading and visual inspection of all fourteen QA90 pages. Last copyedit specifies effective batch size rather than asserting every update contains 24 events; channel-target prose now explicitly says floored shares. README/STATUS point to fresh-reader assessment. Equations and numerical tables unchanged. Source SHA256 26915b58d2798b675aae581bb5e054c78a35c7ff6bcf011af28b0151be4b53a5.
+
+[2026-09-30T20:53:37.770509+00:00] Fresh-reader manuscript review: Completed sixth full reading: final QA91 PDF text, all pages 1-14 including references. QA91 PASS (16 groups, 14 pages). Built-in editor compile requested after user continued: FAIL with platform error Unable to find standard directories for platform; no source-line diagnostic. Editor remains open; no separate build/export performed after the new user instruction. Final pages 6 and 7 directly inspected; all other final page hashes equal fully reviewed QA90 pages. Source SHA256 26915b58d2798b675aae581bb5e054c78a35c7ff6bcf011af28b0151be4b53a5.
+
+[2026-09-30T20:56:34.600686+00:00] Fresh-reader manuscript review: Six complete readings and twelve focused checks finished. QA90/91 PASS (16 groups); final 14-page PDF and source/figures visually bound; six existing binding guard tests PASS. All equations/tables, data and guards unchanged. Native editor compiler platform error remains. No new raw/test access, training, publication or separate build after latest user instruction. Source SHA256 26915b58d2798b675aae581bb5e054c78a35c7ff6bcf011af28b0151be4b53a5.
+
+[2026-09-30T21:37:39.340247+00:00] User-requested affiliation removal: main.tex exact byte replacement; name/email retained; input SHA256 26915b58d2798b675aae581bb5e054c78a35c7ff6bcf011af28b0151be4b53a5; output SHA256 cd4a8322a449b86e4f6a67d55da252c847c167b0eca4a55a487efc8856aaf00d. Built-in editor compiler pending; previous PDF/build audit stale for this edit. Evidence: manuscript_affiliation_removal_20260930 twin in main project.
+
+- 2026-09-30T21:44:14.770085+00:00 — submission preflight: Started complete current-source preflight; preserved input snapshots and recorded native compiler failure.
+
+- 2026-09-30T21:44:14.883428+00:00 — submission preflight: Metadata synchronized; exact replacement author contract enforced; no scientific source change.
+
+- 2026-09-30T21:44:15.998116+00:00 — submission preflight: All five non-PDF validation functions passed (14 check groups); current PDF finalization still pending.
+
+- 2026-09-30T21:46:54.813196+00:00 — submission preflight: primary-reference checks recorded; prior PDF explicitly marked stale; source QA passed 14 groups; alternate-build permission and venue pending. Evidence: audit/submission_preflight_20260930.json (paper), audit/manuscript_submission_preflight_20260930.json (project).
+
+- 2026-09-30T22:11:43.607056+00:00 — manuscript submission completion: User authorized existing PDF rebuild; native editor compiler still fails at environment setup; existing editor remains open.
+
+- 2026-09-30T22:12:35.947353+00:00 — manuscript submission completion: full_QA: exit 0
+
+- 2026-09-30T22:12:35.978683+00:00 — manuscript submission completion: Full automated QA passed; every-page visual review pending for this exact PDF.
+
+- 2026-09-30T22:14:39.851564+00:00 — manuscript submission completion: Every current PDF page visually reviewed; no clipping, overlap, broken references, table or figure legibility defects found.
+
+- 2026-09-30T22:14:41.428915+00:00 — manuscript submission completion: release_guard_tests: exit 0
+
+- 2026-09-30T22:14:42.392011+00:00 — manuscript submission completion: exact_release_binding: exit 0
+
+- 2026-09-30T22:14:42.471716+00:00 — manuscript submission completion: Submission source ZIP assembled; all ten members verified by CRC and exact byte comparison.
+
+- 2026-09-30T22:14:42.476179+00:00 — manuscript submission completion: General manuscript finalization complete: full automated QA, every-page visual review, seven release-guard tests and exact source/PDF/figure binding passed. Venue-specific checks and public release remain separate.
+
+- 2026-10-01T01:59:19.632726+00:00 — external manuscript audit: Archived current source, PDF, source ZIP and supplied audit. B1 is a substantive mathematical omission; previous rendering QA did not establish completeness of scientific inference.
+
+- 2026-10-01T01:59:19.804820+00:00 — external manuscript audit: Corrected the component interpretation, conditional-independence discussion, detector/calibration/time-window scope, classifier caveats, reference-half scales, literature context and metadata. Preserved all 14 numbered equations and four data tables. Bumped current revision to 0.17.0; full QA pending.
+
+- 2026-10-01T02:03:16.435586+00:00 — external manuscript audit: component bound checks pass; QA93 failed at 15 pages; tightened prose/geometry figure without relaxing 14-page guard; cp1252 inspection failures corrected; native editor compiler environment error retained.
+
+- 2026-10-01T02:05:15.539233+00:00 — external manuscript audit: point-by-point response saved for B1-B6, M1-M10 and technical/reference/presentation items; author confirms arXiv/ePIC/data-owner approval; empirical studies are not manufactured from aggregates.
+
+- 2026-10-01T02:06:25.376806+00:00 — manuscript QA94 failed 14-page limit; trimmed repeated results/discussion text without changing scientific checks.
+
+- 2026-10-01T02:08:15.636654+00:00 — manuscript QA95 exceeded page limit; combined declarations and tightened availability/acknowledgments; updated current claim register and retained history. Scientific and page guards unchanged.
+
+- 2026-10-01T02:14:12.560412+00:00: QA96 passed 17 groups / 14 pages; all 14 rendered pages directly reviewed. Seven release-guard tests passed, including intentional native-build failure preserving the deliverable. Built-in editor compiler again failed platform-directory setup; local LaTeX/Biber build passed. Read-only inspection attempted nonexistent audit/qa_runs/iteration_96.json and build/ paths; corrected to audit/iterations/iteration_96.json and repository-root main.bbl. No scientific guard changed.
+
+- 2026-10-01T02:14:12.560412+00:00: Completed v0.17.0 external-audit revision and exact release binding. PDF 896037ac8ca7e8429ee38d73e6314ee7ec81c529d6e6ef98a93da80603d517e7; source ZIP dcbf3e4c57607ec4949678db1500a48ea3854105a48fc4e424805bbc869aeaeb. Minimal arXiv archive passed CRC and all seven member byte/hash comparisons. No upload. See audit/external_audit_completion_20260930 (paper) and audit/manuscript_external_audit_completion_20260930 (project).
+
+- 2026-10-01T06:19:57.107779+00:00: Second audit intake: arithmetic accepted; geometry semantics, exact-versus-bound availability, descriptive statistics and method explanations need correction. Author asked for exact XML/checkpoint/event-array locations; independent document work proceeds. See audit/second_external_audit_20260930.json for command, source, failure and hash evidence.
+
+- 2026-10-01T07:20:50.118699+00:00: Second audit intake: arithmetic accepted; geometry semantics, exact-versus-bound availability, descriptive statistics and method explanations need correction. Author asked for exact XML/checkpoint/event-array locations; independent document work proceeds. See audit/second_external_audit_20260930.json for command, source, failure and hash evidence.
+
+- 2026-10-01T07:20:50.297528+00:00: Saved v0.18.0 manuscript in place: replaced unverified ganging claim, stated aggregate-only access, corrected bound wording and conditional-independence interpretation, added population SD columns/ECAL-start rates/FP32 support evidence, clarified zero-cause ambiguity, and updated relevant primary citations. Fourteen numbered equations and original table values preserved. Full build/QA pending. See audit/second_external_audit_20260930.json for command, source, failure and hash evidence.
+
+- 2026-10-01T07:23:36.413557+00:00: Source preflight found obsolete abstract phrase assertion; updated to require the stronger aggregate-only/single-seed/reused-validation wording. QA97 passed build and source checks but failed unchanged 14-page cap at 15 pages (AI declaration alone on page 12). Trimmed repeated discussion/availability prose and clarified three-layer toy; all scientific thresholds unchanged. Built-in compiler failed platform-directory setup again.
+
+- 2026-10-01T07:25:23.778789+00:00: Second-audit item-by-item response saved, including accepted corrections, unsupported causal claims and missing event-level experiments. Source/response hashes recorded.
+
+- 2026-10-01T07:27:43.993892+00:00: QA98 passed 18 groups / 14 pages; every page visually inspected and seven release guards passed. Exact release binding and source ZIP integrity passed. Native editor compiler remains unavailable; local build passed. No new empirical or test-data work. PDF dc777c46613f50feaaf066f379895a34fc67dcd656425f042dd1681c3d4d0fdb; source archive e4b8b7377ad72e0869021781c41c2ecd9f5ece811a8a3a672ccdeab6a7f28192.
+
+- 2026-10-01T07:28:28.021422+00:00: Final documentation consistency check corrected README historical v0.17 wording after version bump; Table 3 additions now explicit. Manuscript, equations and figure sources unchanged. Rerun full suite for updated README hash.
+
+- 2026-10-01T07:29:51.693158+00:00: QA99 full rerun passed after README historical statement correction. Every rendered page hash matches directly reviewed QA98. Release binding and seven archive member hashes pass. Final PDF 2f0de6dd3ebd24b72ed9bc2ad934b1cdb1cc9ea7d91a385c46f0caee418bf81b; ZIP e4b8b7377ad72e0869021781c41c2ecd9f5ece811a8a3a672ccdeab6a7f28192.
+
+
+## 2026-10-01: physical architecture and third audit intake
+
+Snapshot preserves v0.18.0. Strengthen run bound using gap fractions; clarify readout-stage physics; reject unsupported significance/conservatism claims. No new physics validation. See audit/physics_exposition_20261001.json for commands, hashes, sources and environment.
+
+
+## 2026-10-01: manuscript physical-exposition verification
+
+Revised architecture, stronger bound, profile ratios and energy-weighted centroid. Preserved failed attempts and corrected label fit, exact wording, whitespace and pagination; no guard relaxed. Native editor compiler initialization failed; local build available. Ten release guard tests passed (synthetic checks, not physics validation). See audit/physics_exposition_20261001.json.
+
+
+## 2026-10-01: physical-architecture manuscript revision completed
+
+Final QA series physics_exposition_20261001 attempt 08: 19 groups, 14 pages, exact rendered-page review binding; 10 release guards passed. Packaged v0.19.0 with seven exact-byte source files. Native editor initialization failure remains disclosed. No physics validation or external submission. See audit/physics_exposition_completion_20261001.json for hashes, commands, failures and remaining work.
+
+
+## 2026-10-01T08:55Z: independent fresh-reader review (Claude); proposal only, v0.19.0 untouched
+
+Cold read of `output/fast_mc_zdc_manuscript.pdf` (`aae417e8...`), then in the context of this repository and the parent project. Verdict: correct and honest; not yet fulfilling its purpose for an experimental-HEP reader. All numbers and equations re-derived (192 scripted checks, no error found). Review, proposed 18-page revision, new figures and `verify_numbers.py` are in `proposals/claude_20261001/` (read `REVIEW.md`, then `CHANGES.md`). `main.tex` (`d6ecda67...`), `output/`, `figures/`, `scripts/` and `audit/` were not modified; no QA series was started and no guard was changed. The proposal exceeds the 14-page, 14-equation, 4-figure and 4-table expectations of `scripts/full_manuscript_qa.py`; adopting it is an author decision. New result from the existing summary: the paired residual RMS (0.0460) equals the independent-sample expectation (0.0461), so the mean response difference is 0.045 +/- 0.068 GeV and the binned differences give chi2 13.0 for 8 bins. No event generation, training, test inspection or submission. Project twin: `Fast MC CBSC/audit/manuscript_fresh_reader_claude_20261001.{json,md}`.
+
+
+## 2026-10-01: final reader-proposal integration
+
+Read complete 18-page proposal and supplied audit; snapshot v0.19.0. Adopt verified physical exposition, geometry, observable illustration and paired normalized-response statistics. Preserve uncertainty boundaries, numerical guards and prior failures. GitHub update explicitly authorized; origin/main matches local HEAD before integration. See audit/claude_integration_20261001.json.
+
+
+## 2026-10-01: Claude proposal integration QA
+
+QA attempt 01 failed a required semantic wording check and produced 15 pages; restored precise wording and condensed repetition/figure height without weakening guards. Attempts 02 and 03 passed at 14 pages; attempt 03 passed all 20 groups after adding independent arithmetic checks. All 10 release-guard tests passed (synthetic build checks, not physics validation). Direct visual reading covered all 14 attempt-03 pages. Credential-pattern scan of 519 publication text files found no matches. Native editor compiler returned a platform-directory initialization error; local pdfLaTeX/Biber succeeded. Historical README and claim-register references synchronized before final source-bound QA04. See paper audit/claude_integration_response_20261001.md and QA-series records.
+
+
+## 2026-10-01: reader-proposal manuscript revision completed
+
+Final QA series claude_integration_20261001 attempt 04: 20 groups, 14 pages, exact rendered-page review binding; 10 release guards passed. Packaged v0.20.0 with seven exact-byte source files. Native editor initialization failure remains disclosed. No physics validation or external submission. See audit/claude_integration_completion_20261001.json for hashes, commands, failures and remaining work.

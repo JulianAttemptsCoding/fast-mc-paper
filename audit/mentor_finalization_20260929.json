@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-29T20:38:37.344124+00:00",
+  "status": "finalized",
+  "operation": "mentor presentation manuscript finalization",
+  "paper_root": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper",
+  "source_root": "C:\\Users\\Julia\\OneDrive\\Desktop\\coding\\ASIoP\\Fast MC CBSC",
+  "input_sha256": {
+    "main.tex": "fc8cd845b37616b72e90d11258712772fe42eedf5ba752428fb209c880beb278",
+    "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+    "output/fast_mc_zdc_manuscript.pdf": "51749562918655f4a2305a73f908825c9e447bfa9e48f65b74fb9d5f53a1af81",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f"
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1",
+    "host": "local Windows; no DiCOS/data-source access"
+  },
+  "research_cutoff": "papers first available before 2024-11-01 for exposition comparison",
+  "primary_style_sources": [
+    "https://arxiv.org/abs/2410.21611v1",
+    "https://arxiv.org/abs/2402.11575",
+    "https://arxiv.org/abs/2306.13606",
+    "https://arxiv.org/abs/2211.10295",
+    "https://arxiv.org/abs/2405.09629",
+    "https://arxiv.org/abs/2106.05285",
+    "https://arxiv.org/abs/2308.03876",
+    "https://arxiv.org/abs/2406.03233"
+  ],
+  "initial_findings": [
+    "The active v0.11.1 paper is the fast-mc-paper repository; the supplied workspace paper/ files are older specification or draft copies.",
+    "The paper correctly reports a one-checkpoint validation-bank comparison and preserves the failed 0.65 C2ST gate.",
+    "The paired-condition design, side-specific nonempty denominators, and dependence of graph components on occupied-layer runs need plainer explanation.",
+    "The training-stage lineage is not explained in the paper despite the implementation guide's stage contract.",
+    "The headline support difference is in a table but has no dedicated figure; the current longitudinal-energy figure cannot display per-event gaps."
+  ],
+  "commands": [
+    "Read docs/IMPLEMENTATION_GUIDE.md; docs/FOCUSED_OPERATING_RULES.md; AGENTS.md; git status; source inventories.",
+    "Read active fast-mc-paper main.tex, references.bib, README.md, STATUS.md, source_evidence.json, aggregate report, figure builder, QA script, prior audits, and existing rendered pages.",
+    "Web research: primary pre-2024-11 papers listed in primary_style_sources; read CaloGraph, ALICE ZDC and HEP generative-metrics methods/results text.",
+    "Read-only PDF and figure visual inspection via existing iteration-67 raster pages and figure PNGs.",
+    "Run required PDF edit-operation marker once before manuscript authoring.",
+    "Python exact-match source rewrite: main.tex clarity, design and support-figure text.",
+    "Python exact-match rewrite: scripts/build_figures.py adds report-bound support summary; scripts/full_manuscript_qa.py requires four figures.",
+    ".\\build.ps1 (native pdflatex, biber, pdflatex twice, PDF text/log checks; exit 0)",
+    "python scripts/full_manuscript_qa.py --iteration 68 --focus 'mentor first revision' --disposition 'paired conditions, training lineage, graph confound, support figure' (exit 0)",
+    "Viewed iteration-68 all-page contact sheet and support_summary.png at original resolution.",
+    "git show e039841...:src/cbsc_zdc/models/{response,profile,support,node_fields,graph,system}.py and training/{flow_matching,truth,trainer}.py (read-only; inspected relevant paths)",
+    "Exact-match main.tex edit: state recorded Gumbel selector default temperature tau=1.",
+    "Web primary-paper reading: CaloDREAM arXiv:2405.09629v1, ALICE ZDC arXiv:2306.13606v1, CaloGraph arXiv:2402.11575v1, HEP metrics arXiv:2211.10295, CaloChallenge arXiv:2410.21611v1.",
+    "git show e039841...:src/cbsc_zdc/{features,contracts}.py; exact-match main.tex corrections for zero-momentum feature, W1 definition, teacher-forced checkpoint selection and AUROC benchmark.",
+    "Rewrote audit/literature_benchmark.md with pre-2024-11 style matrix and later-context separation.",
+    "python scripts/full_manuscript_qa.py --iteration 69 --focus 'expert reader and equation correction' --disposition 'mass and zero-momentum endpoint, metric definitions, source-bound sampler' (exit 0)",
+    "Viewed iteration-69 pages 1-11 at original render resolution; inspected all four figures, table, equations, sections and references.",
+    "Exact-match main.tex edit: define S*_ell and K*_ell before the channel-share target equation.",
+    "Read full main.tex and release metadata; inspected QA assertions, visual review and release binding scripts.",
+    "Read-only source-repo audit/epoch_dicos-f-02_0090.json, audit/calibration_joint_r2_terminal_verification.json and git tree inventory; frozen config bytes unavailable in checkout, so no actual nine-weight values were invented.",
+    "Exact-match Python edit: abstract diction, table rounding note, AI-use statement; version 0.12.0 metadata; release visual path; stronger QA requirement for five audit passes.",
+    "python scripts/full_manuscript_qa.py --iteration 70 --focus mentor final source and release revision --disposition fifth reread, four figures, all sections and metadata (failed stale wording assertion)",
+    "Exact-match QA assertion update to require the semantically equivalent revised abstract uncertainty phrase.",
+    "python scripts/full_manuscript_qa.py --iteration 71 --focus mentor final corrected wording --disposition all sections, figures, source binding, release metadata (PASS)",
+    "view_image at original detail for changed iteration-71 pages 1,5,6,7,8,11; SHA-256 comparison to inspected iteration-69 pages 2,3,4,9,10."
+  ],
+  "failed_attempts": [
+    "Initial attempt to write audit twin was rejected by functions.exec JavaScript parser because unescaped Markdown backticks were embedded in a JavaScript template literal; no shell command ran and no file changed.",
+    "First mathematical source-query orchestration failed at functions.exec JavaScript parsing (Unexpected token ':'); no nested command ran. Corrected with two explicit exec_command calls.",
+    "Read-only rg query named two source-repo audit paths while run from the paper repo; both paths were absent there. Retried in the source repo; no data changed.",
+    "Read-only rg inventory included absent prep directory in the local source checkout. Existing audit and configs paths were read; no data changed.",
+    "Read-only combined source inspection included an audit file absent from paper repo. Located it in the local source repo and read it there.",
+    "Two attempted Python edit orchestrations failed at functions.exec JavaScript parsing before a command ran; corrected quoting.",
+    "First Python exact-match edit stopped on a case-sensitive abstract assertion before any file write; corrected match and reran successfully.",
+    "QA iteration 70 failed a stale required-text assertion for the old abstract possessive after the semantic clarification. The manuscript already retained the uncertainty limitation; assertion updated to require the revised phrase without relaxing it. Failed iteration record retained."
+  ],
+  "passes": [
+    {
+      "restart": 1,
+      "lens": "scientific claim and data-role audit from abstract through declarations",
+      "coverage": [
+        "Abstract",
+        "Introduction",
+        "Simulation target and evaluation population",
+        "Generator and training procedure",
+        "Diagnostics",
+        "Results",
+        "Discussion",
+        "Conclusion",
+        "declarations",
+        "all four figure captions",
+        "results table"
+      ],
+      "findings": [
+        "All quoted primary numbers match the immutable aggregate report and conditional denominators; failed high-level classifier gate remains stated.",
+        "New support figure correctly uses side-specific nonempty means; original energy figure remains labelled as an average that cannot reveal eventwise gaps.",
+        "One checkpoint, repeatedly inspected validation bank, missing structural intervals, unresolved pilot-validation overlap, and no test use remain explicit."
+      ],
+      "corrections": "No further numerical correction in restart 1.",
+      "qa_iteration": 68,
+      "qa_result": "pass; eleven-page build and four figure hash checks",
+      "visual_result": "all-page contact sheet inspected; no clipping or overlap; section transition before Results is awkward and will be reviewed in layout restart"
+    },
+    {
+      "restart": 2,
+      "lens": "equation-by-equation, symbol-by-symbol and sampling-path audit against recorded source commit",
+      "coverage": [
+        "condition Eq.1",
+        "response mixture and cap Eqs.2-3",
+        "layer activity Eq.4",
+        "log-fraction targets Eqs.5 and 11",
+        "masked flow loss Eq.6",
+        "eight-step update Eq.7",
+        "budget Eq.8",
+        "graph message Eq.9",
+        "Gumbel top-K Eq.10",
+        "decoder Eq.12",
+        "nine-loss joint objective Eq.13",
+        "support/gap Eq.14",
+        "all architecture prose and schematic"
+      ],
+      "findings": [
+        "Response head's positive mixture, lower clipping, cap and final visibility agree with source; the mixture NLL includes the target Jacobian.",
+        "Profile and share flows both use masked straight-path MSE and current-state midpoint-time eight-step updates; no solver-convergence claim appears.",
+        "Directed message aggregation, one hard Gumbel top-K draw, exact-count mask, and softmax budget closure agree with source.",
+        "Axis features are opt-in and disabled for the selected v2 path; five derived four-vector features are the event condition.",
+        "The paper named a fixed top-K temperature without a value; source sampler uses default 1.0."
+      ],
+      "corrections": "State tau=1 in the top-K explanation. No equation, model, frozen config, result or guard changed.",
+      "verification_pending": "next full rebuild/QA iteration after final manuscript edits"
+    },
+    {
+      "restart": 3,
+      "lens": "experimental-HEP/computational-physics reader and pre-November-2024 literature comparison",
+      "coverage": [
+        "Abstract",
+        "Introduction and prior work",
+        "dataset and four-vector semantics",
+        "geometry and graph",
+        "generator and training",
+        "diagnostic definitions",
+        "results/figures",
+        "discussion and declarations"
+      ],
+      "findings": [
+        "The original direction expression divided by zero at zero momentum, while the implementation clamps the norm and returns a zero vector.",
+        "Neutron mass, one-dimensional hit-count Wasserstein meaning, AUROC chance benchmark and teacher-forced checkpoint-selection status were underexplained.",
+        "Earlier literature explicitly defines target representation, preprocessing, graph, observables and quality/time tradeoffs; this paper must state missing timing and production configuration rather than borrow external claims.",
+        "The manuscript's current scientific citations include later publications, but the requested exposition research is now explicitly limited to pre-2024-11 versions."
+      ],
+      "corrections": "Corrected Eq.1 at zero momentum and kinetic endpoint; added neutron mass, W1/AUROC explanations and teacher-forced selection statement; updated literature audit with version-specific primary links.",
+      "verification_pending": "full rebuild/QA after all restarts"
+    },
+    {
+      "restart": 4,
+      "lens": "figure-by-figure, table-by-table and every-page visual/notation audit",
+      "coverage": [
+        "geometry figure and caption",
+        "sampling schematic and caption",
+        "support-summary figure and caption",
+        "longitudinal-energy figure and caption",
+        "results table and denominators",
+        "equations 1-14 on pages 2 and 4-7",
+        "all 11 PDF pages"
+      ],
+      "findings": [
+        "Four figures and the table are legible with no overlap, clipping, broken glyphs or mismatched labels.",
+        "Support figure derives exact conditional means and uses separate zero-based scales; its caption forbids uncertainty or eventwise interpretation.",
+        "The channel-share target equation appeared at the foot of page 5 with S* defined at the start of page 6; symbols should be defined before the equation.",
+        "Results heading and its complete introduction end page 7 while Table 1 begins page 8; this is readable and keeps the table with its new support figure."
+      ],
+      "corrections": "Moved S*_ell and K*_ell definitions before Eq.11; retained pagination and scientific content.",
+      "qa_iteration": 69,
+      "qa_result": "pass before final symbol-order edit",
+      "visual_result": "11/11 pages inspected individually; no substantive layout defect"
+    },
+    {
+      "restart": 5,
+      "lens": "sentence-by-sentence and word-by-word source read for experimental-HEP mentor audience",
+      "coverage": [
+        "title and abstract",
+        "all Introduction paragraphs",
+        "condition/target/geometry/population paragraphs",
+        "all generator subsections and each displayed equation",
+        "training and diagnostics paragraphs",
+        "results table, all figures, every results paragraph",
+        "all Discussion and Conclusion paragraphs",
+        "availability, acknowledgments, contributions, AI declaration and bibliography"
+      ],
+      "findings": [
+        "Abstract used an awkward possessive for uncertainty and a signed difference where direct direction was clearer.",
+        "Table presents differences from unrounded source values while row entries are rounded; caption needed to say this.",
+        "AI-use statement identified only the earlier model, omitting this later editing pass.",
+        "Actual nine frozen weights could not be recovered from source checkout with the exact frozen config hash; retained source-supported description rather than equating calibration proposals with the selected config."
+      ],
+      "corrections": "Rephrased abstract, stated unrounded-difference convention in Table 1 caption, made AI-use statement model-neutral, updated release metadata and required this audit in QA.",
+      "verification_pending": "final exact-source PDF build, full QA, and page-by-page visual inspection"
+    },
+    {
+      "restart": 6,
+      "lens": "post-build exact-output reread and final word/figure check",
+      "coverage": [
+        "final abstract and citations",
+        "all equation pages",
+        "Table 1 and all four captions/figures",
+        "all results and discussion pages",
+        "declarations and all 18 references",
+        "all 11 rendered pages by direct review or byte-identical prior review"
+      ],
+      "findings": [
+        "Final pagination is legible with no clipped content, undefined symbols, broken references or table/figure mismatch.",
+        "The abstract, Table 1 and AI statement corrections survive typesetting.",
+        "The Results introduction finishes on page 7 and Table 1 begins page 8; no sentence or table is split."
+      ],
+      "corrections": "No further source correction required after full QA iteration 71.",
+      "qa_iteration": 71,
+      "qa_result": "pass",
+      "visual_result": "11/11 pages covered; exact PDF/page hashes recorded in audit/visual_review_20260929.json"
+    }
+  ],
+  "output_sha256": {
+    "output/fast_mc_zdc_manuscript.pdf": "6175d57689a087ef216623ab262a79470bd9cf31d98a387a3dec206577086d60",
+    "figures/manifest.json": "d21341af4f3190c240f80018aa7f44fe8435b512c8fe5eb3178437cddefc0c04",
+    "audit/visual_review_20260929.json": "beeb391ecd53c8d3a7a200902c7965771693c5ea8670d3413190734d5f585ccf"
+  },
+  "scientific_boundary": "No new training, raw event access, test event access, checkpoint evaluation or frozen-config change.",
+  "intermediate_sha256": {
+    "main.tex": "dfd14e1c37a909b953822e54bbd5d2e64128411f4dc525551bcec29e95f91ed4",
+    "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+    "README.md": "ab8b1198f06a9e14966c5a841f3260d23b7ea387f33a328530364c54aa80b008",
+    "STATUS.md": "69b9bf0b94140bcc9ea10d28d581d4cea17a2697b038419bff3a5e9de15704e0",
+    "CITATION.cff": "5370376b3f5a3857f69b25ff74b86cc4b17977ba53930acd5dd74ef571504ef5",
+    "scripts/build_figures.py": "b1cc4dd89e3fab40ce366fdcafe08b033d5d501f8d5912ce10503779406c6313",
+    "scripts/full_manuscript_qa.py": "68d05d7cbe19c9d3d5234287c6376d311ee319a9074419c57783108b680a1c0c",
+    "scripts/write_build_audit.py": "e7f724be4595c25649d2d36af00777c0f5b0a297d9ad17c46f0e2ee158835c25",
+    "figures/support_summary.png": "b24e769d80e4fe3760d49d9b2fed7b739ba36cf69983dbbfb31f67c211b609e0"
+  },
+  "revision_decisions": [
+    "Separate generative methods from detector representations in Introduction.",
+    "Define paired-condition comparison and side-specific nonempty support denominators.",
+    "Define occupied-layer run count R and explain why empty layers confound graph components.",
+    "Describe staged training and shared-encoder freeze/unfreeze without claiming ablation evidence.",
+    "Add a report-bound four-panel support summary with zero-based scales, exact means, and uncertainty caveat."
+  ],
+  "manuscript_version": "0.12.0",
+  "reviewed_main_tex_sha256": "dfd14e1c37a909b953822e54bbd5d2e64128411f4dc525551bcec29e95f91ed4",
+  "section_review": {
+    "abstract": "all claims traced to report; development-bank and uncertainty limits explicit",
+    "introduction": "generative method families, detector representations, related ZDC literature and scope separated",
+    "simulation_target": "input endpoint, raw target semantics, geometry, graph and population hashes checked",
+    "generator": "sampling path, notation, masks, losses, solver, support and decoder checked against recorded source",
+    "diagnostics": "strict-positive threshold, W1, bootstrap, graph-run confound and C2ST split qualified",
+    "results": "all values, side-specific denominators, four figure captions and table checked",
+    "discussion": "possible mechanisms separated from established causes; future experiments linked to gaps",
+    "conclusion": "claim limited to one pilot checkpoint and validation bank",
+    "declarations": "reproducibility, contributions and AI assistance accurately stated"
+  }
+}

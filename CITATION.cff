@@ -5,6 +5,7 @@ type: article
 authors:
   - family-names: Juan
     given-names: Julian
-version: 0.11.1
-date-released: 2026-09-23
+    email: "juliansjuan08@gmail.com"
+version: 0.20.0
+date-released: 2026-10-01
 repository-code: "https://github.com/JulianAttemptsCoding/fast-mc-paper"

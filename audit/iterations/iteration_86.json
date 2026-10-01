@@ -1,0 +1,522 @@
+{
+  "schema_version": 1,
+  "iteration": 86,
+  "created_utc": "2026-09-30T15:32:22.981624+00:00",
+  "focus": "Final exact-source release binding after 24 review passes and three whole-manuscript rereads",
+  "disposition": "Verify completed review records, synchronized author metadata, all tables, every page and all guards without altering scientific scope",
+  "result": "pass",
+  "full_suite": true,
+  "checks": [
+    "Clean end-to-end figure, bibliography, and LaTeX rebuild",
+    "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
+    "Aggregate invariant counters and historical batch-relative policy; legacy absolute-only countercheck fails as disclosed",
+    "Config-hash-bound pilot population, canonical preparation counts, and distinct training/diagnostic split provenance",
+    "Readout geometry, ganging arithmetic, layer count, and explicitly reproduced directed-edge count",
+    "Nonempty denominators; absolute table differences; span/gap/last-layer identities; no ratio-only headline",
+    "Evaluator wall-time number includes topology and classifier analysis; generation-latency claim excluded",
+    "Response moments and bins; zero and hit-count bootstrap intervals; all original C2ST families and failed gate; separately labelled pair-grouped monitor",
+    "ECAL/HCAL cancellation and longitudinal-profile discrepancy",
+    "Hash-verified 104-row extract, contiguous unique epochs, one declared post-90 continuation, and epoch-90 objective minimum",
+    "Claim language, author/mentor metadata, scope statements, and stale-model exclusion",
+    "18 citation keys and 29 LaTeX labels/references",
+    "Four deterministic manuscript figures, source hashes, dimensions, and nonblank raster content",
+    "Appendix calibration arithmetic, every energy bin, all classifier seeds, historical-source hashes and author-supplied metadata",
+    "Active-versus-archived evidence separation, 7 active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check",
+    "14-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
+  ],
+  "pdf": {
+    "sha256": "8e01eb2f3f5608df8f0d265380b5b3a7a5ff52fd09bc16d9bb681bc74d4aa804",
+    "bytes": 1163102,
+    "pages": 14,
+    "page_size": "612 x 792 pts (letter)",
+    "contact_sheet": "audit/qa_runs/iteration_86/contact.png"
+  },
+  "page_metrics": [
+    {
+      "page": 1,
+      "sha256": "591cd01591091eaf1852fee418bb3c3687505760493e958c7c705e1af397c5b7",
+      "ink_fraction": 0.10246961594555178,
+      "ink_margins_px": {
+        "left": 81,
+        "right": 80,
+        "top": 146,
+        "bottom": 37
+      },
+      "text_characters": 3522
+    },
+    {
+      "page": 2,
+      "sha256": "93889b25b49d08db87f402b5277d2f89888260feb4739246edd73295c42c4f35",
+      "ink_fraction": 0.11271401423078622,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 80,
+        "top": 83,
+        "bottom": 37
+      },
+      "text_characters": 2427
+    },
+    {
+      "page": 3,
+      "sha256": "9ec1771ac1ec9b15d14d9e98415d39d1a85a39d3f91c51e0c06d735d6e7b1862",
+      "ink_fraction": 0.18008573827727936,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 81,
+        "top": 86,
+        "bottom": 36
+      },
+      "text_characters": 3042
+    },
+    {
+      "page": 4,
+      "sha256": "20addb7c17978c4da30de79dfecf3ca6cb13899a68b456a3497bdfc19df6ddd8",
+      "ink_fraction": 0.08828037300570116,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 81,
+        "top": 86,
+        "bottom": 37
+      },
+      "text_characters": 3124
+    },
+    {
+      "page": 5,
+      "sha256": "84a082101eb4aa9886e4a4ce7de090e2bc7581e883c275a3daf1a0beab51b58a",
+      "ink_fraction": 0.08488708180492333,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 80,
+        "top": 87,
+        "bottom": 36
+      },
+      "text_characters": 2982
+    },
+    {
+      "page": 6,
+      "sha256": "8eee171c8b790c0a468a3a2452c64352066bb87ee986c99cf11121fadf50705c",
+      "ink_fraction": 0.10656560746011402,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 81,
+        "top": 87,
+        "bottom": 36
+      },
+      "text_characters": 3619
+    },
+    {
+      "page": 7,
+      "sha256": "03d54c1e5bde8ed5b80d75a6ec351dc9bd43a5fbb40b9e9022e1260c8f6812a1",
+      "ink_fraction": 0.09524903875900473,
+      "ink_margins_px": {
+        "left": 81,
+        "right": 80,
+        "top": 83,
+        "bottom": 36
+      },
+      "text_characters": 3171
+    },
+    {
+      "page": 8,
+      "sha256": "f1948afa42f811630acf52e1fc253388f9e5af98b9f6e4601b96913d1f5e4404",
+      "ink_fraction": 0.09811640959915145,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 81,
+        "top": 83,
+        "bottom": 36
+      },
+      "text_characters": 2183
+    },
+    {
+      "page": 9,
+      "sha256": "84762b105d9b799510aedca693f21be22338fc921dd4ec18f777aef46f2506f8",
+      "ink_fraction": 0.13229592964157866,
+      "ink_margins_px": {
+        "left": 80,
+        "right": 80,
+        "top": 86,
+        "bottom": 36
+      },
+      "text_characters": 2352
+    },
+    {
+      "page": 10,
+      "sha256": "283f9d7f30f17d4e3b6bda56b78b06278d497facfc817191879daf7184510752",
+      "ink_fraction": 0.12653555486807797,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 80,
+        "top": 86,
+        "bottom": 36
+      },
+      "text_characters": 4147
+    },
+    {
+      "page": 11,
+      "sha256": "bf97e4705356560cea9c65c89a359e2f524866229b15d2ba4e135654918c096f",
+      "ink_fraction": 0.088966279223936,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 81,
+        "top": 86,
+        "bottom": 37
+      },
+      "text_characters": 2829
+    },
+    {
+      "page": 12,
+      "sha256": "656e0a53849d0f4a6871442fe0a81128ac38fb267b6505733050c18a58c8eb1b",
+      "ink_fraction": 0.08384142838202148,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 81,
+        "top": 83,
+        "bottom": 37
+      },
+      "text_characters": 2787
+    },
+    {
+      "page": 13,
+      "sha256": "eb52fe8a7a574641dae044b51f2f5b42cdf37a3cc6da4e67974729f360f12c73",
+      "ink_fraction": 0.09159941662615459,
+      "ink_margins_px": {
+        "left": 82,
+        "right": 81,
+        "top": 83,
+        "bottom": 36
+      },
+      "text_characters": 3132
+    },
+    {
+      "page": 14,
+      "sha256": "3f03782390f1c628c0ed8417a427b7766235cf6a4392ced6dfa98cb0f4c6bea0",
+      "ink_fraction": 0.07592875767887922,
+      "ink_margins_px": {
+        "left": 83,
+        "right": 81,
+        "top": 83,
+        "bottom": 37
+      },
+      "text_characters": 3621
+    }
+  ],
+  "source_sha256": {
+    "main.tex": "95fa603d553a331fa4f3797615cbf20193b7444b7231463314c9fee723d0541d",
+    "references.bib": "29cdcab9ee382360f4690a00021739404273c42ff8e18c47e28bc77870ca646c",
+    "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
+    "README.md": "7989dd8fcab2580ea7bb5b9f7eca779454f18ba3e83b054907da28d83384a505",
+    "STATUS.md": "1b5b9d0ddf10591a43af03242a68add726de64f2470232f94dbc78cd51c543b0",
+    "CITATION.cff": "7dec446f1db13c9322beb9fbaf85ffe11e67e727618ae131515b1361a05dd67c",
+    "audit/claim_register_20260922.json": "d73da07229886caf7ff3c24dfa9d8c9db4b483148a50c5fd4d9050dcbe7810d1",
+    "audit/claim_register_20260922.md": "229391dfbe011add8829718482cef71ee64524898b0e604a5fe5045d28157dc0",
+    "audit/adversarial_revision_round4_20260923.json": "87a7221885cceb9cecc99b03738fee461150c8fa43483dfbaeb10cda67e0766a",
+    "audit/adversarial_revision_round4_20260923.md": "a8d972178ad19132cea8566dcd548fa7804d799d9634b9cbf3afa094f53dd83a",
+    "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
+    "audit/adversarial_revision_20260922.md": "242b9a9ea5e32edd2dfec801d225c98839787d34c9e18810e82dbfaefabb9346",
+    "audit/adversarial_revision_round3_20260922.json": "56001e050190edcd24b34f021677f1e4b5d262b7383f94e745e399c736b27c64",
+    "audit/adversarial_revision_round3_20260922.md": "f371fcf24dd7be8bbfc118573da4e5857eb1e2a87ca33d188cce9ef04c714fee",
+    "audit/model_exposition_20260922.json": "36a8cfbc005387789c6029520be7bee58262eb2aefc826938db2dd4214f8c1ac",
+    "audit/model_exposition_20260922.md": "d38e6e6ad8f694b613ecbc1c8db24d74c4fa259b87385c8c25de793ac1144ce2",
+    "audit/mathematical_exposition_20260923.json": "3abcda19963b3a3d909429e8efb7526f4d37c1da14969e65c4d62babb952835d",
+    "audit/mathematical_exposition_20260923.md": "4421c3a53dda6bc3f319f4b01a4ee15cdb14aac88bcefe1e02c2ce83c4a4f1c2",
+    "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
+    "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
+    "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
+    "audit/finalization_20260930.json": "0f6d46cc13e564f2ae40de19869ba739e5c5e11a3b2f79746ed82086dcb436fe",
+    "audit/finalization_20260930.md": "f492e2bdea41eee500f16b8175f2c62dffa62e4b2f11d55a63a47ab9cc502049",
+    "scripts/build_figures.py": "3f37e00c1c784c363baeea0bc6e7096eea37ec2ed03d1b698aee12d1f5a30c51",
+    "scripts/full_manuscript_qa.py": "9cd8de5f2e9597968e4b5a3f1619e25b2a11dcf9fcfd4b7c676ecdcb5a67ef8b",
+    "scripts/test_qa_guards.py": "e3c66c54b8321d7d4a8ae1c394f61beac277d5a449218c51aa8213c0be90c9dd",
+    "scripts/write_build_audit.py": "8fb0bc4623e7a7267b77c4959b8e9f6f547cfeccbe99d4e28a1c65555861440a",
+    "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
+    "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+    "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
+    "data/reports/condition_only_control.json": "8d9b1ec17e23a11233b0eac9e12de86dc834928d119ef38d97ff41d42de5619f",
+    "data/reports/dicos-f-02_epoch90.json": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "data/reports/dicos-f-02_epoch90.provenance.json": "d6c9ae3fb5849c8519ae43d8bb8f2a73138b23a1f7473c9f65184690a21e510f",
+    "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
+    "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
+  },
+  "figures_manifest_sha256": "d29d0da0dcc6770f9be2736309d40a5942d5042527f258b1605619f7f4758fe2",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "executed_commands": [
+    {
+      "argv": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "build.ps1",
+        "-Python",
+        "C:\\Python313\\python.exe"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "af272bc833ffea37cbac33412d232ea22c04f94702ae29ebf2599577395b2c4d",
+      "stderr_sha256": "da5512ad25629171fb3fc02a461dc55f55787beaa73aed92c3ffce8a65c8863e"
+    },
+    {
+      "argv": [
+        "C:\\Python313\\python.exe",
+        "-m",
+        "py_compile",
+        "scripts/build_figures.py",
+        "scripts/full_manuscript_qa.py",
+        "scripts/write_build_audit.py"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "f18b93e5b7c568f55ac9bf54e2b439ad63165640aa831e43e7dae419e0c3da05"
+    },
+    {
+      "argv": [
+        "pdfinfo",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "59fecfc95b27ef4ca2546678a973f4c8fbe95dcd7dcd4c4baf14b33519f32fd8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftoppm",
+        "-png",
+        "-r",
+        "110",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\audit\\qa_runs\\iteration_86\\page"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "1",
+        "-l",
+        "1",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "a2b8ceec893f15a4963cef132cea89670f3507500467fd552d28e36c91f1585d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "2",
+        "-l",
+        "2",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "bcf805b14f03f4cf4d4caf07e5be1ca776d848fd66981648737daeb98146f5d3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "3",
+        "-l",
+        "3",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "993bc11a4ad044b3c7508faf0c4704f529c424ca76dc6682275f7b3c8ed31ca7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "4",
+        "-l",
+        "4",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "25577165865c51af9ac970ff29e20ecc56ec2136fad8a5afad6a9c226ddc0a5b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "5",
+        "-l",
+        "5",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "db56bf376bb00f9e10896ea1de05a6f3901ed40464fa573ba15266d4661b66a9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "6",
+        "-l",
+        "6",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "02bafa1a24ff3fd137c1aabfee5ca80260a8a1326ec37a40d45f515242928e7f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "7",
+        "-l",
+        "7",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "f20ccb6fd28ab20aa0a7b0d7fad604937dbf889850f7cb34d08bb9f9dc497920",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "8",
+        "-l",
+        "8",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "b22a184dda917973ee958798448088269c2805487e040e4b64b90f07d70a7497",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "9",
+        "-l",
+        "9",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "3bb6a8c0addff88a8dd9cdfad2b3da5063d3831cc2c392d857539396e5442231",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "10",
+        "-l",
+        "10",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "cbd3a9a550f505f08662d2b0956e7b5cc432663fe77dc05ac08ce51ec754cbf0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "11",
+        "-l",
+        "11",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "2323537d01aa551d741691c692148fd7bbf09cb5a277710866c18c0363f1868f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "12",
+        "-l",
+        "12",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "295b7a96a48c6398638b882a53d7e39a519cbf6f865eb30777560463e6281c02",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "13",
+        "-l",
+        "13",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "78f0d65fe2acd822a5beeb7425d119b21dc9095d79bb3492532399b2d51a32c5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "14",
+        "-l",
+        "14",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "c39f84b382c7df281ac6c95941a8bc2f6fb355b2dfc63ef3f4ea01b5d9ed309f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\fast-mc-paper\\output\\fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "ca1ece8ef7cc4553c4d335b1d5871d1ac86fb6472574992d5fb0fb14ce788dc7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "human_visual_review": "pending; render statistics are not visual inspection",
+  "commands": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1",
+    "python -m py_compile scripts/build_figures.py scripts/full_manuscript_qa.py scripts/write_build_audit.py",
+    "git diff --check",
+    "pdftoppm -png -r 110 output/fast_mc_zdc_manuscript.pdf audit/qa_runs/iteration_86/page",
+    "pdftotext output/fast_mc_zdc_manuscript.pdf -"
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "result": "pass",
+  "reviewed_utc": "2026-09-30T15:45:52.760104+00:00",
+  "pdf_sha256": "9434ab3053d991fea020ea0556a732b1b0220a346ba334ee91ce72d6c490e583",
+  "page_sha256": {
+    "1": "591cd01591091eaf1852fee418bb3c3687505760493e958c7c705e1af397c5b7",
+    "2": "93889b25b49d08db87f402b5277d2f89888260feb4739246edd73295c42c4f35",
+    "3": "9ec1771ac1ec9b15d14d9e98415d39d1a85a39d3f91c51e0c06d735d6e7b1862",
+    "4": "20addb7c17978c4da30de79dfecf3ca6cb13899a68b456a3497bdfc19df6ddd8",
+    "5": "84a082101eb4aa9886e4a4ce7de090e2bc7581e883c275a3daf1a0beab51b58a",
+    "6": "8eee171c8b790c0a468a3a2452c64352066bb87ee986c99cf11121fadf50705c",
+    "7": "03d54c1e5bde8ed5b80d75a6ec351dc9bd43a5fbb40b9e9022e1260c8f6812a1",
+    "8": "f1948afa42f811630acf52e1fc253388f9e5af98b9f6e4601b96913d1f5e4404",
+    "9": "84762b105d9b799510aedca693f21be22338fc921dd4ec18f777aef46f2506f8",
+    "10": "283f9d7f30f17d4e3b6bda56b78b06278d497facfc817191879daf7184510752",
+    "11": "249d0469de2668772779f7e0e9fa3011afe60e693765aae954e83569f8743513",
+    "12": "656e0a53849d0f4a6871442fe0a81128ac38fb267b6505733050c18a58c8eb1b",
+    "13": "eb52fe8a7a574641dae044b51f2f5b42cdf37a3cc6da4e67974729f360f12c73",
+    "14": "3f03782390f1c628c0ed8417a427b7766235cf6a4392ced6dfa98cb0f4c6bea0"
+  },
+  "method": "All QA84 pages 1-14 directly visually inspected and read. QA85 changed pages 6,11,12,13 directly reinspected; remaining pages byte-identical. Every QA86 page is byte-identical to QA85. Complete QA85 PDF text reread in page order. QA87 changed only page 11, directly visually inspected after the author-requested disclosure edit. All other page PNGs byte-identical to QA86.",
+  "directly_reviewed_pages_by_iteration": {
+    "84": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "85": [
+      6,
+      11,
+      12,
+      13
+    ],
+    "87": [
+      11
+    ]
+  },
+  "final_pages_bound_to_iteration_85": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    13,
+    14
+  ],
+  "observations": {
+    "front_matter": "Independent researcher and mailto email fit; no institutional affiliation implied.",
+    "figures": "All four figures inspected. Figure2 original colors correct; share flow and softmax decoder labels clarified. Prior F1 withdrawn.",
+    "equations": "All 14 equations legible, unchanged and paired with explanatory prose; density Jacobian wording clarified.",
+    "results": "Original result table preserved; per-bin and per-seed supplements legible, all populations and units stated.",
+    "appendices": "Calibration proposal provenance caveat, runtime omissions, classifier split, historical test usage and retained failure evidence clear.",
+    "declarations": "Mentor and lab community acknowledged warmly; version and availability updated.",
+    "references": "All 18 references fit one page, readable without clipping; citations resolved."
+  },
+  "layout_failures": [],
+  "scientific_status": "Document and rendering QA only; not physics validation",
+  "previous_revisions": [
+    {
+      "pdf_sha256": "8e01eb2f3f5608df8f0d265380b5b3a7a5ff52fd09bc16d9bb681bc74d4aa804",
+      "page_sha256": {
+        "1": "591cd01591091eaf1852fee418bb3c3687505760493e958c7c705e1af397c5b7",
+        "2": "93889b25b49d08db87f402b5277d2f89888260feb4739246edd73295c42c4f35",
+        "3": "9ec1771ac1ec9b15d14d9e98415d39d1a85a39d3f91c51e0c06d735d6e7b1862",
+        "4": "20addb7c17978c4da30de79dfecf3ca6cb13899a68b456a3497bdfc19df6ddd8",
+        "5": "84a082101eb4aa9886e4a4ce7de090e2bc7581e883c275a3daf1a0beab51b58a",
+        "6": "8eee171c8b790c0a468a3a2452c64352066bb87ee986c99cf11121fadf50705c",
+        "7": "03d54c1e5bde8ed5b80d75a6ec351dc9bd43a5fbb40b9e9022e1260c8f6812a1",
+        "8": "f1948afa42f811630acf52e1fc253388f9e5af98b9f6e4601b96913d1f5e4404",
+        "9": "84762b105d9b799510aedca693f21be22338fc921dd4ec18f777aef46f2506f8",
+        "10": "283f9d7f30f17d4e3b6bda56b78b06278d497facfc817191879daf7184510752",
+        "11": "bf97e4705356560cea9c65c89a359e2f524866229b15d2ba4e135654918c096f",
+        "12": "656e0a53849d0f4a6871442fe0a81128ac38fb267b6505733050c18a58c8eb1b",
+        "13": "eb52fe8a7a574641dae044b51f2f5b42cdf37a3cc6da4e67974729f360f12c73",
+        "14": "3f03782390f1c628c0ed8417a427b7766235cf6a4392ced6dfa98cb0f4c6bea0"
+      },
+      "reviewed_utc": "2026-09-30T15:33:02.937766+00:00"
+    }
+  ]
+}

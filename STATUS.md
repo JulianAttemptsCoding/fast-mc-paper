@@ -1,25 +1,31 @@
 # Scientific status
 
-Version 0.11.1 is a case study of one pilot Zero-Degree Calorimeter checkpoint: **similar mean occupancy accompanies later, more interrupted longitudinal support.** Mean graph-component counts also differ, but the adjacent-layer graph turns interior empty-layer runs into disconnected components by construction. The original high-level classifier AUROC is 0.775, above its declared 0.65 maximum; the row-wise matched-pair split means this is a development screening failure, not a clean held-out-pair fidelity estimate.
+Version 0.20.0 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
 
-The manuscript now gives equations for the implemented generator from input to output: the provisional visibility and response mixture, reference-derived log-fraction targets, masked flow-matching loss and eight-step updates, graph messages, Gumbel top-k support, deterministic energy closure, and nine-term training objective. These are implementation statements checked against source blobs, not claims that the architecture is physically adequate or responsible for the measured discrepancy.
+## Corrected central result
 
-## Supported claim
+The supplied external audit identified an inference omitted in v0.16.0. Let m be graph components, R occupied-layer runs, and G interior inactive layers. With Q=m-R, 1 + I[G>0] <= R <= G+1 implies delta mean Q >= delta mean m - mean G_generator + f_reference = 30.4458 components, at least 84.64% of the 35.9703-component excess. Thus empty-layer separations alone are insufficient: a within-run graph discrepancy is established. It is not necessarily lateral fragmentation, a physical-cluster effect, or causal attribution to a model stage. The earlier claim that the aggregates could not establish within-run fragmentation is superseded.
 
-On the recorded 10,000-condition development bank, the generated sample has 0.25 more active layers but reaches 4.42 layers farther downstream, leaving 3.95 more inactive layers inside the occupied span. It has 28.7 fewer active channels but 35.97 more weak graph components and a 6.03-percentage-point lower largest-component fraction. Mean total deposit differs by 0.045 GeV, with opposing ECAL and HCAL shifts. These are descriptive aggregate differences restricted to the selected dicos-f-02 epoch 90 checkpoint trained on 26,624 pilot events.
+## Scope and remaining research
 
-The batch-relative evaluator reports numerical validity. Its maximum layer residual exceeds the earlier absolute-only tolerance. The revision describes both policies without changing either. Raw-mode dust is a trivial zero-threshold counter. Aggregate records cannot independently reconstruct per-batch checks. The report also retains a paired, energy-stratified 95% bootstrap percentile interval of +0.19 to +0.76 percentage points for the +0.49-point zero-deposit difference; repeated inspection prevents a confirmatory interpretation.
+The results concern one training seed, raw deposits without an added threshold/time cut, an incompletely documented production geometry, separate nonempty samples and a reused validation bank. Headline structural intervals, threshold/graph sensitivity, an activity-independence null, occupancy calibration, same-bank pair-grouped C2ST, reconstructed observables and model-only timing remain unfinished research. The older row-split C2ST values and their failed condition-only control remain disclosed. No new event generation, training, test inspection, calibration or detector threshold was introduced.
 
-## Corrected provenance
+The author confirmed ePIC ZDC identity and data-owner approval for publication on 30 September 2026; no geometry tag was supplied. The paper does not claim equivalence to the current ePIC geometry. Name and email appear without an affiliation label at the author's request; Academia Sinica mentorship is acknowledged.
 
-The earlier v0.3.0 draft incorrectly attributed a later model's 551,234-event training role to this pilot checkpoint, misstated canonical split counts, described two later continuations rather than one accepted continuation, and presented a batch-wide closure tolerance as eventwise. Those statements and the previous QA assurances are superseded. Source evidence is bound to the checkpoint's exact configuration hash in `data/provenance/source_evidence.json`.
+## Evidence
 
-## Limits of this draft
+See audit/claude_integration_response_20261001.md for the latest proposal disposition and the earlier response files listed in README.md for historical audit items, audit/component_bound_20260930.json for the derived arithmetic and mathematical checks, and audit/final_build_audit.json for the current exact-source release binding. The current arXiv upload package should contain only main.tex, references.bib, main.bbl and the four included figures. Upload and final inspection on arXiv have not been performed.
 
-The bank was repeatedly inspected, its overlap with pilot validation is unresolved, and the checkpoint has one training seed. Event arrays are unavailable for structural uncertainty estimates, threshold scans, or graph sensitivity tests; the retained hit-count bootstrap interval is an exception for that distributional metric. The support definition uses energy greater than zero, the readout graph collapses ganged positions, and the graph is shared with the model. The manuscript makes no structural significance, post-digitization, physics-fidelity, speed, causal-mechanism, or architecture-superiority claim. Original shower-aware classifier scores are disclosed with their split limitation. A separate pair-grouped validation monitor records high-level AUROC 0.893 and condition-only AUROC 0.500; it uses its own bank. Neither condition-only score is evidence of shower fidelity.
+## Second audit correction
 
-## Work needed for broader claims
+Current v0.20.0 is an aggregate-only diagnostic note. Stored IDs are model channels, not verified physical electronics channels. Multiplicity alone does not establish ganging; physical interpretation is unresolved pending production segmentation/volume mapping. No integrity failure has been demonstrated for the stored-ID arithmetic, but no detector-level connectivity inference is permitted. The present reanalysis uses the evaluation summary; exact runs, jointly nonempty statistics and threshold studies require a new event-level evaluation. See `audit/second_external_audit_response_20260930.md`. Table 3 now includes retained population standard deviations.
 
-A locked bank with exact identities; at least three independent final training seeds; repeated fixed-condition Geant4 and model showers; valid paired/grouped multivariate tests; cap, clipping, solver and threshold diagnostics; an independent physical-neighbor graph; oracle-cascade and matched baseline comparisons; full-training-sample controls; reconstruction and memorization studies; end-to-end timing; and complete production physics provenance.
 
-Before submission, the author must verify authorship/acknowledgments, collaboration data permissions and the immutable release. These are publication decisions; manuscript QA cannot establish them. The user's intended future Stony Brook/New Haven EIC ZDC context is noted as motivation only and is not used to assert detector identity, affiliation or readiness.
+## Physical interpretation and third audit
+
+Version 0.20.0 explains the physical observable represented by each architecture stage, distinguishes stored-energy closure from incident-energy conservation, and uses gap fractions to sharpen the component bound. See `audit/physics_exposition_response_20261001.md`. The active QA series is named in `audit/current_qa_series.json`; historical attempts are immutable.
+
+
+## Final reader-proposal integration
+
+Version 0.20.0 incorporates verified improvements from the Claude proposal: detector context and stored-coordinate dimensions, clearer stage labels, an illustration of gaps/runs/components, normalized paired-response intervals and deep-layer energy totals. Proposal claims of independent paired samples, threshold irrelevance and guaranteed classifier lower bounds are not adopted. See `audit/claude_integration_response_20261001.md`.

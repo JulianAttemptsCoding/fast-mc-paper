@@ -1,0 +1,22 @@
+{
+  "created_utc": "2026-10-01T09:41:47.856422+00:00",
+  "revision": "0.20.0",
+  "sha256": "eecd8b3c16c641fff498151a37c252c2f4ce267c4d27f2cef24fc40c7b0256df",
+  "members_sha256": {
+    "main.tex": "ddb1ae8b3607c45a8562522ea0cf76d3bb03b9e4c85cb3ae561ac5a91d9bd912",
+    "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+    "main.bbl": "b66a5ab1a81942848dc66bdce817376736e30c2f38d2c6a7ea92c57ce7448cb3",
+    "figures/detector_geometry.png": "0f96b74f9b18431509b71e9a6b7b4b4d20f50916f0252beeb4af5f81f506071a",
+    "figures/generator_schematic.png": "7286a3b17792d6b90790da56560ca74a712b3b215bb55ab53accc644d33d669f",
+    "figures/longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
+    "figures/support_summary.png": "dc8613229d85474c19e141743ca55c5521eee3ab7b1b41b8833d37223b820b5d"
+  },
+  "pdf_sha256": "14259865b931c2ce17f1a2abe3215cc5ec3d2698368fa876b32e949ff89e7598",
+  "status": "Seven-file source archive; CRC and exact bytes verified",
+  "arxiv_server_compile": "Not performed",
+  "current_qa": "audit\\qa_series\\claude_integration_20261001\\iteration_04.json",
+  "guidance_checked": [
+    "https://info.arxiv.org/help/submit_tex.html",
+    "https://info.arxiv.org/help/faq/texlive.html"
+  ]
+}

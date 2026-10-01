@@ -1,0 +1,50 @@
+{
+  "created_utc": "2026-10-01T07:27:43.993892+00:00",
+  "revision": "0.18.0",
+  "status": "document_revision_complete; empirical limitations remain",
+  "main_sha256": "126de20896906f81dc4c66f505389892f7fda8d7d0e98e9a780284015ab36493",
+  "pdf_sha256": "2f0de6dd3ebd24b72ed9bc2ad934b1cdb1cc9ea7d91a385c46f0caee418bf81b",
+  "zip_sha256": "e4b8b7377ad72e0869021781c41c2ecd9f5ece811a8a3a672ccdeab6a7f28192",
+  "automated_checks": 18,
+  "visual_pages": 14,
+  "guard_tests": 7,
+  "failed_qa": [
+    97
+  ],
+  "failed_qa_resolution": "15 pages with AI declaration alone; repetition trimmed; unchanged 14-page cap met by QA98",
+  "native_compile": "platform-directory initialization failed; final source checked again",
+  "local_build": "LaTeX/Biber and exact source/PDF/figure/visual binding passed",
+  "helper_sha256": "1b7ce3c2f4495a3e47d8ec01a2b71404f4e73b31b603c145de93f6632fe3d218",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "commands": [
+    [
+      "C:\\Python313\\python.exe",
+      "-X",
+      "utf8",
+      "scripts/write_build_audit.py"
+    ],
+    [
+      "C:\\Python313\\python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_qa_guards.py",
+      "-v"
+    ]
+  ],
+  "remaining": "Production XML/ID semantics; exact event runs and paired structural statistics; threshold/timing/graph, solver, generation-timing and repeated-fit studies.",
+  "new_event_or_test_data_access": false,
+  "external_submission": false,
+  "supersedes": "v0.17.0; prior deliverables preserved in second_external_audit_20260930 source snapshot",
+  "updated_utc": "2026-10-01T07:29:51.693158+00:00",
+  "current_qa": 99,
+  "visual_binding": "All QA99 image hashes identical to directly inspected QA98 pages"
+}

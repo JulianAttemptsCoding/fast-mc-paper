@@ -1,0 +1,351 @@
+{
+  "status": "source_review_complete",
+  "created_utc": "2026-09-30T08:31:38.417694+00:00",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "baseline_pdf_sha256": "ab20192c4d29df50f3313ce1272aad0b04bb4c9e29ebaf34883c58f7c681a8c2",
+  "input_sha256": {
+    "main.tex": "715c1b07f7ab88d2a48ba9fe3b8b7574f18144af7bdb646e716fe734ac1aa20c",
+    "scripts/build_figures.py": "8be0c66a482b7d5a7df031d55e5adb656cdaf7e2d1f3db907ff3f7a8faa79ece",
+    "scripts/full_manuscript_qa.py": "9bbed957463b775b95f12fdd5286503c86f63b1c282cd2e782a9c66b25f3d40e",
+    "scripts/write_build_audit.py": "17617fc39102fbdaae5a8749c4a3394d129d42d44f9df45d6f71faa774f491f5",
+    "README.md": "cd713d098d3af1c22f5c82d74a884c1e6163aa8ee481f5cef2c6ec7f2f78282b",
+    "STATUS.md": "5e4d1e739377e02c366ced49d15c2bf654695021370c487d06b76f86302a8c81",
+    "CITATION.cff": "7929e661752747ad7d6cf39d7e7d8d3630305bf71757bc7598a1d72bd382835b"
+  },
+  "passes": [
+    {
+      "number": 1,
+      "lens": "Word-level abstract and introduction",
+      "result": "Read every sentence; remove evaluative only from occupancy statement; retain pilot and uncertainty boundaries."
+    },
+    {
+      "number": 2,
+      "lens": "Study populations and quantifiers",
+      "result": "The phrase All shower comparisons overstates bank uniformity because a separate monitor uses its own bank; change to primary shower comparison."
+    },
+    {
+      "number": 3,
+      "lens": "All 14 equations and definitions",
+      "result": "Checked conditions, masks, dimensions, cap, flow updates, decoder, graph and gap identity; preserve equations exactly."
+    },
+    {
+      "number": 4,
+      "lens": "Figure-to-prose correspondence",
+      "result": "Source and high-resolution architecture agree; previous F1 withdrawn. Plan clearer flow/decoder stage labels."
+    },
+    {
+      "number": 5,
+      "lens": "Historical provenance and calibration",
+      "result": "Calibration source hash matches retained evidence; weights are a proposal and runtime YAML absent, so do not assert independent applied-weight verification."
+    },
+    {
+      "number": 6,
+      "lens": "Classifier methodology",
+      "result": "Recovered exact historical classifier source: 70/30 class-stratified rows, max_iter=100,max_depth=4,learning_rate=.08; source identity distinct from historical runtime verification."
+    },
+    {
+      "number": 7,
+      "lens": "Numerical results and denominators",
+      "result": "Per-bin counts and four families of per-seed AUROC recovered; preserve separate nonempty support denominators and all-event response population."
+    },
+    {
+      "number": 8,
+      "lens": "Author declarations",
+      "result": "User confirms independent researcher affiliation/contact and mentor/lab acknowledgment; no institutional representation."
+    },
+    {
+      "number": 9,
+      "lens": "Rendered title and affiliation",
+      "result": "Name, independent-researcher role and mailto email fit on page 1; title remains explicitly pilot-scoped."
+    },
+    {
+      "number": 10,
+      "lens": "Abstract-to-conclusion numerical agreement",
+      "result": "1.0%, 0.25 layers, 4.42 last-layer shift and 3.95 gaps agree throughout; no precision or causal claim added."
+    },
+    {
+      "number": 11,
+      "lens": "Response density wording",
+      "result": "Clarified that the Jacobian multiplies the density, avoiding an ambiguous statement about multiplying a negative log likelihood."
+    },
+    {
+      "number": 12,
+      "lens": "Appendix symbol alignment",
+      "result": "Changed V/T/etc labels to w_V/w_T/etc to match the weights in Eq. 13."
+    },
+    {
+      "number": 13,
+      "lens": "Feature-definition exactness",
+      "result": "Corrected denominator-floor prose so it applies only to normalized features, not unnormalized total/count inputs."
+    },
+    {
+      "number": 14,
+      "lens": "Acknowledgment tone",
+      "result": "Retained warm mentor/lab thanks; removed unnecessary institutional-position disclaimer because title metadata already states independent researcher."
+    },
+    {
+      "number": 15,
+      "lens": "Graph and longitudinal argument",
+      "result": "Verified m>=R uses adjacent-layer edges; no conversion of gap-layer count into run count or independent lateral-fragmentation claim."
+    },
+    {
+      "number": 16,
+      "lens": "Metric populations and arithmetic",
+      "result": "Checked all-event response, independent nonempty support denominators, paired W1 bootstrap and per-bin counts; numerical table unchanged."
+    },
+    {
+      "number": 17,
+      "lens": "Classifier split and seed roles",
+      "result": "All 12 family/seed AUROCs retained; condition control, classifier seeds and generator seed clearly distinguished; internal early-stopping defaults caveat retained."
+    },
+    {
+      "number": 18,
+      "lens": "Visual pagination and figures",
+      "result": "Directly inspected all 14 QA84 pages, four figures, four tables and references; no clipping, overlaps, orphan headings or unreadable labels."
+    },
+    {
+      "number": 19,
+      "lens": "Whole-manuscript reread: skeptical scientific reader",
+      "result": "Read full rendered manuscript from abstract through appendices/references; central result remains one-bank descriptive support mismatch with limitations disclosed."
+    },
+    {
+      "number": 20,
+      "lens": "Reproducibility and historical provenance",
+      "result": "Frozen config hash is recorded but runtime file absent; calibration proposal labeled honestly; source snapshots saved rather than treating defaults as exact environment evidence."
+    },
+    {
+      "number": 21,
+      "lens": "Whole-manuscript reread: final prose and logical flow",
+      "result": "Reread all 14 pages in extracted final PDF order. Checked every paragraph against adjoining claims, definitions and conclusion; no further substantive issue found."
+    },
+    {
+      "number": 22,
+      "lens": "Changed-page visual reinspection",
+      "result": "Directly inspected QA85 pages 6,11,12,13; all other pages match the individually inspected QA84 renders. Corrected Jacobian prose, acknowledgments, weight labels and feature-floor sentence fit cleanly."
+    },
+    {
+      "number": 23,
+      "lens": "Links, fonts and document identity",
+      "result": "Verified email and repository annotations, title/author PDF metadata, all fonts embedded with Unicode maps, no TODO/TBD, no whitespace errors and all 14 equations identical to baseline."
+    },
+    {
+      "number": 24,
+      "lens": "Release metadata and audit continuity",
+      "result": "Synchronized CFF email/independent affiliation; corrected historical v0.15 audit label in README; current-source audit and old QA82 remain separate. Seven stale-binding/build-failure guards passed."
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "-X",
+        "utf8",
+        "audit/finalize_revision_20260930.py"
+      ],
+      "result": "source revision applied"
+    },
+    {
+      "argv": [
+        "python",
+        "-X",
+        "utf8",
+        "scripts/full_manuscript_qa.py",
+        "--iteration",
+        "84",
+        "--focus",
+        "Appendix arithmetic and full rendered manuscript review",
+        "--disposition",
+        "Established Python runtime; preserve QA83 dependency failure"
+      ],
+      "result": "pass; complete subcommands and hashes in iteration_84.json"
+    },
+    {
+      "argv": [
+        "python",
+        "-X",
+        "utf8",
+        "scripts/full_manuscript_qa.py",
+        "--iteration",
+        "85",
+        "--focus",
+        "Second complete reread: precise mathematical prose, appendix notation and author declarations",
+        "--disposition",
+        "Preserve all equations and reported results; verify corrected text and full pagination"
+      ],
+      "result": "pass; full command hashes in iteration_85.json"
+    },
+    {
+      "argv": [
+        "python",
+        "-X",
+        "utf8",
+        "scripts/test_qa_guards.py"
+      ],
+      "result": "7 passed"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "1",
+        "-l",
+        "7",
+        "output/fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "result": "complete reread first half"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-f",
+        "8",
+        "-l",
+        "14",
+        "output/fast_mc_zdc_manuscript.pdf",
+        "-"
+      ],
+      "result": "complete reread second half"
+    },
+    {
+      "argv": [
+        "pdffonts",
+        "output/fast_mc_zdc_manuscript.pdf"
+      ],
+      "result": "all fonts embedded, subset, Unicode mapping"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "result": "pass; existing LF/CRLF informational notice for logs.md"
+    }
+  ],
+  "failures": [
+    {
+      "iteration": 83,
+      "failure": "Bundled Python missing matplotlib",
+      "correction": "Use established C:/Python313/python.exe used by historical manuscript builds; no dependency install or guard relaxation",
+      "pdf_preserved": true
+    }
+  ],
+  "scientific_scope": "No raw/test data access, no training or new model evaluation; aggregate-based manuscript finalization",
+  "preexisting_dirty": true,
+  "baseline_commit": "8c02469f0570e6ff57d0d4ed709cb296a68aa7d5",
+  "notes": [
+    "Prior PDF review F1-F7 adopted as review leads; metadata question pending.",
+    "Graft navigation is indexed in a different checkout, not this separate paper repository; direct bounded source inspection used here.",
+    "No stronger claims or unavailable statistics will be invented."
+  ],
+  "source_commit": "e039841404fc442c7496383d20a8566ac589eea3",
+  "historical_source_sha256": {
+    "src/cbsc_zdc/eval/metrics.py": "a6844fc9217e29c39e99d46afb97cfa03dc7b615f3f99ab1dd5bd0c16438243c",
+    "src/cbsc_zdc/eval/v3_battery.py": "1f8b95ac16cd38ea92878f9feceabc230167fe6b27b01a12873e8e4c3e5a7f59",
+    "src/cbsc_zdc/training/weights.py": "340162791a048d6fc02ddac0350ece94eb898b170b8d98af76c70ba8d7a38787"
+  },
+  "author_metadata": {
+    "affiliation": "Independent researcher",
+    "email": "juliansjuan08@gmail.com",
+    "source": "User reply in current session; not an Academia Sinica institutional affiliation"
+  },
+  "corrections": [
+    {
+      "finding": "Previous review F1 figure-color error",
+      "disposition": "Retracted after full-resolution figure and source inspection: original colors are correct. Improve explicit stage labels only.",
+      "evidence": "plot_architecture rows and 2236x832 PNG: r is flow; Y_li is decode."
+    }
+  ],
+  "current_main_tex_sha256": "126de20896906f81dc4c66f505389892f7fda8d7d0e98e9a780284015ab36493",
+  "changes": [
+    "Independent researcher/contact metadata and mentor/lab thanks",
+    "Precise primary-comparison bank scope",
+    "Explicit share-flow and decoder labels; original colors retained",
+    "Two evidence-bound appendices: settings, weights, all bins, all classifier seeds and methodology",
+    "Historical test-use disclosure and unavailable-runtime limitations",
+    "Revision metadata and strict historical/current audit bindings updated"
+  ],
+  "qa_completed": [
+    {
+      "iteration": 84,
+      "result": "pass",
+      "checks": 16,
+      "pages": 14,
+      "followup": "Small prose/symbol corrections now require rebuild"
+    },
+    {
+      "iteration": 85,
+      "result": "pass",
+      "pages": 14,
+      "check_groups": 16
+    }
+  ],
+  "references_checked": [
+    "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+  ],
+  "review_pass_count": 24,
+  "whole_manuscript_readings": [
+    {
+      "version": "baseline v0.15",
+      "method": "Entire main.tex read in bounded source chunks before edits; prior full PDF review retained"
+    },
+    {
+      "version": "v0.16 QA84",
+      "method": "Every rendered page 1-14 read visually in sequence"
+    },
+    {
+      "version": "v0.16 QA85",
+      "method": "Every page 1-14 reread from PDF text; four changed pages visually reinspected and unchanged page hashes verified"
+    }
+  ],
+  "guard_tests": {
+    "count": 7,
+    "result": "pass",
+    "intentional_native_exit": 7,
+    "interpretation": "Synthetic release-safety checks; not physics validation"
+  },
+  "graft": {
+    "check": "passed",
+    "queries": 1,
+    "estimated_tokens_saved": 22868,
+    "scope": "Primary project navigation only; separate manuscript sources not indexed there"
+  },
+  "final_source_review_status": "Complete; 24 documented passes and three whole-manuscript readings. Final QA must bind these completed records before release.",
+  "author_requested_followups": [
+    {
+      "date": "2026-09-30T08:44:39.479777-07:00",
+      "request": "Author requested AI disclosure wording adjustment",
+      "old_phrase": "analysis and model-design proposals",
+      "new_phrase": "reviewing the model specifications",
+      "input_main_tex_sha256": "95fa603d553a331fa4f3797615cbf20193b7444b7231463314c9fee723d0541d",
+      "output_main_tex_sha256": "844c00be0f102bf527aa75cc252c1906de6dac90bc70b15ff4da540af2ad2c5b",
+      "scope": "Single phrase; no scientific results or contribution claims otherwise changed",
+      "environment": {
+        "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26200-SP0"
+      },
+      "command": "Assert exactly one old phrase, replace byte-for-byte, refresh source review hash; then full_manuscript_qa.py --iteration 87"
+    }
+  ],
+  "subsequent_source_revisions": [
+    {
+      "audit": "audit\\fresh_reader_review_20260930.json",
+      "previous_source_sha256": "844c00be0f102bf527aa75cc252c1906de6dac90bc70b15ff4da540af2ad2c5b",
+      "new_source_sha256": "d9c94d146dcc6d8ba055fef23f2ef8451bf65cbd0c19da9117141bf1ab0e59d0",
+      "reason": "Fresh-reader clarification; all equations and all numerical tables unchanged; rebuild pending."
+    }
+  ],
+  "current_author_metadata": {
+    "name": "Julian Juan",
+    "email": "juliansjuan08@gmail.com",
+    "affiliation_label": null,
+    "authority": "Explicit user removal request",
+    "history": "audit/source_snapshots/submission_preflight_20260930/audit/finalization_20260930.json"
+  },
+  "current_revision": "0.18.0",
+  "superseding_scientific_review": "audit/second_external_audit_response_20260930.md"
+}

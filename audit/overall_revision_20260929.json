@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "version": "0.15.0",
+  "status": "source_review_complete",
+  "created_utc": "2026-09-30T03:04:44.338637+00:00",
+  "request": "Overall scientific, rhetorical and presentation audit informed by the latest supplied critique.",
+  "input_sha256": {
+    "v014_main.tex": "b8b1c491fd282315e48681fa56cf8d1adf523039ec678780b4873b9da06db00c",
+    "attached_audit": "1fa6e4cfb0d4ce305b060f22f60a776205469ad70f05667e88d544aaf983a9e0",
+    "report": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+    "Lamarr_v1": "077f9249b55becf616d9ea08272968c3869bcb6a62747edd2b8dcdb16114e7c7",
+    "implementation_guide": "ccbd2bad099e56b605b823fce65054b76b09f650765b1cea0cbe9bb442a21b07",
+    "focused_rules": "1a3efe90c6a523e63e484dfc986824ba72c612dc102d189a8a518c7f2cb73dae"
+  },
+  "current_main_tex_sha256": "715c1b07f7ab88d2a48ba9fe3b8b7574f18144af7bdb646e716fe734ac1aa20c",
+  "environment": {
+    "python": "3.13.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "host": "local; no DiCOS access"
+  },
+  "scope": "One pilot checkpoint, validation-derived development bank, 50\u2013250 GeV. Manuscript revision only.",
+  "passes": [
+    {
+      "pass": 1,
+      "focus": "overall question, scope and critique disposition",
+      "result": "Retained diagnostic title and core observation. Removed roadmap and premature oracle-test promise; clarified abstract graph argument and uncertainty."
+    },
+    {
+      "pass": 2,
+      "focus": "methods, populations and interpretation",
+      "result": "Added Section2 navigation; standardized development-bank terminology; moved message-passing concept before equation; explained loss-weight sensitivity as future work."
+    },
+    {
+      "pass": 3,
+      "focus": "figures, numerical criteria and Discussion",
+      "result": "Added absolute difference annotations to Figure4; preserved axes, means and populations; distinguished the batch-dependent pass from fixed-tolerance failure; split training versus numerical limits and made timing requirements visible."
+    },
+    {
+      "pass": 4,
+      "focus": "complete rendered reread from abstract through references",
+      "coverage": "All twelve QA80 pages directly inspected. Each equation, figure, caption, table row and paragraph reviewed in sequence.",
+      "result": "Found ambiguous pronoun after terminology consolidation, heavy abstract uncertainty wording and compressed cap-diagnostic terminology. Corrected all three; defined empty shower once and harmonized usage."
+    },
+    {
+      "pass": 5,
+      "focus": "independent source and population cross-check",
+      "finding": "The report stores energy bins under positive_response, but the historical evaluator passes all event totals. Weighted bin means reproduce the all-event mean. Historical W1 implementation integrates empirical step functions exactly.",
+      "result": "Confirmed current paper population and W1 definitions. Current OneDrive checkout contains an older approximate helper and was not used to infer historical battery behavior."
+    },
+    {
+      "pass": 6,
+      "focus": "final full-document semantic and rendered copyedit",
+      "coverage": "QA81 pages1,2,3,4,8,9,10 directly inspected; other pages byte-identical to the fully inspected QA80 pages.",
+      "result": "Twelve pages remain legible. No clipping, overlap, orphan heading or unresolved terminology issue found. Every displayed equation and numerical table unchanged."
+    },
+    {
+      "pass": 7,
+      "focus": "complete 42-point critique disposition and research scope",
+      "result": "Recorded response to all42 numbered items. Retained the exact cap and m>=R argument with reasons; deferred new timing and physics measurements explicitly. Updated local release date to September30; metadata-bound final QA required."
+    },
+    {
+      "pass": 8,
+      "focus": "final exact-output and safeguard verification",
+      "result": "QA82 passes all15 check groups; all12 page hashes match the reviewed QA81 pages. Seven release/native-build guard tests pass. Exact14 displayed equations and numerical table preserved; no unresolved document defect identified."
+    }
+  ],
+  "verification": {
+    "displayed_equations_preserved": 14,
+    "numerical_table_preserved": true,
+    "automated_qa_iterations": [
+      80,
+      81,
+      82
+    ],
+    "final_iteration": 82,
+    "check_groups": 15,
+    "pages": 12,
+    "visual_review": "pass",
+    "guard_tests": 7
+  },
+  "decisions": [
+    "Keep exact response-cap constants in the main model specification for reproducibility.",
+    "Keep the short m>=R graph argument because gap count alone does not determine graph separations.",
+    "Retain the legible two-row schematic; a single row would shrink ten stages excessively.",
+    "Keep transparent AI disclosure and existing author statement; no journal-specific policy or author confirmation invented.",
+    "Do not invent timing, uncertainty, new fits, reconstruction results or metadata."
+  ],
+  "failures": [
+    "Lamarr arXiv version URL failed to open; CERN PDF returned a bot challenge. Read the supplied local PDF instead.",
+    "APS metric-paper page fetch failed; used the primary arXiv abstract/search record for the complementary-metric premise.",
+    "Two read-only inspection calls mixed paper/source checkout paths and returned missing-file errors. Corrected to explicit paper paths and the recorded non-OneDrive historical repository; no file writes occurred in failed reads."
+  ],
+  "commands": [
+    "Read project rules, attached audit, current source, QA guard, report and figure builder.",
+    "Read Lamarr local PDF pages3\u20136; browsed CaloGraph/CaloDREAM v1 and primary Lamarr/HEP-metric records.",
+    "PDF edit marker succeeded once before authoring.",
+    "Saved v0.14 snapshot; performed guarded paragraph replacements and exact equation/table equality checks.",
+    "Synchronized v0.15 metadata; preserved v0.14 source binding to QA79 and added current-audit/snapshot binding. Equivalent prose assertions updated; all numerical guards unchanged.",
+    "QA80 full suite PASS, 12pages, PDF664b0d31f08f52072fb3c668337a3466612625f4bea266da3450365bd9b938da. Direct view_image inspection pages1\u201312.",
+    "git show historical commit for v3_battery.py and metrics.py; verified battery blob hash against recorded provenance.",
+    "Corrected pronoun, uncertainty sentence, cap-diagnostic explanation and empty-shower terminology; equivalent cap assertion updated.",
+    "QA81 full suite PASS, 12pages, PDF6c352ef6f228df09ff7d6eaa0acfb25b873382c695bb86301821876110091cef; direct changed-page review with exact unchanged-page hashes.",
+    "Changed CITATION.cff release date to2026-09-30; no manuscript or figure change after QA81.",
+    "python scripts/full_manuscript_qa.py --iteration 82 --focus \"final overall audit release binding\" --disposition \"complete final source evidence equations figures and page checks\": PASS.",
+    "Compared all QA82 page hashes with QA81: identical.",
+    "python scripts/test_qa_guards.py: seven tests PASS; intentional synthetic native failure preserved the final PDF."
+  ],
+  "research": [
+    {
+      "source": "CaloGraph v1",
+      "url": "https://arxiv.org/html/2402.11575v1",
+      "application": "Separate data/geometry/preprocessing definitions and explain graph operations before network detail."
+    },
+    {
+      "source": "Lamarr v1",
+      "url": "https://arxiv.org/abs/2309.13213",
+      "application": "Explain modular dependencies and distinguish reconstructed-observable validation from low-level response. Treat timing as a separately specified measurement."
+    },
+    {
+      "source": "HEP generative metrics, 2022/2023",
+      "url": "https://arxiv.org/abs/2211.10295",
+      "application": "Use complementary observables; mean or invariant agreement cannot replace distributional assessment."
+    }
+  ],
+  "outputs": {
+    "main.tex": "715c1b07f7ab88d2a48ba9fe3b8b7574f18144af7bdb646e716fe734ac1aa20c",
+    "output/fast_mc_zdc_manuscript.pdf": "ab20192c4d29df50f3313ce1272aad0b04bb4c9e29ebaf34883c58f7c681a8c2",
+    "figures/manifest.json": "beb2b82ca603eb12aea9e0648f66a08eb820ba1826c152238c6e42d7de792a59",
+    "scripts/build_figures.py": "8be0c66a482b7d5a7df031d55e5adb656cdaf7e2d1f3db907ff3f7a8faa79ece",
+    "scripts/full_manuscript_qa.py": "9bbed957463b775b95f12fdd5286503c86f63b1c282cd2e782a9c66b25f3d40e",
+    "CITATION.cff": "7929e661752747ad7d6cf39d7e7d8d3630305bf71757bc7598a1d72bd382835b",
+    "audit/iterations/iteration_82.json": "378cb98ced68db279c533a4c305390f39d3bd251c1938dca3577212d27e2d638",
+    "audit/visual_review_overall_20260929.json": "0bbb6f56bc17f8ef884a8d3473df748686f4c1854302a1df56f2a086ab9a6489"
+  },
+  "additional_source_check": {
+    "source_root": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\Fast MC CBSC",
+    "commit": "e039841404fc442c7496383d20a8566ac589eea3",
+    "files": {
+      "src/cbsc_zdc/eval/v3_battery.py": "1f8b95ac16cd38ea92878f9feceabc230167fe6b27b01a12873e8e4c3e5a7f59",
+      "src/cbsc_zdc/eval/metrics.py": "a6844fc9217e29c39e99d46afb97cfa03dc7b615f3f99ab1dd5bd0c16438243c"
+    },
+    "older_checkout_helper_sha256": "eef250c321475e1a412ed703785ed9e9273f660b280a9b6f0546aca6b57cfee0"
+  },
+  "reviewer_disposition": [
+    {
+      "item": 1,
+      "status": "addressed",
+      "decision": "Abstract now explains how empty layers disconnect occupied runs and names uncertainties on gap/connectivity differences."
+    },
+    {
+      "item": 2,
+      "status": "retained",
+      "decision": "Diagnostic pilot title retained because the evidence does not establish a fast, high-fidelity production simulator."
+    },
+    {
+      "item": 3,
+      "status": "addressed",
+      "decision": "Removed the prospective oracle test from the Introduction; it remains explicitly proposed in Discussion."
+    },
+    {
+      "item": 4,
+      "status": "addressed",
+      "decision": "Removed the expendable Introduction roadmap."
+    },
+    {
+      "item": 5,
+      "status": "addressed",
+      "decision": "Production-metadata sentence now uses a direct verb and explicitly names the unknown four-vector reference point."
+    },
+    {
+      "item": 6,
+      "status": "addressed",
+      "decision": "Added subsections for conditioning/target, geometry/graph, and populations."
+    },
+    {
+      "item": 7,
+      "status": "retained",
+      "decision": "Kept matched incident conditions distinct from independent shower histories."
+    },
+    {
+      "item": 8,
+      "status": "retained",
+      "decision": "Kept the physical cascade explanation before implementation detail."
+    },
+    {
+      "item": 9,
+      "status": "retained",
+      "decision": "Retained the readable two-row schematic and explicit direction; ten stages in one row would reduce label readability."
+    },
+    {
+      "item": 10,
+      "status": "retained",
+      "decision": "Kept the conceptual flow-transport explanation and artificial-time definition."
+    },
+    {
+      "item": 11,
+      "status": "addressed",
+      "decision": "Replaced limited by the cap with capped at the training-derived value."
+    },
+    {
+      "item": 12,
+      "status": "retained",
+      "decision": "Exact cap constants remain in the main specification: they define the actual sampler and saturation occurs inside the claim range."
+    },
+    {
+      "item": 13,
+      "status": "addressed",
+      "decision": "Explained graph messages and channel updates before Eq.9; defined learned functions immediately afterward."
+    },
+    {
+      "item": 14,
+      "status": "retained",
+      "decision": "Kept exact top-K count enforcement and absence of connectivity constraints."
+    },
+    {
+      "item": 15,
+      "status": "addressed",
+      "decision": "Reworded the introduction to the nine-loss joint training objective."
+    },
+    {
+      "item": 16,
+      "status": "addressed",
+      "decision": "Linked clipped loss weights to a specific proposed sensitivity study; no causal effect asserted."
+    },
+    {
+      "item": 17,
+      "status": "retained",
+      "decision": "Kept three-scale evaluation and the numerical-check/distribution-comparison distinction."
+    },
+    {
+      "item": 18,
+      "status": "retained",
+      "decision": "Kept m>=R because it distinguishes occupied runs from inactive-layer counts and prevents attributing every component to a separate gap."
+    },
+    {
+      "item": 19,
+      "status": "retained",
+      "decision": "Kept one explicit paragraph defining available bootstrap intervals and unavailable structural/profile/bin intervals."
+    },
+    {
+      "item": 20,
+      "status": "addressed",
+      "decision": "Split the separate grouped-monitor description into partitioning and score sentences."
+    },
+    {
+      "item": 21,
+      "status": "retained",
+      "decision": "Kept the table introduction focused on the physical contrast."
+    },
+    {
+      "item": 22,
+      "status": "retained",
+      "decision": "Preserved the numerical table, units and pp definition; differences remain computed before rounding."
+    },
+    {
+      "item": 23,
+      "status": "addressed",
+      "decision": "Replaced close total with similar total means and opposing section-level shifts."
+    },
+    {
+      "item": 24,
+      "status": "retained",
+      "decision": "Kept the mean-profile figure before the eventwise-gap analysis and retained corrected axes/caption."
+    },
+    {
+      "item": 25,
+      "status": "addressed",
+      "decision": "Stated explicitly that agreement averaged over energy need not hold within each energy bin."
+    },
+    {
+      "item": 26,
+      "status": "retained",
+      "decision": "Preserved the longitudinal-activity paragraph and all numerical identities."
+    },
+    {
+      "item": 27,
+      "status": "addressed",
+      "decision": "Added generator-minus-reference difference annotations to every support panel; retained zero-based axes and panel-specific units."
+    },
+    {
+      "item": 28,
+      "status": "retained",
+      "decision": "Kept the all-event W1 versus nonempty conditional-mean distinction."
+    },
+    {
+      "item": 29,
+      "status": "addressed",
+      "decision": "Defined the batch-dependent criterion before its pass result and stated that the earlier fixed criterion is exceeded. No tolerance changed."
+    },
+    {
+      "item": 30,
+      "status": "retained",
+      "decision": "Kept the Discussion opening focused on interrupted longitudinal organization."
+    },
+    {
+      "item": 31,
+      "status": "retained",
+      "decision": "Kept graph/longitudinal confounding and the absence of an established independent lateral-fragmentation effect."
+    },
+    {
+      "item": 32,
+      "status": "retained",
+      "decision": "Kept cascade mechanism interpretation and the prospective reference-replacement diagnostic."
+    },
+    {
+      "item": 33,
+      "status": "addressed",
+      "decision": "Separated training/architecture possibilities from the loss-history, cap and solver limitations."
+    },
+    {
+      "item": 34,
+      "status": "addressed",
+      "decision": "Organized Discussion into interpretation, limitations/robustness, and computational performance/detector applications."
+    },
+    {
+      "item": 35,
+      "status": "future measurement",
+      "decision": "Added a visible computational-performance subsection and hardware/batch-size benchmark requirements. No latency or speedup result invented."
+    },
+    {
+      "item": 36,
+      "status": "addressed",
+      "decision": "Narrowed the conclusion opening to longitudinal organization while retaining the methodological lesson."
+    },
+    {
+      "item": 37,
+      "status": "addressed",
+      "decision": "Described the repository as processed summaries, geometry, history and reproduction scripts; preserved availability limits and provenance."
+    },
+    {
+      "item": 38,
+      "status": "retained",
+      "decision": "Kept transparent AI disclosure. No target journal is specified, so no journal-policy compliance was asserted."
+    },
+    {
+      "item": 39,
+      "status": "addressed",
+      "decision": "Standardized development bank and defined empty shower once; preserved distinct pilot-validation and separate-monitor populations."
+    },
+    {
+      "item": 40,
+      "status": "addressed",
+      "decision": "Replaced indirect cause, metadata and availability constructions with direct sentences; unpacked cap diagnostic terms."
+    },
+    {
+      "item": 41,
+      "status": "addressed selectively",
+      "decision": "Removed roadmap and redundant phrasing; retained constants and short graph inequality for their scientific roles."
+    },
+    {
+      "item": 42,
+      "status": "addressed",
+      "decision": "Resolved each priority item or explicitly retained/deferred it for the evidence-based reasons above. Pilot identity remains explicit."
+    }
+  ],
+  "release_state": "complete",
+  "completed_utc": "2026-09-30T07:15:21.230467+00:00"
+}
