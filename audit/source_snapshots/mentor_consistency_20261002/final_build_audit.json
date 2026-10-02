@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-10-02T17:03:53.485641+00:00",
+  "created_utc": "2026-10-02T16:42:32.902169+00:00",
   "release": "v0.22.1",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; at least 84.6% of the mean component excess remains beyond one component per occupied-layer run.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "029db386135346369ad02e36c26300f3444e82862ec20c9e2bd1056c46036a0d",
-    "bytes": 1224599,
+    "sha256": "7d2379ad5f0555d179055fe6892e5a3b3b0cb819cd800a2110cd912d7765a58b",
+    "bytes": 1224679,
     "pages": 14
   },
   "current_qa": {
-    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_05.json",
-    "sha256": "02686a8ba9262c009b3d3059f505f289a913f6012e992ff3a8a1028b192d08de",
+    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_03.json",
+    "sha256": "311ca5eea8ec32ee1ebc41ec0d0ccf1b36c56092665ce32e827702d0fd543bfb",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -38,7 +38,7 @@
       "14-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_finalization_20260930.json",
-    "visual_sha256": "04cd99ca9bae6ef4f8a0cfe5dd068d2d49081ef85064ed2da93ad3ec6fe4de3d"
+    "visual_sha256": "c019c27c171f3dfb925c497ff66f392efddf021cb61138680cbc6243e1fe4cfb"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -46,11 +46,11 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "80af6e3c217f997b2ce6c7f062540da76b30c3bfa8c8840975c28f7211a255e6",
+    "main.tex": "5ca22625422c79d6d3490778a20db272fc41773713e14be7203eed7bd9c76cf7",
     "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
-    "README.md": "f716da9f8793c8e925095ac62ca0b1af6be8b8e5e09f9f66e40e145d2841bc1c",
-    "STATUS.md": "c73bb00deafa86f9c3cb962ddbe4824f52e14ac75e388ac790255cc0eb07f250",
+    "README.md": "ec34dfffbde85a7034b25741150b93b7d5b5922152a6345f5ba29b07e68e2cb9",
+    "STATUS.md": "685f5e81020772ac0e4dfeb835f61ed9b24687b7f8df7a1cafb39666d5a86b0b",
     "CITATION.cff": "308d68f0ec9adcb9b39e9a02f9cf840d4d4cb6064c68e6bdb4484ad47192e6e9",
     "audit/claim_register_20260922.json": "5e3b295859a7f8eed9c7120b03100e9a1415ddd13dddf9346162c438dcc82f65",
     "audit/claim_register_20260922.md": "74f3b7b6fca82d9d9a74d74c0648dd3e38b9ab0547801c14ebce56dacd4b48bf",
@@ -67,8 +67,8 @@
     "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
     "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
     "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
-    "audit/finalization_20260930.json": "b3b78db15168c024e7cb8dd2b598826a780778d2886b71858e7bb9997c6ca538",
-    "audit/finalization_20260930.md": "84442e2f5062aa9a06c4b491806825bcdf3923fd6a18898e22de7a9181c40d46",
+    "audit/finalization_20260930.json": "55717c6471ad6f2cb15e24926aff08d6465d079a285794d439ac75c151d17f79",
+    "audit/finalization_20260930.md": "b2e0cf6c5feddef92f23d6b7adbc62c7054807e58f01109791b24a9f2e4a9c00",
     "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
     "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
     "audit/claude_integration_response_20261001.json": "f47670843099d55734f13b7ef0d799683282bda0bc877c3ce2f9ab059a93a7d6",

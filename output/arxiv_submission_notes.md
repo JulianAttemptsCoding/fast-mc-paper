@@ -8,4 +8,4 @@ Suggested primary subject: physics.ins-det. Choose any cross-list and license du
 
 This is a descriptive pilot diagnostic preprint. Broader detector-performance claims require the event-level, threshold, graph, numerical and repeated-fit studies listed in the manuscript and audit response.
 
-Current scope: one-checkpoint aggregate reanalysis of a repeatedly inspected validation bank. Stored-ID connectivity is not verified physical electronics connectivity. Production segmentation and matching event/checkpoint recovery are prerequisites for the remaining empirical tests. See `audit/mentor_send_completion_20261002.md`.
+Current scope: one-checkpoint aggregate reanalysis of a repeatedly inspected validation bank. Stored-ID connectivity is not verified physical electronics connectivity. Production segmentation and matching event/checkpoint recovery are prerequisites for the remaining empirical tests. See `audit/mentor_consistency_20261002.md`.

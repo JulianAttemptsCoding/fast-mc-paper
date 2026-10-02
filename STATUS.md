@@ -18,7 +18,7 @@ See audit/claude_integration_response_20261001.md for the latest proposal dispos
 
 ## Second audit correction
 
-Current v0.20.0 is an aggregate-only diagnostic note. Stored IDs are model channels, not verified physical electronics channels. Multiplicity alone does not establish ganging; physical interpretation is unresolved pending production segmentation/volume mapping. No integrity failure has been demonstrated for the stored-ID arithmetic, but no detector-level connectivity inference is permitted. The present reanalysis uses the evaluation summary; exact runs, jointly nonempty statistics and threshold studies require a new event-level evaluation. See `audit/second_external_audit_response_20260930.md`. Table 3 now includes retained population standard deviations.
+The historical v0.20.0 revision is an aggregate-only diagnostic note. Stored IDs are model channels, not verified physical electronics channels. Multiplicity alone does not establish ganging; physical interpretation is unresolved pending production segmentation/volume mapping. No integrity failure has been demonstrated for the stored-ID arithmetic, but no detector-level connectivity inference is permitted. The present reanalysis uses the evaluation summary; exact runs, jointly nonempty statistics and threshold studies require a new event-level evaluation. See `audit/second_external_audit_response_20260930.md`. Table 3 now includes retained population standard deviations.
 
 
 ## Physical interpretation and third audit
@@ -45,3 +45,7 @@ Version 0.22.0 adds a structural-data panel beside the definitions, repairs the 
 ## Mentor-send clarity revision
 
 Version 0.22.1 restores definitions that earlier condensing had removed (Wasserstein distance, reference-half scale, edge co-occupancy, closure residuals, support), names the incident particle and both samples in the abstract, ties Table 1 row names to the symbols of the evaluation section, cross-references the result figures, and states the stored-energy scale and the depth shift in physical units. It adds one paragraph of energy-weighted transverse summaries and one binwise error-scale statement, both recomputed from the released aggregate report by `scripts/mentor_send_checks.py`. Numbered equations and numerical table bodies are unchanged. The binwise scale treats the samples as independent and is not a paired interval. No event-level data, checkpoint, threshold scan or new evaluation was used. A word-by-word pre-send pass then corrected the binwise statement to quote both of the largest differences (1.8 and 2.0 standard errors) and made nine wording clarifications without changing any number. See `audit/mentor_send_response_20261002.md`.
+
+## Final consistency review
+
+The mentor consistency pass of 2 October 2026 clarifies provisional visibility versus final zero deposits, stored-ID channel semantics, graph-message inputs, calibration-proposal provenance, relative standard errors, the fully specified three-layer example, component-energy limits, the timing denominator and the comparison of transverse observables. All 14 numbered equations, all four numerical table bodies, data and figure definitions are unchanged. See `audit/mentor_consistency_20261002.{json,md}` for the complete review and verification record. This is an editorial finalization of v0.22.1.

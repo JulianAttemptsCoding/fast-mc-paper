@@ -1,3 +1,3 @@
-# Current every-page visual review
+# Current final visual review
 
-All 14 final pages are covered by exact image hashes and were read in full in QA03 after the word-by-word pass. Figures, equations, tables and bibliography are legible, the ten replacements appear as intended and the page breaks match QA02; page 7 is one line longer inside its existing white space. Remaining short pages (7, 11, 12) end before an unbreakable figure or table. This is document QA, not physics validation.
+All 14 current pages inspected, including every figure and table. QA05 changed only page 9 from the fully inspected QA04 render; that page was inspected again. No layout defect found. Exact page and PDF hashes are in the JSON twin. Previous review preserved in the consistency snapshot.

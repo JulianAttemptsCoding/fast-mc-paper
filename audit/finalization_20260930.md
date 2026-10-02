@@ -116,3 +116,6 @@ Input main.tex SHA256: 95fa603d553a331fa4f3797615cbf20193b7444b7231463314c9fee72
 Output main.tex SHA256: 844c00be0f102bf527aa75cc252c1906de6dac90bc70b15ff4da540af2ad2c5b
 
 Fresh-reader follow-up: current source pointer updated; historical exact release preserved under audit/source_snapshots/fresh_reader_20260930. See fresh_reader_review_20260930 twin. Rebuild pending.
+
+
+The current source pointer was refreshed for the 2 October mentor consistency pass. See `audit/mentor_consistency_20261002.json`; the preceding source is preserved in `audit/source_snapshots/mentor_consistency_20261002_main.tex`.

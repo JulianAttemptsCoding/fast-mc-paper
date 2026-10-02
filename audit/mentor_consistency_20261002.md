@@ -1,0 +1,415 @@
+# Mentor consistency review, 2 October 2026
+
+Complete source/PDF consistency review for mentor discussion; aggregate evidence only.
+
+## Intake and complete source reading
+
+2026-10-02T16:55:13.122849+00:00
+
+```json
+{
+  "reviewed": "All 505 lines of main.tex, all bibliography entries, README, STATUS, build script, prior mentor-send audit.",
+  "commands": [
+    "Get-Content docs/IMPLEMENTATION_GUIDE.md (complete, paged)",
+    "Get-Content docs/FOCUSED_OPERATING_RULES.md; Get-Content docs/GRAFT_SETUP.md",
+    "Get-Content PDF SKILL.md",
+    "git status --short; git remote -v; git log -3 --oneline",
+    "graft check",
+    "graft ask manuscript evidence longitudinal gaps connected components and validation bank --source",
+    "graft build --only-dir dashboard --only-dir exhibition --only-dir scripts --only-dir src --only-dir tests --only-dir vertex",
+    "graft check (paper repo: NO GRAPH)",
+    "node mark_artifact_operation_started.mjs --operation-kind edit --expected-output-count 1 --output-format pdf"
+  ],
+  "navigation_failure": "Original source-repo graph passed freshness check but included an excluded legacy result. Result not relied upon. Rebuilt explicitly from six active directories; recheck passed. Paper repo has no graph; direct document/script reads used.",
+  "web_read": [
+    "https://www.phys.sinica.edu.tw/directory_en.php?directory=11&id_key=36",
+    "https://github.com/JulianAttemptsCoding/fast-mc-paper"
+  ],
+  "initial_paper_worktree": "clean",
+  "status": "Evidence and cross-section review in progress; historical PDF remains available."
+}
+```
+
+## Eleven surgical consistency edits
+
+2026-10-02T16:57:52.846880+00:00
+
+```json
+{
+  "changes": [
+    {
+      "section": "Introduction",
+      "before": "We test that possibility at the level of stored deposits, without claiming a reconstructed performance effect.",
+      "after": "We examine spatial discrepancies at the level of stored deposits, without claiming a reconstructed performance effect.",
+      "reason": "The study diagnoses stored structure; it does not test reconstruction performance."
+    },
+    {
+      "section": "Target",
+      "before": "raw, nondigitized energy deposited in each valid readout channel",
+      "after": "raw, nondigitized energy deposited in each valid stored-ID channel",
+      "reason": "Align the target with the unresolved electronics mapping in the next subsection."
+    },
+    {
+      "section": "Response",
+      "before": "The two-part response stage first samples whether total stored energy is zero, then samples the magnitude when positive.",
+      "after": "The two-part response stage samples a provisional visibility flag and a candidate total deposit.",
+      "reason": "The original wording made provisional visibility definitive, contradicting the subsequent zero clamp."
+    },
+    {
+      "section": "Message inputs",
+      "before": "Each block forms messages from neighboring readouts",
+      "after": "Each block forms messages from neighboring channel representations",
+      "reason": "Graph inputs are learned representations, not observed event readouts at inference."
+    },
+    {
+      "section": "Score dependence",
+      "before": "Messages let scores depend on nearby readouts;",
+      "after": "Messages let scores depend on nearby channel representations;",
+      "reason": "Distinguish generated context from a measured shower supplied to the model."
+    },
+    {
+      "section": "Calibration",
+      "before": "The retained calibration proposal uses training-data gradient norms to set $w_j$.",
+      "after": "The retained calibration record proposes $w_j$ from training-data gradient norms.",
+      "reason": "Applied historical weights are not independently verified; align with Appendix A."
+    },
+    {
+      "section": "Uncertainty",
+      "before": "so each binwise mean has a standard error near 3\\%.",
+      "after": "so each binwise mean has a relative standard error near 3\\%.",
+      "reason": "A percentage standard error is relative to the mean, not measured in GeV."
+    },
+    {
+      "section": "Components",
+      "before": "Both samples retain a dominant connected group (88.87\\% and 94.90\\% of active channels on average); the extra groups lie outside it, but their sizes and energies are unmeasured.",
+      "after": "The largest-group fractions describe channel counts, not energy fractions; the remaining group-size and component-energy distributions are unavailable.",
+      "reason": "Avoid implying dominance in every event or attributing energy to components from occupancy means."
+    },
+    {
+      "section": "Toy distribution",
+      "before": "fix $F=0$ and let layers 1 and 2 be jointly active with probability $p$.",
+      "after": "fix $F=0$ and let layers 1 and 2 be both active with probability $p$ and both inactive otherwise.",
+      "reason": "P(A1=A2=1)=p alone does not specify the marginals; the stated analytic result requires perfect correlation."
+    },
+    {
+      "section": "Timing",
+      "before": "(0.243\\,s per event) for generation",
+      "after": "(0.243\\,s per matched condition) for generation",
+      "reason": "Make the denominator unambiguous: 10,000 pairs, not 20,000 shower records."
+    },
+    {
+      "section": "Calibration formula",
+      "before": "The retained weights use inverse median training-gradient norms on the shared encoder, clipped to $[0.25,4]$ relative to their geometric mean and renormalized to mean one.",
+      "after": "For each loss, the calibration divides the geometric mean of the median training-gradient norms by that loss's median norm on the shared encoder, clips the ratio to $[0.25,4]$, and renormalizes the weights to mean one.",
+      "reason": "State the source implementation order precisely without claiming the proposal was the runtime configuration."
+    }
+  ],
+  "preserved": "All 14 numbered equations, four table bodies, report data, scientific thresholds, existing tests and four figures.",
+  "snapshot_sha256": "5ca22625422c79d6d3490778a20db272fc41773713e14be7203eed7bd9c76cf7",
+  "failed_attempts": [
+    "PowerShell rg supplied wildcard path literals for audit/*mentor_send*py; rg rejected them with Windows error 123. Exact existing filename was read; no evidence changed."
+  ],
+  "sources": [
+    "audit/source_snapshots/finalization_20260930/src/cbsc_zdc/training/weights.py",
+    "audit/mathematical_exposition_20260923.json",
+    "data/reports/dicos-f-02_epoch90.json"
+  ]
+}
+```
+
+## qa04 started
+
+2026-10-02T16:57:53.570917+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "4",
+    "--focus",
+    "Sentence, phrase, word and cross-section consistency",
+    "--disposition",
+    "Eleven surgical edits; numbered equations, numerical tables and guards preserved"
+  ]
+}
+```
+
+## qa04 completed
+
+2026-10-02T16:58:21.541897+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "4",
+    "--focus",
+    "Sentence, phrase, word and cross-section consistency",
+    "--disposition",
+    "Eleven surgical edits; numbered equations, numerical tables and guards preserved"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_consistency_20261002_qa04.txt",
+  "output_sha256": "efd3bd04a0368284bf1718c0a0430d55a4713daa04b74c4573a05f8d8df59e1e"
+}
+```
+
+## Rendered full reading and final precision correction
+
+2026-10-02T17:00:35.295110+00:00
+
+```json
+{
+  "reviewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "qa04": "All 22 automated groups passed; all 14 rendered pages inspected and read. No layout defect found.",
+  "twelfth_edit": {
+    "before": "Energy-weighted transverse observables from the same evaluation summary differ less than the hit pattern.",
+    "after": "Energy-weighted transverse observables from the same evaluation summary provide a complementary comparison.",
+    "reason": "Unlike dimensional observables and graph counts cannot be ranked as differing less without a defined comparison scale."
+  },
+  "source_bytes": "Restored untouched mixed line endings from the original source to keep the diff surgical; prose changes only. Same preservation applied to README and STATUS.",
+  "new_findings": "No further internal contradiction identified in the reviewed results, equations or tables.",
+  "historical_failure_preserved": "Failed classifier criterion/control and failed earlier absolute closure threshold remain explicit; the batch-relative historical pass is not generalized."
+}
+```
+
+## qa05 started
+
+2026-10-02T17:00:35.891389+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "5",
+    "--focus",
+    "Final rendered reread and precision correction",
+    "--disposition",
+    "Twelve surgical edits; original untouched source bytes preserved; no guard changes"
+  ]
+}
+```
+
+## qa05 completed
+
+2026-10-02T17:01:03.476181+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "5",
+    "--focus",
+    "Final rendered reread and precision correction",
+    "--disposition",
+    "Twelve surgical edits; original untouched source bytes preserved; no guard changes"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_consistency_20261002_qa05.txt",
+  "output_sha256": "23d66952b1fc37a1f36827cb9dad125f7f6053cde96a0528a3a6c2f2b878ad48"
+}
+```
+
+## Cross-section consistency assessment
+
+2026-10-02T17:01:47.385437+00:00
+
+```json
+{
+  "abstract_and_introduction": "Same single pilot checkpoint, 50-250 GeV bank and nonempty denominators as the results; descriptive similarity is not statistical equivalence. Reconstruction motivation is separated from a measured performance effect.",
+  "data_and_geometry": "6790=400+6390; 65=1+64; 107920 directed edges; 764940 split counts and 4.35% pilot fraction consistent. Stored IDs do not establish electronics mapping; cited design cuts are not assigned to this production.",
+  "conditioning_and_response": "Five deterministic features; kinetic versus total energy consistent. Response flag is provisional before the clamp/cap; q transform, train-derived saturation near 97.2 GeV and empty-output rule are mutually consistent.",
+  "activity_and_flows": "F is first stored deposit, not interaction depth. Conditional independence is given h_c,T,F, not unconditional independence. Noise-to-log-fraction training and the first-order midpoint-time update are consistent with masked softmax budgets.",
+  "support_and_decoder": "Scores use channel representations and generated upstream quantities; no truth shower input at inference. Gumbel top-K sets cardinality but not connectivity. Share flow preserves support in exact arithmetic; sample-specific FP32 check remains separate.",
+  "training": "Teacher forcing, six-stage order, encoder freezing and objective-based epoch-90 selection agree across sections. Calibration is a proposal with unverified historical application, not an independently verified runtime setting.",
+  "populations_and_metrics": "10000 matched conditions for response, 9907/9858 separate nonempty sets for structural means; intervals resample matched condition pairs and do not imply independent marginal samples or confirmatory significance.",
+  "component_bound": "1+I <= R <= G+1, Q=m-R and separate-sample subtraction give 30.4458 to 37.1372 extra within-segment components. 84.6% is a deterministic sample lower bound, not a confidence interval or causal attribution.",
+  "response_and_profile": "Table 1 unrounded section differences sum to total; rounded displayed differences may differ by 0.001 GeV. Normalized paired residual is distinct from mean absolute response difference. Independent-sample error scales are identified as approximations; no binwise paired significance claimed.",
+  "transverse_and_components": "Counts, largest-group occupancy fractions and energy-weighted positions are distinct observables. Remaining component sizes/energies and threshold dependence are unavailable; no cross-dimensional ranking retained.",
+  "classifier": "Three classifier seeds do not constitute three generator-training seeds. Original row-split values/control and separate pair-grouped bank remain distinguished. Appendix specifies kinetic-energy-only control and unverified runtime defaults.",
+  "numerical_qa": "Historical relative-batch tolerance passes; earlier fixed absolute tolerance fails for maximum layer residual. Both remain stated; no guard/threshold altered.",
+  "discussion_example": "Perfectly correlated layers are explicitly both active with probability p and both inactive otherwise. Independent Bernoulli(p) draws preserve E[count]=1+2p, add gap probability p(1-p), and increase E[last] from 2p to 3p-p^2.",
+  "limitations_timing_conclusion": "One training seed, reused validation, production metadata limits and missing structural intervals remain. 2433 s/10000 matched conditions=0.2433 s is unisolated work, not measured generation latency or speedup. Conclusion stays descriptive.",
+  "appendices_and_disclosures": "All calibration values, all energy bins and all classifier seeds retained. Original test-exposure history and unknown overlap retained. No invented affiliation, deployment or arXiv submission claim.",
+  "equations_reviewed": 14,
+  "tables_reviewed": 4,
+  "figures_reviewed": 4,
+  "cited_references_read": 25,
+  "primary_literature_rechecked": [
+    "https://arxiv.org/html/2406.12877v2",
+    "https://arxiv.org/html/2608.12795v1",
+    "https://arxiv.org/html/2512.20346v1",
+    "https://arxiv.org/abs/2403.15782"
+  ],
+  "mentor_context": "https://www.phys.sinica.edu.tw/directory_en.php?directory=11&id_key=36 confirms Wen-Chen Chang and experimental nuclear/hadron interests; no contact made.",
+  "assessment": "No remaining internal contradiction identified within the retained evidence. This editorial review does not establish physics validation or recover missing event-level evidence."
+}
+```
+
+## guards started
+
+2026-10-02T17:01:48.020603+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "scripts/test_qa_guards.py",
+    "-q"
+  ]
+}
+```
+
+## guards completed
+
+2026-10-02T17:01:52.957714+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "scripts/test_qa_guards.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_consistency_20261002_guards.txt",
+  "output_sha256": "7c302cc663093cb85e6550b3ad5052aabe7998fff18bd3955c5eae14fef137de"
+}
+```
+
+## seal started
+
+2026-10-02T17:03:52.093169+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "audit/seal_consistency_20261002.py"
+  ]
+}
+```
+
+## Final visual and package verification
+
+2026-10-02T17:03:52.338432+00:00
+
+```json
+{
+  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_05.json",
+  "automated_groups": 22,
+  "guard_tests": "10 passed; intentional negative native-build test preserved the PDF",
+  "pages_visually_reviewed": 14,
+  "changed_page_reinspected": 9,
+  "numbered_equations_unchanged": 14,
+  "table_bodies_unchanged": 4,
+  "source_zip_sha256": "35f1f3c56f191a4e526c5d9a7106d62468229893ade9313ce887a2a9f2d8de69",
+  "status": "Ready for exact-source release binding and Git commit.",
+  "bibliography_scope": "All 25 cited bibliography entries read; primary-source rechecks targeted the detector and recent related studies listed in the assessment."
+}
+```
+
+## seal completed
+
+2026-10-02T17:03:52.380929+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "audit/seal_consistency_20261002.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_consistency_20261002_seal.txt",
+  "output_sha256": "eb9ececca4212d17a53e9fe50d5c4ad9b423440edb881d2d37b41ee3072c7a49"
+}
+```
+
+## release started
+
+2026-10-02T17:03:52.983415+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "scripts/write_build_audit.py"
+  ]
+}
+```
+
+## release completed
+
+2026-10-02T17:03:53.773468+00:00
+
+```json
+{
+  "command": [
+    "python",
+    "scripts/write_build_audit.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_consistency_20261002_release.txt",
+  "output_sha256": "fa3fd44b89eeb03bebff2db2fdf87bd751029afc32acc1fee65c9024d7b82d8b"
+}
+```
+
+## Precommit final verification
+
+2026-10-02T17:04:50.275247+00:00
+
+```json
+{
+  "source_pdf_figure_binding": "pass",
+  "pdf_sha256": "029db386135346369ad02e36c26300f3444e82862ec20c9e2bd1056c46036a0d",
+  "review": "All prose, all 14 equations, four tables, four figures, both appendices and 25 bibliography entries reviewed; 12 targeted wording edits.",
+  "qa": "22 full-suite groups passed twice; 10 guard tests passed; all 14 pages visually covered.",
+  "git_plan": [
+    "git add (explicit reviewed manuscript, outputs and evidence paths)",
+    "git diff --cached --check",
+    "git commit -m docs(paper): resolve final consistency ambiguities",
+    "git push origin main",
+    "git ls-remote origin refs/heads/main"
+  ],
+  "status": "Ready for mentor review as the stated exploratory study; no internal contradiction identified within retained evidence."
+}
+```
+
+## Staged whitespace correction
+
+2026-10-02T17:05:20.069860+00:00
+
+```json
+{
+  "check": "git diff --cached --check found a trailing blank line in the new review Markdown.",
+  "correction": "Record writer now strips trailing whitespace before its final newline; no manuscript, QA source or PDF changed.",
+  "status": "Whitespace check repeated before commit."
+}
+```

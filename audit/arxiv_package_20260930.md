@@ -1,3 +1,3 @@
-# Current arXiv source package
+# Current source package
 
-Version 0.22.1; seven required files only. CRC and exact source/figure bytes verified; hashes in the JSON twin. arXiv upload and server compilation remain unperformed.
+The seven-file source archive matches the mentor consistency revision of v0.22.1. CRC and all member bytes were verified. No arXiv upload or server compilation was performed.
