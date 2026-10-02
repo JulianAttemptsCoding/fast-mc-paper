@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-10-02T18:51:51.478273+00:00",
+  "created_utc": "2026-10-02T17:03:53.485641+00:00",
   "release": "v0.22.1",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; at least 84.6% of the mean component excess remains beyond one component per occupied-layer run.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "4e499f417fcfb6974a4616428881555e850b1d24ad08a9c12100e396308d37a6",
-    "bytes": 1224485,
+    "sha256": "029db386135346369ad02e36c26300f3444e82862ec20c9e2bd1056c46036a0d",
+    "bytes": 1224599,
     "pages": 14
   },
   "current_qa": {
-    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_06.json",
-    "sha256": "1a01ea6bcbde1d182e2cd76d16a43e1296d8f615ce8981cf51ae86669ce2ee65",
+    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_05.json",
+    "sha256": "02686a8ba9262c009b3d3059f505f289a913f6012e992ff3a8a1028b192d08de",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -38,7 +38,7 @@
       "14-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_finalization_20260930.json",
-    "visual_sha256": "dbfacf702c00fc12ea61f57efe76e79ad9d64b9538ccfe1f679a15f7dc2c5f6e"
+    "visual_sha256": "04cd99ca9bae6ef4f8a0cfe5dd068d2d49081ef85064ed2da93ad3ec6fe4de3d"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -46,7 +46,7 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "f4e1e38b8c57fdb93a0a7e5e56d01ff0111914f07bdcad4e1ea7a3fe67cd78b9",
+    "main.tex": "80af6e3c217f997b2ce6c7f062540da76b30c3bfa8c8840975c28f7211a255e6",
     "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
     "README.md": "f716da9f8793c8e925095ac62ca0b1af6be8b8e5e09f9f66e40e145d2841bc1c",
@@ -67,8 +67,8 @@
     "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
     "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
     "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
-    "audit/finalization_20260930.json": "4a9c8eab822a9ff5ee4f3f52b43dcf164db87f65281c11edda359cf343fdeadd",
-    "audit/finalization_20260930.md": "bcd897de1bcb5deda80a9732e7a9350355209d7cd0b59d4f5b739ae038a65dc4",
+    "audit/finalization_20260930.json": "b3b78db15168c024e7cb8dd2b598826a780778d2886b71858e7bb9997c6ca538",
+    "audit/finalization_20260930.md": "84442e2f5062aa9a06c4b491806825bcdf3923fd6a18898e22de7a9181c40d46",
     "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
     "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
     "audit/claude_integration_response_20261001.json": "f47670843099d55734f13b7ef0d799683282bda0bc877c3ce2f9ab059a93a7d6",
@@ -83,7 +83,7 @@
     "audit/mentor_send_response_20261002.md": "435675c647cc827a8cdc816625139d13be9d3212dd5d9a0f81f48c9673aaa281",
     "audit/current_qa_series.json": "68df3c477e90c741236902ea5c0c7d1ec03cb9981ea6f6ea2320359acfb32be0",
     "scripts/build_figures.py": "891b114016dbe7facbc6dcd8535a2f12859e45568747b3f57733450407e7ffd6",
-    "scripts/claude_reader_checks.py": "66b7f408431d901f02abeeebb3fd5b2118ebe37f657f4d82af38c21ed2a30540",
+    "scripts/claude_reader_checks.py": "a9990258576ee53403fab7bb237976922e825b49f2288eb12a862c8813b0a669",
     "scripts/component_bounds.py": "07f1e9cf62151d733a1d0330a8a4bed935edd024ad98cfdf1affd1efb45e1f07",
     "scripts/full_manuscript_qa.py": "77348a5b3586ea3497dfa271112ca499f3d2102d26299cc90707ca759a9a208a",
     "scripts/mentor_send_checks.py": "39e4a6f51ab86537ca8314bd21774906a690d3d3088cd5174527715c2b89cc37",

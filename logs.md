@@ -542,3 +542,45 @@ Evidence: `audit/mentor_consistency_20261002.{json,md}`.
 {"check": "git diff --cached --check found a trailing blank line in the new review Markdown.", "correction": "Record writer now strips trailing whitespace before its final newline; no manuscript, QA source or PDF changed.", "status": "Whitespace check repeated before commit."}
 
 Evidence: `audit/mentor_consistency_20261002.{json,md}`.
+
+### 2026-10-02T18:50:27.396388+00:00 - Author-requested AI attribution revision started
+
+{"request": "Name only OpenAI's GPT-5.6-Sol in the AI acknowledgment; remove Anthropic model attribution.", "commands": ["graft check", "graft ask manuscript AI acknowledgment author disclosure --source", "graft build --only-dir dashboard --only-dir exhibition --only-dir scripts --only-dir src --only-dir tests --only-dir vertex", "git status --short", "rg -n Anthropic|Claude|OpenAI Codex|GPT-5 main.tex scripts", "node mark_artifact_operation_started.mjs --operation-kind edit --expected-output-count 1 --output-format pdf"], "scope": "Acknowledgment only; preserve historical review provenance and scientific content."}
+
+Evidence: `audit/ai_ack_20261002.{json,md}`.
+
+### 2026-10-02T18:50:27.436831+00:00 - Attribution source edit complete
+
+{"new_acknowledgment": "OpenAI's GPT-5.6-Sol assisted with software and manuscript drafting, specification review, literature searches, and editing. The author supplied the research ideas, checked the work, and takes responsibility for the scientific content.", "QA_contract": "Replace the required attribution string with the user-requested model and add absence assertions for Anthropic and Claude. All scientific guards remain intact.", "historical_audits": "Preserved; the change applies to the current manuscript acknowledgment."}
+
+Evidence: `audit/ai_ack_20261002.{json,md}`.
+
+### 2026-10-02T18:50:27.642553+00:00 - ai_ack_qa06 started
+
+{"command": ["python", "scripts/full_manuscript_qa.py", "--iteration", "6", "--focus", "Author-requested AI acknowledgment", "--disposition", "Only OpenAI GPT-5.6-Sol; scientific content unchanged"]}
+
+Evidence: `audit/mentor_consistency_20261002.{json,md}`.
+
+### 2026-10-02T18:51:04.264443+00:00 - ai_ack_qa06 completed
+
+{"command": ["python", "scripts/full_manuscript_qa.py", "--iteration", "6", "--focus", "Author-requested AI acknowledgment", "--disposition", "Only OpenAI GPT-5.6-Sol; scientific content unchanged"], "exit_code": 0, "output": "audit\\mentor_consistency_20261002_ai_ack_qa06.txt", "output_sha256": "b3d964ad0a792eb967f5172f280432fdbf003e829a3581c7a8674703f5c805ec"}
+
+Evidence: `audit/mentor_consistency_20261002.{json,md}`.
+
+### 2026-10-02T18:51:50.430099+00:00 - PDF and source archive verified
+
+{"full_qa": "22 groups passed; 14 pages", "changed_pages": [11], "visual": "Page 11 inspected; other page hashes identical to prior reviewed render", "PDF_text": "GPT-5.6-Sol present; Anthropic and Claude absent", "source_zip_sha256": "696114dc3231e08d1b26131af9d525432bee7e22f1e68e381fcfbaa377b5fbd6", "commands": ["python scripts/full_manuscript_qa.py --iteration 6", "pdftotext output/fast_mc_zdc_manuscript.pdf -", "ZIP CRC and member-byte assertions"], "status": "Ready for release binding and commit"}
+
+Evidence: `audit/ai_ack_20261002.{json,md}`.
+
+### 2026-10-02T18:51:50.692581+00:00 - ai_ack_release started
+
+{"command": ["python", "scripts/write_build_audit.py"]}
+
+Evidence: `audit/mentor_consistency_20261002.{json,md}`.
+
+### 2026-10-02T18:51:51.719516+00:00 - ai_ack_release completed
+
+{"command": ["python", "scripts/write_build_audit.py"], "exit_code": 0, "output": "audit\\mentor_consistency_20261002_ai_ack_release.txt", "output_sha256": "fa3fd44b89eeb03bebff2db2fdf87bd751029afc32acc1fee65c9024d7b82d8b"}
+
+Evidence: `audit/mentor_consistency_20261002.{json,md}`.

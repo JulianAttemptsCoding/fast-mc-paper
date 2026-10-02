@@ -39,7 +39,9 @@ def validate_reader_revision(checks):
                 if q in todo:todo.remove(q);stack.append(q)
     assert components==3 and {x for x,y in occupied}=={0,1,2,3}
     tex=(ROOT/'main.tex').read_text()
-    for token in ['30.3','24.9','1.57','35.73','17.85','17.19','2.94','8.51','9.34','0.243','Anthropic Claude','does not isolate the energy']:
+    # Author-requested attribution; historical review records remain unchanged.
+    assert "Anthropic" not in tex and "Claude" not in tex
+    for token in ['30.3','24.9','1.57','35.73','17.85','17.19','2.94','8.51','9.34','0.243',"OpenAI's GPT-5.6-Sol",'does not isolate the energy']:
         assert token in tex,token
     for overclaim in ['no measurable correlation','This difference is not statistically significant','acceptance is likely to matter','the quoted values are lower bounds']:
         assert overclaim not in tex,overclaim

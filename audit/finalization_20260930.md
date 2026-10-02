@@ -119,3 +119,5 @@ Fresh-reader follow-up: current source pointer updated; historical exact release
 
 
 The current source pointer was refreshed for the 2 October mentor consistency pass. See `audit/mentor_consistency_20261002.json`; the preceding source is preserved in `audit/source_snapshots/mentor_consistency_20261002_main.tex`.
+
+Current AI acknowledgment updated at the author's request to OpenAI's GPT-5.6-Sol only; see `audit/ai_ack_20261002.json`.

@@ -1,0 +1,71 @@
+{
+  "scope": "Complete source/PDF consistency review for mentor discussion; aggregate evidence only.",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "initial_commit": "84148a2e91cd20a4e9a2538ea960ea67eada270d",
+  "new_event_data_access": false,
+  "new_model_evaluation": false,
+  "events": [
+    {
+      "utc": "2026-10-02T18:50:27.396388+00:00",
+      "event": "Author-requested AI attribution revision started",
+      "details": {
+        "request": "Name only OpenAI's GPT-5.6-Sol in the AI acknowledgment; remove Anthropic model attribution.",
+        "commands": [
+          "graft check",
+          "graft ask manuscript AI acknowledgment author disclosure --source",
+          "graft build --only-dir dashboard --only-dir exhibition --only-dir scripts --only-dir src --only-dir tests --only-dir vertex",
+          "git status --short",
+          "rg -n Anthropic|Claude|OpenAI Codex|GPT-5 main.tex scripts",
+          "node mark_artifact_operation_started.mjs --operation-kind edit --expected-output-count 1 --output-format pdf"
+        ],
+        "scope": "Acknowledgment only; preserve historical review provenance and scientific content."
+      },
+      "hashes": {
+        "main.tex": "80af6e3c217f997b2ce6c7f062540da76b30c3bfa8c8840975c28f7211a255e6",
+        "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+        "output/fast_mc_zdc_manuscript.pdf": "029db386135346369ad02e36c26300f3444e82862ec20c9e2bd1056c46036a0d"
+      }
+    },
+    {
+      "utc": "2026-10-02T18:50:27.436831+00:00",
+      "event": "Attribution source edit complete",
+      "details": {
+        "new_acknowledgment": "OpenAI's GPT-5.6-Sol assisted with software and manuscript drafting, specification review, literature searches, and editing. The author supplied the research ideas, checked the work, and takes responsibility for the scientific content.",
+        "QA_contract": "Replace the required attribution string with the user-requested model and add absence assertions for Anthropic and Claude. All scientific guards remain intact.",
+        "historical_audits": "Preserved; the change applies to the current manuscript acknowledgment."
+      },
+      "hashes": {
+        "main.tex": "f4e1e38b8c57fdb93a0a7e5e56d01ff0111914f07bdcad4e1ea7a3fe67cd78b9",
+        "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+        "output/fast_mc_zdc_manuscript.pdf": "029db386135346369ad02e36c26300f3444e82862ec20c9e2bd1056c46036a0d"
+      }
+    },
+    {
+      "utc": "2026-10-02T18:51:50.430099+00:00",
+      "event": "PDF and source archive verified",
+      "details": {
+        "full_qa": "22 groups passed; 14 pages",
+        "changed_pages": [
+          11
+        ],
+        "visual": "Page 11 inspected; other page hashes identical to prior reviewed render",
+        "PDF_text": "GPT-5.6-Sol present; Anthropic and Claude absent",
+        "source_zip_sha256": "696114dc3231e08d1b26131af9d525432bee7e22f1e68e381fcfbaa377b5fbd6",
+        "commands": [
+          "python scripts/full_manuscript_qa.py --iteration 6",
+          "pdftotext output/fast_mc_zdc_manuscript.pdf -",
+          "ZIP CRC and member-byte assertions"
+        ],
+        "status": "Ready for release binding and commit"
+      },
+      "hashes": {
+        "main.tex": "f4e1e38b8c57fdb93a0a7e5e56d01ff0111914f07bdcad4e1ea7a3fe67cd78b9",
+        "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+        "output/fast_mc_zdc_manuscript.pdf": "4e499f417fcfb6974a4616428881555e850b1d24ad08a9c12100e396308d37a6"
+      }
+    }
+  ]
+}

@@ -453,6 +453,84 @@
         "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
         "output/fast_mc_zdc_manuscript.pdf": "029db386135346369ad02e36c26300f3444e82862ec20c9e2bd1056c46036a0d"
       }
+    },
+    {
+      "utc": "2026-10-02T18:50:27.642553+00:00",
+      "event": "ai_ack_qa06 started",
+      "details": {
+        "command": [
+          "python",
+          "scripts/full_manuscript_qa.py",
+          "--iteration",
+          "6",
+          "--focus",
+          "Author-requested AI acknowledgment",
+          "--disposition",
+          "Only OpenAI GPT-5.6-Sol; scientific content unchanged"
+        ]
+      },
+      "hashes": {
+        "main.tex": "f4e1e38b8c57fdb93a0a7e5e56d01ff0111914f07bdcad4e1ea7a3fe67cd78b9",
+        "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+        "output/fast_mc_zdc_manuscript.pdf": "029db386135346369ad02e36c26300f3444e82862ec20c9e2bd1056c46036a0d"
+      }
+    },
+    {
+      "utc": "2026-10-02T18:51:04.264443+00:00",
+      "event": "ai_ack_qa06 completed",
+      "details": {
+        "command": [
+          "python",
+          "scripts/full_manuscript_qa.py",
+          "--iteration",
+          "6",
+          "--focus",
+          "Author-requested AI acknowledgment",
+          "--disposition",
+          "Only OpenAI GPT-5.6-Sol; scientific content unchanged"
+        ],
+        "exit_code": 0,
+        "output": "audit\\mentor_consistency_20261002_ai_ack_qa06.txt",
+        "output_sha256": "b3d964ad0a792eb967f5172f280432fdbf003e829a3581c7a8674703f5c805ec"
+      },
+      "hashes": {
+        "main.tex": "f4e1e38b8c57fdb93a0a7e5e56d01ff0111914f07bdcad4e1ea7a3fe67cd78b9",
+        "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+        "output/fast_mc_zdc_manuscript.pdf": "4e499f417fcfb6974a4616428881555e850b1d24ad08a9c12100e396308d37a6"
+      }
+    },
+    {
+      "utc": "2026-10-02T18:51:50.692581+00:00",
+      "event": "ai_ack_release started",
+      "details": {
+        "command": [
+          "python",
+          "scripts/write_build_audit.py"
+        ]
+      },
+      "hashes": {
+        "main.tex": "f4e1e38b8c57fdb93a0a7e5e56d01ff0111914f07bdcad4e1ea7a3fe67cd78b9",
+        "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+        "output/fast_mc_zdc_manuscript.pdf": "4e499f417fcfb6974a4616428881555e850b1d24ad08a9c12100e396308d37a6"
+      }
+    },
+    {
+      "utc": "2026-10-02T18:51:51.719516+00:00",
+      "event": "ai_ack_release completed",
+      "details": {
+        "command": [
+          "python",
+          "scripts/write_build_audit.py"
+        ],
+        "exit_code": 0,
+        "output": "audit\\mentor_consistency_20261002_ai_ack_release.txt",
+        "output_sha256": "fa3fd44b89eeb03bebff2db2fdf87bd751029afc32acc1fee65c9024d7b82d8b"
+      },
+      "hashes": {
+        "main.tex": "f4e1e38b8c57fdb93a0a7e5e56d01ff0111914f07bdcad4e1ea7a3fe67cd78b9",
+        "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+        "output/fast_mc_zdc_manuscript.pdf": "4e499f417fcfb6974a4616428881555e850b1d24ad08a9c12100e396308d37a6"
+      }
     }
   ]
 }
