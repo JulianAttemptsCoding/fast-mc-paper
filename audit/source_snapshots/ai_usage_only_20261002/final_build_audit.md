@@ -1,11 +1,11 @@
 # Final manuscript build audit
 
-Version 0.22.1; 2026-10-02T22:10:08.713932+00:00.
+Version 0.22.1; 2026-10-02T18:57:29.657911+00:00.
 
 PDF: `output\fast_mc_zdc_manuscript.pdf`; 14 pages.
 
-SHA-256: `313acc648f93e96d8d36245dba1c98fed43a9a487260c101c115f40449c6e6e9`.
+SHA-256: `a42f85cfecb2f53685d66469ca75217f2987d9e515b5a4db16eb8eea127f3435`.
 
-The complete automated suite in `audit\qa_series\mentor_send_20261002\iteration_08.json` and an every-page visual review match the current PDF and source hashes. Historical QA records are not counted as validation of this revision.
+The complete automated suite in `audit\qa_series\mentor_send_20261002\iteration_07.json` and an every-page visual review match the current PDF and source hashes. Historical QA records are not counted as validation of this revision.
 
 The supported claim is that one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support. The mean within-run component excess is bounded below by 30.45; empty-layer separations alone are insufficient. This build audit establishes document consistency and rendering checks, not statistical significance, physics fidelity, or submission approval. See STATUS.md and the claim register for evidence boundaries.

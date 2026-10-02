@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-10-02T22:10:08.713932+00:00",
+  "created_utc": "2026-10-02T18:57:29.657911+00:00",
   "release": "v0.22.1",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; at least 84.6% of the mean component excess remains beyond one component per occupied-layer run.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "313acc648f93e96d8d36245dba1c98fed43a9a487260c101c115f40449c6e6e9",
-    "bytes": 1224297,
+    "sha256": "a42f85cfecb2f53685d66469ca75217f2987d9e515b5a4db16eb8eea127f3435",
+    "bytes": 1224398,
     "pages": 14
   },
   "current_qa": {
-    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_08.json",
-    "sha256": "973d3834ef1ba092e1c40fb20c322098868b832d7efff7c23f0daa9ceef363f7",
+    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_07.json",
+    "sha256": "4c658eccefa3a92f8f83ffd61e395b99d275f2c8141ecf39a77fd8cb77cba3ae",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -38,7 +38,7 @@
       "14-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_finalization_20260930.json",
-    "visual_sha256": "33779f632255ee9b41edfe45803ae27a01bef6cf3c759b7e6d2ac3e826cb23a2"
+    "visual_sha256": "defbe80f546985ade890503e75bb291f4e6e8c309d6e47cbe751ceed450b9d8d"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -46,7 +46,7 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "2ca2f1d66670d0dfa136463b4eadee947047814d025f85953f656b98f68f3a5b",
+    "main.tex": "5eb9414c1b3facdcbe0dfcc1bb3b78f9075ba4fc27ab1c3a68a9b4d9936f58ac",
     "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
     "README.md": "f716da9f8793c8e925095ac62ca0b1af6be8b8e5e09f9f66e40e145d2841bc1c",
@@ -67,8 +67,8 @@
     "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
     "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
     "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
-    "audit/finalization_20260930.json": "02c105bd01f61e105c5bd856efd33febb039a73b5dc3e8872b7704aba8c714dd",
-    "audit/finalization_20260930.md": "0dec20aeed0a9f0623b66d35288b4029a5e75f5e04cff879d1b02e8fd7d13662",
+    "audit/finalization_20260930.json": "b94f9cf5c04e5f67a74950a7d08dbb8ca0cedcf183614d0bd218cf2f917d26b3",
+    "audit/finalization_20260930.md": "1c5534c1e8e287d5e447ef069f83a0d4f27e6e187e98c9c7bc232adea4c51911",
     "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
     "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
     "audit/claude_integration_response_20261001.json": "f47670843099d55734f13b7ef0d799683282bda0bc877c3ce2f9ab059a93a7d6",

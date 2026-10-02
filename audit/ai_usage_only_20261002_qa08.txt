@@ -1,0 +1,2 @@
+FULL QA iteration 08: PASS (14 pages, 313acc648f93e96d8d36245dba1c98fed43a9a487260c101c115f40449c6e6e9)
+Built output/fast_mc_zdc_manuscript.pdf

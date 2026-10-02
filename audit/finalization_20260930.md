@@ -123,3 +123,5 @@ The current source pointer was refreshed for the 2 October mentor consistency pa
 Current AI acknowledgment updated at the author's request to OpenAI's GPT-5.6-Sol only; see `audit/ai_ack_20261002.json`.
 
 Current use-of-generative-AI wording was updated at the author's request to state Julian Juan's lead role and main work; see `audit/author_lead_20261002.json`.
+
+The author requested a concise AI-use disclosure and responsibility for all paper content; current wording is recorded in `audit/ai_usage_only_20261002.json`.

@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-02T22:10:06.918389+00:00",
+  "created_utc": "2026-10-02T18:57:27.840407+00:00",
   "result": "pass",
-  "pdf_sha256": "313acc648f93e96d8d36245dba1c98fed43a9a487260c101c115f40449c6e6e9",
+  "pdf_sha256": "a42f85cfecb2f53685d66469ca75217f2987d9e515b5a4db16eb8eea127f3435",
   "page_sha256": {
     "1": "0210f998caede76b1389ff50e30f67ca451eef5a253e62e9359dcae78cf51cd2",
     "2": "58f769fec1fa0844a77b51a92786baa082296506a23a8cda392dd56db1696802",
@@ -13,12 +13,12 @@
     "8": "57bd41842e1191f1e04ceefdf81f3464c3f26722443f6632ec017aa4ae81ff31",
     "9": "05015270cabfc455997ed74a1039c9c5394c6f21d7ff7cac704fb53fb746140c",
     "10": "75dbc408924c081b08ca5ec1bc629d453b7df0f21c9ae859bb30eac40dea7ffc",
-    "11": "c9ab97fd8fc7d78dae8a85a0f70147ee29409533a4d79ce6ac875e315b0383bc",
+    "11": "17d20a9f78efbcc211884ca0f0779f6a36bdb987e8344a1902959d9f3fd4b9cb",
     "12": "7d0eed141d1886fafdfbc01d13e1d93f0b810fd00898c0babaa5f54794b31cc9",
     "13": "8a37893b2a8f04a5da3c01c2b56ed9cbc14d8df15c0fc0610a2ed1392d93c015",
     "14": "b34b62558bd0e96546ca0c738e61191f3c7835638b695ddb46d0ae2bd4f356a6"
   },
-  "method": "Page 11 reopened and visually inspected after concise AI disclosure edit. Other 13 page images are byte-identical to the previously reviewed QA07 images.",
-  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_08.json",
-  "findings": "AI assistance and responsibility for all paper content stated concisely. No clipping or layout defect."
+  "method": "Page 11 reopened and visually inspected after author-led attribution edit. Other 13 page images are byte-identical to the previously reviewed QA06 images.",
+  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_07.json",
+  "findings": "Heading and paragraph clearly state the author led and did the main work; AI has an assistance role. No clipping or layout defect."
 }
