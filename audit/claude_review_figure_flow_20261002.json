@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-02T10:24:31.992428+00:00",
+  "command": "python -X utf8 audit/resolve_figure_flow_20261002.py",
+  "before_main_sha256": "d67e903d92f78bbb6e4c13a26ccdeecd43d78e157703a7df4a7e5a4ae026cb88",
+  "after_main_sha256": "03c870b7be0d4e38c67a5868281023f6850c3a2147a66796c3dc5d1c0af7bd78",
+  "failure": "First local build after placing Figure 4 in evaluation produced 15 pages, exceeding the unchanged 14-page QA cap",
+  "correction": "Keep data-enriched Figure 4 next to longitudinal result while defining its terms and citing it earlier",
+  "environment": "Windows Python 3.13; local pdfLaTeX/Biber"
+}

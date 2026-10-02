@@ -1,0 +1,61 @@
+{
+  "created_utc": "2026-10-02T10:56:34.898788+00:00",
+  "revision": "0.22.0",
+  "status": "Local manuscript and submission-package QA complete; supersedes the response audit pending-QA status",
+  "main_sha256": "19ee0ec31df33e7506f450446ad85f352136b1421797d4573d83e470199e78c3",
+  "pdf_sha256": "2c763e0bfe7d66fe1fd5441d13a4bc6bb1a8d09bce13bd1cfb1ee0d743f8a228",
+  "zip_sha256": "9b4f7647bbaa6ba349f9e5400ea82e02093e1373cfaca2fb5e390183669a4d4f",
+  "checks": 21,
+  "visual_pages": 13,
+  "guard_tests": 10,
+  "current_qa": "audit/qa_series/claude_review_20261002/iteration_02.json",
+  "full_qa_attempts": [
+    1,
+    2
+  ],
+  "failed_attempts": [
+    "Initial PowerShell audit writer parser error; corrected before any write.",
+    "V3_FULL_REPORT absent in OneDrive checkout; found and hashed in the reviewer-named Desktop checkout.",
+    "First source-edit script assumed uniform CRLF; assertion rejected mixed line endings; matcher corrected before source write.",
+    "Figure relocation regex moved the intervening result prose. Visual check caught it; restored exact HEAD source and replayed only supported edits. Earlier placement/flow records are superseded.",
+    "Several 11-point layout probes remained 15 pages. 0.70/0.65-inch margin probes were rejected and original 0.75-inch margins restored.",
+    "Layout helper count assertions and one apply_patch context failed before writes; corrected. Removing conservative page reservations alone still gave 15 pages.",
+    "10-point build reached 13 pages but failed an overfull bibliography box; 8-point bibliography with flexible line breaking corrected it.",
+    "Release preparation stopped after a CRLF-specific matcher failure; completed remaining operations without replaying applied edits. First resume invocation lacked __file__; corrected before any resume writes.",
+    "QA01 passed 21 automated groups; complete page review found Figure 3 inserted between halves of one sentence and a one-line widow. Replaced the two floating figure environments with anchored minipages and suppressed one-line widows/orphans."
+  ],
+  "native_editor_compile": "Two attempts failed before TeX: Unable to find standard directories for platform",
+  "local_build": "Clean pdfLaTeX/Biber build and all 21 QA groups passed",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "commands": [
+    "C:/Python313/python.exe -X utf8 -m unittest discover -s scripts -p test_qa_guards.py -v",
+    "C:/Python313/python.exe -X utf8 audit/seal_claude_review_20261002.py",
+    [
+      "C:\\Python313\\python.exe",
+      "-X",
+      "utf8",
+      "scripts/write_build_audit.py"
+    ]
+  ],
+  "inputs": {
+    "review": {
+      "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\audit\\manuscript_review_claude_20261002.md",
+      "sha256": "2a0c04a05dc54a0a501993b04b77e1cc66722d7b764d05f91b5f3660ad79ebd3"
+    },
+    "qa_sha256": "99d831b1441db66191dab5ef71eada2fd64197c4b5b4a1f6cd5cd2256aaf9133",
+    "seal_script_sha256": "758f2031a49ebee82f3189a84ead9f61e93f83ce4ce26158e8c41bd109b54d8c"
+  },
+  "new_event_or_test_data_access": false,
+  "new_training_or_model_changes": false,
+  "arxiv_uploaded": false,
+  "remaining_empirical_work": "Event-level uncertainties and paired covariance, threshold sensitivity, same-bank pair-grouped classifier, repeated seeds, production configuration verification and detector-level validation remain unperformed.",
+  "post_seal_correction": {
+    "finding": "git diff --cached --check found an extra blank line at intake MD EOF",
+    "action": "Trimmed EOF; no source-bound input changed",
+    "before_sha256": "cd809332a0328b2b06efb54232719226ad9eece1bcbfe3bab5b7b9552d72bc09",
+    "after_sha256": "c26b8ff48dafb79ca12fca8c4364da3223386cc195a63b5a48bf787f1ed0f7ce"
+  }
+}

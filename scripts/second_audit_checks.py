@@ -26,7 +26,7 @@ def validate_second_audit(checks):
         assert f"{100*r['first_layer'][key]['ecal_start_prevalence']:.2f}"==fmt
         assert fmt+r'\%' in tex
     assert r['structural_invariants']['support_mask_mismatch']==0
-    for text in ['does not establish electronic ganging','This reanalysis uses the evaluation summary and static geometry','This evaluation study uses one checkpoint and 10,000 validation conditions','at least 30.45 of the 35.97 excess groups','assumes conditional independence','70\\% chance','0.25\\,MeV','provisional $V_0$','zero support-mask mismatch','4.759 and 4.830']:
+    for text in ['does not establish electronic ganging','This reanalysis uses the evaluation summary and static geometry','aggregate reanalysis of one checkpoint on 10,000 repeatedly inspected validation conditions','at least 30.45 of the 35.97 excess groups','assumes conditional independence','70\\% chance','0.25\\,MeV','provisional $V_0$','zero support-mask mismatch','4.759\\,GeV for Geant4', '4.830\\,GeV for the generator']:
         assert text in tex,text
     assert 'ganged channel' not in tex
     assert 'A MIP-equivalent threshold cannot be assigned' not in tex

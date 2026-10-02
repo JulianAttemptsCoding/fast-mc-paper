@@ -1,6 +1,6 @@
 # Scientific status
 
-Version 0.21.1 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
+Version 0.22.0 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
 
 ## Corrected central result
 
@@ -37,3 +37,7 @@ Version 0.21.0 clarifies the positive-deposit hit definition and connects graph 
 ## Follow-up HEP reader pass
 
 Version 0.21.1 clarifies the ePIC design context, the condition-only C2ST control, section-weighted calibration as an illustrative calculation, and the two possible directions of threshold effects. No reconstruction, threshold, training, or event-level study was performed. See `audit/hep_readability_followup_response_20261001.md`.
+
+## October reader review
+
+Version 0.22.0 adds a structural-data panel beside the definitions, repairs the geometry guide and tick labels, reports the depth-distribution discrepancy, identifies the pooled response widths, and states the fixed gun vertex and nominal materials as documented context with explicit provenance limits. The uncertainty calculation is an independent-sample error scale, not a recovered paired interval. No threshold scan or event-level experiment was performed. See `audit/claude_review_response_20261002.md`.

@@ -412,3 +412,21 @@ Follow-up HEP reader revision v0.21.1 sealed: QA06 passed 20 groups at 14 pages;
 Git preflight initially flagged extra blank EOF lines in two immutable failed-attempt Markdown notes. Normalized only their trailing blank lines and retained their findings. Final staged whitespace, helper AST and exact raw-byte identity for all 622 indexed files passed. The sealed main.tex/PDF/ZIP SHA-256 hashes are unchanged.
 
 Follow-up HEP reader revision 0.21.1 committed as 8dd04cada8fad79066ee8fc4f86c47528d07f8ce and pushed to GitHub `main`. Verified the remote ref equals that commit and the working tree was clean before writing this publication record. See audit/publication_v0211_20261001.{json,md}; arXiv upload remains unperformed.
+
+2026-10-02 review intake: Review SHA-256 2a0c04a05dc54a0a501993b04b77e1cc66722d7b764d05f91b5f3660ad79ebd3; main.tex 9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645; paper HEAD 7d14229b914aa1f519d17bc37504c0c93620212a. Graft check OK. First audit-writer command failed to parse; corrected. Missing docs/V3_FULL_REPORT.md locally. See audit/claude_review_intake_20261002.json. No DiCOS/test access.
+
+
+2026-10-02 source edit: First audit/revise_claude_review_20261002.py run failed on mixed CRLF/LF assumption; corrected line-ending matcher, reran. main.tex da1ff959a2efd1c2730bf1e1dbe7ea362673b6227a2871fc17b899626517d859, 20 source-checked replacements. See audit/*claude_review_source_edits_20261002.json. No event/test data accessed.
+
+
+2026-10-02 figure revision: Removed misleading beam-slope guide and crowded x tick; Figure 4 now combines definition schematic with three released nonempty-sample means and is placed after definitions. main.tex SHA-256 d67e903d92f78bbb6e4c13a26ccdeecd43d78e157703a7df4a7e5a4ae026cb88. See audit/*claude_review_figure_placement_20261002.json. Figures generated locally from immutable aggregate and geometry. No DiCOS/test access.
+
+
+2026-10-02 October review source revision v0.22.0: main.tex 1a2852da76e14c0df765cb775b7b0d3e4021bd46963ef9d7cd939b8c5ae03b96. See audit/claude_review_response_20261002.json for adopted/rejected inferences, documentary hashes, primary research, all layout/editor failures and corrections. No event/test access or new experiment. Version metadata and source-binding QA synchronized; final checks pending.
+
+2026-10-02 QA01: 21 full-suite groups and 10 guard tests passed. All 13 pages directly inspected; figure interrupted sentence and one-line widow found. Anchored result figures and set widow/orphan penalties. Source 19ee0ec31df33e7506f450446ad85f352136b1421797d4573d83e470199e78c3. Native compiler initialization failed; local build works. Release-preparation CRLF matcher and missing __file__ retry failures recorded in response audit. See audit/claude_review_final_reading_20261002.json.
+
+
+October manuscript v0.22.0 sealed: QA02 passed 21 groups; all 13 pages visually verified; 10 guard tests passed. Seven-file ZIP CRC and byte identities verified. Native compiler initialization failed; local pdfLaTeX/Biber passed. No raw/test data or new model evaluation. See audit/claude_review_completion_20261002.json for commands, hashes, environment, failures and remaining empirical work.
+
+Staging QA corrected an extra blank line at audit/claude_review_intake_20261002.md EOF. No source-bound input changed; hashes recorded in the October completion audit.

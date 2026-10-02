@@ -1,0 +1,79 @@
+{
+  "created_utc": "2026-10-02T10:46:19.980119+00:00",
+  "revision": "0.22.0",
+  "input_review": {
+    "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\audit\\manuscript_review_claude_20261002.md",
+    "sha256": "2a0c04a05dc54a0a501993b04b77e1cc66722d7b764d05f91b5f3660ad79ebd3"
+  },
+  "baseline_commit": "7d14229b914aa1f519d17bc37504c0c93620212a",
+  "current_main_sha256": "19ee0ec31df33e7506f450446ad85f352136b1421797d4573d83e470199e78c3",
+  "context_sources": {
+    "docs/V3_FULL_REPORT.md": {
+      "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\docs\\V3_FULL_REPORT.md",
+      "sha256": "43f9888e661db38b93073654b2aa1847e094bd89663e3f6dfa1e84dcb3f2307a",
+      "excerpt_summary": "The generator vertex silently defaulted to the origin. True value is [-917.41, -30.0, 35488.91] mm.",
+      "status": "Project documentary context; does not independently identify the historical Geant4 production."
+    },
+    "docs/DATA_CONTRACT.md": {
+      "path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\docs\\DATA_CONTRACT.md",
+      "sha256": "35a8d12272ad54482150c0d2c14186fa58a363c851d9ee3bd23b8e5b4560520d",
+      "excerpt_summary": "Historical detector context to verify, not assume: nominal LYSO ECAL and steel/scintillator HCAL; fixed vertex conversion check.",
+      "status": "Project documentary context; does not independently identify the historical Geant4 production."
+    }
+  },
+  "primary_research": [
+    "https://arxiv.org/html/2406.12877v2"
+  ],
+  "decisions": [
+    {
+      "item": "Headline data figure",
+      "disposition": "Added three aggregate mean comparisons to Figure 4 while retaining the definition illustration. Structural distributions and intervals cannot be reconstructed from means."
+    },
+    {
+      "item": "Response uncertainty",
+      "disposition": "Report 0.068 GeV independent-sample SE scale; do not adopt exact 0.065 GeV paired SE or chi-square. Conditional independence does not determine covariance of the conditional means within each energy bin; the review requires additional assumptions."
+    },
+    {
+      "item": "Depth and response distributions",
+      "disposition": "Report depth W1=0.971 layers versus half-split 0.155, and response W1=0.073 GeV versus half-split 0.147. These unequal-size empirical scales do not establish a calibrated significance test."
+    },
+    {
+      "item": "Geometry and gun",
+      "disposition": "Verify graph connectivity and median nearest-centroid spacing from static geometry. Report gun vertex and nominal materials as documentary context with an explicit production-evidence caveat. Remove misleading beam guide and crowded tick."
+    },
+    {
+      "item": "Product-of-means satellite estimate",
+      "disposition": "Do not turn products of marginal means into mean group size or energy. State only that both samples retain a dominant connected group and sizes/energies remain unmeasured."
+    },
+    {
+      "item": "Prose and architecture",
+      "disposition": "Name flow-matching shower generator; clarify motivation and aggregate scope, coarse-to-fine generation, pooled-width ordering, depth distribution, bound range, and timing heading. Model equations and numerical table bodies remain unchanged."
+    },
+    {
+      "item": "Form guards",
+      "disposition": "AGENTS rule 23 forbids weakening assertions to pass. Retained the 14-page maximum, equation/table preservation and exact figure set. Equivalent source-wording checks now require explicit width ordering. Natural page flow and standard 10-point article typography fit without removing scientific content; bibliography remains 8 point."
+    },
+    {
+      "item": "Event-level experiments and frozen runtime weights",
+      "disposition": "Not represented as completed. The paper package lacks events/checkpoint/runtime config; no DiCOS session, raw/test data access, retraining, metadata request or new model experiment was performed. The manuscript remains an aggregate diagnostic case study."
+    }
+  ],
+  "failed_attempts": [
+    "Initial PowerShell audit writer parser error; corrected before any write.",
+    "V3_FULL_REPORT absent in OneDrive checkout; found and hashed in the reviewer-named Desktop checkout.",
+    "First source-edit script assumed uniform CRLF; assertion rejected mixed line endings; matcher corrected before source write.",
+    "Figure relocation regex moved the intervening result prose. Visual check caught it; restored exact HEAD source and replayed only supported edits. Earlier placement/flow records are superseded.",
+    "Several 11-point layout probes remained 15 pages. 0.70/0.65-inch margin probes were rejected and original 0.75-inch margins restored.",
+    "Layout helper count assertions and one apply_patch context failed before writes; corrected. Removing conservative page reservations alone still gave 15 pages.",
+    "10-point build reached 13 pages but failed an overfull bibliography box; 8-point bibliography with flexible line breaking corrected it.",
+    "Release preparation stopped after a CRLF-specific matcher failure; completed remaining operations without replaying applied edits. First resume invocation lacked __file__; corrected before any resume writes.",
+    "QA01 passed 21 automated groups; complete page review found Figure 3 inserted between halves of one sentence and a one-line widow. Replaced the two floating figure environments with anchored minipages and suppressed one-line widows/orphans."
+  ],
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "new_event_or_test_data_access": false,
+  "new_model_evaluation": false,
+  "status": "Whole-document source and QA01 visual review complete; final source-bound QA pending after layout correction"
+}

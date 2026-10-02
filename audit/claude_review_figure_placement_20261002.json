@@ -1,0 +1,8 @@
+{
+  "utc": "2026-10-02T10:20:10.701935+00:00",
+  "command": "python -X utf8 audit/place_support_figure_20261002.py",
+  "before_main_sha256": "da1ff959a2efd1c2730bf1e1dbe7ea362673b6227a2871fc17b899626517d859",
+  "after_main_sha256": "d67e903d92f78bbb6e4c13a26ccdeecd43d78e157703a7df4a7e5a4ae026cb88",
+  "action": "Move Figure 4 immediately after definitions; caption distinguishes illustrative top panels and aggregate data bottom panels",
+  "environment": "Windows Python 3.13, local paper checkout"
+}

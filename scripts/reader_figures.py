@@ -1,8 +1,9 @@
-"""Reader diagrams adapted from the preserved Claude proposal; static geometry and toy graph only."""
+"""Reader figures from static geometry, an illustrative graph and released aggregates."""
 
 from __future__ import annotations
 
 import csv
+import json
 from pathlib import Path
 
 import matplotlib
@@ -15,6 +16,7 @@ from matplotlib.patches import Rectangle
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 GEOMETRY = ROOT / "data/geometry/readout_geometry.npz"
+REPORT = ROOT / "data/reports/dicos-f-02_epoch90.json"
 HISTORY = ROOT / "data/training/calibrated_lr3e4_history.csv"
 OUT = ROOT / "figures"
 
@@ -64,9 +66,6 @@ def plot_detector_layout() -> None:
                 label="HCAL, layers 1–64", rasterized=True)
     top.scatter(pos[~hcal, 2] / 1000, pos[~hcal, 0], s=2.4, color="#b3412f", linewidths=0,
                 label="ECAL, layer 0", rasterized=True)
-    z_line = np.array([35.66, 37.44])
-    top.plot(z_line, -0.025 * z_line * 1000, color=REF, lw=0.9, ls="--",
-             label="coordinate guide")
     top.set_xlabel("stored centroid $z$ (m)")
     top.set_ylabel("stored centroid $x$ (mm)")
     top.set_title("Top view: 65 layers")
@@ -91,7 +90,7 @@ def plot_detector_layout() -> None:
         ax.set_title(title)
         ax.set_xlim(-1230, -570)
         ax.set_ylim(-330, 330)
-        ax.set_xticks([-1100, -900, -700])
+        ax.set_xticks([-1100, -700])
         ax.set_axisbelow(True)
         if index == 1:
             bar = fig.colorbar(scatter, ax=ax, shrink=0.72, pad=0.03, ticks=[1, 2, 3, 4])
@@ -120,8 +119,11 @@ def _strip(ax, y: float, active: set[int], n_layers: int, label: str) -> None:
 
 
 def plot_observable_definitions() -> None:
-    fig = plt.figure(figsize=(8.6, 2.75), layout="constrained")
-    grid = fig.add_gridspec(1, 2, width_ratios=[1.9, 1.0])
+    report = json.loads(REPORT.read_text(encoding="utf-8"))
+    assert report["split"] == "validation" and report["test_events_used"] == 0
+    fig = plt.figure(figsize=(8.6, 3.85), layout="constrained")
+    grid = fig.add_gridspec(2, 2, width_ratios=[1.9, 1.0],
+                            height_ratios=[2.75, 1.10])
 
     ax = fig.add_subplot(grid[0, 0])
     n_layers = 13
@@ -172,6 +174,31 @@ def plot_observable_definitions() -> None:
     bx.set_ylabel("channels in a layer")
     bx.grid(False)
     bx.set_title("(b) $R=1$, $m=3$, $Q=m-R=2$")
+    bars = grid[1, :].subgridspec(1, 3, wspace=0.27)
+    zero = report["visibility_and_zero_response"]
+    metrics = [
+        ("last hit layer", report["activity"]["truth"]["mean_last_active_layer"],
+         report["activity"]["generated"]["mean_last_active_layer"]),
+        ("skipped layers", report["activity"]["truth"]["mean_gaps"],
+         report["activity"]["generated"]["mean_gaps"]),
+        ("graph groups", report["topology"]["truth"]["connected_components_mean"] /
+         (1 - zero["truth"]["zero_fraction"]),
+         report["topology"]["generated"]["connected_components_mean"] /
+         (1 - zero["generated"]["zero_fraction"])),
+    ]
+    for index, (title, reference, generator) in enumerate(metrics):
+        cx = fig.add_subplot(bars[0, index])
+        scale = max(reference, generator) * 1.22
+        cx.barh([1, 0], [reference, generator], color=[REF, GEN], height=0.42)
+        cx.text(reference + 0.015 * scale, 1, f"{reference:.2f}", va="center", fontsize=8)
+        cx.text(generator + 0.015 * scale, 0, f"{generator:.2f}", va="center", fontsize=8)
+        cx.set_xlim(0, scale)
+        cx.set_yticks([1, 0], ["Geant4", "model"], fontsize=8)
+        cx.set_xticks([])
+        cx.set_title(f"(c{index + 1}) {title}", fontsize=9)
+        cx.grid(False)
+        for spine in cx.spines.values():
+            spine.set_visible(False)
     save(fig, "support_summary.png")
 
 

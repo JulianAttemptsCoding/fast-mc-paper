@@ -1,0 +1,19 @@
+{
+  "event": "intake",
+  "utc": "2026-10-02T10:10:51.3415862Z",
+  "command": "Read review, graft check, inspect paper source/QA and source evidence",
+  "review_path": "C:\\Users\\Julia\\Desktop\\coding\\ASIoP\\Fast MC CBSC\\audit\\manuscript_review_claude_20261002.md",
+  "review_sha256": "2a0c04a05dc54a0a501993b04b77e1cc66722d7b764d05f91b5f3660ad79ebd3",
+  "main_sha256": "9d0510a62d243db574d42b7d3640d6c639878cf49fcf675578c44e0bd728e645",
+  "paper_head": "7d14229b914aa1f519d17bc37504c0c93620212a",
+  "environment": "Windows PowerShell; local only",
+  "decisions": [
+    "Evaluate every finding against released aggregates and manuscript",
+    "No new DiCOS or test-data access",
+    "Preserve binding QA guards under AGENTS.md rule 23"
+  ],
+  "failures": [
+    "Scientific project path docs/V3_FULL_REPORT.md absent in current checkout",
+    "First PowerShell audit writer failed with parser error; no files written"
+  ]
+}

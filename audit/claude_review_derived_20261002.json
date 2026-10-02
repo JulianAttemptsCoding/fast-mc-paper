@@ -1,0 +1,14 @@
+{
+  "geometry_sha256": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
+  "report_sha256": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+  "directed_edges": 107920,
+  "weak_components": 1,
+  "every_layer_laterally_connected": true,
+  "hcal_median_nearest_centroid_mm": 54.21318817138672,
+  "independent_sample_se_scale_gev": 0.0678146989105792,
+  "depth_w1_layers": 0.9708638587337449,
+  "depth_half_split_layers": 0.15494737999472724,
+  "response_w1_gev": 0.07272892743995106,
+  "response_half_split_gev": 0.1474655284291369,
+  "scope": "Arithmetic, static geometry and section order only; independent-sample SE is an approximation, not a recovered paired interval or physics validation."
+}

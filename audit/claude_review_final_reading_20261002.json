@@ -1,0 +1,10 @@
+{
+  "command": "python -X utf8 audit/final_reading_corrections_20261002.py",
+  "before_main_sha256": "1a2852da76e14c0df765cb775b7b0d3e4021bd46963ef9d7cd939b8c5ae03b96",
+  "after_main_sha256": "19ee0ec31df33e7506f450446ad85f352136b1421797d4573d83e470199e78c3",
+  "review": "All 13 QA01 pages directly inspected; prose, equations, numbers, figures and citations read in sequence.",
+  "correction": "Anchor both result figures at paragraph boundaries; eliminate figure-interrupted sentence and prevent one-line widow/orphan.",
+  "native_compile": "Failed at platform initialization: Unable to find standard directories for platform",
+  "qa01": "21 groups passed; 10 release-guard tests passed",
+  "scope": "Document QA, not physics validation"
+}
