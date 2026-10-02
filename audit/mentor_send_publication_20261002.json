@@ -1,0 +1,31 @@
+{
+  "created_utc": "2026-10-02T16:43:45.818139+00:00",
+  "revision": "0.22.1",
+  "release_commit": "15bc5f6615bb80bc875dcabbad16b0b034531c7d",
+  "remote_main_verified": "15bc5f6615bb80bc875dcabbad16b0b034531c7d",
+  "repository": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+  "publication_scope": "User-requested GitHub commit and push; no arXiv upload",
+  "release_worktree_clean": true,
+  "index_raw_bytes_verified": true,
+  "tracked_files_verified": 674,
+  "output_sha256": {
+    "main_sha256": "5ca22625422c79d6d3490778a20db272fc41773713e14be7203eed7bd9c76cf7",
+    "pdf_sha256": "7d2379ad5f0555d179055fe6892e5a3b3b0cb819cd800a2110cd912d7765a58b",
+    "zip_sha256": "c8d1616eb507af7303120b38a57e6630737ba151f6a9523f9a1b7d79db8bb895"
+  },
+  "commands": [
+    "git fetch origin",
+    "git add --all",
+    "git diff --cached --check",
+    "git commit -m \"docs(paper): finalize mentor-send revision v0.22.1\"",
+    "git push origin main",
+    "git rev-parse HEAD",
+    "git ls-remote origin refs/heads/main",
+    "git status --short"
+  ],
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "audit_commit_note": "This record is committed after the release; the containing audit commit may be newer than release_commit."
+}
