@@ -84,6 +84,6 @@
   "revision": "0.17.0",
   "response": "audit/external_audit_response_20260930.md",
   "current_geometry_scope": "Stored-ID grouping only; physical electronics interpretation unresolved; electronic ganging not established.",
-  "current_revision": "0.22.0",
-  "current_reader_revision": "audit/claude_review_response_20261002.md"
+  "current_revision": "0.22.1",
+  "current_reader_revision": "audit/mentor_send_response_20261002.md"
 }

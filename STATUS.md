@@ -1,6 +1,6 @@
 # Scientific status
 
-Version 0.22.0 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
+Version 0.22.1 is an arXiv preprint candidate describing one pilot ePIC ZDC simulation model on a repeatedly inspected development bank. It is not a validated FastMC or detector-performance result.
 
 ## Corrected central result
 
@@ -41,3 +41,7 @@ Version 0.21.1 clarifies the ePIC design context, the condition-only C2ST contro
 ## October reader review
 
 Version 0.22.0 adds a structural-data panel beside the definitions, repairs the geometry guide and tick labels, reports the depth-distribution discrepancy, identifies the pooled response widths, and states the fixed gun vertex and nominal materials as documented context with explicit provenance limits. The uncertainty calculation is an independent-sample error scale, not a recovered paired interval. No threshold scan or event-level experiment was performed. See `audit/claude_review_response_20261002.md`.
+
+## Mentor-send clarity revision
+
+Version 0.22.1 restores definitions that earlier condensing had removed (Wasserstein distance, reference-half scale, edge co-occupancy, closure residuals, support), names the incident particle and both samples in the abstract, ties Table 1 row names to the symbols of the evaluation section, cross-references the result figures, and states the stored-energy scale and the depth shift in physical units. It adds one paragraph of energy-weighted transverse summaries and one binwise error-scale statement, both recomputed from the released aggregate report by `scripts/mentor_send_checks.py`. Numbered equations and numerical table bodies are unchanged. The binwise scale treats the samples as independent and is not a paired interval. No event-level data, checkpoint, threshold scan or new evaluation was used. A word-by-word pre-send pass then corrected the binwise statement to quote both of the largest differences (1.8 and 2.0 standard errors) and made nine wording clarifications without changing any number. See `audit/mentor_send_response_20261002.md`.

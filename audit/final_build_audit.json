@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-10-02T10:56:34.608402+00:00",
-  "release": "v0.22.0",
+  "created_utc": "2026-10-02T16:42:32.902169+00:00",
+  "release": "v0.22.1",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; at least 84.6% of the mean component excess remains beyond one component per occupied-layer run.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "2c763e0bfe7d66fe1fd5441d13a4bc6bb1a8d09bce13bd1cfb1ee0d743f8a228",
-    "bytes": 1217666,
-    "pages": 13
+    "sha256": "7d2379ad5f0555d179055fe6892e5a3b3b0cb819cd800a2110cd912d7765a58b",
+    "bytes": 1224679,
+    "pages": 14
   },
   "current_qa": {
-    "record": "audit\\qa_series\\claude_review_20261002\\iteration_02.json",
-    "sha256": "99d831b1441db66191dab5ef71eada2fd64197c4b5b4a1f6cd5cd2256aaf9133",
+    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_03.json",
+    "sha256": "311ca5eea8ec32ee1ebc41ec0d0ccf1b36c56092665ce32e827702d0fd543bfb",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -33,11 +33,12 @@
       "Third audit: profile peak/ratios, energy-weighted depth, stored-ID periodicity check, physical-stage scope and synchronized sharper bound",
       "Reader proposal: physical coordinate dimensions, paired normalized interval, deep-layer totals, timing accounting and independently counted schematic",
       "October review: graph connectivity and pitch, response error scale, depth/response distances, structural figure denominators and Results reading order",
+      "Mentor-send additions: stored-energy scale, binwise error scale, depth shift in metres, profile ratio, transverse summaries and restored definitions",
       "Active-versus-archived evidence separation, 7 active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check",
-      "13-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
+      "14-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_finalization_20260930.json",
-    "visual_sha256": "effc131462a7600c76a885482471c8ccda1d836ef15519942253704d1376ce9c"
+    "visual_sha256": "c019c27c171f3dfb925c497ff66f392efddf021cb61138680cbc6243e1fe4cfb"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -45,14 +46,14 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "19ee0ec31df33e7506f450446ad85f352136b1421797d4573d83e470199e78c3",
+    "main.tex": "5ca22625422c79d6d3490778a20db272fc41773713e14be7203eed7bd9c76cf7",
     "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
-    "README.md": "01868573d9dcda9e9878405154419ae4bf666db644caac7922da6f068ce77ad3",
-    "STATUS.md": "04f8500e6754c48681717cc8df3fca525f7f1b646eb1579a9cb33a1a2d6ff014",
-    "CITATION.cff": "0fc8da82e8bbaad5ca32b297a32494db979090a7a1e6c2d4f629378d8325d5e2",
-    "audit/claim_register_20260922.json": "60ecb55ad7124b0f3739692b70b03d594bf6123c42131725e4d766377ba83403",
-    "audit/claim_register_20260922.md": "a75cf453940a62fe6f8f66cb6a75479dab554a47aded4ba579f7f3d0e108562c",
+    "README.md": "ec34dfffbde85a7034b25741150b93b7d5b5922152a6345f5ba29b07e68e2cb9",
+    "STATUS.md": "685f5e81020772ac0e4dfeb835f61ed9b24687b7f8df7a1cafb39666d5a86b0b",
+    "CITATION.cff": "308d68f0ec9adcb9b39e9a02f9cf840d4d4cb6064c68e6bdb4484ad47192e6e9",
+    "audit/claim_register_20260922.json": "5e3b295859a7f8eed9c7120b03100e9a1415ddd13dddf9346162c438dcc82f65",
+    "audit/claim_register_20260922.md": "74f3b7b6fca82d9d9a74d74c0648dd3e38b9ab0547801c14ebce56dacd4b48bf",
     "audit/adversarial_revision_round4_20260923.json": "87a7221885cceb9cecc99b03738fee461150c8fa43483dfbaeb10cda67e0766a",
     "audit/adversarial_revision_round4_20260923.md": "a8d972178ad19132cea8566dcd548fa7804d799d9634b9cbf3afa094f53dd83a",
     "audit/adversarial_revision_20260922.json": "d5b25b7b515759d51dba446ee65ac37ec19e26c6bd6f51b800248b58d0670edf",
@@ -66,7 +67,7 @@
     "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
     "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
     "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
-    "audit/finalization_20260930.json": "f891d991dac6d86b01aeb5953b36cb131627a7f8bb92d62a2de90f088f04b5ae",
+    "audit/finalization_20260930.json": "55717c6471ad6f2cb15e24926aff08d6465d079a285794d439ac75c151d17f79",
     "audit/finalization_20260930.md": "b2e0cf6c5feddef92f23d6b7adbc62c7054807e58f01109791b24a9f2e4a9c00",
     "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
     "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
@@ -78,18 +79,21 @@
     "audit/hep_readability_followup_response_20261001.md": "ead83a2434568a14695adfc88da2893b923eb4d318bb9f92a145aa8b1f7e2cb1",
     "audit/claude_review_response_20261002.json": "e5b929d4a08aaeca9e836b0fd330ba8b0ee055191b0296ce5594a4e1aa68c656",
     "audit/claude_review_response_20261002.md": "966c1d6721ed0578e335991d75006837f47b01fe6910375f0917d2d23de5cfbe",
-    "audit/current_qa_series.json": "1c225990cff2a61b510e386aa235a670599867fe5e761ecfc1954654a4d289f2",
+    "audit/mentor_send_response_20261002.json": "a79d92292279665ba48eee0d1c156699dd641145e4262d92d07dc40490b64c95",
+    "audit/mentor_send_response_20261002.md": "435675c647cc827a8cdc816625139d13be9d3212dd5d9a0f81f48c9673aaa281",
+    "audit/current_qa_series.json": "68df3c477e90c741236902ea5c0c7d1ec03cb9981ea6f6ea2320359acfb32be0",
     "scripts/build_figures.py": "891b114016dbe7facbc6dcd8535a2f12859e45568747b3f57733450407e7ffd6",
     "scripts/claude_reader_checks.py": "a9990258576ee53403fab7bb237976922e825b49f2288eb12a862c8813b0a669",
     "scripts/component_bounds.py": "07f1e9cf62151d733a1d0330a8a4bed935edd024ad98cfdf1affd1efb45e1f07",
-    "scripts/full_manuscript_qa.py": "972a3e73576389536f49cd140e448ab51c23b122d250bc6c349e02203c1c39ff",
+    "scripts/full_manuscript_qa.py": "77348a5b3586ea3497dfa271112ca499f3d2102d26299cc90707ca759a9a208a",
+    "scripts/mentor_send_checks.py": "39e4a6f51ab86537ca8314bd21774906a690d3d3088cd5174527715c2b89cc37",
     "scripts/physics_exposition_checks.py": "a2dd3ca33399af137cebda59de3033677c1e7d05140302228a16619a3be347a5",
     "scripts/qa_series.py": "e9694aefd12bcac2c59a784e3126cb2c296b7d928cd7fcf796aa293dbd2b86e4",
-    "scripts/reader_figures.py": "6b86a0d4bcda9112fbd61751b2608d209c7a25a70a230a0cb46e1aa59a752ac5",
+    "scripts/reader_figures.py": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
     "scripts/review_october_checks.py": "6ca3bc0e2dfe9c0b64821db677dd66cb06596b5583bba09fe0d0e570263a1902",
     "scripts/second_audit_checks.py": "2b15aff2fc51880783e85bc2988d19c7caeeb7b1c127652a6e487fbfed51d49d",
     "scripts/test_qa_guards.py": "04e4012b2aa71a3987b1834321d9f507797df43561f3d5b9eba8118fade8feb9",
-    "scripts/write_build_audit.py": "bb25f6ec1f13e6e53fd36853961d1487ceb36d8441beebaa0989b02ddfba620e",
+    "scripts/write_build_audit.py": "66c5bdf9caa72bf429f5c17ce18b5f6393b35c783e28698872b0f69f63264609",
     "data/geometry/geometry_summary.json": "0edb2744c1e87851c186c1fa310ae6325b429568bd8ff39d6e8adfc9b62cd546",
     "data/geometry/readout_geometry.npz": "f3bf20d992b41e5f7f6b6fb41453359e80851d3c34a70e3175dd0219748afe2e",
     "data/provenance/source_evidence.json": "10f8d01e716c5563daf16085dea25044662ddcd551ea121c43cf6e4a11bf789f",
@@ -99,7 +103,7 @@
     "data/training/calibrated_lr3e4_history.csv": "bfd3ce99cc45e56ab92e878f20234939b3fe64ce971d5bfa1d4ed7a7d566193f",
     "data/training/calibrated_lr3e4_history.provenance.json": "6f07abc2a90284af0054185c73ba55fc7eefec35008ba3b32b526df828422bd9"
   },
-  "figures_manifest_sha256": "c4d9475df30dc7559ea05626e40c824646fe1707cfce0813f1fe3c47ed6a8c2f",
+  "figures_manifest_sha256": "17151812514234bab52a26f25268003c86791f51b82db3223394b41883219dcf",
   "research_boundary": "No new training, test-data use or model evaluation. Aggregate arithmetic, model implementation statements and source provenance were audited; physics fidelity was not established.",
   "remaining_publication_actions": [
     "Author reports data-owner permission; production geometry tag remains unspecified",

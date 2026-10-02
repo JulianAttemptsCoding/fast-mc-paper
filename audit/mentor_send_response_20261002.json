@@ -1,0 +1,329 @@
+{
+  "created_utc": "2026-10-02T11:17:47.328424+00:00",
+  "revision": "0.22.1",
+  "baseline_commit": "d540f97",
+  "baseline_main_sha256": "19ee0ec31df33e7506f450446ad85f352136b1421797d4573d83e470199e78c3",
+  "current_main_sha256": "5ca22625422c79d6d3490778a20db272fc41773713e14be7203eed7bd9c76cf7",
+  "replacements": [
+    {
+      "section": "abstract",
+      "old_sha256": "36e61a7e94a8e741e9d82111a1194686aa095be513522a16373f65c0ea83cdd2",
+      "new": "is compared with Geant4 at 10,000 matched incident-neutron conditions spanning 50--250\\,GeV kinetic energy. Among nonempty showers, the mean active-layer count differs by only 0.25 (54.83 generated versus 54.58 Geant4, of 65 layers), yet the generated last layer with a deposit lies 4.42 layers farther downstream and the occupied span contains 3.95 more skipped layers. The mean number of connected hit groups on the model graph is 23.42 for Geant4 and 59.39 for the generator."
+    },
+    {
+      "section": "abstract",
+      "old_sha256": "cea80aa1f9e36265c5726cc5891f91ef84447279f74e9a11cdb795437802991b",
+      "new": "A classifier separates generated from Geant4 showers on high-level summaries (AUROC 0.775, where 0.5 is chance), but its control using incident conditions alone gives 0.464 rather than 0.5, so the score is not a calibrated fidelity test."
+    },
+    {
+      "section": "conditioning",
+      "old_sha256": "918e6e0a026aa08040c3d16b9a6043e1674db79f1f25f6c9090a6d897711f668",
+      "new": "where $\\mathbf p=(p_x,p_y,p_z)$ is the three-momentum"
+    },
+    {
+      "section": "placement",
+      "old_sha256": "28f01c3f356326f4b1e1f3a21644ab1e4d6a46cae86b15b73fa80ed103feba24",
+      "new": "with temperature $\\tau$ and random perturbations $g_{\\ell i}$. Rank one denotes the largest noisy score. The sampler uses $\\tau=1$ and independent Gumbel perturbations $g_{\\ell i}$ obtained"
+    },
+    {
+      "section": "decoder",
+      "old_sha256": "22a63e879ecb9b81f932f847ef80e1bcaed95e8c0462e170d9331325ea9665d5",
+      "new": "so that, in exact arithmetic, $|S_\\ell|=K_\\ell$"
+    },
+    {
+      "section": "generator overview",
+      "old_sha256": "dee9b6fc30b7a4bb59da102780507c21eb5aa6286c6404eabd52de64cc6dc3cd",
+      "new": "Discrete heads generate visibility, layer activity, channel counts, and support (the set of active channels); two conditional"
+    },
+    {
+      "section": "generator overview",
+      "old_sha256": "89b1c73cdef536db9e47d299c10ce203b09548855da70dc1df1073b48b64d106",
+      "new": "There is no learned shower encoder or common random event latent: no single random vector is shared by all stages of an event."
+    },
+    {
+      "section": "training",
+      "old_sha256": "910553d56b926c9d0b18513a9c5c25c8eeef0bf9475493e15dcf7acdf918c1ce",
+      "new": "the free-running (fully sampled) support diagnostics were evaluated subsequently"
+    },
+    {
+      "section": "evaluation",
+      "old_sha256": "197e217d24dc26683389f89963afd30b2dc0b19ce001a8bed325868c759f8955",
+      "new": "eight 25\\,GeV bins of incident kinetic energy show the energy dependence of the response."
+    },
+    {
+      "section": "evaluation",
+      "old_sha256": "0af5734e3dfe5a2c56d551b0c4f52fbe76576027d689f77b69ea94f189eeb42d",
+      "new": "For a scalar observable, the Wasserstein-1 distance $W_1$ is the area between the generated and reference empirical cumulative distributions, in the units of that observable~\\cite{kansalmetrics}; all events enter, with empty showers at zero. As a finite-sample scale, we also quote $W_1$ between two disjoint 5,000-event halves of the Geant4 sample (the reference-half scale); it is a descriptive comparison, not a critical value. The 95\\% intervals for the active-channel-count $W_1$, zero-deposit fraction"
+    },
+    {
+      "section": "evaluation",
+      "old_sha256": "bd47d7526f2e3903b96cb50931f022009882f5be7020fd62cc6d77f05948da34",
+      "new": "has chance benchmark 0.5 and equals 1 for perfect separation~\\cite{c2st,kansalmetrics}."
+    },
+    {
+      "section": "results table caption",
+      "old_sha256": "b370ae63d7ad3cdeb9f9ec28c93e23cd924978af08001e1d16058e0128ac4ddf",
+      "new": "Inactive layers in span is the gap count $G$ of Eq.~\\eqref{eq:gaps}; weak graph components are the graph-connected hit groups $m$ of Sec.~\\ref{sec:diagnostics}. Differences are generator minus reference, computed before rounding; pp denotes percentage points.}"
+    },
+    {
+      "section": "deposited energy",
+      "old_sha256": "e423537fc1cfc3c7dac664db9b216c7feedd1d99bce2daf60d03f2c71bdd9a32",
+      "new": "a difference of 0.045\\,GeV (1.0\\%). Both are about 3\\% of the 149.9\\,GeV mean incident kinetic energy: the stored total counts only energy deposited in readout channels and is neither a calibrated energy nor a sampling-fraction measurement. Opposing section shifts are concealed:"
+    },
+    {
+      "section": "deposited energy",
+      "old_sha256": "4ecb812c29965a55f5ef0d07c7d323f72c8757ced1dd7d76aeba8bd3750fa36c",
+      "new": "without constituting a matched-size significance test. In every energy bin the standard deviation of the stored total is comparable to its mean (Table~\\ref{tab:energy_bins}), so each binwise mean has a standard error near 3\\%. On the same independent-sample scale, the largest binwise mean difference ($-7.65\\%$ at 150--175\\,GeV) is 2.0 standard errors; the alternating signs in Table~\\ref{tab:energy_bins} therefore do not establish an energy-dependent bias."
+    },
+    {
+      "section": "deposited energy",
+      "old_sha256": "6da8edd826043514f1ef77eba08bcd0b4c178a9d118c1a559a131cc79256667a",
+      "new": "cannot be split reliably into Bernoulli-draw ($V_0=0$) and zero-clamp contributions"
+    },
+    {
+      "section": "longitudinal activity",
+      "old_sha256": "3b088d87030a7f919bbb2c9f8d12b7252ac8ac1a591415c79d4c0f8808f20236",
+      "new": "but the last positive deposit is farther downstream (Table~\\ref{tab:results}; Fig.~\\ref{fig:support}, bottom)."
+    },
+    {
+      "section": "longitudinal activity",
+      "old_sha256": "0b10779a86fd6c2930d36cc79d5604e69540fd3903680dd375ffc97e3624d528",
+      "new": "last active layer by $+4.42$, about 0.11\\,m at the 24.9\\,mm median HCAL layer spacing."
+    },
+    {
+      "section": "longitudinal activity",
+      "old_sha256": "d45c5cc0b1d94ae8b321ffe37975b5cd5a9b70c59374b5d61f609ac03ca20224",
+      "new": "does not isolate the energy of the additional occupied layers or disconnected components. In Fig.~\\ref{fig:longitudinal} (right), the generator-to-reference ratio of mean layer deposits is 0.84 at layer 51 and exceeds one from layer 60 onward, reaching 1.23 at layer 64."
+    },
+    {
+      "section": "hit pattern",
+      "old_sha256": "96873c7c901ec290f255b4210f07c20e256c3d61dd29d29ca626c727df636cdd",
+      "new": "Generated showers have 28.7 fewer positive-deposit channels ($-1.8\\%$) but 35.97 more graph-connected hit groups (Fig.~\\ref{fig:support}, bottom);"
+    },
+    {
+      "section": "hit pattern",
+      "old_sha256": "2f0eee921805ac70c97e16a8ddb4682e76caeb76a99fb6305b202606fc4314a7",
+      "new": "Edge co-occupancy, the all-event mean fraction of graph edges whose two end channels are both active, is 0.1375 for the generator and 0.1458 for Geant4. Because this fraction is not normalized to the number of active channels,"
+    },
+    {
+      "section": "numerical checks",
+      "old_sha256": "458274842b29812e8ae49fa9fd09a58537697e742f0071963a788de5221ef504",
+      "new": "Closure residuals compare decoded deposits with the sampled budgets: $|\\sum_{\\ell i}Y_{\\ell i}-T|$ per event and $|\\sum_iY_{\\ell i}-B_\\ell|$ per layer. The evaluator uses a common tolerance for both: the larger of"
+    },
+    {
+      "section": "discussion",
+      "old_sha256": "5c6c696275a44c12241d999b43ce9904f78890f4d96eb13c46dd7380c14434c0",
+      "new": "A direct test builds a null sample from Geant4 itself: redraw each later layer's activity independently, with probabilities matched in energy, direction, $T$ and $F$, and check whether the depth and gap shifts appear. A complementary test runs the generator with the Geant4 activity mask substituted for its own; substituting only the reference $T$ and $F$ would leave the factorization intact."
+    },
+    {
+      "section": "conclusion",
+      "old_sha256": "9b53ed3e85a1fad0e4c30ef17c76c833168e2bb2ed3d586ce7dd270845b4cea8",
+      "new": "similar mean deposited energy, active-layer count and active-channel count do not imply"
+    },
+    {
+      "section": "acknowledgments",
+      "old_sha256": "42e9aea1c5c68f0b86fd0f20e204b797734332b8ac14a5eb20503b23deac7a0c",
+      "new": "thanks Dr.~Wen-Chen Chang"
+    },
+    {
+      "section": "disclosure",
+      "old_sha256": "0fe975d83a1c2195b35c37b45a007ea9e6d0ba9c7a858b54fb6d033fb69bdfbd",
+      "new": "Anthropic Claude provided additional manuscript reviews, revision proposals and final clarity edits; selected text"
+    }
+  ],
+  "inserted_paragraph": "Energy-weighted transverse summaries from the same evaluation summary differ less than the hit pattern. Among nonempty showers, the mean energy-weighted centroids differ by 0.5\\,mm in $x$ and 1.1\\,mm in $y$, small compared with the 30.3\\,mm ECAL pitch. The mean energy-weighted radial RMS about the centroid is 84.7\\,mm for the generator and 87.1\\,mm for Geant4 (2.8\\% narrower); its all-event $W_1$ is 3.34\\,mm, against a 0.48\\,mm reference-half scale. Energy weighting suppresses isolated low-energy channels, so these summaries and the zero-threshold group counts probe different aspects of the shower; neither is a reconstructed position.",
+  "decisions": [
+    {
+      "item": "Abstract",
+      "disposition": "Named the incident neutron, gave both sample values for the active-layer and group counts, and replaced row-split and condition-only jargon with the plain statement that the control gives 0.464 rather than 0.5."
+    },
+    {
+      "item": "Definitions removed by earlier condensing",
+      "disposition": "Restored: Wasserstein-1 distance for any scalar observable, the reference-half scale (two disjoint 5,000-event Geant4 halves), edge co-occupancy, closure residuals, support, free-running, and the Bernoulli-draw versus zero-clamp origin of empty showers. Each was used in Results without a prior definition."
+    },
+    {
+      "item": "Naming",
+      "disposition": "Table 1 body is byte-locked, so its caption now maps inactive layers in span to G and weak graph components to the graph-connected hit groups m. Figure 4 bars are labelled generator, as in Figure 3 and Table 1."
+    },
+    {
+      "item": "Figures in Results",
+      "disposition": "Sections 5.2 and 5.3 now cite Figure 4, which was referenced only from the evaluation section, and quote the Figure 3 mean-profile ratio at layers 51, 60 and 64."
+    },
+    {
+      "item": "Physical scale",
+      "disposition": "Stated that the stored total is about 3 percent of the 149.9 GeV mean incident kinetic energy and is neither a calibrated energy nor a sampling-fraction measurement; converted the 4.42-layer shift to about 0.11 m with the stored 24.9 mm HCAL layer spacing."
+    },
+    {
+      "item": "Energy-bin table",
+      "disposition": "Added the independent-sample error scale already adopted for the pooled mean: width comparable to mean in every bin, standard error near 3 percent, largest binwise difference 2.0 standard errors. No paired interval or chi-square is claimed."
+    },
+    {
+      "item": "Transverse summaries",
+      "disposition": "Added nonempty-sample energy-weighted centroid differences (0.5 mm, 1.1 mm) and radial RMS (84.7 versus 87.1 mm; W1 3.34 mm against a 0.48 mm reference-half scale) from the released report. Centroid W1 values are not quoted because the zero-deposit mass at the origin dominates them."
+    },
+    {
+      "item": "Discussion tests",
+      "disposition": "Rewrote the reference-activity-null and oracle-cascade sentences as concrete procedures; content unchanged."
+    },
+    {
+      "item": "Equation punctuation",
+      "disposition": "Numbered equations are byte-locked. The sentences following Eqs. 1, 10 and 12, which end with commas, now continue grammatically."
+    },
+    {
+      "item": "Not changed",
+      "disposition": "No numbered equation, numerical table body, figure data, model statement or evidence limit was altered. The title result still has no distribution, interval or threshold scan; that requires an event-level evaluation and is not a prose matter."
+    }
+  ],
+  "primary_research": [
+    "https://arxiv.org/abs/2406.12877",
+    "https://arxiv.org/html/2406.12877v2",
+    "https://arxiv.org/abs/2512.20346",
+    "https://arxiv.org/abs/2608.12795"
+  ],
+  "source_definitions_checked": [
+    "src/cbsc_zdc/eval/metrics.py",
+    "src/cbsc_zdc/eval/topology.py",
+    "src/cbsc_zdc/eval/invariants.py"
+  ],
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "new_event_or_test_data_access": false,
+  "new_model_evaluation": false,
+  "status": "Source revision complete; final QA and every-page review pending",
+  "second_pass": {
+    "created_utc": "2026-10-02T11:21:47.451269+00:00",
+    "qa01_main_sha256": "f7cd95b92f49c5209b763c622edd4b6ec9cf49ecef49baf0e8f2e7de5f07b54c",
+    "finding": "QA01 passed 22 groups at 14 pages. Every-page reading found white gaps on pages 1, 6 and 7 caused by a one-line longer abstract, plus three wording inconsistencies.",
+    "layout_probe": "Scratch-copy pdfLaTeX builds: page fill before 0.82/0.92/0.83/0.90/0.92/0.81/0.77; after 0.92/0.92/0.92/0.92/0.92/0.91/0.88. Relaxing the nine-line reservation before the hit-pattern paragraph made no difference and was not applied.",
+    "replacements": [
+      {
+        "section": "abstract length",
+        "old_sha256": "7e1608ebeb1b980d908e44a8786145aab33a380c5aa1c13caafec29ea46e5ef5",
+        "new": "differs by 0.25 (54.83 generated versus 54.58 Geant4, of 65 layers)"
+      },
+      {
+        "section": "abstract length",
+        "old_sha256": "6c5fc33aa6dfa222931ce0266a9a0b946507f033965cfc03e38749fb4f7070ee",
+        "new": "(AUROC 0.775), but its control using incident conditions alone gives 0.464 rather than the chance value 0.5, so the score"
+      },
+      {
+        "section": "evaluation",
+        "old_sha256": "f5a22684e1b3fcc47341ecef7fb3e5f94975ae79085c5431e70d4aebb43124ff",
+        "new": "and $A_\\ell$ the activity indicator of layer $\\ell$."
+      },
+      {
+        "section": "numerical checks",
+        "old_sha256": "341f7044de92f441f8de1bcdfa901dcb8fe9319fde02598b792d3348671874cc",
+        "new": "verifies that single-precision (FP32) decoding created"
+      },
+      {
+        "section": "longitudinal activity",
+        "old_sha256": "e7c6c67cdaf764fbd83dee392cc2a2df2e7899c54b53a31aab696a2e78c34650",
+        "new": "The nonempty fraction starting in ECAL is 92.53\\% for the generator versus 93.81\\% for Geant4."
+      },
+      {
+        "section": "longitudinal activity",
+        "old_sha256": "9d51ccc6f7840bc593e030ddd04fd5a0aa59ffef92618e2c00bdb00cf5a0541f",
+        "new": "versus a 0.155-layer reference-half scale."
+      },
+      {
+        "section": "longitudinal activity",
+        "old_sha256": "8df69141ae48c105f8c42841265409ee91eb25ba186f2cb5ada5afeafcc727cf",
+        "new": "The reference-half scale is descriptive, not a significance threshold;"
+      }
+    ]
+  },
+  "failed_attempts": [
+    "QA01 layout: abstract grew to twelve lines and displaced Section 2; corrected by shortening two abstract clauses without removing a number."
+  ],
+  "third_pass": {
+    "created_utc": "2026-10-02T16:40:38.483883+00:00",
+    "qa02_main_sha256": "52a7b267299a3999e1831a99aad3c95a101a0fab9f4761cbeef6f58dfbd3cc92",
+    "method": "All 14 pages of the QA02 PDF were read, then the full source was read word by word: every sentence, caption, table cell and bibliography entry. Each quoted number was recomputed from data/reports/dicos-f-02_epoch90.json by a separate script; the component bound, the three-layer independence example, the Table 1 and Table 3 differences, the Table 2 normalization and the Table 4 means were rechecked by hand.",
+    "finding": "All numbers, equations and tables agree with the released report. One sentence in Sec. 5.1 named -7.65% as the largest binwise mean difference while Table 3 lists +7.74%; it is largest only in standard-error units (2.0 against 1.8). Nine further wordings were ambiguous for a detector-physics reader.",
+    "verified_without_change": [
+      "Component bound: Q_gen >= 52.3407, Q_ref <= 21.8949, difference 30.4458 to 37.1372, 84.64% of 35.9703.",
+      "Binwise independent-sample scale: -1.6, 0.1, -0.1, 1.8, -2.0, 1.5, 0.4, 1.0 standard errors; reference relative standard errors 2.7-3.4%.",
+      "Section sums, layer-9 ratio (-8.64%), layers 57-64 energy (17.85 and 17.19 MeV), timing remainder (2,433 s), calibration weights (sum 9, bound ratio 16).",
+      "Figure 4 illustrations: 9 active/span 10/G=1/R=2 and 8 active/span 12/G=4/R=4; panel (b) has three groups in four consecutive active layers.",
+      "References: arXiv 2608.12795, 2512.20346, 2507.18811 and 2406.12877 resolve to the cited titles and authors; Crossref confirms 10.1016/j.nima.2025.170613, 10.1016/j.cpc.2025.109936 and 10.1007/s41781-025-00130-x.",
+      "Cited design cuts: arXiv 2406.12877 states E > 0.5 MIP with 1 MIP = 0.5 MeV and t < 275 ns, and an iron/scintillator structure, as quoted in Sec. 6.2."
+    ],
+    "layout_probe": "Scratch-copy pdfLaTeX/Biber builds before and after: 14 pages, identical page breaks, no log warning. Page 7 gains one line inside its existing white space; no other page changes its line count.",
+    "replacements": [
+      {
+        "section": "deposited energy",
+        "reason": "Table 3 lists +7.74% at 125-150 GeV, larger in magnitude than the quoted -7.65%; the quoted bin is largest only in standard-error units. Signs are -,+,-,+,-,+,+,+, which is mixed rather than alternating.",
+        "old_sha256": "c1e71d735db37096b17a00b351166643cf2007e35ebbb80a35a99eaac523e49f",
+        "new": "the two largest binwise mean differences ($+7.74\\%$ at 125--150\\,GeV and $-7.65\\%$ at 150--175\\,GeV) are 1.8 and 2.0 standard errors; the mixed signs in"
+      },
+      {
+        "section": "hit pattern",
+        "reason": "The parenthesis followed the Geant4 value and could be read as Geant4 being narrower.",
+        "old_sha256": "a252f72d8610594d947910a9b952470ab3a04cb3f25b8802f61442fc86980eba",
+        "new": "87.1\\,mm for Geant4 (the generator is 2.8\\% narrower);"
+      },
+      {
+        "section": "longitudinal figure caption",
+        "reason": "Compensation has a specific meaning in hadron calorimetry (e/h response); the text elsewhere calls this effect cancellation.",
+        "old_sha256": "b94a62c21867b8da933a18ee83560e0e4aad6cf5570898dec06c8b36382f3fa6",
+        "new": "deposits expose section-level cancellation."
+      },
+      {
+        "section": "evaluation",
+        "reason": "The run tag appeared here for the first time, before Appendix A identifies it as the analyzed checkpoint.",
+        "old_sha256": "6c547717c1a2ce4bc3bf630d7af80ada9a213dfc0b5c182f73fc354b6c7cd878",
+        "new": "A separate pair-grouped monitor of the same checkpoint (\\texttt{dicos-f-02}, epoch 90) records"
+      },
+      {
+        "section": "evaluation",
+        "reason": "The pronoun followed a sentence whose subject is the event masks.",
+        "old_sha256": "64554e3868b1abab47c903bb7b41407c4679b7dc871fed8a18333a3d49c3e45b",
+        "new": "but were not retained. The bound discounts empty-layer separations"
+      },
+      {
+        "section": "introduction",
+        "reason": "Later can be read as a time; the observable is a layer depth and no timing is used.",
+        "old_sha256": "8ae0b8b58ffaba4e18cc3cf247327dfe7cd01926fb7038e99dfb23579c933be8",
+        "new": "the last deposit lies deeper, more layers are skipped"
+      },
+      {
+        "section": "limitations",
+        "reason": "E denotes the incident energy in Eq. 1; the deposit symbol is Y. The established term is zero-threshold.",
+        "old_sha256": "9fc9345779cb86131ae29985d6b4fe88a9b7b12ce50c59b723d98d9871d47d91",
+        "new": "The zero-threshold hit pattern describes"
+      },
+      {
+        "section": "hit pattern",
+        "reason": "Summaries from the same summary.",
+        "old_sha256": "be8c414df69bcd9d98b1f0f6705cda981b32e3dd00abd23b5e08f8c1cb50c9b5",
+        "new": "Energy-weighted transverse observables from the same evaluation summary differ"
+      },
+      {
+        "section": "evaluation",
+        "reason": "Splits rows did not say what a row is or how it is split.",
+        "old_sha256": "7c808e2e5f79886394efd822a158f0053c81c43e88ee2ba70f0194f46f22c803",
+        "new": "The three-seed classifier battery splits individual showers at random, not matched pairs. Members"
+      },
+      {
+        "section": "evaluation",
+        "reason": "Edges join channels, not layers.",
+        "old_sha256": "209909a9ca6fad763eb0684f21815110dfab1a146e8940534c769a38b52f0835",
+        "new": "Graph edges join channels only within a layer or between adjacent layers."
+      }
+    ],
+    "not_changed": [
+      "Abstract and page-1 flow, every numbered equation, every table body and all four figures.",
+      "Geant4 is cited where the transport is described (Sec. 2.1), not at its first mention; moving the citation would renumber every reference.",
+      "No chi-square or other new statistic is added. The eight binwise values give 13.0 for 8 bins on the same independent-sample scale; it is recorded here only as a possible addition for the author to decide."
+    ],
+    "environment": {
+      "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "new_event_or_test_data_access": false,
+    "new_model_evaluation": false
+  }
+}

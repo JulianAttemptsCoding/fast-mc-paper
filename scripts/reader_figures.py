@@ -193,7 +193,7 @@ def plot_observable_definitions() -> None:
         cx.text(reference + 0.015 * scale, 1, f"{reference:.2f}", va="center", fontsize=8)
         cx.text(generator + 0.015 * scale, 0, f"{generator:.2f}", va="center", fontsize=8)
         cx.set_xlim(0, scale)
-        cx.set_yticks([1, 0], ["Geant4", "model"], fontsize=8)
+        cx.set_yticks([1, 0], ["Geant4", "generator"], fontsize=8)
         cx.set_xticks([])
         cx.set_title(f"(c{index + 1}) {title}", fontsize=9)
         cx.grid(False)

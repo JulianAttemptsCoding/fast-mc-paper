@@ -1,3 +1,3 @@
 # Current every-page visual review
 
-All 13 final pages are covered by exact image hashes. Pages 1-6 match the fully inspected QA01 rendering; every changed page 7-13 was directly inspected in QA02. Figures, equations, tables and bibliography are legible. The figure/sentence interruption and widow were repaired. This is document QA, not physics validation.
+All 14 final pages are covered by exact image hashes and were read in full in QA03 after the word-by-word pass. Figures, equations, tables and bibliography are legible, the ten replacements appear as intended and the page breaks match QA02; page 7 is one line longer inside its existing white space. Remaining short pages (7, 11, 12) end before an unbreakable figure or table. This is document QA, not physics validation.

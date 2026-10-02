@@ -43,3 +43,5 @@ Current v0.21.0 terminology: graph-connected hit groups are weak components of s
 Current v0.21.1 reader clarification: the section-weighted reconstruction identity is illustrative, the classifier-control cause is unverified, and threshold effects can change both late occupancy and interior gaps. See `hep_readability_followup_response_20261001.md`.
 
 Current v0.22.0 adds documented gun/material context and aggregate structural plots. Exact paired response covariance, group-size/energy distributions and threshold robustness remain unmeasured. See `claude_review_response_20261002.md`.
+
+Current v0.22.1 restores reader definitions and adds released energy-weighted transverse means and a binwise independent-sample error scale. Paired covariance, structural intervals, group sizes and energies, and threshold robustness remain unmeasured. See `mentor_send_response_20261002.md`.

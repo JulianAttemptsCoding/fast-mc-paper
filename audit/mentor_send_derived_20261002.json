@@ -1,0 +1,115 @@
+{
+  "report_sha256": "0e7cc51d34e36eef68039bec36acc5f05dc06cc509a4ad70fea2f5d35a044bd5",
+  "mean_incident_kinetic_gev": 149.9007264076233,
+  "stored_total_over_mean_kinetic": {
+    "truth": 0.028846929020317793,
+    "generated": 0.029148374752561726
+  },
+  "energy_bins": [
+    {
+      "low": 50.0,
+      "n": 1182,
+      "reference_std_over_mean": 1.1803153742119648,
+      "generated_std_over_mean": 1.1955058353366885,
+      "reference_mean_relative_se": 0.03433122703033988,
+      "difference_over_independent_se": -1.6139870410788764,
+      "mean_difference_percent": -7.592649757862091
+    },
+    {
+      "low": 75.0,
+      "n": 1270,
+      "reference_std_over_mean": 1.090676730793377,
+      "generated_std_over_mean": 1.1148883497752076,
+      "reference_mean_relative_se": 0.030605127086995157,
+      "difference_over_independent_se": 0.13020887512404117,
+      "mean_difference_percent": 0.5717544350773096
+    },
+    {
+      "low": 100.0,
+      "n": 1310,
+      "reference_std_over_mean": 1.0977782019335194,
+      "generated_std_over_mean": 1.0944920352079495,
+      "reference_mean_relative_se": 0.03033045707606541,
+      "difference_over_independent_se": -0.09751078418103136,
+      "mean_difference_percent": -0.4169267602264881
+    },
+    {
+      "low": 125.0,
+      "n": 1226,
+      "reference_std_over_mean": 1.0188114644034973,
+      "generated_std_over_mean": 1.0362695045362758,
+      "reference_mean_relative_se": 0.029097025068947648,
+      "difference_over_independent_se": 1.7914093899415726,
+      "mean_difference_percent": 7.735941559076309
+    },
+    {
+      "low": 150.0,
+      "n": 1288,
+      "reference_std_over_mean": 1.034911193033595,
+      "generated_std_over_mean": 0.9986583612739722,
+      "reference_mean_relative_se": 0.02883667299139939,
+      "difference_over_independent_se": -1.9806162288580254,
+      "mean_difference_percent": -7.6530903577804565
+    },
+    {
+      "low": 175.0,
+      "n": 1268,
+      "reference_std_over_mean": 0.9547731823879863,
+      "generated_std_over_mean": 0.9820526337160581,
+      "reference_mean_relative_se": 0.026812702240268542,
+      "difference_over_independent_se": 1.4541508209376384,
+      "mean_difference_percent": 5.763557553291321
+    },
+    {
+      "low": 200.0,
+      "n": 1266,
+      "reference_std_over_mean": 1.0348323387280176,
+      "generated_std_over_mean": 0.999511400045782,
+      "reference_mean_relative_se": 0.02908393324852774,
+      "difference_over_independent_se": 0.4352178590364623,
+      "mean_difference_percent": 1.7756571993231773
+    },
+    {
+      "low": 225.0,
+      "n": 1190,
+      "reference_std_over_mean": 0.9560869033212444,
+      "generated_std_over_mean": 0.9688881301885572,
+      "reference_mean_relative_se": 0.027715574705615007,
+      "difference_over_independent_se": 0.9568848869046223,
+      "mean_difference_percent": 3.8517627865076065
+    }
+  ],
+  "last_active_layer_shift_layers": 4.423773647160424,
+  "hcal_median_layer_spacing_mm": 24.892851562501164,
+  "last_active_layer_shift_m": 0.11012034074486883,
+  "mean_profile_ratio": {
+    "minimum_layer": 51,
+    "minimum": 0.841438488538858,
+    "layer_64": 1.230419730219405,
+    "layers_above_one_after_33": [
+      60,
+      61,
+      62,
+      63,
+      64
+    ]
+  },
+  "nonempty_transverse_means_mm": {
+    "x_centroid_mm": {
+      "truth": -915.2861635611084,
+      "generated": -915.7761325693004
+    },
+    "y_centroid_mm": {
+      "truth": -33.515460288234024,
+      "generated": -32.39921739873064
+    },
+    "radial_rms_mm": {
+      "truth": 87.1490577749447,
+      "generated": 84.6844281904546
+    }
+  },
+  "radial_rms_relative_change_percent": -2.82806222742511,
+  "radial_rms_w1_mm": 3.3364474112033857,
+  "radial_rms_reference_half_w1_mm": 0.4849968073844904,
+  "scope": "Arithmetic on the released aggregate report and static geometry. The binwise error scale treats the samples as independent and is not a paired interval; transverse summaries are energy-weighted stored-ID centroids, not reconstructed positions."
+}

@@ -1,6 +1,6 @@
 {
-  "series": "claude_review_20261002",
-  "predecessor": "audit/qa_series/hep_readability_followup_20261001/iteration_06.json",
-  "predecessor_sha256": "d670051b8f705ad706f9492ed2d81db56aca3230a615e43f3624603eb7c3b561",
-  "reason": "Source-checked October reader review; numerical, equation/table preservation, page, split and release guards retained."
+  "series": "mentor_send_20261002",
+  "predecessor": "audit/qa_series/claude_review_20261002/iteration_02.json",
+  "predecessor_sha256": "99d831b1441db66191dab5ef71eada2fd64197c4b5b4a1f6cd5cd2256aaf9133",
+  "reason": "Mentor-send clarity revision; numerical, equation/table preservation, page, split and release guards retained and one check module added."
 }

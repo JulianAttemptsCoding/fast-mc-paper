@@ -1,0 +1,67 @@
+{
+  "created_utc": "2026-10-02T16:42:33.174459+00:00",
+  "revision": "0.22.1",
+  "status": "Local manuscript and submission-package QA complete after the word-by-word pass; sealed before commit; supersedes the QA02 seal of this revision",
+  "baseline_commit": "d540f97069b61613f0a3697650338fd3177d7256",
+  "committed": false,
+  "pushed": false,
+  "main_sha256": "5ca22625422c79d6d3490778a20db272fc41773713e14be7203eed7bd9c76cf7",
+  "pdf_sha256": "7d2379ad5f0555d179055fe6892e5a3b3b0cb819cd800a2110cd912d7765a58b",
+  "zip_sha256": "c8d1616eb507af7303120b38a57e6630737ba151f6a9523f9a1b7d79db8bb895",
+  "checks": 22,
+  "visual_pages": 14,
+  "guard_tests": 10,
+  "current_qa": "audit/qa_series/mentor_send_20261002/iteration_03.json",
+  "full_qa_attempts": [
+    1,
+    2,
+    3
+  ],
+  "superseded_qa02_seal": {
+    "main_sha256": "52a7b267299a3999e1831a99aad3c95a101a0fab9f4761cbeef6f58dfbd3cc92",
+    "pdf_sha256": "3c542932ce8cd519d279ea84a87913c64f892fa913fef779a588e1a6374c1bf6",
+    "zip_sha256": "be3049010dd6db2b2101ea8c42c35b123409edf15f9f72b8db620517f9d3ccb6",
+    "qa": "audit/qa_series/mentor_send_20261002/iteration_02.json"
+  },
+  "word_pass": {
+    "replacements": 10,
+    "numbers_changed": 0,
+    "equations_or_table_bodies_changed": 0,
+    "page_breaks_changed": 0,
+    "record": "audit/mentor_send_response_20261002.json#third_pass"
+  },
+  "failed_attempts": [
+    "QA01 layout: abstract grew to twelve lines and displaced Section 2; corrected by shortening two abstract clauses without removing a number."
+  ],
+  "local_build": "Clean pdfLaTeX/Biber build and all 22 QA groups passed",
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "commands": [
+    "python -X utf8 audit/mentor_send_revision_20261002.py",
+    "python -X utf8 scripts/full_manuscript_qa.py --iteration 1 ...",
+    "python -X utf8 audit/mentor_send_layout_20261002.py",
+    "python -X utf8 scripts/full_manuscript_qa.py --iteration 2 ...",
+    "python -X utf8 audit/seal_mentor_send_20261002.py",
+    "python -X utf8 audit/mentor_send_word_pass_20261002.py",
+    "python -X utf8 scripts/full_manuscript_qa.py --iteration 3 ...",
+    "python -X utf8 -m unittest discover -s scripts -p test_qa_guards.py",
+    "python -X utf8 audit/seal_mentor_send_word_pass_20261002.py",
+    [
+      "C:\\Python313\\python.exe",
+      "-X",
+      "utf8",
+      "scripts/write_build_audit.py"
+    ]
+  ],
+  "inputs": {
+    "qa_sha256": "311ca5eea8ec32ee1ebc41ec0d0ccf1b36c56092665ce32e827702d0fd543bfb",
+    "seal_script_sha256": "a76ffd4d9dcd5fca81e4f9187b2fe191d6455158569980c571863a032ae47771",
+    "response_sha256": "a79d92292279665ba48eee0d1c156699dd641145e4262d92d07dc40490b64c95"
+  },
+  "new_event_or_test_data_access": false,
+  "new_training_or_model_changes": false,
+  "arxiv_uploaded": false,
+  "remaining_empirical_work": "Event-level uncertainties and paired covariance, a channel-energy threshold scan, same-bank pair-grouped classifier, repeated seeds, production configuration verification and detector-level validation remain unperformed."
+}
