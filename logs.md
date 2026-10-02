@@ -430,3 +430,5 @@ Follow-up HEP reader revision 0.21.1 committed as 8dd04cada8fad79066ee8fc4f86c47
 October manuscript v0.22.0 sealed: QA02 passed 21 groups; all 13 pages visually verified; 10 guard tests passed. Seven-file ZIP CRC and byte identities verified. Native compiler initialization failed; local pdfLaTeX/Biber passed. No raw/test data or new model evaluation. See audit/claude_review_completion_20261002.json for commands, hashes, environment, failures and remaining empirical work.
 
 Staging QA corrected an extra blank line at audit/claude_review_intake_20261002.md EOF. No source-bound input changed; hashes recorded in the October completion audit.
+
+October manuscript v0.22.0 GitHub release 82bcab96d123547eaef0242ae71013efc168bae1 pushed; remote main equality, clean release worktree and raw index byte identities verified. See audit/claude_review_publication_20261002.json. A following audit-only commit records this event; no arXiv upload.

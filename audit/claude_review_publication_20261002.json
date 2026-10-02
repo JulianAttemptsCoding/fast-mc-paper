@@ -1,0 +1,29 @@
+{
+  "created_utc": "2026-10-02T10:58:40.926492+00:00",
+  "revision": "0.22.0",
+  "release_commit": "82bcab96d123547eaef0242ae71013efc168bae1",
+  "remote_main_verified": "82bcab96d123547eaef0242ae71013efc168bae1",
+  "repository": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+  "publication_scope": "User-authorized GitHub update; no arXiv upload",
+  "release_worktree_clean": true,
+  "index_raw_bytes_verified": true,
+  "output_sha256": {
+    "main_sha256": "19ee0ec31df33e7506f450446ad85f352136b1421797d4573d83e470199e78c3",
+    "pdf_sha256": "2c763e0bfe7d66fe1fd5441d13a4bc6bb1a8d09bce13bd1cfb1ee0d743f8a228",
+    "zip_sha256": "9b4f7647bbaa6ba349f9e5400ea82e02093e1373cfaca2fb5e390183669a4d4f"
+  },
+  "commands": [
+    "git add --all",
+    "git diff --cached --check",
+    "git commit -m \"docs(paper): finalize HEP reader revision\"",
+    "git push origin main",
+    "git rev-parse HEAD",
+    "git ls-remote origin refs/heads/main",
+    "git status --short"
+  ],
+  "environment": {
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "audit_commit_note": "This record is committed after the release; the containing audit commit may be newer than release_commit."
+}
