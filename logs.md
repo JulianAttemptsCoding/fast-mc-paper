@@ -3461,3 +3461,29 @@ Evidence: `audit/ai_usage_only_20261002.{json,md}`.
   "scope": "Update QA acceptance rule, fuller discussion, current docs, 15-page PDF, seven-file source archive and audit. Preserve the eight existing local-only raw/historical files."
 }
 ```
+
+## Content-first manuscript publication verified
+
+2026-10-03T03:56:02.697464+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:56:02.692800+00:00",
+  "repository": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+  "release_commit": "ae3cef6f899f29d448865ba2f3e98fd020ceb838",
+  "remote_main_verified": "ae3cef6f899f29d448865ba2f3e98fd020ceb838",
+  "pdf_pages": 15,
+  "qa_groups_passed": 22,
+  "guard_tests_passed": 10,
+  "final_release_binding": "PASS: QA18, visual review, source hashes, figure manifest, PDF, build audit and source archive match",
+  "output_sha256": {
+    "main.tex": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
+    "scripts/full_manuscript_qa.py": "5f222e57bcfa021844b4eda26286c1ae68c1ee0191138daec603db76ce0c5d0a",
+    "output/fast_mc_zdc_manuscript.pdf": "07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4",
+    "output/fast_mc_zdc_submission_source.zip": "aebff1f733d07c4882e423a6cf91daa6ed5f000727821301b45260636c16f38b"
+  },
+  "scientific_scope": "No numerical results, equations, table bodies, data or physics claim changed.",
+  "disposition": "Removed arbitrary upper page limit; restored the fuller Sec. 6.2 limitation; all 15 actual pages reviewed.",
+  "mentor_submission": "Not sent by this task."
+}
+```
