@@ -11,8 +11,8 @@
   ],
   "returncode": 1,
   "expected_native_exit": 7,
-  "pdf_before": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
-  "pdf_after": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "pdf_before": "07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4",
+  "pdf_after": "07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4",
   "result": "pass",
   "interpretation": "Intentional synthetic build failure rejected; not physics validation"
 }

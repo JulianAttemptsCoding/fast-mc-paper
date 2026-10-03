@@ -1,7 +1,7 @@
 {
-  "created_utc": "2026-10-03T03:41:51.726298+00:00",
+  "created_utc": "2026-10-03T03:52:57.005679+00:00",
   "result": "pass",
-  "pdf_sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "pdf_sha256": "07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4",
   "page_sha256": {
     "1": "0596c942c3439c02bcde7841a6b18859eaf8f2988919fd61f764ff87611c93a0",
     "2": "dbcad02a13209aea2bfbb020a4b81f3b50246ae9f6c6c34de29d0737ce277848",
@@ -13,28 +13,21 @@
     "8": "9f3da3fa5d180fc0212208be516a048e45f4881ba5af1bde16728bdb90e4215e",
     "9": "174eed88bda8ca3099a13473518d5ac82c973ea8e79f51d41d26411a9b2c1be3",
     "10": "17aed728cddca525a5833dff7d0d4c0fba0804bc4a169312819f1ccf76d39e11",
-    "11": "689f46a2fec1b742a3277d6e9a48e09797d61f918fad9f4ffc6241c632b6fc69",
-    "12": "48ab8303213a55e6d81613afb36407393b7387ed5ddc7200e5efc5eca36a7b94",
-    "13": "1b29db8059bbfb9c3ba98531855440b4e78ff79aa9e56f8db270576ba85e3b4d",
-    "14": "d2fcfcaaebc60630af63be5e99bbb46e75ce479b4e1fa7ba4af73b38062fc37e"
+    "11": "4675f62988082e354ce8aa37332f5dd45017387e952d44a8972d7e291474b28b",
+    "12": "9bde0783cfbea59e09f2b86235441054ca11f7ebd56c6eb01e3640684253f169",
+    "13": "79331b8eefc1d1735547a1b5e33dee58304795af89abc6fa1acce1b1ac7bae17",
+    "14": "3da69429f9b42bcdec4dc0ab7c2e341cff3489f04f4301d42c79d936100b5e6c",
+    "15": "165e3bbf39a87883a81f03d9b3758a4dfad153368163fb86994ee7ac870c375d"
   },
-  "method": "Direct visual inspection of all fourteen QA16 rendered pages, followed by exact pixel-hash comparison of every QA17 page. QA17 differs only in PDF file metadata after a STATUS documentation change.",
-  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_17.json",
+  "method": "Direct visual inspection of QA18 pages 11-15; exact rendered pixel comparison of QA18 pages 1-10 against the prior all-page QA17 direct visual review. All 15 current pages therefore covered.",
+  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_18.json",
   "page_findings": {
-    "1": "Displayed title, author, abstract and introduction legible. Abstract identifies the kinetic-energy-only control and uses precise group-count wording.",
-    "2": "Target, geometry, condition equation and Figure 1 checked; no clipping or detached caption.",
-    "3": "Prior separate test-partition inspection is disclosed next to the no-test-events-in-this-analysis statement; Figure 2 checked.",
-    "4": "Response, activity and flow equations 2-6 remain legible and within margins.",
-    "5": "Equations 7-11, generation order and channel-placement account checked.",
-    "6": "Decoder/loss equations 12-13 and training protocol checked.",
-    "7": "Gap equation 14 and classifier control explicitly define incident kinetic energy alone; references and caveats legible.",
-    "8": "Table 1, response text and all Figure 3 labels/captions checked.",
-    "9": "Figure 4(c1) says last active layer, consistent with Table 1, surrounding prose and caption; panels and numbers legible.",
-    "10": "Graph, classifier and closure results and discussion opening checked; screening criterion wording consistent.",
-    "11": "Three independent generator-training seeds are distinguished from classifier seeds; detector/timing and conclusion opening legible.",
-    "12": "Conclusion continuation, availability, acknowledgments, AI disclosure and Table 2 checked.",
-    "13": "Appendix A/B, response bins and classifier-seed Table 4 checked; caption uses screening criterion of 0.65.",
-    "14": "All 25 references legible with complete identifiers and no overflow."
+    "1-10": "Every page has the exact rendered pixel SHA-256 of the prior directly inspected QA17 release. Title, abstract, methods, equations 1-14, four figures and Table 1 remain legible; Figure 4(c1) still reads last active layer.",
+    "11": "The complete fuller structural-limitation paragraph, threshold caveats and detector/timing discussion are readable; the page ends naturally before Conclusion.",
+    "12": "Conclusion is together on one page, followed by availability, acknowledgments, AI disclosure and Appendix A identity; no crowding or clipping.",
+    "13": "Table 2, calibration/split provenance, Appendix B, and all eight response-bin rows of Table 3 legible.",
+    "14": "Table 4 and classifier explanation legible; references 1-16 start below the appendix without detached labels.",
+    "15": "References 17-25 continue with intact titles, identifiers and links. Deliberate white space after the final entry is preferable to compressing text to an arbitrary page target."
   },
-  "findings": "No clipping, overlap, missing glyph, figure/caption mismatch, unresolved reference or unreadable label observed. Natural Conclusion continuation across pages 11-12 accepted."
+  "findings": "No clipping, overlap, missing glyph, unreadable figure/table text, detached caption or unresolved citation observed. The Conclusion starts at the top of page 12 and all 25 references are legible across pages 14-15."
 }

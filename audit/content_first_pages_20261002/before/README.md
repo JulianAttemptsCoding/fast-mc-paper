@@ -23,7 +23,7 @@ $Iteration = Read-Host "Unused QA iteration number"
 python scripts/full_manuscript_qa.py --iteration $Iteration --focus "scientific revision" --disposition "source-bound checks"
 ```
 
-Choose an unused iteration number; historical records cannot be overwritten. The build stops on a failed native command before replacing `output/fast_mc_zdc_manuscript.pdf`. The QA checks evidence hashes, source-bound data roles, reported arithmetic, citation/label resolution, every figure and every rendered page. Automated raster checks are not human visual review. A final release audit additionally requires a hash-matched visual-review record and rejects stale source/PDF hashes. Page count has no upper or editorial target; the QA renders and checks every page, and the final visual review assesses content and layout directly.
+Choose an unused iteration number; historical records cannot be overwritten. The build stops on a failed native command before replacing `output/fast_mc_zdc_manuscript.pdf`. The QA checks evidence hashes, source-bound data roles, reported arithmetic, citation/label resolution, every figure and every rendered page. Automated raster checks are not human visual review. A final release audit additionally requires a hash-matched visual-review record and rejects stale source/PDF hashes.
 
 ## Evidence and reproducibility
 

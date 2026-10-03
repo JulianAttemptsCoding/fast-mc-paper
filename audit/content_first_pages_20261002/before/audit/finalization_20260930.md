@@ -139,5 +139,3 @@ QA13 retained a 15-page overflow after the page-flow correction. Abstract and pr
 The 2 October mentor pre-submission wording corrections update the current main source pointer to 27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608. See `audit/mentor_surgical_20261002/events.json`.
 
 After QA15 page-count failure, the Sec. 6.2 caveat was shortened without removing its generator-seed, classifier-control or same-bank pair-grouped-rerun meaning. Current main source SHA-256: 4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499.
-
-The author removed the arbitrary upper page cap and restored the fuller Sec. 6.2 caveat. Current main source SHA-256: 27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608. See `audit/content_first_pages_20261002/`.

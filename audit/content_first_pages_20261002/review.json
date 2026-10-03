@@ -1,0 +1,17 @@
+{
+  "created_utc": "2026-10-03T03:52:57.005679+00:00",
+  "result": "pass",
+  "decision": "No upper page count or target; preserve clear scientific explanation and verify every actual page.",
+  "user_direction": "There is no need for a hard page cap; what matters is the content.",
+  "main_tex_sha256": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
+  "qa_script_sha256": "5f222e57bcfa021844b4eda26286c1ae68c1ee0191138daec603db76ce0c5d0a",
+  "pdf_sha256": "07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4",
+  "source_package_sha256": "aebff1f733d07c4882e423a6cf91daa6ed5f000727821301b45260636c16f38b",
+  "page_count": 15,
+  "full_qa_groups": 22,
+  "content_restored": "Sec. 6.2 again explicitly separates the failed classifier control from structural significance and specifies a pair-grouped rerun on the same validation bank, plus three independent generator-training seeds.",
+  "quality_checks_retained": "Every-page render count, nonblank ink range, minimum visible margins, extractable text, complete citations, equations and LaTeX log checks remain in the full suite.",
+  "preserved": "All 14 numbered equations, four tabular bodies, figures, numerical results, data and scientific scope remain unchanged.",
+  "historical_failure": "QA15 failed solely under the superseded 14-page maximum; the original failed record remains intact as historical evidence.",
+  "visual": "Direct visual inspection of QA18 pages 11-15; exact rendered pixel comparison of QA18 pages 1-10 against the prior all-page QA17 direct visual review. All 15 current pages therefore covered. No clipping, overlap, missing glyph, unreadable figure/table text, detached caption or unresolved citation observed. The Conclusion starts at the top of page 12 and all 25 references are legible across pages 14-15."
+}

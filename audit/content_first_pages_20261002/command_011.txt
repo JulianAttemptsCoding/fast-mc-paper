@@ -1,0 +1,4 @@
+FULL QA iteration 18: PASS (15 pages, 07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4)
+Built output/fast_mc_zdc_manuscript.pdf
+
+STDERR

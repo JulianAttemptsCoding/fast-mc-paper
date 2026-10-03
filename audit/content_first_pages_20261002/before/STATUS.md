@@ -61,7 +61,3 @@ The title now names generated neutron showers. The abstract states the target, m
 ## Mentor pre-submission corrections, 2 October 2026
 
 The classifier control uses incident kinetic energy alone. Figure 4(c1), test-partition scope, proposed independent generator-training seeds, and screening-criterion wording are synchronized across the paper. Numerical evidence, equations, tables, figure scales and scientific claims are unchanged. The first 15-page build failed the existing pagination guard; the correction passed a 14-page full QA. The final hash-bound build and direct all-page visual review are recorded in `audit/mentor_surgical_20261002/`.
-
-## Content-first pagination policy, 2 October 2026
-
-The author clarified that there is no hard page cap. The previous 14-page upper assertion was removed, and the fuller Sec. 6.2 explanation was restored. The earlier 15-page QA failure remains historical evidence of the superseded rule, not a defect in manuscript content. Current QA still requires a valid nonempty PDF and checks every rendered page for text extraction, margins, ink, clipping and unresolved LaTeX issues. The current release hash binding and all-page review are recorded in `audit/content_first_pages_20261002/`.

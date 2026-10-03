@@ -1,0 +1,3 @@
+Removed upper page assertion; restored fuller structural limitation; current documentation and pointer updated.
+
+STDERR

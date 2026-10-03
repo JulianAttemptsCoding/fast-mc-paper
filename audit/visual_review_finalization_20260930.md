@@ -1,22 +1,14 @@
 # Current complete visual review
 
-2026-10-03T03:41:51.726298+00:00
+2026-10-03T03:52:57.005679+00:00
 
-PDF SHA-256: 6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b. All 14 pages directly inspected in QA16; every QA17 rendered page has the same pixel hash.
+PDF SHA-256: 07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4. All 15 pages covered by direct inspection or identical-pixel comparison.
 
-- Page 1: Displayed title, author, abstract and introduction legible. Abstract identifies the kinetic-energy-only control and uses precise group-count wording.
-- Page 2: Target, geometry, condition equation and Figure 1 checked; no clipping or detached caption.
-- Page 3: Prior separate test-partition inspection is disclosed next to the no-test-events-in-this-analysis statement; Figure 2 checked.
-- Page 4: Response, activity and flow equations 2-6 remain legible and within margins.
-- Page 5: Equations 7-11, generation order and channel-placement account checked.
-- Page 6: Decoder/loss equations 12-13 and training protocol checked.
-- Page 7: Gap equation 14 and classifier control explicitly define incident kinetic energy alone; references and caveats legible.
-- Page 8: Table 1, response text and all Figure 3 labels/captions checked.
-- Page 9: Figure 4(c1) says last active layer, consistent with Table 1, surrounding prose and caption; panels and numbers legible.
-- Page 10: Graph, classifier and closure results and discussion opening checked; screening criterion wording consistent.
-- Page 11: Three independent generator-training seeds are distinguished from classifier seeds; detector/timing and conclusion opening legible.
-- Page 12: Conclusion continuation, availability, acknowledgments, AI disclosure and Table 2 checked.
-- Page 13: Appendix A/B, response bins and classifier-seed Table 4 checked; caption uses screening criterion of 0.65.
-- Page 14: All 25 references legible with complete identifiers and no overflow.
+- Page 1-10: Every page has the exact rendered pixel SHA-256 of the prior directly inspected QA17 release. Title, abstract, methods, equations 1-14, four figures and Table 1 remain legible; Figure 4(c1) still reads last active layer.
+- Page 11: The complete fuller structural-limitation paragraph, threshold caveats and detector/timing discussion are readable; the page ends naturally before Conclusion.
+- Page 12: Conclusion is together on one page, followed by availability, acknowledgments, AI disclosure and Appendix A identity; no crowding or clipping.
+- Page 13: Table 2, calibration/split provenance, Appendix B, and all eight response-bin rows of Table 3 legible.
+- Page 14: Table 4 and classifier explanation legible; references 1-16 start below the appendix without detached labels.
+- Page 15: References 17-25 continue with intact titles, identifiers and links. Deliberate white space after the final entry is preferable to compressing text to an arbitrary page target.
 
-No clipping, overlap, missing glyph, figure/caption mismatch, unresolved reference or unreadable label observed. Natural Conclusion continuation across pages 11-12 accepted.
+No clipping, overlap, missing glyph, unreadable figure/table text, detached caption or unresolved citation observed. The Conclusion starts at the top of page 12 and all 25 references are legible across pages 14-15.

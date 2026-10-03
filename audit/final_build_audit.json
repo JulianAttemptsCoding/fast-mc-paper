@@ -1,18 +1,18 @@
 {
   "schema_version": 4,
-  "created_utc": "2026-10-03T03:42:00.446236+00:00",
+  "created_utc": "2026-10-03T03:53:04.536110+00:00",
   "release": "v0.22.1",
   "status": "exploratory HEP/computational-physics case study",
   "claim": "On the specified development bank, one pilot checkpoint has similar mean occupancies but later, more interrupted longitudinal support; at least 84.6% of the mean component excess remains beyond one component per occupied-layer run.",
   "output": {
     "path": "output\\fast_mc_zdc_manuscript.pdf",
-    "sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
-    "bytes": 1226922,
-    "pages": 14
+    "sha256": "07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4",
+    "bytes": 1228138,
+    "pages": 15
   },
   "current_qa": {
-    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_17.json",
-    "sha256": "7e269d7c1c133fae204ce27fc78ef6a45ec19f0341323b247e0048273da18646",
+    "record": "audit\\qa_series\\mentor_send_20261002\\iteration_18.json",
+    "sha256": "7a7c847849bec0d2b96219a0483b3a171df48265d74ba9f1e1227b139a607838",
     "checks": [
       "Clean end-to-end figure, bibliography, and LaTeX rebuild",
       "Evidence identity, split roles, checkpoint/config hashes, and condition-only control",
@@ -35,10 +35,10 @@
       "October review: graph connectivity and pitch, response error scale, depth/response distances, structural figure denominators and Results reading order",
       "Mentor-send additions: stored-energy scale, binwise error scale, depth shift in metres, profile ratio, transverse summaries and restored definitions",
       "Active-versus-archived evidence separation, 7 active JSON files, source-bound model and mathematical exposition, sentence-level evidence review, nine supplied audits, synchronized release documentation, Python compilation, and git whitespace check",
-      "14-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
+      "15-page PDF text/log scan plus every-page render, clipping, ink, and extractability checks"
     ],
     "visual_record": "audit\\visual_review_finalization_20260930.json",
-    "visual_sha256": "4446987bebc446e2a649ab5d1c2a907695c9e0f2b3d93efefffe90b0cce4ff6e"
+    "visual_sha256": "f3af6448f75b10994ac6c224d11879a8f5b90c6cd967ad1445425a8fe40d30fe"
   },
   "historical_qa": "Earlier records are preserved; no pass count is used as evidence for this output.",
   "environment": {
@@ -46,11 +46,11 @@
     "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
   },
   "source_sha256": {
-    "main.tex": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+    "main.tex": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
     "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
     "build.ps1": "c11128ab5918b84202fc1c7ab4944147896916d3a6176ff37fb7991beefb87e2",
-    "README.md": "ac4dbc522193d0511a0a1c8b9570b021742aac9c4c9c1f274a9fe86119a9d161",
-    "STATUS.md": "2211062aeb9445b18d0d8cf68f92deac1392d5b972b7f2b93e4e4c6259a04081",
+    "README.md": "881f831e9e2a8efcf665fce5f06a635e0ea347888bd4d85e433a84fb2c58b131",
+    "STATUS.md": "b48829f49cca631ac5a999731e75e46ee2c022899e575f08862e5a9b73abe5af",
     "CITATION.cff": "3b32bfe4fa2a6b07f6e1a35667378bc4a3911b7f2e8f0e98b192c5e1d544feeb",
     "audit/claim_register_20260922.json": "5e3b295859a7f8eed9c7120b03100e9a1415ddd13dddf9346162c438dcc82f65",
     "audit/claim_register_20260922.md": "74f3b7b6fca82d9d9a74d74c0648dd3e38b9ab0547801c14ebce56dacd4b48bf",
@@ -67,8 +67,8 @@
     "audit/sentence_evidence_20260922.json": "89504ec1c8c9a8b6e7526dcc1e88293c70ef0c122d5cb7d05ea93c1e2d7e3743",
     "audit/sentence_evidence_20260922.md": "e7a42ab259c544c6e90e15c9b6326652db45b42cfd2f28750fbaea2eca26d6f0",
     "audit/literature_benchmark.md": "61340e12a17d1026b8332da97418f1875058899d36c9359f277f47b3e8b5aa09",
-    "audit/finalization_20260930.json": "8b1d188db2ad80a879f57b81c5fea7a482a7adad5ff173c9359c4dbd75f63893",
-    "audit/finalization_20260930.md": "b3dd7bdb19ee5e7112340b5dc5def4c9bd41e04bd7ee69e66c49e6cfdb66775d",
+    "audit/finalization_20260930.json": "03cd4d19c918042e3c16f54007a08369ff15245634326f61b844f6e4b1143fc9",
+    "audit/finalization_20260930.md": "f0e3f209ca861d4f09ad7b797179e678cdb99a90654b1c7cea318ec9bdc8f437",
     "audit/physics_exposition_response_20261001.json": "f4b19bc1a2fdb9221fdc3a7584bf43e68f2ff1aa72a3042a9f4bc84f2f8d4a19",
     "audit/physics_exposition_response_20261001.md": "080f324d1e627d10a2297ddba5c1bc1e00893b35ce7e911661b757cde9f43381",
     "audit/claude_integration_response_20261001.json": "f47670843099d55734f13b7ef0d799683282bda0bc877c3ce2f9ab059a93a7d6",
@@ -85,7 +85,7 @@
     "scripts/build_figures.py": "891b114016dbe7facbc6dcd8535a2f12859e45568747b3f57733450407e7ffd6",
     "scripts/claude_reader_checks.py": "66b7f408431d901f02abeeebb3fd5b2118ebe37f657f4d82af38c21ed2a30540",
     "scripts/component_bounds.py": "07f1e9cf62151d733a1d0330a8a4bed935edd024ad98cfdf1affd1efb45e1f07",
-    "scripts/full_manuscript_qa.py": "3cc36038b3d85f88d3a6a180c9253e237d042bf323a076253bb9fb9dae85d24b",
+    "scripts/full_manuscript_qa.py": "5f222e57bcfa021844b4eda26286c1ae68c1ee0191138daec603db76ce0c5d0a",
     "scripts/mentor_send_checks.py": "39e4a6f51ab86537ca8314bd21774906a690d3d3088cd5174527715c2b89cc37",
     "scripts/physics_exposition_checks.py": "a2dd3ca33399af137cebda59de3033677c1e7d05140302228a16619a3be347a5",
     "scripts/qa_series.py": "e9694aefd12bcac2c59a784e3126cb2c296b7d928cd7fcf796aa293dbd2b86e4",

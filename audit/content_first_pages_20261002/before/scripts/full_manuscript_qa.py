@@ -302,7 +302,7 @@ def validate_tex_and_bib(checks: list[str]) -> None:
         "50\\leq\\Kinc\\leq250\\GeV", "No nominal-test event enters the analyses reported here",
         "104 retained rows spanning epochs 11--114", "defines the checkpoint analyzed below",
         "a control using incident kinetic energy alone gives 0.464", "The condition-only control uses incident kinetic energy alone",
-        "A study with three independent generator-training seeds", "Similar aggregate means mask a hit-pattern discrepancy",
+        "Three independent generator-training seeds", "Similar aggregate means mask a hit-pattern discrepancy",
         "All three high-level AUROCs exceed the recorded screening criterion of 0.65",
         "selects four nearest centroids", "stored in both directions", "107,920 in total",
         r"\prod_{\ell>F}^{64}", "the two energy features carry the same physical information",
@@ -533,7 +533,7 @@ def validate_repository(checks: list[str]) -> None:
 def validate_pdf(iteration: int, checks: list[str]) -> tuple[dict, list[dict]]:
     info_text = run(["pdfinfo", str(PDF)]).stdout
     pages = int(re.search(r"^Pages:\s+(\d+)", info_text, re.MULTILINE).group(1))
-    assert pages >= 1, "PDF must contain at least one page"
+    assert 6 <= pages <= 14
     render_dir = RENDER_ROOT / f"iteration_{iteration:02d}"
     render_dir.mkdir(parents=True, exist_ok=False)
     run(["pdftoppm", "-png", "-r", "110", str(PDF), str(render_dir / "page")])

@@ -1,9 +1,9 @@
 {
-  "created_utc": "2026-10-03T03:41:51.726298+00:00",
+  "created_utc": "2026-10-03T03:52:57.005679+00:00",
   "revision": "0.22.1",
-  "sha256": "489a2d8642f9a961889dbddf3d84611b648f4e9d76c4112c3c8194dcc25ce5b0",
+  "sha256": "aebff1f733d07c4882e423a6cf91daa6ed5f000727821301b45260636c16f38b",
   "members_sha256": {
-    "main.tex": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+    "main.tex": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
     "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
     "main.bbl": "7e3c535fa8aac713f3e59967ccf339796f1934706a08e332c6e4834367503091",
     "figures/detector_geometry.png": "220ce16b98bd6f53974d458f45e149263d1e105f3916215ec1998d6cd51f652c",
@@ -11,8 +11,8 @@
     "figures/longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
     "figures/support_summary.png": "f4b2c0ca5337161b56df5c3cc4f242ad543f02fe4437577ca0af038ae11df8fd"
   },
-  "pdf_sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "pdf_sha256": "07ba41d37f51eed6221225c8166481a8ffe0bbc68f736dd0d51718f0238636d4",
   "status": "Seven-file archive; CRC and exact current member bytes verified",
   "arxiv_server_compile": "Not performed",
-  "current_qa": "audit/qa_series/mentor_send_20261002/iteration_17.json"
+  "current_qa": "audit/qa_series/mentor_send_20261002/iteration_18.json"
 }
