@@ -1,0 +1,3 @@
+GitHub release commit and exact published artifact bytes verified: 96aca45578ad16a40a00cf31d63ec200326f7bd3
+
+STDERR

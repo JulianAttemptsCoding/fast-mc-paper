@@ -3007,3 +3007,68 @@ Evidence: `audit/ai_usage_only_20261002.{json,md}`.
   "final_git_diff_cached_check": "pass after excluding only these files"
 }
 ```
+
+## Command started
+
+2026-10-03T03:46:21.315622+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/publish_audit.py"
+  ]
+}
+```
+
+## GitHub release commit verified
+
+2026-10-03T03:46:22.452424+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:46:22.434976+00:00",
+  "repository": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+  "release_commit": "96aca45578ad16a40a00cf31d63ec200326f7bd3",
+  "remote_main_verified": "96aca45578ad16a40a00cf31d63ec200326f7bd3",
+  "revision": "0.22.1",
+  "output_sha256": {
+    "main.tex": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+    "figures/support_summary.png": "f4b2c0ca5337161b56df5c3cc4f242ad543f02fe4437577ca0af038ae11df8fd",
+    "output/fast_mc_zdc_manuscript.pdf": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+    "output/fast_mc_zdc_submission_source.zip": "489a2d8642f9a961889dbddf3d84611b648f4e9d76c4112c3c8194dcc25ce5b0",
+    "README.md": "ac4dbc522193d0511a0a1c8b9570b021742aac9c4c9c1f274a9fe86119a9d161",
+    "CITATION.cff": "3b32bfe4fa2a6b07f6e1a35667378bc4a3911b7f2e8f0e98b192c5e1d544feeb"
+  },
+  "qa": "QA17 full suite passed 22 groups, 14 pages; 10 guard regression tests passed; all final page pixels directly reviewed.",
+  "web_verification": "GitHub commit-specific README and CITATION.cff pages displayed the PDF title and version 0.22.1. The earlier fetched 0.5.0 claim was stale.",
+  "excluded_raw_local_evidence": {
+    "audit/final_review_20261002/command_015.txt": "13960c0a27f7186c43ccf6cf0438680063be3d2beef66dea5bbeebe9fe2faca0",
+    "audit/mentor_surgical_20261002/before/scripts/reader_figures.py": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
+    "audit/mentor_surgical_20261002/command_024.txt": "4f31636dfa05b4509eb95541b1dcb1ef51fb3e2317e2fc46ebf14bde7b2bb573",
+    "audit/mentor_surgical_20261002/command_027.txt": "00b554a1d0026b3c68bb6c32fc8ebd0aebb9bb631a94468e0214c5dad7f7cf4a",
+    "audit/qa_series/mentor_send_20261002/iteration_09.md": "25a26f1556b21630410776ddea47332c67375288aceba8b8434b26a86a1d091f",
+    "audit/qa_series/mentor_send_20261002/iteration_12.md": "1efcd27bc671f78bbb7ffab4f65cf46bb1a9a934b2591135428282e7a356b3a7",
+    "audit/qa_series/mentor_send_20261002/iteration_13.md": "21bcff820a6eeb589f84db5259a9c62a6e2a8e55d5ea202916ab57b1e7dd8d9f",
+    "audit/qa_series/mentor_send_20261002/iteration_15.md": "15fe97f37b201d65c164ecfd8b53ba3eac3e5003fa1b42320cbc4381305b7cf0"
+  },
+  "exclusion_reason": "Exact raw transcripts, source backup or immutable failed-attempt markdown retained locally because staged whitespace checks flagged their original bytes. QA JSON attempts and current review records were published; no QA assertion or whitespace policy was changed.",
+  "mentor_submission": "Not sent by this task."
+}
+```
+
+## Command completed
+
+2026-10-03T03:46:22.484465+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/publish_audit.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_051.txt",
+  "output_sha256": "d4b4a263f49a7cd4db4cfb90f892463f3b286c35ac7fe097a073d2b5dceeb940"
+}
+```
