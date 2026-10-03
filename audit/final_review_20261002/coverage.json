@@ -1,0 +1,687 @@
+{
+  "created_utc": "2026-10-02T22:28:01.105621+00:00",
+  "source_sha256": "488f7627eec24660a218f5e55c1e843fcff5a1fe7d0d131d779958d9923ab201",
+  "pdf_sha256": "c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422",
+  "blocks": [
+    {
+      "start_line": 1,
+      "sha256": "43363d3f635d702e066b786f0dec1c8488041fba9860c6b683e58ae475b376e7",
+      "opening": "\\documentclass[10pt]{article}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 3,
+      "sha256": "9de3df1da6e704cecbae4ab4ca40811174bf69a4d6059aeef8fca8820519fe6e",
+      "opening": "\\usepackage[T1]{fontenc}\n\\usepackage[margin=0.75in]{geometry}\n\\usepackage{amsmath,amssymb}\n\\usepackage{booktab",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 20,
+      "sha256": "ec42f3570451f6d341da96b2d956f0316b0c3c890e04c5a2a99453bda0238243",
+      "opening": "\\graphicspath{{figures/}}\n\\hypersetup{pdftitle={Longitudinal Gaps and Spatial Hit Connectivity in a Pilot Gene",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 31,
+      "sha256": "d2f4c6049c2130c3c9eb72acb377cbbfa3349fb35419ce297319bb6faf077fd8",
+      "opening": "\\title{Longitudinal Gaps and Spatial Hit Connectivity in a Pilot\\\\Generative Model of Zero-Degree Calorimeter ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 35,
+      "sha256": "d6baedf71d44c9f1a6ba031a22125a7abd7989c3c9918fc71bf79c9ad04f11e8",
+      "opening": "\\begin{document}\n\\maketitle",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 38,
+      "sha256": "6c6dc34dc764ba8be8160244a874550ebae5e92337267022fcde0dd4bf4c9f8f",
+      "opening": "\\begin{abstract}\nWe test whether similar mean deposited energy and active-channel counts imply similar shower ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 42,
+      "sha256": "479ce8267a8dc66449e53b838492edeab11f9f116eed87da087547c1cd388ae6",
+      "opening": "\\section{Introduction}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 44,
+      "sha256": "2a794c951fbd8b5d3be6e6a2df24a6903aa1f0bde7372bec69a9b21b61aef569",
+      "opening": "At the Electron--Ion Collider, a zero-degree calorimeter (ZDC) measures neutral particles near the outgoing ha",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 46,
+      "sha256": "d4809eb2c674747dfa5dd1b78d0b172a930c1a4f3e5f6623a8e39e9cbfdd3601",
+      "opening": "Calorimeter generators use flows, diffusion and flow matching on grids, point clouds and graphs~\\cite{caloflow",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 48,
+      "sha256": "cabeab63dc6da1f744faa625708e5d6e74ef2b5a069ac9e9dc7a3e2325650245",
+      "opening": "We study a generator that samples total deposit, active layers and deposited-energy hit patterns in sequence. ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 50,
+      "sha256": "5fa15c441f4e22aa0b64669f53dab2700a75e579cd3581244ab02cfbfc38d7e6",
+      "opening": "\\section{Simulation target and study population}\n\\label{sec:data}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 53,
+      "sha256": "8245348dcc285130386e94dd0b60ccc725e09eab235d56858c751f1d2f113fd7",
+      "opening": "\\subsection{Readout target and conditioning}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 55,
+      "sha256": "863a2f09c83ed6675add25679afbeeb49713687f6d73d6139bd8d756f4246fe0",
+      "opening": "The event condition is the incident-neutron four-vector $p^\\mu=(E,p_x,p_y,p_z)$, expressed in GeV. The five ne",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 63,
+      "sha256": "cf1f41f2597c361a3c54b3d2888fa7b0c17a298f0149ee5719eb7b25d59238a6",
+      "opening": "The target $\\Y\\in\\mathbb R_{\\geq0}^{6790}$ is the raw, nondigitized energy deposited in each valid stored-ID c",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 65,
+      "sha256": "e2c0dd78194ec0b8ee870c267c0c443d3049df39d082d9740e78a41c29723f6c",
+      "opening": "\\subsection{Geometry and graph representation}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 67,
+      "sha256": "49a30d34af88142ce84e653ff511e3e006101a50ef7ad4b0f01dd5590887291b",
+      "opening": "The stored geometry has 400 electromagnetic-calorimeter (ECAL) IDs in layer 0 and 6,390 hadronic-calorimeter (",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 69,
+      "sha256": "0a1bc104f5a017fcbd9165de773bc20efb215f90b7ff391ce7040907bffc4a12",
+      "opening": "A channel is a stored ID. For 2,400 HCAL IDs, two to four positions share that ID; their unweighted centroid d",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 71,
+      "sha256": "76cb08c24cb2d37cf87cc06e71f3328c292631e848c87edd201a89443b76017a",
+      "opening": "\\begin{center}\n\\begin{minipage}{\\linewidth}\n \\centering\n \\includegraphics[width=0.94\\linewidth]{detector_geome",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 80,
+      "sha256": "05ef9cfc7dce1f35dc2fbc8f29bad346ef7250aa5753b757a773a961a2e32828",
+      "opening": "The fixed graph gives each channel eight nearest-centroid links within its layer. For each channel in layers 0",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 82,
+      "sha256": "9a4ceda04def9b25edc1084eeb641ce7568f0c47a9827244605a6ed11c3ce38b",
+      "opening": "\\subsection{Training and evaluation populations}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 84,
+      "sha256": "8ab5db207fff2c33eb3f7e9a315c264f7e58db8a7d2d112b652511787adc1b43",
+      "opening": "The preparation record contains 764,940 showers over 0--300\\,GeV. A deterministic event-hash split assigns 612",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 86,
+      "sha256": "495283820b2bf7fc5097a05556fd76556c44e9cdeeebf9cb05ec1c71220e5c00",
+      "opening": "\\Needspace{8\\baselineskip}\nThe primary shower comparison uses 10,000 incident conditions drawn from canonical ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 89,
+      "sha256": "3913022f8cb9988a4c425e8a402740835c5ec400b1d040906846ee940e08b445",
+      "opening": "\\section{Generator and training procedure}\n\\label{sec:model}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 92,
+      "sha256": "ae858b9386e05d22aac52bbcfd22a6a6ac79538546d60dd28bf616d8a9305b7f",
+      "opening": "The generator builds a stored shower readout from coarse to fine: total deposit, layer activity and energy, th",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 94,
+      "sha256": "219c522c42732465529f24a4f3792b1fd128770732756d51b371e1f645d7d39e",
+      "opening": "The model has 2,082,507 trainable parameters. A two-block residual multilayer perceptron encodes the five inpu",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 96,
+      "sha256": "4b8df04aa0e7cbbb3b78868f0a3833966062f21833855bae1801847da1733ec8",
+      "opening": "Below, $\\ell=0,\\ldots,64$ indexes layers, $i$ indexes valid channels in layer $\\ell$, and $Y_{\\ell i}$ is a st",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 98,
+      "sha256": "55dd203ddf7a9abc8c16315973611fd43eaf8d63553a1507c3d13fc3dddff4e2",
+      "opening": "\\begin{center}\n\\begin{minipage}{\\linewidth}\n \\centering\n \\includegraphics[width=\\linewidth]{generator_schemati",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 107,
+      "sha256": "841fa10beb56dc020d7aaae73a4992cf8f4c09920974d1c157ace46c8529061a",
+      "opening": "\\Needspace{8\\baselineskip}\n\\subsection{Total deposit and longitudinal allocation}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 110,
+      "sha256": "67a77f98551dcd800f5453ef03e1d152e620670ff03603795468c10351c44139",
+      "opening": "\\textbf{Stored response.} The two-part response stage samples a provisional visibility flag and a candidate to",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 132,
+      "sha256": "1a69236509a64acf59ec7b15d1945de978e63fac527344b4397c10a65b2c6911",
+      "opening": "\\textbf{Layer activity.} For a visible event, the model draws the first active layer $F\\sim\\mathrm{Cat}[\\opera",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 149,
+      "sha256": "f8b743935db19586c95bea003ccc3887fc993697953023179d010ce63b116671",
+      "opening": "\\textbf{Energy allocation by flow matching.} Both energy-allocation flows learn a velocity field that transpor",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 160,
+      "sha256": "3a3eee1c7b0566b5f80d43f0d00227fac7fc68a2634125c5fac9c758f382d21e",
+      "opening": "\\Needspace{8\\baselineskip}\nDuring generation, both flows start from fresh Gaussian noise and use eight masked ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 178,
+      "sha256": "3cda1eeccd61a6a23ddf10ce451b660768ad9e947284ed12f94b96218ca8bbf0",
+      "opening": "\\subsection{Channel counts, hit pattern, and deposited energy}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 180,
+      "sha256": "3d05c1a8b114bd30f32d890621d77c383b782c047472c2a1469dcee027803fef",
+      "opening": "\\textbf{Channel counts.} Given $(h_c,B_\\ell,A_\\ell)$ and a learned layer identifier, a categorical head draws ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 182,
+      "sha256": "a8cd7630520ec82e461aab9ae322312a41912eb742de1c39d84d39ee7a5ddab2",
+      "opening": "\\textbf{Channel placement.} The support network uses channel geometry and the sampled layer state to score can",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 197,
+      "sha256": "0dc4dfec937bf63d939af22fab64fb0c0f1a5e74682b6ded6a38278f8632e14a",
+      "opening": "% Allow natural page flow.\n\\textbf{Channel energies.} A second flow divides each layer budget among its select",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 209,
+      "sha256": "6b041a568942ac9d746e34ea8a11bd370b3f76ffadbd66eb8f18793943345015",
+      "opening": "The channel-flow velocity network follows the support network's graph and layer-context design, with the flow ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 220,
+      "sha256": "3a432780a05f34a2ac2413415140ca31b5ba439811ca2f3e73c7d6c473689062",
+      "opening": "\\subsection{Training and checkpoint selection}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 222,
+      "sha256": "2d81feb8fea4ac127bfd5ce3b4f2c0affcfd33b1a30ac1f42792c1c0b8a46e50",
+      "opening": "During training, each stage receives reference-derived upstream values (teacher forcing); when generating a fu",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 239,
+      "sha256": "201cfb6311dc3b5633275a0862a1c7232e2782c2d73b0f1b4b855ab16f139a25",
+      "opening": "The retained calibration record proposes $w_j$ from training-data gradient norms. In that proposal, response, ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 241,
+      "sha256": "f5c321329877f5ce02bdc2894c080b37854cca7f085021acad30d1325b165929",
+      "opening": "Optimization proceeded through response, profile, count, support, share, and joint stages. The condition encod",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 243,
+      "sha256": "70bd5a8617b48b2f8782292d7a79311d7d8d9d9a255f666f910ecddeeab209c9",
+      "opening": "Training used AdamW with a peak learning rate of $3\\times10^{-4}$, batches of six accumulated over four steps ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 245,
+      "sha256": "84ace8297e98539987a5ab6ef8a04b1853938669228f08ca1ce01acdd7374754",
+      "opening": "\\section{Evaluation protocol}\n\\label{sec:diagnostics}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 248,
+      "sha256": "51048578e15717d6587d85786d58d9c6393602f505f39617c69150b8d8a42266",
+      "opening": "We compare total and ECAL/HCAL deposits, active-layer patterns, and positive-deposit channel patterns with Gea",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 250,
+      "sha256": "103bd16fa2db6de5b88cabf77bb8eabb093f6884184ad337c1a874f211939820",
+      "opening": "\\Needspace{9\\baselineskip}\nHit-pattern measurements count every strictly positive stored deposit, with no dete",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 258,
+      "sha256": "e3a648aa04ddeb5bb81e6d942d29700dc193599fed97b520f862ad42b0f9354e",
+      "opening": "Graph edges join channels only within a layer or between adjacent layers. Let $R$ count contiguous active-laye",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 266,
+      "sha256": "ca403f2e7134b93c1b3aebaef360e45ff63322efe39af6598e4dee741d273c01",
+      "opening": "For a scalar observable, the Wasserstein-1 distance $W_1$ is the area between the generated and reference empi",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 268,
+      "sha256": "5c286d16dbd2ede02f8b2b9510efc44c903a2cb467af8bc5f1e94307a3eeb1fe",
+      "opening": "A classifier two-sample test (C2ST) distinguishes generated from reference showers; AUROC (area under the rece",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 270,
+      "sha256": "0b326d29ef0bfcd175f1dc21fe98a6cc529baecb62cb6f94ba447cf982f35349",
+      "opening": "% Allow natural page flow.\n\\section{Results}\n\\label{sec:results}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 274,
+      "sha256": "2cbf2fa60b76d35bd06b0e278c81f6f36e78cd36210c57a47bfb327d737b2b64",
+      "opening": "Table~\\ref{tab:results} compares all-event deposits with hit-pattern statistics computed within each sample's ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 276,
+      "sha256": "6ece21fb12e758f51870892e9269d654f8de1a4c7e1cb9f83c261337a55c139f",
+      "opening": "\\begin{center}\n\\begin{minipage}{\\linewidth}\n\\centering\n\\captionof{table}{Aggregate comparison on the developme",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 305,
+      "sha256": "4c3161c6d5017b10bf1bb767ea57a4d2dbe3fa963a72f4a0f5d71e417262d828",
+      "opening": "\\subsection{Deposited energy and empty showers}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 307,
+      "sha256": "6f1bc96825b4daea39766345f50961a3d02307402821668b91d12c2c39254d0f",
+      "opening": "The all-event mean total deposit is 4.369\\,GeV for generated showers and 4.324\\,GeV for Geant4, a difference o",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 309,
+      "sha256": "e2c74b77fd6f48fb2710849543e554c4ebce46f9035f971f50e273e4f96eee83",
+      "opening": "\\begin{center}\n\\begin{minipage}{\\linewidth}\n \\centering\n \\includegraphics[width=\\linewidth]{longitudinal_profi",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 318,
+      "sha256": "601c5d979e5ec68444191237cffea323220d7a2b1cf6ba8faa128c1c392eb575",
+      "opening": "Table~\\ref{tab:energy_bins} gives binwise means and widths; the pooled standard deviations are 4.759\\,GeV for ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 320,
+      "sha256": "980aea7b5ab31037ff2cc56a9f8f87cfad10484c2eaab8edf9d287044584495b",
+      "opening": "The model produces 142 empty showers versus 93 in Geant4, a difference of 49 events or 0.49 percentage points.",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 322,
+      "sha256": "e632cec4863ee820f39877d421ed8d9e3c6cecc776345c1258facb097cbb08f2",
+      "opening": "\\subsection{Longitudinal activity}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 324,
+      "sha256": "f5495dcfa8ac970c4cf7cc9fe13c92bfc22edf47ca6448f63eb0d2f1bd525ecf",
+      "opening": "The mean active-layer counts are close (54.83 generated versus 54.58 reference), but the last positive deposit",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 326,
+      "sha256": "0f7023a119d09e1ff3843a837a080eba6a2c6aa8e52147a4a3f200ab7761f6e3",
+      "opening": "\\Needspace{5\\baselineskip}\nFor nonempty showers, mean energy-weighted depth, $\\sum_\\ell\\ell B_\\ell/\\max(T,10^{",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 329,
+      "sha256": "50bd9482224e12723bdd9dc518f5dac9c0a365cf73e4190669f58656a93d3bc5",
+      "opening": "\\begin{center}\n\\begin{minipage}{\\linewidth}\n \\centering\n \\includegraphics[width=\\linewidth]{support_summary.pn",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 338,
+      "sha256": "ff1d88ef33c6c76b9727822c7cc3e9031708b282e2877cf5083109ae0e7d8cf3",
+      "opening": "\\subsection{Channel hit pattern and graph structure}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 340,
+      "sha256": "b8dacb93d913dc6fe9499c94f56e87fdb8f3efa62144a0318567f72a268ff9a0",
+      "opening": "Generated showers have 28.7 fewer positive-deposit channels ($-1.8\\%$) but 35.97 more graph-connected hit grou",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 342,
+      "sha256": "267b61a47b2830280be43336e3a1585fdf8ecb398b8de66fed2ac445a879dfe3",
+      "opening": "\\Needspace{3\\baselineskip}\nThe aggregate bounds give $\\overline Q_{\\rm gen}\\geq52.34$ and $\\overline Q_{\\rm re",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 345,
+      "sha256": "d30dc617f707f78d3140baab2df07a6b96ed0f33a9b77bef821df3125392eed5",
+      "opening": "\\Needspace{4\\baselineskip}\nThe all-event active-channel-count distribution has $W_1=58.68$ channels, with a pa",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 348,
+      "sha256": "e5e2226023129024e63d9c89a54facd10c7d34658fb6a322e20265e4e6903cfa",
+      "opening": "Energy-weighted transverse observables from the same evaluation summary provide a complementary comparison. Am",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 350,
+      "sha256": "53a1bd82ac262d33cb29fccbc9d2709ad09ff07bf47834ad58d51dd9beb4b0c0",
+      "opening": "Edge co-occupancy, the all-event mean fraction of graph edges whose two end channels are both active, is 0.137",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 352,
+      "sha256": "0030a672a020433ffb585509deccb031d3566c2c2a760869da429edff901d2df",
+      "opening": "\\subsection{Classifier and numerical checks}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 354,
+      "sha256": "6d64880e83b4a6eacfb502a5bdb834e1938f00ed8c0c2963cc05fa925d2f0052",
+      "opening": "The original C2ST battery gives mean AUROCs of 0.775 for high-level shower summaries, 0.791 for channel energi",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 356,
+      "sha256": "b4f66c7f88814ae02dace184ce9d1b5496d653d16340ce7de2224c290623c00b",
+      "opening": "Closure residuals compare decoded deposits with the sampled budgets: $|\\sum_{\\ell i}Y_{\\ell i}-T|$ per event a",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 358,
+      "sha256": "93b694030dae8882c09beb128f23ee0afeb1aab78daf54dad80319328549318d",
+      "opening": "\\FloatBarrier\n\\section{Discussion}\n\\label{sec:discussion}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 362,
+      "sha256": "0fe840cb65238aa2a5a42c7d20d51cb1d10c39fba2836b290b1808f1f47e32a5",
+      "opening": "\\subsection{Interpretation and diagnostic tests}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 364,
+      "sha256": "fb4ff9adb6b7ea59ec498a6d5c0be32ccc1dffe6dcd0661a069b1ca836435540",
+      "opening": "The bound in Sec.~\\ref{sec:diagnostics} gives $\\overline Q_{\\rm gen}\\geq52.34$ and $\\overline Q_{\\rm ref}\\leq2",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 366,
+      "sha256": "197282c6dd7b2e30d1267b2a2194feae43c52e89cad62260b54c0c63fe5f5695",
+      "opening": "Equation~\\eqref{eq:activity} assumes conditional independence of later-layer activity given $(h_c,T,F)$. In a ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 368,
+      "sha256": "c1dca25e5a9ef8d5a4873f7ca8a391fc77d43a43ac7e59ac7a5840ff20f36727",
+      "opening": "A direct test builds a null sample from Geant4 itself: redraw each later layer's activity independently, with ",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 370,
+      "sha256": "f565fc457f93099df18354f56ee8381760d120ff0047c7403c1288482fc115bb",
+      "opening": "BCE-trained logits are not automatically calibrated inclusion probabilities after fixed-count Gumbel selection",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 372,
+      "sha256": "b045bf60615d531d8cf8f70ae9ffbef142620f859a62a5e2c2da620ad7185f56",
+      "opening": "\\subsection{Limitations and robustness}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 374,
+      "sha256": "5435fd9e68316da163f97ce90043b99c974df29b83ec4d36d19ea4dec60aa0e6",
+      "opening": "Paired sampling intervals for the headline structural means are not retained. Large descriptive differences do",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 376,
+      "sha256": "4695677c53561a02511e22f84eef7c1c931e2a5408b02ba96b6420bb651a4eec",
+      "opening": "The zero-threshold hit pattern describes stored simulation deposits, not electronics readout. Tiny or late dep",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 378,
+      "sha256": "812ccef523daf67a37dd5dd483669cbaa580f15a2620f07c4fe3d518e35e20f6",
+      "opening": "The model has no explicit impact-position input. The recorded fixed gun vertex makes direction informative abo",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 380,
+      "sha256": "d611714eedba4bea8a53518f42ccd2cf6a5a31ca9cf799503c7710789193d78b",
+      "opening": "Response-tail studies require counts of generated draws clipped by the cap and reference deposits above it. Nu",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 382,
+      "sha256": "a0cff487cae3bd93924e5dcb21ec01d2e8b74746d671bfb07be640dd19200a15",
+      "opening": "\\subsection{Timing and detector applications}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 384,
+      "sha256": "1ccb78dcff62ea61bb72a043b2cc1c3d3f1ff9d40f195574f7eee54bc89c4148",
+      "opening": "The evaluation took 3,442\\,s for 10,000 pairs. Its nonoverlapping timed analysis stages total 1,009\\,s, leavin",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 386,
+      "sha256": "1fdafc496784d7d7ed65f684d4bd853bbe744b0fcb98878eea0502afd6848871",
+      "opening": "Relating this raw-deposit study to detector performance requires production metadata, training-only calibratio",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 388,
+      "sha256": "f27d080eb405d8570c03f14a37933c94fcb0c3c66fd00e4da70b2acebcd39dba",
+      "opening": "% Allow natural page flow.\n\\section{Conclusion}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 391,
+      "sha256": "dd2870dde2d700aa7c1af25cb1c424627e18caa1edf871837751eb383f0807d9",
+      "opening": "This pilot comparison shows that similar mean deposited energy, active-layer count and active-channel count do",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 393,
+      "sha256": "0e0c3c39e69cf018562c174360170a01a2dead3384acff42a194fd1795437ad8",
+      "opening": "\\section*{Code and data availability}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 395,
+      "sha256": "5d3c9894477a6b5bf87eeace93ff061c346a16adf44e5f0707562a9dd0a7b72d",
+      "opening": "The \\href{https://github.com/JulianAttemptsCoding/fast-mc-paper}{project repository} provides aggregate report",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 397,
+      "sha256": "9c619036687c1f674a729216235cbde0a1ffa126a78b643c9b953e86167f94a5",
+      "opening": "\\section*{Acknowledgments}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 399,
+      "sha256": "daa9d2dbde1770f41cbd9c1829af0b0e42d7fee6272753c5f9ef07f80e219c49",
+      "opening": "The author thanks Dr.~Wen-Chen Chang (Institute of Physics, Academia Sinica) for his generous mentorship, guid",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 401,
+      "sha256": "74ac80dbb660fd2bfd7e7858bba95d4bc27e4d5a7d464c49879bec2d6dcaee88",
+      "opening": "\\section*{Use of generative AI}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 403,
+      "sha256": "e4da4362b65c82344fb8c952e7380aeb4f307e139ec6c4cc6641650f2239f0e8",
+      "opening": "OpenAI's GPT-5.6-Sol assisted with code and manuscript drafting, specification review, literature searches, an",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 406,
+      "sha256": "5f69d47aa1cf18074e8613c0f01bf4cb67a3c84408e1f837d424b21fc170a7ba",
+      "opening": "\\appendix\n\\section{Recorded settings and reproducibility limits}\n\\label{app:reproducibility}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 410,
+      "sha256": "51dcc95b400fac2f41f56ae687f084c35f33acaab313d8a79e4a3ccf33d49503",
+      "opening": "The analyzed checkpoint is \\texttt{dicos-f-02}, epoch 90, from the \\texttt{calibrated\\_lr3e4} family, with tra",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 416,
+      "sha256": "c03a547430835ab51e689fac1efcb06051fbf5708d8c468a51fad6884aee2a64",
+      "opening": "\\begin{center}\n\\begin{minipage}{0.82\\linewidth}\n\\centering\n\\captionof{table}{Recorded gradient-calibration pro",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 440,
+      "sha256": "8e3343eb3df83f3f52bf8b3fb4813a6b1b0023aea3283e9e76a078ac8c8179c4",
+      "opening": "For each loss, the calibration divides the geometric mean of the median training-gradient norms by that loss's",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 442,
+      "sha256": "df4cfb62001e59f83951d24c472b28d7d117519c2c376bd74345dea8cd9d71d6",
+      "opening": "The diagnostic report records generation seed 20260723 (the same integer as the training seed, used for a sepa",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 446,
+      "sha256": "512ded4ad12e456d8a000fb7c43bfd577fb1cc247e7351c2d815cea93257dbc8",
+      "opening": "The canonical split uses event hashes, not independent simulation jobs; this study uses validation only. Earli",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 448,
+      "sha256": "f01a9cc5add6cb9ebc584b5a421a8f82c85a84af85deed36f294b691334fcb9f",
+      "opening": "\\section{Energy-bin results and classifier details}\n\\label{app:additional}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 451,
+      "sha256": "e9e09539d83f36ef26f60b90c916a72b230ea2146d9981fe56d000018af602f8",
+      "opening": "Table~\\ref{tab:energy_bins} resolves the aggregate response comparison into the eight incident-energy bins. Th",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 453,
+      "sha256": "a4729529e4e8b4bba3568f9a2d15f1044158f0950809a4540efbd52f663dcfc9",
+      "opening": "\\begin{center}\n\\begin{minipage}{\\linewidth}\n\\centering\n\\captionof{table}{Deposited-energy response by incident",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 476,
+      "sha256": "c09e6d56eb44e78a815d687b07b19b7f629997839d7349e2f8b14a83f941a2cb",
+      "opening": "\\begin{center}\n\\begin{minipage}{\\linewidth}\n\\centering\n\\captionof{table}{All recorded classifier seeds for the",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 495,
+      "sha256": "922f87624cd28a077381a42b24d33fd5e6c323cf50e4544127fda1925dd2a2af",
+      "opening": "The archived evaluator uses histogram gradient boosting (at most 100 iterations, depth four, learning rate 0.0",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 497,
+      "sha256": "820c33227c29bea68b5524b34d57f8b831524237b3a1b8404663b00d71501253",
+      "opening": "High-level features are total deposit, active-channel count, energy-weighted depth, transverse centroids, radi",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 499,
+      "sha256": "53302dd31566102472e4951f7e36044931ab23c5306a0fb4cbca34fc70235af4",
+      "opening": "The settings come from archived source, without a verified match to the historical runtime. The retained repor",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 501,
+      "sha256": "e15f7e3c8d20e73ab4ea982fcdd447f8d801ad0aedc9523312614fbe1a08e020",
+      "opening": "\\printbibliography",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    },
+    {
+      "start_line": 503,
+      "sha256": "2dc670e7ffe1f12aa0326631b39a0b6d72da153425c7f5f9aed627a71c1487d6",
+      "opening": "\\end{document}",
+      "disposition": "Reviewed in complete source reading and corresponding final rendered page."
+    }
+  ],
+  "sections": [
+    "Title and abstract",
+    "Introduction",
+    "Simulation target and study population",
+    "Generator and training procedure",
+    "Evaluation protocol",
+    "Results",
+    "Discussion",
+    "Conclusion",
+    "Availability, acknowledgments and AI use",
+    "Appendix A",
+    "Appendix B",
+    "References"
+  ],
+  "equations": [
+    "eq:condition",
+    "eq:response_transform",
+    "eq:cap",
+    "eq:activity",
+    "eq:profile_target",
+    "eq:cfm",
+    "eq:flow_steps",
+    "eq:layer_budget",
+    "eq:message",
+    "eq:topk",
+    "eq:share_target",
+    "eq:decoder",
+    "eq:joint_loss",
+    "eq:gaps"
+  ],
+  "figure_labels": [
+    "fig:geometry",
+    "fig:architecture",
+    "fig:longitudinal",
+    "fig:support"
+  ],
+  "table_labels": [
+    "tab:results",
+    "tab:weights",
+    "tab:energy_bins",
+    "tab:classifier_seeds"
+  ],
+  "claims": "Descriptive one-seed pilot, reused validation; separate nonempty samples; algebraic bounds not intervals; no physics validation, speedup or reconstructed-performance claim.",
+  "remaining_research": "Structural paired intervals, repeated model seeds, threshold/graph scans, event-level reconstruction and comparable generation timing remain disclosed research limits, not silently completed by this editorial review."
+}

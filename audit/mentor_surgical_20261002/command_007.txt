@@ -1,0 +1,17 @@
+
+STDERR
+Traceback (most recent call last):
+  File "C:\Users\Julia\Desktop\coding\ASIoP\fast-mc-paper\audit\mentor_surgical_20261002\revise.py", line 38, in <module>
+    replace('main.tex', [
+    ~~~~~~~^^^^^^^^^^^^^^
+        ('Their mean number is 23.42 for Geant4 and 59.39 for the generator.',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<14 lines>...
+         'All three high-level AUROCs exceed the recorded screening criterion of 0.65.'),
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ])
+    ^^
+  File "C:\Users\Julia\Desktop\coding\ASIoP\fast-mc-paper\audit\mentor_surgical_20261002\revise.py", line 30, in replace
+    assert contents.count(old_bytes) == 1, (path, old, contents.count(old_bytes))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('main.tex', 'recorded development-screening criterion of 0.65', 0)

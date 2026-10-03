@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-10-02T22:28:01.105621+00:00",
+  "result": "pass",
+  "pdf_sha256": "c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422",
+  "page_sha256": {
+    "1": "923b0daa0c4d0b260117e931801cf08c1c4f7e10796ce728e18c7179726c6bae",
+    "2": "0af7c22fb1ea77046dbec194049ba6d941cffb62be43ea18eb40e77266261dea",
+    "3": "03c795a6a905fdfdc1e96b095094b74699530baeb7e3216183bb4f5ab55deec8",
+    "4": "465cb81f63d40424577bb3ea4ad6d623f20cd8c0dd49a2eee3de7de4aed229b0",
+    "5": "683f35c036b10430e0720cbf170a32f72617e6cc9ac4390bc0c1e672d5aaf421",
+    "6": "8bad3dd24849c29045e64f668f2ae671965bd84507bdde500f70145f7b71f15b",
+    "7": "94eebdba0fcee5d6052eb4a48023ffc6c46f52ccf3e4542a1444da0c67f6e808",
+    "8": "9f3da3fa5d180fc0212208be516a048e45f4881ba5af1bde16728bdb90e4215e",
+    "9": "0be7d9309241e8a91c9e6a55961bfad32226902b5cde7f7f16d60671b47d32c9",
+    "10": "9aa68ad6246b34e4b4a8ee67e856630d6dc5bd6edba52f8bf16e15038308c457",
+    "11": "2708691c7cf7c57d3023ab9b18d1a60991a407e776671f94e816cad87ac2959e",
+    "12": "332fbb983b4df346afe06b4a182f16afc89c1c274ecc13c9a8dcfb3772479f7e",
+    "13": "5b98a5ac27a95ba5393a0698a8368d39cb4398bb3b30e78105d3b77ab7b5b028",
+    "14": "379cab66e7b65661a59407ef411db81899f097dd52c5dcbdfa488b64f3ce4b74"
+  },
+  "method": "Direct visual inspection of all fourteen current 110-dpi page PNGs, individually displayed in four batches. All prose, numbered equations, table bodies/captions and figure panels reviewed.",
+  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_10.json",
+  "page_findings": {
+    "1": "Title, author/contact, date, abstract, introduction and condition equation: legible, pilot scope explicit, no clipping.",
+    "2": "Target, detector definitions, channel semantics, geometry dimensions, Figure 1 axes/legend and graph counts checked.",
+    "3": "Population continuation, conditional independence, model overview and Figure 2 generation/conditioning labels checked.",
+    "4": "Response mixture, caps, layer activity, log-share target and masked flow objective checked; equation numbers 2-6 clear.",
+    "5": "Solver, layer budgets, counts, messages, Gumbel selection and share target checked; equations 7-11 within margins.",
+    "6": "Decoder identities, losses, calibration provenance, stage order and selection protocol checked; equations 12-13 legible.",
+    "7": "Gap identity, segment/component bounds, denominators, bootstrap scope, W1 definition and classifier caveats checked.",
+    "8": "Table 1 numbers/units/rounding, response text and Figure 3 scales/ratios/legend/caption checked.",
+    "9": "Response uncertainty, empty counts, longitudinal observations and all Figure 4 illustrative/data panels checked.",
+    "10": "Component bounds, transverse summaries, edge co-occupancy, failed classifier screen, closure tolerances and discussion checked.",
+    "11": "Activity/support hypotheses, robustness limits, threshold timing scope, cost accounting, conclusion and availability checked.",
+    "12": "Acknowledgment, exact author-requested AI disclosure, source/checkpoint identities, Table 2 and test-history accounting checked.",
+    "13": "Appendix B, Tables 3-4, all classifier seeds and split caveats checked; references 1-5 legible.",
+    "14": "References 6-25 checked for titles, names, dates, venues, identifiers and line wrapping; corrected references 18,20,25 present."
+  },
+  "findings": "No clipping, overlap, missing glyphs, broken labels/citations, unreadable figure text or detached captions observed. Natural paragraph continuations and page breaks accepted."
+}

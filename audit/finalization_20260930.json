@@ -260,7 +260,7 @@
       "evidence": "plot_architecture rows and 2236x832 PNG: r is flow; Y_li is decode."
     }
   ],
-  "current_main_tex_sha256": "2ca2f1d66670d0dfa136463b4eadee947047814d025f85953f656b98f68f3a5b",
+  "current_main_tex_sha256": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
   "changes": [
     "Independent researcher/contact metadata and mentor/lab thanks",
     "Precise primary-comparison bank scope",
@@ -352,5 +352,18 @@
   "current_consistency_review": "audit/mentor_consistency_20261002.json",
   "current_ai_attribution_request": "audit/ai_ack_20261002.json",
   "current_author_lead_request": "audit/author_lead_20261002.json",
-  "current_ai_disclosure_request": "audit/ai_usage_only_20261002.json"
+  "current_ai_disclosure_request": "audit/ai_usage_only_20261002.json",
+  "followup_final_review_20261002": {
+    "record": "audit/final_review_20261002/events.json",
+    "previous_source_sha256": "2ca2f1d66670d0dfa136463b4eadee947047814d025f85953f656b98f68f3a5b",
+    "scope": "Complete current source read; conditional independence and detector definitions clarified; equations and tables preserved. Exact author-requested AI disclosure retained.",
+    "status": "source_review_complete; final PDF QA pending"
+  },
+  "hep_framing_research_20261002": {
+    "status": "source_review_complete",
+    "record": "audit/hep_framing_research_20261002/events.json",
+    "previous_source_sha256": "488f7627eec24660a218f5e55c1e843fcff5a1fe7d0d131d779958d9923ab201",
+    "scope": "Research-informed title, abstract, discussion and conclusion review; numerical and equation/table preservation checked."
+  },
+  "mentor_surgical_20261002": "audit/mentor_surgical_20261002/events.json"
 }

@@ -1,0 +1,23 @@
+ M README.md
+ M STATUS.md
+ M audit/arxiv_package_20260930.json
+ M audit/arxiv_package_20260930.md
+ M audit/final_build_audit.json
+ M audit/final_build_audit.md
+ M audit/finalization_20260930.json
+ M audit/finalization_20260930.md
+ M audit/native_build_guard.json
+ M audit/visual_review_finalization_20260930.json
+ M audit/visual_review_finalization_20260930.md
+ M logs.md
+ M main.tex
+ M output/fast_mc_zdc_manuscript.pdf
+ M output/fast_mc_zdc_submission_source.zip
+ M references.bib
+?? audit/final_review_20261002/
+?? audit/qa_series/mentor_send_20261002/iteration_09.json
+?? audit/qa_series/mentor_send_20261002/iteration_09.md
+?? audit/qa_series/mentor_send_20261002/iteration_10.json
+?? audit/qa_series/mentor_send_20261002/iteration_10.md
+
+STDERR

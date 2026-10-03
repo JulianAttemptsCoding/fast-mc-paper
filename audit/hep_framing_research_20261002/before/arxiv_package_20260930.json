@@ -1,0 +1,18 @@
+{
+  "created_utc": "2026-10-02T22:28:01.105621+00:00",
+  "revision": "0.22.1",
+  "sha256": "6f07e725623d747ea24a360db958cb6d282c993f209db2cc7d5f813dcb4f8925",
+  "members_sha256": {
+    "main.tex": "488f7627eec24660a218f5e55c1e843fcff5a1fe7d0d131d779958d9923ab201",
+    "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
+    "main.bbl": "7e3c535fa8aac713f3e59967ccf339796f1934706a08e332c6e4834367503091",
+    "figures/detector_geometry.png": "220ce16b98bd6f53974d458f45e149263d1e105f3916215ec1998d6cd51f652c",
+    "figures/generator_schematic.png": "7286a3b17792d6b90790da56560ca74a712b3b215bb55ab53accc644d33d669f",
+    "figures/longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
+    "figures/support_summary.png": "e996034c26145aa7533fa28f3ba0a4303491d79c12303c706db993081d57faea"
+  },
+  "pdf_sha256": "c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422",
+  "status": "Seven-file archive; CRC and exact current source bytes verified",
+  "arxiv_server_compile": "Not performed",
+  "current_qa": "audit/qa_series/mentor_send_20261002/iteration_10.json"
+}

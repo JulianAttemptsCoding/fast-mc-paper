@@ -1,0 +1,73 @@
+{
+  "created_utc": "2026-10-03T03:07:52.291865+00:00",
+  "result": "pass",
+  "scope": "Research-informed title, abstract, discussion and conclusion, with whole-paper regression and visual review.",
+  "main_tex_sha256": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+  "pdf_sha256": "c0bd5a739385cbd8a917de468cac8ecd3e18d7e0313d258496994bfe54010fa8",
+  "source_package_sha256": "83cff1cc49730ccb29a26ef5c13506661604f12bd8e3b3149e1b5acac057fc83",
+  "research_sources": [
+    {
+      "source": "APS Style Basics",
+      "url": "https://journals.aps.org/authors/style-basics",
+      "reading": "Titles and Abstracts",
+      "finding": "Titles should identify the subject without promotional wording. Abstracts must stand alone and avoid unexplained abbreviations.",
+      "application": "Name neutron showers in the title; state the target and comparison immediately; spell out the classifier metric."
+    },
+    {
+      "source": "IOP Article Structure",
+      "url": "https://publishingsupport.iopscience.iop.org/questions/structure-and-format-of-your-journal-article/",
+      "reading": "Abstract, Discussion, Conclusion",
+      "finding": "Summarize method, principal results and implications; the discussion interprets results in context and the conclusion identifies the contribution and follow-up. General guidance suggests an abstract no longer than 300 words.",
+      "application": "Use a sub-300-word abstract; open the discussion with the meaning of the discrepancy; end with a bounded validation lesson. This is guidance, not a claimed target-journal requirement."
+    },
+    {
+      "source": "Evaluating generative models in high energy physics",
+      "url": "https://arxiv.org/html/2211.10295",
+      "reading": "Abstract; sections IV-VI",
+      "finding": "Different metrics have different sensitivities; an interpretable observable and a multivariate score provide complementary evidence.",
+      "application": "Connect the observed differences to complementary validation observables; do not turn agreement in a mean or a failed-control classifier score into fidelity."
+    },
+    {
+      "source": "ePIC SiPM-on-tile ZDC design",
+      "url": "https://arxiv.org/html/2406.12877v2",
+      "reading": "Abstract; design; performance; summary",
+      "finding": "The detector study evaluates reconstructed neutron energy and angle using hit energies and positions. It explicitly separates demonstrated performance from prospective timing work.",
+      "application": "Name neutron energy and angle as the downstream questions, while stating that the present graph counts do not measure either and the production geometry is not verified equivalent."
+    },
+    {
+      "source": "CaloDREAM",
+      "url": "https://arxiv.org/html/2405.09629v3",
+      "reading": "Abstract; classifier discussion; section 5 Outlook",
+      "finding": "Low-energy deposits, sparsity and thresholds can affect comparisons. Generalization to irregular geometry, hadrons and varying angles requires further study.",
+      "application": "Keep the zero-threshold definition adjacent to the findings; preserve unmeasured threshold/graph sensitivity and numerical-solver limits."
+    },
+    {
+      "source": "ALICE normalizing-flow/co-activation study",
+      "url": "https://arxiv.org/html/2608.12795",
+      "reading": "Abstract; conditional/co-activation results; bootstrap discussion",
+      "finding": "The study uses conditional response and co-activation observables with explicit resampling units and uncertainty limitations.",
+      "application": "State the reused validation bank, separate nonempty samples and absence of paired structural intervals; distinguish descriptive differences from a significance or causal claim."
+    }
+  ],
+  "abstract_whitespace_word_count": 232,
+  "sections": {
+    "title": "Names generated neutron showers and the pilot ZDC scope; synchronized with PDF metadata, CITATION.cff and README.",
+    "abstract": "States target, method, conditions, key numerical differences and their limitations; defines graph groups and the classifier metric without claiming reconstruction performance.",
+    "discussion": "Leads with the observation; separates the algebraic bound, mechanistic hypotheses, distinguishing tests, robustness limitations, detector relevance and timing.",
+    "conclusion": "States the bounded validation lesson and necessary follow-up; retains one-seed reused-bank status and unmeasured reconstruction effects."
+  },
+  "preserved": [
+    "All 14 displayed equations unchanged in this HEP framing revision",
+    "Bibliography unchanged in this revision",
+    "Numerical evidence, figures, tables, thresholds, model and data unchanged",
+    "All QA guards unchanged"
+  ],
+  "QA_history": [
+    "QA11 passed all 22 groups before final wording/layout refinement.",
+    "QA12 and QA13 failed the existing 14-page maximum. Both failed QA records and command outputs retained. A fitz import failed during optional quarantine inspection; installed pdfinfo used instead.",
+    "Original QA12 PDF was overwritten before retention. QA12 source-hash evidence remains. The reconstructed source under quarantined_qa12 does not match its hash and is not exact provenance. Its copied PDF is QA13; README and event log explicitly correct that identity.",
+    "QA13 failed PDF/source retained under quarantined_qa13. Concise wording and natural page flow corrected the overflow without changing fonts, figure sizes, numerical evidence or guards.",
+    "QA14 passed all 22 groups; all 14 final pages directly inspected."
+  ],
+  "scientific_boundary": "Document QA and literature-informed editing do not establish physics validation or independent HEP peer review. Structural intervals, repeated training seeds, threshold/graph studies, comparable generation timing and reconstructed neutron performance remain unmeasured as disclosed."
+}

@@ -125,3 +125,17 @@ Current AI acknowledgment updated at the author's request to OpenAI's GPT-5.6-So
 Current use-of-generative-AI wording was updated at the author's request to state Julian Juan's lead role and main work; see `audit/author_lead_20261002.json`.
 
 The author requested a concise AI-use disclosure and responsibility for all paper content; current wording is recorded in `audit/ai_usage_only_20261002.json`.
+
+The current source pointer was refreshed after the full 2 October final review; prior pointer preserved in `audit/final_review_20261002/before/`. See that review's events twin for the preserved failed QA09 and correction. All equations/tables and author-requested AI disclosure are preserved.
+
+Current source pointer updated after HEP framing research and review. Prior source/audit preserved in `audit/hep_framing_research_20261002/before/`; see the research and events twins in that directory. Final full QA and visual review follow separately.
+
+Second HEP framing QC pass: made unavailable structural intervals explicit, clarified the proposed channel-placement control, matched the detector/timing heading to its paragraph order, and kept the conclusion together. Current source SHA-256: da8ffe988ef29e75d6b262ecf5ad070c163103923be2f9dd9c1e4449e411a374.
+
+QC correction: reverted conclusion keep-together spacing after QA12 exceeded the unchanged 14-page limit; natural page flow restored. Failed PDF and source retained in audit/hep_framing_research_20261002/quarantined_qa12. Current source SHA-256: fb5594d0d1e98678b60d6a1eaec8f23af4741da2a2c8eab2de87c49d6216521b.
+
+QA13 retained a 15-page overflow after the page-flow correction. Abstract and proposed-control wording shortened without changing meaning; source SHA-256: 5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761. No guard, font or figure-size changes. See the session evidence for corrected quarantine identities.
+
+The 2 October mentor pre-submission wording corrections update the current main source pointer to 27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608. See `audit/mentor_surgical_20261002/events.json`.
+
+After QA15 page-count failure, the Sec. 6.2 caveat was shortened without removing its generator-seed, classifier-control or same-bank pair-grouped-rerun meaning. Current main source SHA-256: 4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499.

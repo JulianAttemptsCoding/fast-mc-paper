@@ -1,0 +1,17 @@
+
+STDERR
+Traceback (most recent call last):
+  File "C:\Users\Julia\Desktop\coding\ASIoP\fast-mc-paper\audit\mentor_surgical_20261002\revise.py", line 60, in <module>
+    replace('scripts/full_manuscript_qa.py', [
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('"high-level score exceeds the recorded development-screening criterion of 0.65"',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+         '    active_reports'),
+         ^^^^^^^^^^^^^^^^^^^^^^
+    ])
+    ^^
+  File "C:\Users\Julia\Desktop\coding\ASIoP\fast-mc-paper\audit\mentor_surgical_20261002\revise.py", line 30, in replace
+    assert contents.count(old_bytes) == 1, (path, old, contents.count(old_bytes))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('scripts/full_manuscript_qa.py', 'def validate_figures(checks: list[str]) -> None:\n    active_reports', 0)

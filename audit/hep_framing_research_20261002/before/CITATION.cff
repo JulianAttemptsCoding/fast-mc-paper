@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this manuscript artifact, please cite it using the metadata below."
+title: "Longitudinal Gaps and Spatial Hit Connectivity in a Pilot Generative Model of Zero-Degree Calorimeter Showers"
+type: article
+authors:
+  - family-names: Juan
+    given-names: Julian
+    email: "juliansjuan08@gmail.com"
+version: 0.22.1
+date-released: 2026-10-02
+repository-code: "https://github.com/JulianAttemptsCoding/fast-mc-paper"

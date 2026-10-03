@@ -49,3 +49,15 @@ Version 0.22.1 restores definitions that earlier condensing had removed (Wassers
 ## Final consistency review
 
 The mentor consistency pass of 2 October 2026 clarifies provisional visibility versus final zero deposits, stored-ID channel semantics, graph-message inputs, calibration-proposal provenance, relative standard errors, the fully specified three-layer example, component-energy limits, the timing denominator and the comparison of transverse observables. All 14 numbered equations, all four numerical table bodies, data and figure definitions are unchanged. See `audit/mentor_consistency_20261002.{json,md}` for the complete review and verification record. This is an editorial finalization of v0.22.1.
+
+## Comprehensive final review, 2 October 2026
+
+The complete title-to-references review defines SiPM, MIP and LYSO, makes paired-shower independence explicitly conditional, clarifies graph messages, preserves the author-requested AI disclosure, and synchronizes three bibliography entries with primary publication records. All 14 numbered equations, four numerical tables, figure definitions and scientific results are preserved. See `audit/final_review_20261002/events.{json,md}` for commands, source hashes, failures and the final full-suite/every-page review. The exact current release remains bound by `audit/final_build_audit.json`.
+
+## HEP framing research and review, 2 October 2026
+
+The title now names generated neutron showers. The abstract states the target, model comparison, principal quantitative finding and evidentiary limits without an unexplained classifier acronym. The discussion distinguishes the observed discrepancy, possible causes, required tests and relevance to neutron reconstruction; the conclusion states the validation lesson and its one-seed scope. APS/IOP guidance and four relevant primary research papers inform the revision. All 14 numbered equations, four numerical tables, figures and evidence remain unchanged. Research, decisions and full QA are recorded in `audit/hep_framing_research_20261002/`. This is an editorial revision of v0.22.1, not new physics validation.
+
+## Mentor pre-submission corrections, 2 October 2026
+
+The classifier control uses incident kinetic energy alone. Figure 4(c1), test-partition scope, proposed independent generator-training seeds, and screening-criterion wording are synchronized across the paper. Numerical evidence, equations, tables, figure scales and scientific claims are unchanged. The first 15-page build failed the existing pagination guard; the correction passed a 14-page full QA. The final hash-bound build and direct all-page visual review are recorded in `audit/mentor_surgical_20261002/`.

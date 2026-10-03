@@ -656,3 +656,2354 @@ Evidence: `audit/ai_usage_only_20261002.{json,md}`.
 {"commands": ["python scripts/write_build_audit.py", "git diff --check"], "result": "Exact source/PDF/figure and current 14-page visual binding PASS; whitespace check PASS.", "pdf_sha256": "313acc648f93e96d8d36245dba1c98fed43a9a487260c101c115f40449c6e6e9", "next": "Commit and push corrected disclosure."}
 
 Evidence: `audit/ai_usage_only_20261002.{json,md}`.
+
+## Comprehensive final review started
+
+2026-10-02T22:17:04.296642+00:00
+
+```json
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "scope": "Entire 14-page manuscript, 14 equations, four figures, four tables, appendices and 25 references; editorial and aggregate-evidence review only.",
+  "inputs": {
+    "main.tex": "2ca2f1d66670d0dfa136463b4eadee947047814d025f85953f656b98f68f3a5b",
+    "references.bib": "477fd4f4fc91766da1915d82f635f6db50b1f1c1444724376d2adf57f917a1bf",
+    "output\\fast_mc_zdc_manuscript.pdf": "313acc648f93e96d8d36245dba1c98fed43a9a487260c101c115f40449c6e6e9",
+    "audit\\final_build_audit.json": "a72872ce91a13cb31b70ad3d951740d3d7c14fc7c2d142eca721658267fe5df0"
+  },
+  "initial_reads": [
+    "Implementation guide (including separately recovered architecture lines)",
+    "Focused operating rules",
+    "Graft setup",
+    "PDF skill",
+    "README.md",
+    "STATUS.md",
+    "build.ps1",
+    "main.tex lines 1-247",
+    "references.bib",
+    "current release/QA/AI disclosure records"
+  ],
+  "commands_before_logger": [
+    "Get-Content and Get-ChildItem read-only discovery",
+    "git status --short (clean)",
+    "graft check (current)",
+    "graft ask manuscript finalization evidence bibliography build PDF scientific claims --source"
+  ],
+  "navigation": "Graft graph covers the simulation repository; paper source is a separate unindexed repository. Relevant paper files inspected directly.",
+  "failures": [
+    "Two tool responses truncated; manuscript content being reread in bounded chunks."
+  ],
+  "boundary": "No remote dataset access, training, event evaluation, configuration changes, or checkpoint selection."
+}
+```
+
+## Command started
+
+2026-10-02T22:19:03.850837+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/check_references.py"
+  ]
+}
+```
+
+## Primary reference metadata retrieved
+
+2026-10-02T22:19:06.619827+00:00
+
+```json
+{
+  "artifact": "audit\\final_review_20261002\\reference_metadata.json",
+  "sha256": "9e2fda32951707fec5ecdb7eddfe306dbf4a073a82fe3de10a918d73799203d2",
+  "entries": 26,
+  "failures": [
+    {
+      "key": "fasterzdc",
+      "url": "https://api.crossref.org/works/10.1016/j.cpc.2025.109936",
+      "status": "failed",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "key": "calograph",
+      "url": "https://api.crossref.org/works/10.1103/PhysRevD.110.072003",
+      "status": "failed",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "key": "epiczdc",
+      "url": "https://api.crossref.org/works/10.1016/j.nima.2025.170613",
+      "status": "failed",
+      "error": "HTTP Error 429: Too Many Requests"
+    }
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:19:06.706874+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/check_references.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_003.txt",
+  "sha256": "a883d73f16de7dd17281403149181abf9addfe3953212b9f8dc9fee757a031c3"
+}
+```
+
+## Full source and reference review
+
+2026-10-02T22:20:22.653563+00:00
+
+```json
+{
+  "source_read": "main.tex lines 1 through end; references.bib complete",
+  "findings": [
+    "All 14 equations reviewed for masks, units, conditioning, numerical floors, solver order and closure scope.",
+    "Four tables and figure captions checked for denominators, units, rounding and role.",
+    "Reference retrieval: 23 of 26 BibTeX entries retrieved; three Crossref rate limits logged; primary-source fallbacks in progress.",
+    "Rectified Flow has an ICLR 2023 publication; update preprint-only entry.",
+    "iCaloFlow published author order differs from arXiv; verify publisher PDF before editing."
+  ],
+  "failed_attempts": [
+    "Metadata print failed with Windows cp1252 UnicodeEncodeError; corrected by ASCII-escaped JSON.",
+    "Some DOI web opens returned internal errors; no scientific artifact affected."
+  ],
+  "initial_visual": [
+    "Pages 1-4 inspected at 110 dpi; figures 1 and 2, equations 1-8 legible without clipping."
+  ]
+}
+```
+
+## Command started
+
+2026-10-02T22:22:08.649725+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/revise.py"
+  ]
+}
+```
+
+## Editorial and bibliography corrections applied
+
+2026-10-02T22:22:08.912815+00:00
+
+```json
+{
+  "changes": {
+    "main.tex": [
+      [
+        "A proposed ePIC SiPM-on-tile design",
+        "A proposed ePIC silicon-photomultiplier (SiPM)-on-tile design"
+      ],
+      [
+        "no MIP-scale threshold or additional time cut is applied",
+        "no minimum-ionizing-particle (MIP) threshold or additional time cut is applied"
+      ],
+      [
+        "layer 0 as nominally LYSO",
+        "layer 0 as nominally lutetium--yttrium oxyorthosilicate (LYSO)"
+      ],
+      [
+        "its stochastic shower histories are independent.",
+        "its stochastic shower histories are independent at that fixed condition."
+      ],
+      [
+        "they are statistical comparisons, not particle or energy transport.",
+        "they are learned feature transformations, not particle or energy transport."
+      ],
+      [
+        "literature searches, and editing. The author takes responsibility",
+        "literature searches, and editing. GPT-6 assisted with the final manuscript review. The author takes responsibility"
+      ]
+    ],
+    "references.bib": [
+      [
+        "author={Buckley, Matthew R. and Krause, Claudius and Pang, Ian and Shih, David}",
+        "author={Buckley, Matthew R. and Pang, Ian and Shih, David and Krause, Claudius}"
+      ],
+      [
+        "@misc{rectifiedflow,",
+        "@inproceedings{rectifiedflow,"
+      ],
+      [
+        "year={2022}, eprint={2209.03003}, archivePrefix={arXiv}",
+        "booktitle={International Conference on Learning Representations},\n year={2023}, eprint={2209.03003}, archivePrefix={arXiv}"
+      ],
+      [
+        "title={{CaloPointFlow II}: Generating Calorimeter Showers as Point Clouds}",
+        "title={{CaloPointFlow II} Generating Calorimeter Showers as Point Clouds}"
+      ]
+    ]
+  },
+  "equations_preserved": 14,
+  "tables_preserved": 4,
+  "hashes": {
+    "main.tex": "a1bc8070f7a85da267a68482c7cab37029562657f4a83f63073ef323042ecc99",
+    "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
+    "README.md": "56f9750f65bf0a5c76ec171fd0f3db0b1413abf4a4ced6cb271afc28dc7d5380",
+    "STATUS.md": "c2b7f54c8f07e826be73f58419bbed88ad59918c18f76cad1c0a88a011e82ad2"
+  },
+  "reference_sources": [
+    "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.033006",
+    "https://iclr.cc/virtual/2023/papers.html",
+    "https://github.com/gnobitab/RectifiedFlow",
+    "https://arxiv.org/abs/2403.15782"
+  ],
+  "status": "Awaiting complete build, aggregate checks and visual verification."
+}
+```
+
+## Command completed
+
+2026-10-02T22:22:08.949887+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/revise.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_007.txt",
+  "sha256": "1643f6abc16fad2d66c6268cab1c723e3fcd3a05afd75615b8fb99e26fd58011"
+}
+```
+
+## Command started
+
+2026-10-02T22:22:26.482219+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "9",
+    "--focus",
+    "Comprehensive title-to-references finalization",
+    "--disposition",
+    "Full source reading; detector definitions, conditional independence, message wording and primary bibliography metadata corrected; scientific numbers preserved"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:22:51.075571+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "9",
+    "--focus",
+    "Comprehensive title-to-references finalization",
+    "--disposition",
+    "Full source reading; detector definitions, conditional independence, message wording and primary bibliography metadata corrected; scientific numbers preserved"
+  ],
+  "exit_code": 1,
+  "output": "audit\\final_review_20261002\\command_009.txt",
+  "sha256": "78f78ddfdd2ab497bfa7a0c5a748a6f3196322466e5dc25752d091485d8983d0"
+}
+```
+
+## Command started
+
+2026-10-02T22:24:22.008708+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/sync_review.py"
+  ]
+}
+```
+
+## Stale review binding diagnosed and corrected
+
+2026-10-02T22:24:22.212107+00:00
+
+```json
+{
+  "failed_qa": "audit/qa_series/mentor_send_20261002/iteration_09.json",
+  "failure": "Current-source review pointer remained at prior source hash; build and preceding scientific checks completed but full suite correctly rejected stale evidence.",
+  "correction": "Updated current review pointer after completing source review; preserved historical pointer and failed attempt. No guard changed.",
+  "disclosure": "Reverted unsolicited GPT-6 sentence to preserve documented author-requested GPT-5.6-Sol-only attribution. This session assistance is recorded here.",
+  "reference_fallbacks": {
+    "calograph": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.110.072003",
+    "epiczdc": "https://www.sciencedirect.com/science/article/pii/S0168900225004140",
+    "fasterzdc": "https://www.sciencedirect.com/science/article/abs/pii/S0010465525004370"
+  },
+  "reference_outcome": "All 26 stored entries checked against primary bibliographic records (25 cited). Three initial Crossref 429s and invalid-query retry 400s preserved; publisher records resolve metadata.",
+  "prior_candidate_status": "Not released: stale evidence binding; superseded by corrected build.",
+  "source_sha256": "488f7627eec24660a218f5e55c1e843fcff5a1fe7d0d131d779958d9923ab201"
+}
+```
+
+## Command completed
+
+2026-10-02T22:24:22.250730+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/sync_review.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_012.txt",
+  "sha256": "1643f6abc16fad2d66c6268cab1c723e3fcd3a05afd75615b8fb99e26fd58011"
+}
+```
+
+## Command started
+
+2026-10-02T22:24:22.955695+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "10",
+    "--focus",
+    "Final complete review after source-binding correction",
+    "--disposition",
+    "All sections and references reviewed; stale current-source audit pointer repaired; exact author disclosure preserved; no guard changes"
+  ]
+}
+```
+
+## Command started
+
+2026-10-02T22:24:50.981224+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "diff",
+    "--",
+    "main.tex",
+    "references.bib"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:24:51.115320+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "diff",
+    "--",
+    "main.tex",
+    "references.bib"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_015.txt",
+  "sha256": "13960c0a27f7186c43ccf6cf0438680063be3d2beef66dea5bbeebe9fe2faca0"
+}
+```
+
+## Command completed
+
+2026-10-02T22:24:59.682375+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "10",
+    "--focus",
+    "Final complete review after source-binding correction",
+    "--disposition",
+    "All sections and references reviewed; stale current-source audit pointer repaired; exact author disclosure preserved; no guard changes"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_016.txt",
+  "sha256": "b7c83db3a3f829e3822d7ab446361b6a1d7c23b563d011eb9bf2b8fb73244749"
+}
+```
+
+## Command started
+
+2026-10-02T22:28:00.925252+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/finalize.py"
+  ]
+}
+```
+
+## Complete final PDF visual review passed
+
+2026-10-02T22:28:01.121600+00:00
+
+```json
+{
+  "created_utc": "2026-10-02T22:28:01.105621+00:00",
+  "result": "pass",
+  "pdf_sha256": "c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422",
+  "page_sha256": {
+    "1": "923b0daa0c4d0b260117e931801cf08c1c4f7e10796ce728e18c7179726c6bae",
+    "2": "0af7c22fb1ea77046dbec194049ba6d941cffb62be43ea18eb40e77266261dea",
+    "3": "03c795a6a905fdfdc1e96b095094b74699530baeb7e3216183bb4f5ab55deec8",
+    "4": "465cb81f63d40424577bb3ea4ad6d623f20cd8c0dd49a2eee3de7de4aed229b0",
+    "5": "683f35c036b10430e0720cbf170a32f72617e6cc9ac4390bc0c1e672d5aaf421",
+    "6": "8bad3dd24849c29045e64f668f2ae671965bd84507bdde500f70145f7b71f15b",
+    "7": "94eebdba0fcee5d6052eb4a48023ffc6c46f52ccf3e4542a1444da0c67f6e808",
+    "8": "9f3da3fa5d180fc0212208be516a048e45f4881ba5af1bde16728bdb90e4215e",
+    "9": "0be7d9309241e8a91c9e6a55961bfad32226902b5cde7f7f16d60671b47d32c9",
+    "10": "9aa68ad6246b34e4b4a8ee67e856630d6dc5bd6edba52f8bf16e15038308c457",
+    "11": "2708691c7cf7c57d3023ab9b18d1a60991a407e776671f94e816cad87ac2959e",
+    "12": "332fbb983b4df346afe06b4a182f16afc89c1c274ecc13c9a8dcfb3772479f7e",
+    "13": "5b98a5ac27a95ba5393a0698a8368d39cb4398bb3b30e78105d3b77ab7b5b028",
+    "14": "379cab66e7b65661a59407ef411db81899f097dd52c5dcbdfa488b64f3ce4b74"
+  },
+  "method": "Direct visual inspection of all fourteen current 110-dpi page PNGs, individually displayed in four batches. All prose, numbered equations, table bodies/captions and figure panels reviewed.",
+  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_10.json",
+  "page_findings": {
+    "1": "Title, author/contact, date, abstract, introduction and condition equation: legible, pilot scope explicit, no clipping.",
+    "2": "Target, detector definitions, channel semantics, geometry dimensions, Figure 1 axes/legend and graph counts checked.",
+    "3": "Population continuation, conditional independence, model overview and Figure 2 generation/conditioning labels checked.",
+    "4": "Response mixture, caps, layer activity, log-share target and masked flow objective checked; equation numbers 2-6 clear.",
+    "5": "Solver, layer budgets, counts, messages, Gumbel selection and share target checked; equations 7-11 within margins.",
+    "6": "Decoder identities, losses, calibration provenance, stage order and selection protocol checked; equations 12-13 legible.",
+    "7": "Gap identity, segment/component bounds, denominators, bootstrap scope, W1 definition and classifier caveats checked.",
+    "8": "Table 1 numbers/units/rounding, response text and Figure 3 scales/ratios/legend/caption checked.",
+    "9": "Response uncertainty, empty counts, longitudinal observations and all Figure 4 illustrative/data panels checked.",
+    "10": "Component bounds, transverse summaries, edge co-occupancy, failed classifier screen, closure tolerances and discussion checked.",
+    "11": "Activity/support hypotheses, robustness limits, threshold timing scope, cost accounting, conclusion and availability checked.",
+    "12": "Acknowledgment, exact author-requested AI disclosure, source/checkpoint identities, Table 2 and test-history accounting checked.",
+    "13": "Appendix B, Tables 3-4, all classifier seeds and split caveats checked; references 1-5 legible.",
+    "14": "References 6-25 checked for titles, names, dates, venues, identifiers and line wrapping; corrected references 18,20,25 present."
+  },
+  "findings": "No clipping, overlap, missing glyphs, broken labels/citations, unreadable figure text or detached captions observed. Natural paragraph continuations and page breaks accepted."
+}
+```
+
+## Current source archive synchronized
+
+2026-10-02T22:28:01.215673+00:00
+
+```json
+{
+  "created_utc": "2026-10-02T22:28:01.105621+00:00",
+  "revision": "0.22.1",
+  "sha256": "6f07e725623d747ea24a360db958cb6d282c993f209db2cc7d5f813dcb4f8925",
+  "members_sha256": {
+    "main.tex": "488f7627eec24660a218f5e55c1e843fcff5a1fe7d0d131d779958d9923ab201",
+    "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
+    "main.bbl": "7e3c535fa8aac713f3e59967ccf339796f1934706a08e332c6e4834367503091",
+    "figures/detector_geometry.png": "220ce16b98bd6f53974d458f45e149263d1e105f3916215ec1998d6cd51f652c",
+    "figures/generator_schematic.png": "7286a3b17792d6b90790da56560ca74a712b3b215bb55ab53accc644d33d669f",
+    "figures/longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
+    "figures/support_summary.png": "e996034c26145aa7533fa28f3ba0a4303491d79c12303c706db993081d57faea"
+  },
+  "pdf_sha256": "c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422",
+  "status": "Seven-file archive; CRC and exact current source bytes verified",
+  "arxiv_server_compile": "Not performed",
+  "current_qa": "audit/qa_series/mentor_send_20261002/iteration_10.json"
+}
+```
+
+## Command completed
+
+2026-10-02T22:28:01.268904+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/final_review_20261002/finalize.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_020.txt",
+  "sha256": "ad7de8d158fba427c211ed8cbf4a513863c57f21887e14c03f12320ac4f8c731"
+}
+```
+
+## Command started
+
+2026-10-02T22:28:01.975325+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/write_build_audit.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:28:02.872431+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/write_build_audit.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_022.txt",
+  "sha256": "8a7a3b41323128d52ade9221a2797d80a7baba2012a235f656c11263983def70"
+}
+```
+
+## Command started
+
+2026-10-02T22:28:19.825217+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "scripts/test_qa_guards.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:28:25.530273+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "scripts/test_qa_guards.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_024.txt",
+  "sha256": "3d6a144c45fc0553d3f784e8d429b1f1bcf235287d205c797cb5f26ec37370be"
+}
+```
+
+## Command started
+
+2026-10-02T22:28:25.758572+00:00
+
+```json
+{
+  "argv": [
+    "pdffonts",
+    "output/fast_mc_zdc_manuscript.pdf"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:28:26.783431+00:00
+
+```json
+{
+  "argv": [
+    "pdffonts",
+    "output/fast_mc_zdc_manuscript.pdf"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_026.txt",
+  "sha256": "3e2c1e4082671a3e521d6bbc32b547e5ba1ef098214ca6968c9cc8115d741bfa"
+}
+```
+
+## Command started
+
+2026-10-02T22:28:27.039614+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:28:27.317695+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_028.txt",
+  "sha256": "1643f6abc16fad2d66c6268cab1c723e3fcd3a05afd75615b8fb99e26fd58011"
+}
+```
+
+## Command started
+
+2026-10-02T22:28:27.538030+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "status",
+    "--short"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:28:27.682313+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "status",
+    "--short"
+  ],
+  "exit_code": 0,
+  "output": "audit\\final_review_20261002\\command_030.txt",
+  "sha256": "18db327d1920b49d94a7a3e2eb42952d46661ac5c9853eea3116748822d3fc82"
+}
+```
+
+## Final full release check complete
+
+2026-10-02T22:29:11.920657+00:00
+
+```json
+{
+  "result": "PASS",
+  "automated_check_groups": 22,
+  "guard_tests": "10 passed",
+  "visual_pages": 14,
+  "equations": 14,
+  "figures": 4,
+  "tables": 4,
+  "cited_references": 25,
+  "all_pdf_fonts_embedded": true,
+  "git_diff_check": "PASS",
+  "source_pdf_archive_bindings": "PASS after guard tests",
+  "source_pdf_archive_hashes": {
+    "main.tex": "488f7627eec24660a218f5e55c1e843fcff5a1fe7d0d131d779958d9923ab201",
+    "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
+    "pdf": "c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422",
+    "archive": "6f07e725623d747ea24a360db958cb6d282c993f209db2cc7d5f813dcb4f8925"
+  },
+  "status": "Editorially finalized local manuscript and synchronized source package; disclosed pilot research limits remain.",
+  "publication": "No upload or external publication performed.",
+  "minor_read_failure": "Get-Content for QA10 was issued before completion; subsequently read via finalized QA10 and verified."
+}
+```
+
+## HEP audience research and QC started
+
+2026-10-02T22:33:23.039344+00:00
+
+```json
+{
+  "scope": "Title, abstract, discussion and conclusion, with full-manuscript regression and visual QA.",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "input_hashes": {
+    "main.tex": "488f7627eec24660a218f5e55c1e843fcff5a1fe7d0d131d779958d9923ab201",
+    "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
+    "CITATION.cff": "308d68f0ec9adcb9b39e9a02f9cf840d4d4cb6064c68e6bdb4484ad47192e6e9",
+    "output/fast_mc_zdc_manuscript.pdf": "c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422",
+    "audit/final_build_audit.json": "b0e66a195ca7a1fa8fdf0f36a3fc57693d615ff852bd242ba2101627c90fa23c"
+  },
+  "commands_before_logger": [
+    "Read relevant implementation/operating rules already read completely earlier in this conversation",
+    "graft check: fresh; graft ask for paper framing: navigation only, no relevant scientific evidence",
+    "Read current title/abstract/discussion/conclusion, QA guards and claim register; git status preserves prior uncommitted work",
+    "Primary-source web research: APS and IOP guidance; ePIC ZDC, Kansal metrics, CaloDREAM and ALICE co-activation papers"
+  ],
+  "failure": "CaloChallenge HTML returned internal error; use its already verified abstract and other full-text primary sources.",
+  "scientific_boundary": "No new data, test inspection, training, thresholds, graph choices, checkpoint selection or model evaluation. Editorial clarity is not a claim of HEP peer review or detector validation."
+}
+```
+
+## Command started
+
+2026-10-02T22:38:50.871750+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/hep_framing_research_20261002/revise.py"
+  ]
+}
+```
+
+## Primary research completed
+
+2026-10-02T22:38:51.148892+00:00
+
+```json
+{
+  "sources": [
+    {
+      "source": "APS Style Basics",
+      "url": "https://journals.aps.org/authors/style-basics",
+      "reading": "Titles and Abstracts",
+      "finding": "Titles should identify the subject without promotional wording. Abstracts must stand alone and avoid unexplained abbreviations.",
+      "application": "Name neutron showers in the title; state the target and comparison immediately; spell out the classifier metric."
+    },
+    {
+      "source": "IOP Article Structure",
+      "url": "https://publishingsupport.iopscience.iop.org/questions/structure-and-format-of-your-journal-article/",
+      "reading": "Abstract, Discussion, Conclusion",
+      "finding": "Summarize method, principal results and implications; the discussion interprets results in context and the conclusion identifies the contribution and follow-up. General guidance suggests an abstract no longer than 300 words.",
+      "application": "Use a sub-300-word abstract; open the discussion with the meaning of the discrepancy; end with a bounded validation lesson. This is guidance, not a claimed target-journal requirement."
+    },
+    {
+      "source": "Evaluating generative models in high energy physics",
+      "url": "https://arxiv.org/html/2211.10295",
+      "reading": "Abstract; sections IV-VI",
+      "finding": "Different metrics have different sensitivities; an interpretable observable and a multivariate score provide complementary evidence.",
+      "application": "Connect the observed differences to complementary validation observables; do not turn agreement in a mean or a failed-control classifier score into fidelity."
+    },
+    {
+      "source": "ePIC SiPM-on-tile ZDC design",
+      "url": "https://arxiv.org/html/2406.12877v2",
+      "reading": "Abstract; design; performance; summary",
+      "finding": "The detector study evaluates reconstructed neutron energy and angle using hit energies and positions. It explicitly separates demonstrated performance from prospective timing work.",
+      "application": "Name neutron energy and angle as the downstream questions, while stating that the present graph counts do not measure either and the production geometry is not verified equivalent."
+    },
+    {
+      "source": "CaloDREAM",
+      "url": "https://arxiv.org/html/2405.09629v3",
+      "reading": "Abstract; classifier discussion; section 5 Outlook",
+      "finding": "Low-energy deposits, sparsity and thresholds can affect comparisons. Generalization to irregular geometry, hadrons and varying angles requires further study.",
+      "application": "Keep the zero-threshold definition adjacent to the findings; preserve unmeasured threshold/graph sensitivity and numerical-solver limits."
+    },
+    {
+      "source": "ALICE normalizing-flow/co-activation study",
+      "url": "https://arxiv.org/html/2608.12795",
+      "reading": "Abstract; conditional/co-activation results; bootstrap discussion",
+      "finding": "The study uses conditional response and co-activation observables with explicit resampling units and uncertainty limitations.",
+      "application": "State the reused validation bank, separate nonempty samples and absence of paired structural intervals; distinguish descriptive differences from a significance or causal claim."
+    }
+  ],
+  "assessment": "Literature supports the editorial criteria, not this checkpoint's numerical results. All numbers remain bound to local aggregate evidence.",
+  "limitations": "No external HEP reader was polled. Clarity assessment is research-informed editorial QC, not independent peer review."
+}
+```
+
+## Research-informed framing revision applied
+
+2026-10-02T22:38:51.240634+00:00
+
+```json
+{
+  "title": "Longitudinal Gaps and Spatial Hit Connectivity in Generated Neutron Showers: A Pilot Zero-Degree Calorimeter Study",
+  "abstract_whitespace_words": 236,
+  "changes": [
+    "Title identifies generated neutron showers and pilot ZDC scope.",
+    "Abstract starts with physics object and comparison, defines connected groups, spells out classifier metric and retains the failed control and exact pilot limitations.",
+    "Discussion begins with the meaning of the result, explains both hypotheses in detector-facing language, preserves counterexample and proposed controls, and names neutron reconstruction as untested.",
+    "Conclusion separates supported observation, validation lesson and remaining research."
+  ],
+  "preserved": [
+    "14 numbered equations",
+    "Four table bodies",
+    "All four figure definitions",
+    "All data and numerical reports",
+    "Author-requested disclosure",
+    "All guards and thresholds"
+  ],
+  "current_main_tex_sha256": "f896bbc31561682fc8c49f33ec4af1d03bf13ac9c31f046420762336632ce2fa",
+  "status": "Awaiting full build and rendered review."
+}
+```
+
+## Command completed
+
+2026-10-02T22:38:51.287733+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/hep_framing_research_20261002/revise.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_004.txt",
+  "output_sha256": "b221722e865fde438e072da113ffd3dcf782239375d3fee47b70d5e06d938e8a"
+}
+```
+
+## Command started
+
+2026-10-02T22:39:30.518587+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "11",
+    "--focus",
+    "Research-informed HEP framing",
+    "--disposition",
+    "Title, self-contained abstract, interpretive discussion and bounded conclusion revised using primary guidance and research; no data or guard changes"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-02T22:40:06.113402+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "11",
+    "--focus",
+    "Research-informed HEP framing",
+    "--disposition",
+    "Title, self-contained abstract, interpretive discussion and bounded conclusion revised using primary guidance and research; no data or guard changes"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_006.txt",
+  "output_sha256": "79c5839c8d4f71348842aed81bcb1397da1557f8e9a4175992eae3db0fe1d3b3"
+}
+```
+
+## Second editorial QC refinement
+
+2026-10-02T22:45:29.233838+00:00
+
+```json
+{
+  "previous_source_sha256": "f896bbc31561682fc8c49f33ec4af1d03bf13ac9c31f046420762336632ce2fa",
+  "current_source_sha256": "da8ffe988ef29e75d6b262ecf5ad070c163103923be2f9dd9c1e4449e411a374",
+  "first_full_QA": "iteration_11: all 22 groups pass; pages 1,10,11,12 inspected before refinement",
+  "corrections": [
+    "Abstract distinguishes unavailable uncertainty intervals from unmeasured sensitivity",
+    "Proposed randomized placement control states conditions, frequencies and counts; retains hypothesis status",
+    "Detector applications precede timing in heading and text",
+    "Reserve 16 baselines before conclusion to keep its two paragraphs together"
+  ],
+  "scientific_changes": "None: no numerical evidence, equations, figures, tables, tests or thresholds changed"
+}
+```
+
+## Command started
+
+2026-10-03T03:00:56.876173+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "12",
+    "--focus",
+    "Final HEP wording and layout QC",
+    "--disposition",
+    "Explicit unavailable structural intervals, clearer proposed placement control, and complete conclusion layout; all scientific evidence and guards preserved"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:01:36.499476+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "12",
+    "--focus",
+    "Final HEP wording and layout QC",
+    "--disposition",
+    "Explicit unavailable structural intervals, clearer proposed placement control, and complete conclusion layout; all scientific evidence and guards preserved"
+  ],
+  "exit_code": 1,
+  "output": "audit\\hep_framing_research_20261002\\command_009.txt",
+  "output_sha256": "9a0d8657e3288cd3cfdf35ffb56e581ab2c834cdd9eff3b4a91414c2a83a59c8"
+}
+```
+
+## Page-flow correction applied
+
+2026-10-03T03:02:33.695607+00:00
+
+```json
+{
+  "source_sha256": "fb5594d0d1e98678b60d6a1eaec8f23af4741da2a2c8eab2de87c49d6216521b",
+  "correction": "Natural conclusion page flow restored; final uncertainty and proposed-control wording retained; guards unchanged"
+}
+```
+
+## Command started
+
+2026-10-03T03:02:34.308129+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "13",
+    "--focus",
+    "Final HEP framing and corrected page flow",
+    "--disposition",
+    "Preserve clarified uncertainty and proposed control; restore natural conclusion flow after quarantined QA12 page-limit failure; all guards unchanged"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:02:52.456263+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "13",
+    "--focus",
+    "Final HEP framing and corrected page flow",
+    "--disposition",
+    "Preserve clarified uncertainty and proposed control; restore natural conclusion flow after quarantined QA12 page-limit failure; all guards unchanged"
+  ],
+  "exit_code": 1,
+  "output": "audit\\hep_framing_research_20261002\\command_012.txt",
+  "output_sha256": "9a0d8657e3288cd3cfdf35ffb56e581ab2c834cdd9eff3b4a91414c2a83a59c8"
+}
+```
+
+## Quarantine utility correction
+
+2026-10-03T03:03:11.106015+00:00
+
+```json
+{
+  "failed_attempt": "Optional fitz import unavailable; first quarantine command stopped before copying or recording. Used installed pdfinfo instead.",
+  "reconstructed_failed_source_sha256": "756b1546329cbb6744d0cfb8e2eceda24a3feb845692c369fc11eae7e3ece96c",
+  "failed_source_expected": "da8ffe988ef29e75d6b262ecf5ad070c163103923be2f9dd9c1e4449e411a374",
+  "failed_pdf_retained": true,
+  "observed_pages": [
+    "Pages:           15"
+  ],
+  "quarantine": "audit\\hep_framing_research_20261002\\quarantined_qa12",
+  "existing_QA12_failure_record": "audit/qa_series/mentor_send_20261002/iteration_12.json",
+  "guard": "14-page maximum unchanged"
+}
+```
+
+## QA13 page-limit failure diagnosed and quarantined
+
+2026-10-03T03:03:43.292031+00:00
+
+```json
+{
+  "pdf_sha256": "6868d809ddcc076696c03075b50fda22756c01db673b76aa4ec83f193cc1427a",
+  "source_sha256": "fb5594d0d1e98678b60d6a1eaec8f23af4741da2a2c8eab2de87c49d6216521b",
+  "quarantine": "audit\\hep_framing_research_20261002\\quarantined_qa13",
+  "correction_to_earlier_record": "The 15-page PDF copied under quarantined_qa12 was actually the completed QA13 build; its PDF identity is QA13. Original QA12 PDF was overwritten before it could be retained; QA12 command/source-hash evidence remains. The initial Needspace-only diagnosis was incomplete.",
+  "next_step": "Inspect page text and tighten wording without losing meaning; no layout or guard relaxation."
+}
+```
+
+## Concise wording correction after QA13
+
+2026-10-03T03:04:31.746732+00:00
+
+```json
+{
+  "source_sha256": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+  "corrections": [
+    "Structural uncertainty is explicitly unquantified",
+    "Randomized control retains matched conditions, layer counts and channel inclusion frequencies",
+    "No numerical, equation, figure, table, font or guard change"
+  ],
+  "QA12_retention_correction": "Original QA12 PDF no longer available; command and source-hash evidence retained. PDF under quarantined_qa12 is QA13 and must not be treated as QA12."
+}
+```
+
+## Command started
+
+2026-10-03T03:04:32.345896+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "14",
+    "--focus",
+    "Concise final HEP framing",
+    "--disposition",
+    "Shorten uncertainty and proposed-control wording while preserving meaning; unchanged numerical evidence and unchanged page-limit guard"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:05:01.258392+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "14",
+    "--focus",
+    "Concise final HEP framing",
+    "--disposition",
+    "Shorten uncertainty and proposed-control wording while preserving meaning; unchanged numerical evidence and unchanged page-limit guard"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_017.txt",
+  "output_sha256": "179f1b263678e2373b05f1473b71e2fbc103c11db0e023cb99278db414bb53bf"
+}
+```
+
+## Failed-build identities clarified
+
+2026-10-03T03:05:11.307256+00:00
+
+```json
+{
+  "QA12_source_exact_hash_match": false,
+  "QA12_source_sha256": "756b1546329cbb6744d0cfb8e2eceda24a3feb845692c369fc11eae7e3ece96c",
+  "QA12_original_pdf": "Not retained; overwritten before quarantine attempt",
+  "QA13_pdf_sha256": "6868d809ddcc076696c03075b50fda22756c01db673b76aa4ec83f193cc1427a",
+  "identity_note": "audit\\hep_framing_research_20261002\\quarantined_qa12\\README.md"
+}
+```
+
+## Command started
+
+2026-10-03T03:07:52.144317+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/hep_framing_research_20261002/finalize.py"
+  ]
+}
+```
+
+## Final every-page visual review passed
+
+2026-10-03T03:07:52.304282+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:07:52.291865+00:00",
+  "result": "pass",
+  "pdf_sha256": "c0bd5a739385cbd8a917de468cac8ecd3e18d7e0313d258496994bfe54010fa8",
+  "page_sha256": {
+    "1": "96d861b7c7be75e287db50b6fd6f6777fb8fd8b199773aefa951347487ac8519",
+    "2": "dbcad02a13209aea2bfbb020a4b81f3b50246ae9f6c6c34de29d0737ce277848",
+    "3": "f7f9d3d2be6ef60baf30896bd6acd1b8bbe89b9547bdec88e91969ba52f1690a",
+    "4": "92cc5170f070a2a81699750ff80d81565f071dcef9ce3d1f7b4e65b35bcd7492",
+    "5": "683f35c036b10430e0720cbf170a32f72617e6cc9ac4390bc0c1e672d5aaf421",
+    "6": "8bad3dd24849c29045e64f668f2ae671965bd84507bdde500f70145f7b71f15b",
+    "7": "94eebdba0fcee5d6052eb4a48023ffc6c46f52ccf3e4542a1444da0c67f6e808",
+    "8": "9f3da3fa5d180fc0212208be516a048e45f4881ba5af1bde16728bdb90e4215e",
+    "9": "0be7d9309241e8a91c9e6a55961bfad32226902b5cde7f7f16d60671b47d32c9",
+    "10": "166b84b2a4d78b31ac2ad76654ba2a4f809db9c4a54a348aa96d44746a927f76",
+    "11": "aaddf2d8b0689e5366a662c49f14f04423073e2febc5e63edd7d852fbacb5806",
+    "12": "48ab8303213a55e6d81613afb36407393b7387ed5ddc7200e5efc5eca36a7b94",
+    "13": "a8962017e105d05a69cb331da8f389b406ea91e26d0df14c15f00253a61d3004",
+    "14": "d2fcfcaaebc60630af63be5e99bbb46e75ce479b4e1fa7ba4af73b38062fc37e"
+  },
+  "method": "Direct visual inspection of all fourteen final 110-dpi rendered page PNGs, displayed individually in five batches.",
+  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_14.json",
+  "page_findings": {
+    "1": "Two-line neutron-shower title, author, self-contained abstract and complete introduction legible; caveats and metric definition present.",
+    "2": "Condition equation, raw-deposit target, detector definitions, Figure 1 axes/legend/caption and graph counts legible within margins.",
+    "3": "Split and population explanation, generator overview and Figure 2 arrows, symbols and training/generation distinction checked.",
+    "4": "Equations 2-6 and response, activity and flow-matching explanations legible; equation numbers and denominators intact.",
+    "5": "Equations 7-11, solver caveat, channel count and placement explanations checked; no clipping.",
+    "6": "Decoder equation 12, loss equation 13, training/selection account and evaluation introduction checked.",
+    "7": "Equation 14, contiguous-segment bound, separate denominators, uncertainty scope and classifier-control caveats checked.",
+    "8": "Table 1 numbers/units/rounding and Figure 3 axes, ratios, legends and caption checked; caption remains with figure.",
+    "9": "Response uncertainty, empty counts and longitudinal results checked; all illustrative and aggregate panels of Figure 4 clearly distinguished.",
+    "10": "Graph results, classifier and closure limitations and opening Discussion interpretation checked; hypotheses are explicitly distinguished from measured effects.",
+    "11": "Proposed activity and placement controls, robustness limits, detector relevance and timing checked; Conclusion heading has two following lines before natural continuation.",
+    "12": "Conclusion continuation, availability, acknowledgment, author-requested AI disclosure, Appendix A identities and Table 2 legible.",
+    "13": "Calibration/split provenance, Appendix B and Tables 3-4 checked; all classifier seeds and failed-control caveats retained.",
+    "14": "All 25 references legible on one page; names, titles, identifiers, hyperlinks and wrapping checked against the unchanged bibliography."
+  },
+  "findings": "No clipping, overlap, missing glyphs, detached captions or unreadable figure labels observed. Natural paragraph continuations, including Conclusion across pages 11-12, accepted. All equations, four figures, four tables and references inspected."
+}
+```
+
+## Final source package synchronized
+
+2026-10-03T03:07:52.375517+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:07:52.291865+00:00",
+  "revision": "0.22.1",
+  "sha256": "83cff1cc49730ccb29a26ef5c13506661604f12bd8e3b3149e1b5acac057fc83",
+  "members_sha256": {
+    "main.tex": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+    "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
+    "main.bbl": "7e3c535fa8aac713f3e59967ccf339796f1934706a08e332c6e4834367503091",
+    "figures/detector_geometry.png": "220ce16b98bd6f53974d458f45e149263d1e105f3916215ec1998d6cd51f652c",
+    "figures/generator_schematic.png": "7286a3b17792d6b90790da56560ca74a712b3b215bb55ab53accc644d33d669f",
+    "figures/longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
+    "figures/support_summary.png": "e996034c26145aa7533fa28f3ba0a4303491d79c12303c706db993081d57faea"
+  },
+  "pdf_sha256": "c0bd5a739385cbd8a917de468cac8ecd3e18d7e0313d258496994bfe54010fa8",
+  "status": "Seven-file archive; CRC and exact current source bytes verified",
+  "arxiv_server_compile": "Not performed",
+  "current_qa": "audit/qa_series/mentor_send_20261002/iteration_14.json"
+}
+```
+
+## HEP framing review complete
+
+2026-10-03T03:07:52.413403+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:07:52.291865+00:00",
+  "result": "pass",
+  "scope": "Research-informed title, abstract, discussion and conclusion, with whole-paper regression and visual review.",
+  "main_tex_sha256": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+  "pdf_sha256": "c0bd5a739385cbd8a917de468cac8ecd3e18d7e0313d258496994bfe54010fa8",
+  "source_package_sha256": "83cff1cc49730ccb29a26ef5c13506661604f12bd8e3b3149e1b5acac057fc83",
+  "research_sources": [
+    {
+      "source": "APS Style Basics",
+      "url": "https://journals.aps.org/authors/style-basics",
+      "reading": "Titles and Abstracts",
+      "finding": "Titles should identify the subject without promotional wording. Abstracts must stand alone and avoid unexplained abbreviations.",
+      "application": "Name neutron showers in the title; state the target and comparison immediately; spell out the classifier metric."
+    },
+    {
+      "source": "IOP Article Structure",
+      "url": "https://publishingsupport.iopscience.iop.org/questions/structure-and-format-of-your-journal-article/",
+      "reading": "Abstract, Discussion, Conclusion",
+      "finding": "Summarize method, principal results and implications; the discussion interprets results in context and the conclusion identifies the contribution and follow-up. General guidance suggests an abstract no longer than 300 words.",
+      "application": "Use a sub-300-word abstract; open the discussion with the meaning of the discrepancy; end with a bounded validation lesson. This is guidance, not a claimed target-journal requirement."
+    },
+    {
+      "source": "Evaluating generative models in high energy physics",
+      "url": "https://arxiv.org/html/2211.10295",
+      "reading": "Abstract; sections IV-VI",
+      "finding": "Different metrics have different sensitivities; an interpretable observable and a multivariate score provide complementary evidence.",
+      "application": "Connect the observed differences to complementary validation observables; do not turn agreement in a mean or a failed-control classifier score into fidelity."
+    },
+    {
+      "source": "ePIC SiPM-on-tile ZDC design",
+      "url": "https://arxiv.org/html/2406.12877v2",
+      "reading": "Abstract; design; performance; summary",
+      "finding": "The detector study evaluates reconstructed neutron energy and angle using hit energies and positions. It explicitly separates demonstrated performance from prospective timing work.",
+      "application": "Name neutron energy and angle as the downstream questions, while stating that the present graph counts do not measure either and the production geometry is not verified equivalent."
+    },
+    {
+      "source": "CaloDREAM",
+      "url": "https://arxiv.org/html/2405.09629v3",
+      "reading": "Abstract; classifier discussion; section 5 Outlook",
+      "finding": "Low-energy deposits, sparsity and thresholds can affect comparisons. Generalization to irregular geometry, hadrons and varying angles requires further study.",
+      "application": "Keep the zero-threshold definition adjacent to the findings; preserve unmeasured threshold/graph sensitivity and numerical-solver limits."
+    },
+    {
+      "source": "ALICE normalizing-flow/co-activation study",
+      "url": "https://arxiv.org/html/2608.12795",
+      "reading": "Abstract; conditional/co-activation results; bootstrap discussion",
+      "finding": "The study uses conditional response and co-activation observables with explicit resampling units and uncertainty limitations.",
+      "application": "State the reused validation bank, separate nonempty samples and absence of paired structural intervals; distinguish descriptive differences from a significance or causal claim."
+    }
+  ],
+  "abstract_whitespace_word_count": 232,
+  "sections": {
+    "title": "Names generated neutron showers and the pilot ZDC scope; synchronized with PDF metadata, CITATION.cff and README.",
+    "abstract": "States target, method, conditions, key numerical differences and their limitations; defines graph groups and the classifier metric without claiming reconstruction performance.",
+    "discussion": "Leads with the observation; separates the algebraic bound, mechanistic hypotheses, distinguishing tests, robustness limitations, detector relevance and timing.",
+    "conclusion": "States the bounded validation lesson and necessary follow-up; retains one-seed reused-bank status and unmeasured reconstruction effects."
+  },
+  "preserved": [
+    "All 14 displayed equations unchanged in this HEP framing revision",
+    "Bibliography unchanged in this revision",
+    "Numerical evidence, figures, tables, thresholds, model and data unchanged",
+    "All QA guards unchanged"
+  ],
+  "QA_history": [
+    "QA11 passed all 22 groups before final wording/layout refinement.",
+    "QA12 and QA13 failed the existing 14-page maximum. Both failed QA records and command outputs retained. A fitz import failed during optional quarantine inspection; installed pdfinfo used instead.",
+    "Original QA12 PDF was overwritten before retention. QA12 source-hash evidence remains. The reconstructed source under quarantined_qa12 does not match its hash and is not exact provenance. Its copied PDF is QA13; README and event log explicitly correct that identity.",
+    "QA13 failed PDF/source retained under quarantined_qa13. Concise wording and natural page flow corrected the overflow without changing fonts, figure sizes, numerical evidence or guards.",
+    "QA14 passed all 22 groups; all 14 final pages directly inspected."
+  ],
+  "scientific_boundary": "Document QA and literature-informed editing do not establish physics validation or independent HEP peer review. Structural intervals, repeated training seeds, threshold/graph studies, comparable generation timing and reconstructed neutron performance remain unmeasured as disclosed."
+}
+```
+
+## Command completed
+
+2026-10-03T03:07:52.446093+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/hep_framing_research_20261002/finalize.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_023.txt",
+  "output_sha256": "024a38797f6ce73bc88f97e99eb5f475a1c573cf1b391e5da67a4f6bb886f3f7"
+}
+```
+
+## Command started
+
+2026-10-03T03:08:04.348656+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/write_build_audit.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:08:05.092018+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/write_build_audit.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_025.txt",
+  "output_sha256": "8a7a3b41323128d52ade9221a2797d80a7baba2012a235f656c11263983def70"
+}
+```
+
+## Command started
+
+2026-10-03T03:08:05.763513+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "scripts/test_qa_guards.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:08:11.898698+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "scripts/test_qa_guards.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_027.txt",
+  "output_sha256": "2433b45e0d2442ac0bf102610cea5c3f3d7595470c0b11edb0689e71fdf5051e"
+}
+```
+
+## Command started
+
+2026-10-03T03:08:45.085766+00:00
+
+```json
+{
+  "argv": [
+    "pdffonts",
+    "output/fast_mc_zdc_manuscript.pdf"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:08:45.573842+00:00
+
+```json
+{
+  "argv": [
+    "pdffonts",
+    "output/fast_mc_zdc_manuscript.pdf"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_029.txt",
+  "output_sha256": "66a58dbd6c57fb3acbef466abc1a41069dbd3ac6ddb47aa0cc33729f8e49c2da"
+}
+```
+
+## Command started
+
+2026-10-03T03:08:46.181719+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:08:46.330538+00:00
+
+```json
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "exit_code": 0,
+  "output": "audit\\hep_framing_research_20261002\\command_031.txt",
+  "output_sha256": "1643f6abc16fad2d66c6268cab1c723e3fcd3a05afd75615b8fb99e26fd58011"
+}
+```
+
+## Final finalization check passed
+
+2026-10-03T03:08:47.743814+00:00
+
+```json
+{
+  "pdf_sha256": "c0bd5a739385cbd8a917de468cac8ecd3e18d7e0313d258496994bfe54010fa8",
+  "source_archive_sha256": "83cff1cc49730ccb29a26ef5c13506661604f12bd8e3b3149e1b5acac057fc83",
+  "source_and_every_page_binding": "pass after all final checks",
+  "full_QA_groups": 22,
+  "pages": 14,
+  "guard_regression_tests": "10 passed",
+  "embedded_Unicode_fonts": 31,
+  "git_diff_check": "pass",
+  "abstract_word_count": 232,
+  "publication": "Local artifacts finalized; no remote publication or arXiv upload performed"
+}
+```
+
+## Mentor surgical edit started
+
+2026-10-03T03:31:56.095652+00:00
+
+```json
+{
+  "scope": "Classifier input, Figure 4 terminology, test-partition scope, generator-seed wording, screening criterion, abstract prose, and live repository metadata.",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "inputs_sha256": {
+    "main.tex": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+    "scripts/reader_figures.py": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
+    "scripts/full_manuscript_qa.py": "77348a5b3586ea3497dfa271112ca499f3d2102d26299cc90707ca759a9a208a",
+    "README.md": "adbaa07d546ae65da89eb418c1d1a94274f01f15962ccd1e98ecab43871c8ff4",
+    "CITATION.cff": "3b32bfe4fa2a6b07f6e1a35667378bc4a3911b7f2e8f0e98b192c5e1d544feeb",
+    "output/fast_mc_zdc_manuscript.pdf": "c0bd5a739385cbd8a917de468cac8ecd3e18d7e0313d258496994bfe54010fa8"
+  },
+  "pre_logger_commands": [
+    "Read project implementation guide; graft check reported fresh graph; graft ask located manuscript release workflow (27,339 tokens saved).",
+    "Read local working state, exact target sentences, figure-generation source and QA guard; verified archived classifier source uses kinetic.reshape(-1, 1).",
+    "Web-opened the live GitHub repository, README and CITATION.cff; git ls-remote main and origin/main both identify 13ae8adc.",
+    "gh CLI unavailable; read-only git remote and GitHub pages show live README/CITATION title differs from PDF, while live CITATION version is already 0.22.1."
+  ],
+  "scientific_boundary": "Editorial and figure-label changes only; retain all data, numbers, equations, figure scales, calibration and statistical caveats."
+}
+```
+
+## Command started
+
+2026-10-03T03:33:21.330571+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ]
+}
+```
+
+## Pre-edit source and deliverable snapshot
+
+2026-10-03T03:33:21.559218+00:00
+
+```json
+{
+  "input_sha256": {
+    "main.tex": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+    "scripts/reader_figures.py": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
+    "scripts/full_manuscript_qa.py": "77348a5b3586ea3497dfa271112ca499f3d2102d26299cc90707ca759a9a208a",
+    "README.md": "adbaa07d546ae65da89eb418c1d1a94274f01f15962ccd1e98ecab43871c8ff4",
+    "STATUS.md": "c3c909c75e1257d024d461c0f3b9844445ce8f42a5f7e3b8e712900af3266dbf",
+    "CITATION.cff": "3b32bfe4fa2a6b07f6e1a35667378bc4a3911b7f2e8f0e98b192c5e1d544feeb",
+    "figures/support_summary.png": "e996034c26145aa7533fa28f3ba0a4303491d79c12303c706db993081d57faea",
+    "output/fast_mc_zdc_manuscript.pdf": "c0bd5a739385cbd8a917de468cac8ecd3e18d7e0313d258496994bfe54010fa8",
+    "output/fast_mc_zdc_submission_source.zip": "83cff1cc49730ccb29a26ef5c13506661604f12bd8e3b3149e1b5acac057fc83",
+    "audit/finalization_20260930.json": "5a7f091a4caddfe8aef8531164b8e05b533953453e924c342cb53b7f486c4f56",
+    "audit/finalization_20260930.md": "68229d4f85f4843a8ea4d962a5ac428489ad602318c88ca2a382c93a37ed5d01"
+  },
+  "snapshot": "audit\\mentor_surgical_20261002\\before"
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:33:21.595615+00:00
+
+```json
+{
+  "file": "main.tex",
+  "sha256_before": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+  "sha256_after": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
+  "replacements": [
+    [
+      "Their mean number is 23.42 for Geant4 and 59.39 for the generator.",
+      "The mean group count is 23.42 for Geant4 and 59.39 for the generator."
+    ],
+    [
+      "but its control using incident conditions alone gives 0.464",
+      "but a control using incident kinetic energy alone gives 0.464"
+    ],
+    [
+      "These means miss a hit-pattern discrepancy.",
+      "Similar aggregate means mask a hit-pattern discrepancy."
+    ],
+    [
+      "No nominal test event is used here.",
+      "No nominal-test event enters the analyses reported here; Appendix~\\ref{app:reproducibility} documents prior separate inspection of parts of that partition."
+    ],
+    [
+      "Its condition-only AUROC of 0.464 is a failed control consistent with such bias, though the cause is unverified.",
+      "The condition-only control uses incident kinetic energy alone; its AUROC of 0.464 is a failed control consistent with such bias, though the cause is unverified."
+    ],
+    [
+      "recorded development-screening criterion of 0.65",
+      "recorded screening criterion of 0.65"
+    ],
+    [
+      "A three-seed study and full-data fit are needed",
+      "A study with three independent generator-training seeds and a full-data fit is needed"
+    ],
+    [
+      "All three high-level AUROCs exceed the recorded screening maximum of 0.65.",
+      "All three high-level AUROCs exceed the recorded screening criterion of 0.65."
+    ]
+  ]
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:33:21.630346+00:00
+
+```json
+{
+  "file": "scripts/reader_figures.py",
+  "sha256_before": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
+  "sha256_after": "551d92af5ad7aac5020932292d20d56577636d92cfe210f2d922cd6931f569bf",
+  "replacements": [
+    [
+      "(\"last hit layer\", report[\"activity\"][\"truth\"][\"mean_last_active_layer\"]",
+      "(\"last active layer\", report[\"activity\"][\"truth\"][\"mean_last_active_layer\"]"
+    ]
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:33:21.683872+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ],
+  "exit_code": 1,
+  "output": "audit\\mentor_surgical_20261002\\command_005.txt",
+  "output_sha256": "8f8347cc0e8dd393a08714d785799b57acf969f4d76676d7516a8b8256f12c9d"
+}
+```
+
+## Command started
+
+2026-10-03T03:34:00.953274+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:34:01.128813+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ],
+  "exit_code": 1,
+  "output": "audit\\mentor_surgical_20261002\\command_007.txt",
+  "output_sha256": "2c70534113aa7b8b544685ad54cd29d6c4f4044d26c4d6e4a35f1a1b6641acf2"
+}
+```
+
+## Command started
+
+2026-10-03T03:34:20.732664+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ]
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:34:20.904385+00:00
+
+```json
+{
+  "file": "main.tex",
+  "sha256_before": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+  "sha256_after": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
+  "replacements": [
+    [
+      "Their mean number is 23.42 for Geant4 and 59.39 for the generator.",
+      "The mean group count is 23.42 for Geant4 and 59.39 for the generator."
+    ],
+    [
+      "but its control using incident conditions alone gives 0.464",
+      "but a control using incident kinetic energy alone gives 0.464"
+    ],
+    [
+      "These means miss a hit-pattern discrepancy.",
+      "Similar aggregate means mask a hit-pattern discrepancy."
+    ],
+    [
+      "No nominal test event is used here.",
+      "No nominal-test event enters the analyses reported here; Appendix~\\ref{app:reproducibility} documents prior separate inspection of parts of that partition."
+    ],
+    [
+      "Its condition-only AUROC of 0.464 is a failed control consistent with such bias, though the cause is unverified.",
+      "The condition-only control uses incident kinetic energy alone; its AUROC of 0.464 is a failed control consistent with such bias, though the cause is unverified."
+    ],
+    [
+      "recorded development-screening criterion of 0.65",
+      "recorded screening criterion of 0.65"
+    ],
+    [
+      "A three-seed study and full-data fit are needed",
+      "A study with three independent generator-training seeds and a full-data fit is needed"
+    ],
+    [
+      "All three high-level AUROCs exceed the recorded screening maximum of 0.65.",
+      "All three high-level AUROCs exceed the recorded screening criterion of 0.65."
+    ]
+  ]
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:34:20.917451+00:00
+
+```json
+{
+  "file": "scripts/reader_figures.py",
+  "sha256_before": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
+  "sha256_after": "551d92af5ad7aac5020932292d20d56577636d92cfe210f2d922cd6931f569bf",
+  "replacements": [
+    [
+      "(\"last hit layer\", report[\"activity\"][\"truth\"][\"mean_last_active_layer\"]",
+      "(\"last active layer\", report[\"activity\"][\"truth\"][\"mean_last_active_layer\"]"
+    ]
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:34:20.981507+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ],
+  "exit_code": 1,
+  "output": "audit\\mentor_surgical_20261002\\command_011.txt",
+  "output_sha256": "67bf712dfe7234f1948ccd8d8a98ce25d634ddcc09869981863e6bc494259f71"
+}
+```
+
+## Command started
+
+2026-10-03T03:34:42.200376+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ]
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:34:42.348509+00:00
+
+```json
+{
+  "file": "main.tex",
+  "sha256_before": "5be9437e2c7732836ee8f03f45682afbc06482fb6636e024e731edf2fc29b761",
+  "sha256_after": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
+  "replacements": [
+    [
+      "Their mean number is 23.42 for Geant4 and 59.39 for the generator.",
+      "The mean group count is 23.42 for Geant4 and 59.39 for the generator."
+    ],
+    [
+      "but its control using incident conditions alone gives 0.464",
+      "but a control using incident kinetic energy alone gives 0.464"
+    ],
+    [
+      "These means miss a hit-pattern discrepancy.",
+      "Similar aggregate means mask a hit-pattern discrepancy."
+    ],
+    [
+      "No nominal test event is used here.",
+      "No nominal-test event enters the analyses reported here; Appendix~\\ref{app:reproducibility} documents prior separate inspection of parts of that partition."
+    ],
+    [
+      "Its condition-only AUROC of 0.464 is a failed control consistent with such bias, though the cause is unverified.",
+      "The condition-only control uses incident kinetic energy alone; its AUROC of 0.464 is a failed control consistent with such bias, though the cause is unverified."
+    ],
+    [
+      "recorded development-screening criterion of 0.65",
+      "recorded screening criterion of 0.65"
+    ],
+    [
+      "A three-seed study and full-data fit are needed",
+      "A study with three independent generator-training seeds and a full-data fit is needed"
+    ],
+    [
+      "All three high-level AUROCs exceed the recorded screening maximum of 0.65.",
+      "All three high-level AUROCs exceed the recorded screening criterion of 0.65."
+    ]
+  ]
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:34:42.362647+00:00
+
+```json
+{
+  "file": "scripts/reader_figures.py",
+  "sha256_before": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
+  "sha256_after": "551d92af5ad7aac5020932292d20d56577636d92cfe210f2d922cd6931f569bf",
+  "replacements": [
+    [
+      "(\"last hit layer\", report[\"activity\"][\"truth\"][\"mean_last_active_layer\"]",
+      "(\"last active layer\", report[\"activity\"][\"truth\"][\"mean_last_active_layer\"]"
+    ]
+  ]
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:34:42.410461+00:00
+
+```json
+{
+  "file": "scripts/full_manuscript_qa.py",
+  "sha256_before": "77348a5b3586ea3497dfa271112ca499f3d2102d26299cc90707ca759a9a208a",
+  "sha256_after": "ea7a4753fbdd27e2d967c742215101740c94c39445ee2238d4d0ccbaa9c9d81e",
+  "replacements": [
+    [
+      "\"high-level score exceeds the recorded development-screening criterion of 0.65\"",
+      "\"high-level score exceeds the recorded screening criterion of 0.65\""
+    ],
+    [
+      "\"No nominal test event is used\"",
+      "\"No nominal-test event enters the analyses reported here\""
+    ],
+    [
+      "\"104 retained rows spanning epochs 11--114\", \"defines the checkpoint analyzed below\",",
+      "\"104 retained rows spanning epochs 11--114\", \"defines the checkpoint analyzed below\",\n        \"a control using incident kinetic energy alone gives 0.464\", \"The condition-only control uses incident kinetic energy alone\",\n        \"A study with three independent generator-training seeds\", \"Similar aggregate means mask a hit-pattern discrepancy\",\n        \"All three high-level AUROCs exceed the recorded screening criterion of 0.65\","
+    ],
+    [
+      "def validate_figures(checks: list[str]) -> None:\n    manifest = load_json(FIGURE_MANIFEST)",
+      "def validate_figures(checks: list[str]) -> None:\n    figure_source = (ROOT / \"scripts/reader_figures.py\").read_text(encoding=\"utf-8\")\n    assert '(\"last active layer\", report[\"activity\"][\"truth\"][\"mean_last_active_layer\"]' in figure_source\n    assert \"last hit layer\" not in figure_source\n    manifest = load_json(FIGURE_MANIFEST)"
+    ]
+  ]
+}
+```
+
+## Surgical edit
+
+2026-10-03T03:34:42.463038+00:00
+
+```json
+{
+  "file": "README.md",
+  "sha256_before": "adbaa07d546ae65da89eb418c1d1a94274f01f15962ccd1e98ecab43871c8ff4",
+  "sha256_after": "681ede5e787ea9c5fe22187e2f7eb301457ce1e1ff28c38f5c9b97a9b6931aad",
+  "replacements": [
+    [
+      "the failed condition-only control and row-wise split prevent a calibrated fidelity interpretation.",
+      "the failed classifier control using incident kinetic energy alone and the row-wise split prevent a calibrated fidelity interpretation."
+    ]
+  ]
+}
+```
+
+## README pre-submission note added
+
+2026-10-03T03:34:42.494432+00:00
+
+```json
+{
+  "sha256_before": "adbaa07d546ae65da89eb418c1d1a94274f01f15962ccd1e98ecab43871c8ff4",
+  "sha256_after": "ac4dbc522193d0511a0a1c8b9570b021742aac9c4c9c1f274a9fe86119a9d161"
+}
+```
+
+## STATUS pre-submission note added
+
+2026-10-03T03:34:42.522644+00:00
+
+```json
+{
+  "sha256_before": "c3c909c75e1257d024d461c0f3b9844445ce8f42a5f7e3b8e712900af3266dbf",
+  "sha256_after": "0eac4d160aa4734adacd586a70f26d5682871d4fb5d92b0d5f30569d423d3e66"
+}
+```
+
+## Source-review pointer synchronized
+
+2026-10-03T03:34:42.557863+00:00
+
+```json
+{
+  "current_main_tex_sha256": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
+  "pointer_sha256": "cfee5e0dbc445b652a8cf940388fd47002ae61de4241a0fea6e75dbceed68f5b",
+  "pointer_twin_sha256": "ca7dad237b7c63f59f7a3ec8bdddf1f17445284ca6dc76efc818d94f53d57a24"
+}
+```
+
+## Command completed
+
+2026-10-03T03:34:42.588665+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/revise.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_020.txt",
+  "output_sha256": "026f0686bc94c7f58de451ac2ad861fe29c4df7ca9c87adc152b9512763693da"
+}
+```
+
+## Command started
+
+2026-10-03T03:34:49.347996+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "15",
+    "--focus",
+    "Mentor pre-submission surgical corrections",
+    "--disposition",
+    "Precise kinetic-energy classifier control, test-partition scope, Figure 4 label, generator seed distinction, screening terminology and abstract polish; no numerical changes"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:35:20.328818+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "15",
+    "--focus",
+    "Mentor pre-submission surgical corrections",
+    "--disposition",
+    "Precise kinetic-energy classifier control, test-partition scope, Figure 4 label, generator seed distinction, screening terminology and abstract polish; no numerical changes"
+  ],
+  "exit_code": 1,
+  "output": "audit\\mentor_surgical_20261002\\command_022.txt",
+  "output_sha256": "f660168ebd904277a8995ef567518853d5c54b5613a23a4697bf9ff852dc6cc7"
+}
+```
+
+## Command started
+
+2026-10-03T03:36:01.943649+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/quarantine_qa15.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:36:02.597533+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/quarantine_qa15.py"
+  ],
+  "exit_code": 1,
+  "output": "audit\\mentor_surgical_20261002\\command_024.txt",
+  "output_sha256": "4f31636dfa05b4509eb95541b1dcb1ef51fb3e2317e2fc46ebf14bde7b2bb573"
+}
+```
+
+## Command started
+
+2026-10-03T03:36:21.323172+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/quarantine_qa15.py"
+  ]
+}
+```
+
+## QA15 page overflow quarantined
+
+2026-10-03T03:36:22.319683+00:00
+
+```json
+{
+  "pdf_sha256": "b3c93afc01173f1716280e8610ccd48776deb5d782189be5a8a3c719c9745e68",
+  "source_sha256": "27195c3103870326c1d211743be96f5f53248ffdc19a92b4f9efe18ad566c608",
+  "failed_qa": "audit/qa_series/mentor_send_20261002/iteration_15.json",
+  "pages": 15,
+  "quarantine": "audit\\mentor_surgical_20261002\\quarantined_qa15",
+  "failed_inspection_commands": [
+    "A prior python -c inspection command had a PowerShell quoting syntax error; it did not alter files.",
+    "First quarantine helper copied the failed files but stopped before logging because Windows console could not encode a minus sign in extracted text. This retry records the copies."
+  ],
+  "diagnosis": "Additional explanatory lines shifted the appendix and references past the unchanged 14-page limit."
+}
+```
+
+## Command completed
+
+2026-10-03T03:36:22.364283+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/quarantine_qa15.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_027.txt",
+  "output_sha256": "00b554a1d0026b3c68bb6c32fc8ebd0aebb9bb631a94468e0214c5dad7f7cf4a"
+}
+```
+
+## Command started
+
+2026-10-03T03:37:57.742476+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/tighten.py"
+  ]
+}
+```
+
+## QA15 pagination correction
+
+2026-10-03T03:37:58.010432+00:00
+
+```json
+{
+  "file": "main.tex",
+  "sha256_after": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+  "old": "Paired sampling intervals for the headline structural means are not retained. Large descriptive differences do not establish robustness across training seeds, thresholds or graphs. A study with three independent generator-training seeds and a full-data fit is needed to separate architecture effects from training-population and optimization effects. The failed condition-only classifier control is a separate limitation: the quoted classifier scores cannot supply the missing structural significance. A rerun that keeps each matched pair in one partition is needed on the same validation bank.",
+  "new": "Paired sampling intervals for the headline structural means are not retained. Large descriptive differences do not establish robustness across training seeds, thresholds or graphs. Three independent generator-training seeds and a full-data fit are needed to separate architecture effects from training-population and optimization effects. Classifier scores cannot supply the missing structural significance: the condition-only control failed. A same-bank rerun must keep each matched pair in one partition."
+}
+```
+
+## QA15 pagination correction
+
+2026-10-03T03:37:58.048013+00:00
+
+```json
+{
+  "file": "scripts/full_manuscript_qa.py",
+  "sha256_after": "3cc36038b3d85f88d3a6a180c9253e237d042bf323a076253bb9fb9dae85d24b",
+  "old": "\"A study with three independent generator-training seeds\"",
+  "new": "\"Three independent generator-training seeds\""
+}
+```
+
+## QA15 correction pointer synchronized
+
+2026-10-03T03:37:58.066790+00:00
+
+```json
+{
+  "main_tex_sha256": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+  "QA15_failure": "15 pages; unchanged 14-page guard retained",
+  "scientific_changes": "None"
+}
+```
+
+## Command completed
+
+2026-10-03T03:37:58.120565+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/tighten.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_032.txt",
+  "output_sha256": "1643f6abc16fad2d66c6268cab1c723e3fcd3a05afd75615b8fb99e26fd58011"
+}
+```
+
+## Command started
+
+2026-10-03T03:37:58.865741+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "16",
+    "--focus",
+    "Mentor surgical edits, corrected pagination",
+    "--disposition",
+    "All requested distinctions retained; Sec. 6.2 concise classifier limitation; unchanged page-count and scientific guards"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:38:39.860472+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "16",
+    "--focus",
+    "Mentor surgical edits, corrected pagination",
+    "--disposition",
+    "All requested distinctions retained; Sec. 6.2 concise classifier limitation; unchanged page-count and scientific guards"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_034.txt",
+  "output_sha256": "cf0638e5185780b8b3319483c724a5effc3ab89e458e0984b62f804fd4209f49"
+}
+```
+
+## STATUS current-state correction
+
+2026-10-03T03:39:45.959882+00:00
+
+```json
+{
+  "status_sha256": "2211062aeb9445b18d0d8cf68f92deac1392d5b972b7f2b93e4e4c6259a04081",
+  "reason": "Replace stale pending-QA wording with truthful pass/fail history; full QA will be rerun to bind changed document hash",
+  "main_tex_sha256": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499"
+}
+```
+
+## Command started
+
+2026-10-03T03:39:46.678564+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "17",
+    "--focus",
+    "Final mentor submission binding",
+    "--disposition",
+    "Final current-state documentation after QA16 visual review; same scientific manuscript and Figure 4; full suite rerun for exact release hashes"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:40:25.639189+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/full_manuscript_qa.py",
+    "--iteration",
+    "17",
+    "--focus",
+    "Final mentor submission binding",
+    "--disposition",
+    "Final current-state documentation after QA16 visual review; same scientific manuscript and Figure 4; full suite rerun for exact release hashes"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_037.txt",
+  "output_sha256": "da5abcc24d18893d258526334456411222e2acb679a2638218c24eb4d338151b"
+}
+```
+
+## Command started
+
+2026-10-03T03:41:51.574024+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/finalize.py"
+  ]
+}
+```
+
+## Final every-page visual review bound
+
+2026-10-03T03:41:51.737624+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:41:51.726298+00:00",
+  "result": "pass",
+  "pdf_sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "page_sha256": {
+    "1": "0596c942c3439c02bcde7841a6b18859eaf8f2988919fd61f764ff87611c93a0",
+    "2": "dbcad02a13209aea2bfbb020a4b81f3b50246ae9f6c6c34de29d0737ce277848",
+    "3": "559bf931682b6f53bee2b0f4b563ac5d1d08f4f7bf111acf67aaaee70b95a1b8",
+    "4": "92cc5170f070a2a81699750ff80d81565f071dcef9ce3d1f7b4e65b35bcd7492",
+    "5": "683f35c036b10430e0720cbf170a32f72617e6cc9ac4390bc0c1e672d5aaf421",
+    "6": "8bad3dd24849c29045e64f668f2ae671965bd84507bdde500f70145f7b71f15b",
+    "7": "58efa057e3d189464192dbe1a70ae20a48bc6e45d517b2fd91ee5c290e34f80c",
+    "8": "9f3da3fa5d180fc0212208be516a048e45f4881ba5af1bde16728bdb90e4215e",
+    "9": "174eed88bda8ca3099a13473518d5ac82c973ea8e79f51d41d26411a9b2c1be3",
+    "10": "17aed728cddca525a5833dff7d0d4c0fba0804bc4a169312819f1ccf76d39e11",
+    "11": "689f46a2fec1b742a3277d6e9a48e09797d61f918fad9f4ffc6241c632b6fc69",
+    "12": "48ab8303213a55e6d81613afb36407393b7387ed5ddc7200e5efc5eca36a7b94",
+    "13": "1b29db8059bbfb9c3ba98531855440b4e78ff79aa9e56f8db270576ba85e3b4d",
+    "14": "d2fcfcaaebc60630af63be5e99bbb46e75ce479b4e1fa7ba4af73b38062fc37e"
+  },
+  "method": "Direct visual inspection of all fourteen QA16 rendered pages, followed by exact pixel-hash comparison of every QA17 page. QA17 differs only in PDF file metadata after a STATUS documentation change.",
+  "qa_record": "audit/qa_series/mentor_send_20261002/iteration_17.json",
+  "page_findings": {
+    "1": "Displayed title, author, abstract and introduction legible. Abstract identifies the kinetic-energy-only control and uses precise group-count wording.",
+    "2": "Target, geometry, condition equation and Figure 1 checked; no clipping or detached caption.",
+    "3": "Prior separate test-partition inspection is disclosed next to the no-test-events-in-this-analysis statement; Figure 2 checked.",
+    "4": "Response, activity and flow equations 2-6 remain legible and within margins.",
+    "5": "Equations 7-11, generation order and channel-placement account checked.",
+    "6": "Decoder/loss equations 12-13 and training protocol checked.",
+    "7": "Gap equation 14 and classifier control explicitly define incident kinetic energy alone; references and caveats legible.",
+    "8": "Table 1, response text and all Figure 3 labels/captions checked.",
+    "9": "Figure 4(c1) says last active layer, consistent with Table 1, surrounding prose and caption; panels and numbers legible.",
+    "10": "Graph, classifier and closure results and discussion opening checked; screening criterion wording consistent.",
+    "11": "Three independent generator-training seeds are distinguished from classifier seeds; detector/timing and conclusion opening legible.",
+    "12": "Conclusion continuation, availability, acknowledgments, AI disclosure and Table 2 checked.",
+    "13": "Appendix A/B, response bins and classifier-seed Table 4 checked; caption uses screening criterion of 0.65.",
+    "14": "All 25 references legible with complete identifiers and no overflow."
+  },
+  "findings": "No clipping, overlap, missing glyph, figure/caption mismatch, unresolved reference or unreadable label observed. Natural Conclusion continuation across pages 11-12 accepted."
+}
+```
+
+## Source package synchronized
+
+2026-10-03T03:41:51.810299+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:41:51.726298+00:00",
+  "revision": "0.22.1",
+  "sha256": "489a2d8642f9a961889dbddf3d84611b648f4e9d76c4112c3c8194dcc25ce5b0",
+  "members_sha256": {
+    "main.tex": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+    "references.bib": "3a50cdd8679b22895e17c7a7b4b6712d4a4661507dce358fdd9deeb93c5eb883",
+    "main.bbl": "7e3c535fa8aac713f3e59967ccf339796f1934706a08e332c6e4834367503091",
+    "figures/detector_geometry.png": "220ce16b98bd6f53974d458f45e149263d1e105f3916215ec1998d6cd51f652c",
+    "figures/generator_schematic.png": "7286a3b17792d6b90790da56560ca74a712b3b215bb55ab53accc644d33d669f",
+    "figures/longitudinal_profile.png": "738378ddc7bfdec5559397e2d8e6b7a636f033cec73509c4197ad2edd58273fb",
+    "figures/support_summary.png": "f4b2c0ca5337161b56df5c3cc4f242ad543f02fe4437577ca0af038ae11df8fd"
+  },
+  "pdf_sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "status": "Seven-file archive; CRC and exact current member bytes verified",
+  "arxiv_server_compile": "Not performed",
+  "current_qa": "audit/qa_series/mentor_send_20261002/iteration_17.json"
+}
+```
+
+## Mentor surgical review completed
+
+2026-10-03T03:41:51.848750+00:00
+
+```json
+{
+  "created_utc": "2026-10-03T03:41:51.726298+00:00",
+  "result": "pass",
+  "manuscript_sha256": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+  "pdf_sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "source_package_sha256": "489a2d8642f9a961889dbddf3d84611b648f4e9d76c4112c3c8194dcc25ce5b0",
+  "figure4_sha256": "f4b2c0ca5337161b56df5c3cc4f242ad543f02fe4437577ca0af038ae11df8fd",
+  "qa": "QA17: 22 groups passed, 14 pages; all page pixels equal directly inspected QA16 pages",
+  "corrections": [
+    "Abstract and first methods use define the classifier control as incident kinetic energy alone.",
+    "Figure 4(c1) says last active layer.",
+    "Sec. 2.3 distinguishes this validation-only analysis from earlier separate inspection of nominal-test events, documented in Appendix A.",
+    "Sec. 6.2 specifies three independent generator-training seeds; Appendix B classifier seeds remain distinct.",
+    "Sec. 5.4 and Table 4 both say recorded screening criterion of 0.65.",
+    "Abstract uses mean group count and similar aggregate means mask a hit-pattern discrepancy."
+  ],
+  "metadata": "Local PDF title, README title and CITATION.cff title/version 0.22.1 match. Public repository synchronization is recorded separately after push.",
+  "preserved": "All 14 numbered equations, four tabular bodies, data, training/checkpoint selection, figures other than the label, and numerical claims unchanged.",
+  "failures": "Three interrupted edit attempts from exact-match or line-ending assumptions and QA15 15-page overflow are retained in events and QA records; concise Sec. 6.2 wording resolved pagination. A failed optional inspection one-liner and console-encoding retry are logged.",
+  "boundary": "Document QC does not establish structural significance, detector reconstruction performance, generator speedup or physics validation."
+}
+```
+
+## Command completed
+
+2026-10-03T03:41:51.883403+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "audit/mentor_surgical_20261002/finalize.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_042.txt",
+  "output_sha256": "00d1559f30236714d7bf95462ed3803bc479375f0180d3c201be0a0b37411018"
+}
+```
+
+## Command started
+
+2026-10-03T03:41:59.956308+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/write_build_audit.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:42:00.700413+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "scripts/write_build_audit.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_044.txt",
+  "output_sha256": "8a7a3b41323128d52ade9221a2797d80a7baba2012a235f656c11263983def70"
+}
+```
+
+## Command started
+
+2026-10-03T03:42:01.374808+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "scripts/test_qa_guards.py"
+  ]
+}
+```
+
+## Command completed
+
+2026-10-03T03:42:05.759862+00:00
+
+```json
+{
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "scripts/test_qa_guards.py"
+  ],
+  "exit_code": 0,
+  "output": "audit\\mentor_surgical_20261002\\command_046.txt",
+  "output_sha256": "cc9f5ef73873c3f33aa158303c6a0b53e90df0b6e3ca0d825f1e8f976fa47032"
+}
+```
+
+## GitHub synchronization authorized and prepared
+
+2026-10-03T03:43:08.300841+00:00
+
+```json
+{
+  "remote": "https://github.com/JulianAttemptsCoding/fast-mc-paper",
+  "starting_remote_main": "13ae8adcf850cd309d7fffb6fc28e5c53671f3f2",
+  "scope": "Publish final reviewed manuscript, Figure 4, README/CITATION title and version, source archive, validation/evidence and all preserved failed QA records. Prior project publication authorization is recorded in audit/mentor_send_publication_20261002.json; current user explicitly requests external metadata update before mentor submission.",
+  "local_pdf_sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "QA": "iteration_17 passed all 22 groups; all 14 pages reviewed; 10 guard tests passed",
+  "commit_message": "fix(paper): align mentor submission details"
+}
+```
+
+## Publication staging check corrected
+
+2026-10-03T03:44:56.899392+00:00
+
+```json
+{
+  "initial_git_diff_cached_check": "failed on trailing whitespace in byte-preserved raw command transcripts and blank EOF in historical review files",
+  "correction": "Eight raw or historical text files unstaged; originals remain locally with exact bytes; JSON QA attempts, source, PDF, figures and other evidence remain staged. No policy test was altered.",
+  "unstaged_local_evidence_sha256": {
+    "audit/final_review_20261002/command_015.txt": "13960c0a27f7186c43ccf6cf0438680063be3d2beef66dea5bbeebe9fe2faca0",
+    "audit/mentor_surgical_20261002/before/scripts/reader_figures.py": "c39c8d0693284344bcde67f3e7931ad229c808c9ddeb1055f35ae5ace446fe69",
+    "audit/mentor_surgical_20261002/command_024.txt": "4f31636dfa05b4509eb95541b1dcb1ef51fb3e2317e2fc46ebf14bde7b2bb573",
+    "audit/mentor_surgical_20261002/command_027.txt": "00b554a1d0026b3c68bb6c32fc8ebd0aebb9bb631a94468e0214c5dad7f7cf4a",
+    "audit/qa_series/mentor_send_20261002/iteration_09.md": "25a26f1556b21630410776ddea47332c67375288aceba8b8434b26a86a1d091f",
+    "audit/qa_series/mentor_send_20261002/iteration_12.md": "1efcd27bc671f78bbb7ffab4f65cf46bb1a9a934b2591135428282e7a356b3a7",
+    "audit/qa_series/mentor_send_20261002/iteration_13.md": "21bcff820a6eeb589f84db5259a9c62a6e2a8e55d5ea202916ab57b1e7dd8d9f",
+    "audit/qa_series/mentor_send_20261002/iteration_15.md": "15fe97f37b201d65c164ecfd8b53ba3eac3e5003fa1b42320cbc4381305b7cf0"
+  },
+  "final_git_diff_cached_check": "pass after excluding only these files"
+}
+```

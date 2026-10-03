@@ -177,7 +177,7 @@ def plot_observable_definitions() -> None:
     bars = grid[1, :].subgridspec(1, 3, wspace=0.27)
     zero = report["visibility_and_zero_response"]
     metrics = [
-        ("last hit layer", report["activity"]["truth"]["mean_last_active_layer"],
+        ("last active layer", report["activity"]["truth"]["mean_last_active_layer"],
          report["activity"]["generated"]["mean_last_active_layer"]),
         ("skipped layers", report["activity"]["truth"]["mean_gaps"],
          report["activity"]["generated"]["mean_gaps"]),

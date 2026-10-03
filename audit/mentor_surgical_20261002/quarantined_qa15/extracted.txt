@@ -1,0 +1,792 @@
+        Longitudinal Gaps and Spatial Hit Connectivity in Generated
+          Neutron Showers: A Pilot Zero-Degree Calorimeter Study
+                                                        Julian Juan
+                                                  juliansjuan08@gmail.com
+
+                                                       October 2026
+
+                                                          Abstract
+          We compare the longitudinal hit pattern and spatial connectivity of single-neutron showers from a pilot
+      flow-matching generator with Geant4 in an ePIC zero-degree calorimeter simulation. The model was trained on
+      26,624 showers and evaluated at 10,000 matched incident-neutron conditions spanning 50–250 GeV kinetic energy.
+      The target is raw deposited energy in 6,790 stored channels, with every positive deposit counted as a hit and no
+      digitization or analysis threshold. The all-event mean deposit differs by 1.0%. Among nonempty showers, the
+      mean active-layer count differs by 0.25 (54.83 generated versus 54.58 Geant4, of 65 layers), yet the generated last
+      active layer lies 4.42 layers farther downstream and the occupied span contains 3.95 more empty layers. Connected
+      hit groups join positive-deposit channels on the fixed nearest-centroid graph; they are not reconstructed clusters.
+      The mean group count is 23.42 for Geant4 and 59.39 for the generator. After allowing one group per contiguous
+      active-layer segment, at least 30.45 of the 35.97 excess groups (84.6%) remain: empty layers alone cannot explain
+      the graph discrepancy. A classifier using shower summaries gives an area under the receiver operating characteristic
+      curve of 0.775, but a control using incident kinetic energy alone gives 0.464 rather than the chance value 0.5,
+      preventing a calibrated fidelity interpretation. These aggregate results use one training seed and a repeatedly
+      inspected validation sample. Similar aggregate means mask a hit-pattern discrepancy. Structural uncertainty is
+      unquantified; threshold, graph and reconstruction effects remain unmeasured.
+
+
+1    Introduction
+At the Electron–Ion Collider, a zero-degree calorimeter (ZDC) measures neutral particles near the outgoing hadron
+beam. Detailed Geant4 transport is useful for detector studies but costly to repeat at scale; a fast generator must
+reproduce more than a mean energy response. A proposed ePIC silicon-photomultiplier (SiPM)-on-tile design
+reconstructs neutron energy and angle from hit energies and positions [1], so spatial discrepancies may matter for
+reconstruction. We examine spatial discrepancies at the level of stored deposits, without claiming a reconstructed
+performance effect. A hit here means any stored channel with positive energy; it is not a digitized hit.
+    Calorimeter generators use flows, diffusion and flow matching on grids, point clouds and graphs [2–6]. CaloChallenge
+evaluates energy, shape, classifier and cost observables [7, 8]. ALICE ZDC studies include variational autoencoders,
+adversarial models, diffusion, flows and expert mixtures [9–13]; recent work tests output variability [14] and neighboring-
+channel co-activation [15]. Different detector representations and targets preclude direct numerical comparison with
+this raw-channel study.
+    We study a generator that samples total deposit, active layers and deposited-energy hit patterns in sequence. The
+question is whether similar mean deposits and hit counts imply similar shower depth and graph structure. They do
+not in this case: the last deposit lies deeper, more layers are skipped, and many extra graph-connected groups remain
+after accounting for empty-layer separations. We describe the target and sample, trace the physical meaning of each
+generation stage, and compare response with longitudinal and graph observables. This is an aggregate reanalysis
+of one checkpoint on 10,000 repeatedly inspected validation conditions. It tests neither architecture superiority nor
+detector performance; its graph diagnostic complements established co-activation tests.
+
+
+
+
+                                                               1
+2     Simulation target and study population
+2.1    Readout target and conditioning
+The event condition is the incident-neutron four-vector pµ = (E, px , py , pz ), expressed in GeV. The five network inputs
+are
+                                                                                               p
+              c = (log(1 + Kinc /100 GeV), ux , uy , uz , log(E/ GeV)) ,         u=                        ,           (1)
+                                                                                     max(∥p∥, 10−12 GeV)
+where p = (px , py , pz ) is the three-momentum, Kinc = max(E − mn , 0), and mn = 0.93956542052 GeV. For E ≥ mn ,
+the two energy features carry the same physical information because E = Kinc + mn ; both reflect this checkpoint’s
+input convention. Direction features vanish at zero momentum; the clamp is numerical.
+    The target Y ∈ R6790 ≥0 is the raw, nondigitized energy deposited in each valid stored-ID channel, with repeated
+hits to one ID summed in preprocessing. Geant4 supplies the transport [16]. The event total sums stored deposits; it
+excludes energy lost outside the readout. Every positive deposit counts as a hit: no minimum-ionizing-particle (MIP)
+threshold or additional time cut is applied, and the production integration window is unknown. Tiny deposits may
+change gaps and graph connectivity. Zero total deposit defines an empty shower; its physical cause is unknown.
+
+2.2    Geometry and graph representation
+The stored geometry has 400 electromagnetic-calorimeter (ECAL) IDs in layer 0 and 6,390 hadronic-calorimeter
+(HCAL) IDs in layers 1–64: 100 per layer through 63 and 90 in layer 64. ECAL centroids have 30.3 mm horizontal
+pitch; HCAL nearest-centroid spacing within a layer has median 54.2 mm. HCAL mean layer coordinates have
+median z spacing 24.9 mm and first-to-last span 1.57 m. The ECAL lies at z = 35.73 m in the stored frame (Fig. 1).
+The project production record reports a fixed neutron-gun vertex at (−917.41, −30.0, 35488.91) mm, about 0.24 m
+upstream of that plane; this reported value is not independently verified by the released aggregates. With a fixed
+vertex, direction constrains the nominal impact trajectory, although the actual entry-point distribution was not
+retained.
+    A channel is a stored ID. For 2,400 HCAL IDs, two to four positions share that ID; their unweighted centroid
+defines its graph node. This multiplicity does not establish electronic ganging without a production volume/electronics
+map. The cited design has individually instrumented staggered tiles [1, 17], but equivalence is unverified. Project
+documents describe layer 0 as nominally lutetium–yttrium oxyorthosilicate (LYSO) and the HCAL as nominally
+steel/scintillator, but the production material map is not in the released evidence. The cited SiPM-on-tile study
+models an iron/scintillator sampling calorimeter without this layer-0 section [1]; its material scales and reconstruction
+cuts cannot be assigned to this production. Layer index therefore cannot be converted reliably to radiation lengths
+X0 or interaction lengths λI .
+
+
+
+
+Figure 1: Stored-ID centroids. Left: horizontal projection of 65 stored layers; the nearly flat rows in this coordinate frame
+should not be read as a beam-axis direction. Center/right: ECAL/HCAL faces, colored by positions per ID. ID multiplicity
+does not establish electronic ganging.
+
+    The fixed graph gives each channel eight nearest-centroid links within its layer. For each channel in layers 0–63, it
+also selects four nearest centroids in the next layer, with each selected longitudinal pair stored in both directions. The
+resulting directed edge set contains 8 × 6790 = 54,320 lateral and 2 × 4 × (400 + 63 × 100) = 53,600 longitudinal
+edges, or 107,920 in total. The full graph is connected, including lateral connectivity within every layer. The
+same three-dimensional nearest-centroid graph supplies model messages and connects positive-deposit channels for
+
+
+                                                             2
+diagnostics; its links are not verified physical tile neighbors. Consequently, extra components arise from the occupied
+hit pattern on this graph, not disconnected pieces of the full graph.
+
+2.3    Training and evaluation populations
+The preparation record contains 764,940 showers over 0–300 GeV. A deterministic event-hash split assigns 612,482 to
+canonical training, 76,158 to validation, and 76,300 to the nominal test partition. The selected checkpoint instead
+used a pilot subset of 26,624 training and 6,656 validation events; the pilot training population is 4.35% of canonical
+training.
+    The primary shower comparison uses 10,000 incident conditions drawn from canonical validation with 50 ≤ Kinc ≤
+250 GeV. We refer to this repeatedly inspected validation subset as the development bank Ddev . For each four-vector,
+we compare one stored Geant4 shower with one independently sampled model shower. The pair shares its incident
+condition; its stochastic shower histories are independent at that fixed condition. The development bank’s overlap with
+the 6,656-event pilot-validation subset cannot be reconstructed from the released aggregates, although the recorded
+split cross-tabulation places pilot training and validation events within their corresponding canonical partitions. No
+nominal-test event enters the analyses reported here; Appendix A documents prior separate inspection of parts of
+that partition. This reanalysis uses the evaluation summary and static geometry. The publicly released summary
+lacks per-event masks and energies; exact contiguous-segment counts, paired structural intervals and threshold studies
+require another event-level evaluation with the collaboration-owned events and checkpoint.
+
+
+3     Generator and training procedure
+The generator builds a stored shower readout from coarse to fine: total deposit, layer activity and energy, then channel
+positions and deposits (Fig. 2). It separates how much energy is stored (T ), where along the detector it appears
+(F, A, B), and how it is distributed transversely (K, S, Y). Counts precede positions, as in point-cloud models [5,
+18]. These observables describe a shower outcome; the cascade does not simulate individual interactions or particle
+trajectories.
+    The model has 2,082,507 trainable parameters. A two-block residual multilayer perceptron encodes the five inputs
+in Eq. (1) into a 128-component condition vector hc . Discrete heads generate visibility, layer activity, channel counts,
+and support (the set of active channels); two conditional flow-matching models generate the continuous layer and
+channel energy shares from independent Gaussian draws. There is no learned shower encoder or common random
+event latent: no single random vector is shared by all stages of an event. At inference, the incident four-vector is the
+only event input. The embedding hc encodes energy and direction for a fixed geometry; its learned coordinates have
+no assigned physical observables. Random draws represent conditional shower variability, not added electronics noise.
+                                                    Pvalid channels in layer ℓ, and Yℓi P
+    Below, ℓ = 0, . . . , 64 indexes layers, i indexes                                  is a stored deposit. A channel is
+active if Yℓi > 0 and a layer if its budget Bℓ = i Yℓi > 0. The event total is T = ℓ Bℓ .
+
+
+
+
+Figure 2: Read the top row left to right, then the bottom row right to left. The cascade maps incident kinematics to stored
+deposits. Green stages generate energy shares by conditional flows; purple decodes deposits. Arrows show generation order, not
+every conditioning connection or particle transport. The middle annotation contrasts training and generation inputs.
+
+
+
+
+                                                              3
+3.1    Total deposit and longitudinal allocation
+Stored response. The two-part response stage samples a provisional visibility flag and a candidate total deposit.
+We call the positive-deposit indicator visibility; it describes the stored readout, not whether a neutron underwent
+an inelastic interaction. A Bernoulli head samples a provisional visibility flag V0 , while a four-component Gaussian
+mixture describes the transformed total qT . The Bernoulli logit aθ , mixture means µm , positive widths σm , and
+softmax weights ωm depend on hc ; θ denotes the learned parameters and σ the logistic function:
+
+                   Pr(V0 = 1 | hc ) = σ(aθ (hc )),                                     qT = log(1 + T /10 GeV),
+                                          4
+                                          X
+                                                                        2
+                                                                                                                      (2)
+                         pθ (q | hc ) =         ωm (hc )N q; µm (hc ), σm (hc ) .
+                                          m=1
+
+A draw q is mapped back to deposited-energy units, clipped at zero, and capped at the training-derived value C(Kinc ).
+The final visibility flag also requires positive incident kinetic energy and a positive candidate deposit:
+
+                               C(Kinc ) = min{0.630110 max(Kinc , 1 GeV), 61.2338 GeV},
+                                  Tcand = min{10 GeV max(eq − 1, 0), C(Kinc )},                                        (3)
+                                      V = V0 1Kinc >0 1Tcand >0 ,           T = V Tcand .
+
+The cap saturates at 61.2338 GeV above Kinc ≈ 97.2 GeV. Its training-derived tail bound is a numerical safeguard,
+not a sampling fraction or a mean-response prediction. Clamping a nonpositive inverse-transform value to zero can
+produce an empty shower even when V0 = 1.
+   Layer activity. For a visible event, the model draws the first active layer F ∼ Cat[softmax fθ (hc , log(1+T / GeV))]
+from 65 categorical probabilities. It forces layer F active and all earlier layers inactive. Separate Bernoulli draws set
+the later indicators Aℓ ; conditional on (hc , T, F ), their joint probability factorizes as
+                                                          64
+                                                          Y
+                                  p(A | hc , T, F ) =          p(Aℓ | hc , T, F, ℓ),     AF = 1.                       (4)
+                                                         ℓ>F
+
+F marks the first stored deposit, not necessarily the first inelastic interaction. The mask A specifies which layers
+contain any positive deposit. At fixed (hc , T, F ), Eq. (4) samples later layers independently: an intermediate layer can
+be empty even when deposits occur on both sides. Physical cascades correlate deposits across depth, but whether this
+assumption causes the observed gaps requires a controlled test. The budget flow then assigns the longitudinal energy
+profile and ECAL/HCAL            P on that support. A star denotes a reference-derived quantity. For a reference
+                             partition
+shower, let Bℓ⋆ = i Yℓi⋆ , T ⋆ = ℓ Bℓ⋆ , and A⋆ℓ = 1Bℓ⋆ >0 . The target for a nonempty event is a centered log fraction
+                   P
+on those layers:
+                                                                                               ⋆ ⋆
+                                           Bℓ⋆
+                                                                                      P             
+                  ⋆                                         −8                ⋆    ⋆       mA  m am
+                 aℓ = log max                           , 10     , (x 1 )ℓ = Aℓ   aℓ −                   .              (5)
+                                 max(T ⋆ , 10−12 GeV)
+                                                                                              P
+                                                                                       max(1, m A⋆m )
+
+For an empty reference shower, the target and mask are zero. The centering removes a common log offset that
+the softmax ignores. Gaussian noise can contain this offset, which final normalization removes. Floors of 10−8 and
+10−12 GeV keep the operations finite; they are numerical conventions, not detector thresholds, and alter small shares.
+Their activation frequency was not measured.
+    Energy allocation by flow matching. Both energy-allocation flows learn a velocity field that transports
+Gaussian noise toward the distribution of reference log fractions, conditioned on the incident particle and upstream
+shower state. Flow time is an artificial interpolation coordinate, independent of detector time. Straight-path conditional
+flow matching regresses noise-to-target displacements [19, 20]. For each training example, x0 is standard-normal noise
+on the active coordinates, x1 the reference-derived target, and t is uniform on [0, 1]. A mask Mbj ∈ {0, 1} identifies
+active coordinate j of minibatch example b:
+                                                                                                         2
+                                                           P
+                                                             b,j Mbj [vθ (xt , t; ctx)bj − (x1 − x0 )bj ]
+                      xt = (1 − t)x0 + tx1 ,       LFM =                          P                        .           (6)
+                                                                       max(1, b,j Mbj )
+
+The velocity field vθ predicts the straight-path displacement x1 − x0 from the interpolated state xt , time, and context.
+Inactive coordinates do not contribute to the masked squared-error loss.
+
+
+
+                                                                   4
+    During generation, both flows start from fresh Gaussian noise and use eight masked velocity updates. The context
+contains outputs sampled by earlier stages, whereas training supplies their reference values. For an active-layer or
+selected-channel mask M , the implemented rule is
+                                                            h                       i
+              z0 = M ⊙ ε, ε ∼ N (0, I),        zn+1 = M ⊙ zn + 18 vθ zn , n+1/2
+                                                                             8  ; ctx , n = 0, . . . , 7.        (7)
+
+Here ⊙ denotes elementwise multiplication. Each update evaluates the velocity at the current state zn and the midpoint
+time (n + 1/2)/8, then resets inactive coordinates to zero. It is a first-order explicit update with midpoint-time
+evaluation, not the midpoint Runge–Kutta method, which also advances the state to the midpoint. For a visible
+event, the resulting active-layer logits are normalized to fractions πℓ , giving budgets
+                                                                              64
+                                              Aℓ ez8,ℓ                        X
+                                πℓ = P                 z8,m
+                                                            ,   Bℓ = T πℓ ,         Bℓ = T.                          (8)
+                                             m:Am =1 e                        ℓ=0
+
+Only active layers enter the softmax denominator; their budgets sum to the sampled total and inactive layers receive
+zero. The layer-flow network uses a 128-component representation and two bidirectional transformer layers with four
+attention heads. Its context includes hc , the total T , layer identity, the activity mask, and a sinusoidal flow-time
+encoding. Bidirectional attention lets each layer use information from all other layers; it is a statistical dependency,
+not backward particle transport.
+
+3.2    Channel counts, hit pattern, and deposited energy
+Channel counts. Given (hc , Bℓ , Aℓ ) and a learned layer identifier, a categorical head draws the number Kℓ of active
+channels. A feasibility mask sets Kℓ = 0 for inactive layers and restricts active layers to 1 ≤ Kℓ ≤ Nℓ , where Nℓ is
+the number of valid channels. This models readout multiplicity at a given layer energy. It does not specify particle
+multiplicity, footprint area, channel positions or a minimum deposit.
+    Channel placement. The support network uses channel geometry and the sampled layer state to score candidate
+channels. Its inputs combine standardized (x, y, z) centroids, normalized layer index, ECAL/HCAL indicators, hc , Bℓ ,
+and the requested fraction Kℓ /Nℓ . Three graph blocks of width 96 propagate information along the fixed directed
+edge set E. Each block forms messages from neighboring channel representations and uses their sum to update the
+                        (r)
+receiving channel. If hi is the representation of channel i entering block r, and eji contains five edge inputs (three
+coordinate differences, distance, and edge type), one block computes
+                            (r)               (r)  (r)           (r+1)     (r)       (r)   (r)
+                                   X
+                           mi =          ϕr (hj , hi , eji ),   hi     = hi + ψr (hi , mi ).                       (9)
+                                 j:(j,i)∈E
+
+Here ϕr computes each message and ψr computes the residual update. Layerwise averages of the resulting representa-
+tions pass through a two-layer, four-head bidirectional transformer; its outputs are broadcast back to channels before
+their final scores sℓi are formed. Messages let scores depend on nearby channel representations; they are learned
+feature transformations, not particle or energy transport. The support Sℓ determines transverse placement and
+therefore graph connectivity. Selection is a separate stochastic step. For valid-channel set Nℓ , the sampler chooses
+
+                                       Sℓ = {i ∈ Nℓ : rankNℓ (sℓi /τ + gℓi ) ≤ Kℓ } ,                               (10)
+
+with temperature τ and random perturbations gℓi . Rank one denotes the largest noisy score. The sampler uses
+τ = 1 and independent Gumbel perturbations gℓi obtained from uniform draws clipped to [10−7 , 1 − 10−7 ] [21].
+Gumbel-top-K samples Kℓ distinct channels without replacement. Selecting the top Kℓ enforces the requested count
+exactly, but imposes no adjacency or connectivity constraint: isolated positive-deposit channels remain possible
+despite graph-informed scores.
+    Channel energies. A second flow divides each layer budget among its selected channels, describing energy
+concentration and fluctuations on fixed support. It can change energy-weighted shape and centroids, but cannot
+relocate deposits or repair disconnected support in exact arithmetic. In training, Sℓ⋆ denotes the positive-deposit
+reference channels and Kℓ⋆ = |Sℓ⋆ |. For Kℓ⋆ > 0, its target is the centered log fraction of each channel’s layer budget:
+                                                                                                         
+                                           ⋆
+                                                           
+                                         Yℓi                                                 1  X
+               a⋆ℓi = log max                         , 10−8 ,      (x1 )ℓi = 1i∈Sℓ⋆ a⋆ℓi − ⋆       a⋆ℓj  .        (11)
+                                max(Bℓ⋆ , 10−12 GeV)                                        Kℓ     ⋆
+                                                                                              j∈Sℓ
+
+
+
+
+                                                                5
+Here x1 refers to the channel-flow target rather than the layer-flow target. The centering preserves the floored relative
+shares. An inactive layer has zero target coordinates. This flow uses Eqs. (6) and (7) with the reference channel set
+during training and the sampled set during generation.
+    The channel-flow velocity network follows the support network’s graph and layer-context design, with the flow
+state and a sinusoidal time encoding supplied at each channel. Unselected channels are masked before and after every
+graph block. Eight updates yield logits rℓi for selected channels; a deterministic softmax then assigns the energy
+                                                        exp rℓi
+                                                B ℓ P               , i ∈ Sℓ ,
+                                          Yℓi =         j∈Sℓ exp rℓj                                                 (12)
+                                                  0,                    i∈
+                                                                         / Sℓ ,
+                                                
+
+                                                   P                P
+so that, in exact arithmetic, |Sℓ | = Kℓ , Yℓi ≥ 0, i Yℓi = Bℓ , and ℓi Yℓi = T . These are accounting identities for
+the model’s sampled readout budget, not conservation of the incident neutron’s full energy. Energy in unrecorded
+material and leakage are not generated; positivity and closure alone do not establish a physical shower.
+
+3.3    Training and checkpoint selection
+During training, each stage receives reference-derived upstream values (teacher forcing); when generating a full shower,
+it receives the preceding stages’ sampled values. Errors can therefore propagate through the cascade. We evaluate
+those complete generated showers in Sec. 5. The joint training objective combines nine weighted losses:
+
+                     Ljoint = wV LBCE (V ) + wT LNLL (T ) + wF LCE (F ) + wA LBCE (A) + wB LB
+                                                                                            FM
+                                                                                                                    (13)
+                              + wK LCE (K) + wS LBCE (S) + wR Lrank (S) + wY LYFM .
+
+Binary cross entropy (BCE) trains visibility, later-layer activity, and channel-support decisions; categorical cross
+entropy (CE) trains first-layer and count distributions. The total-deposit negative log likelihood (NLL) uses the density
+in transformed qT . Expressing that density in deposited-energy units introduces the Jacobian factor 1/(T + 10 GeV).
+The ranking term averages log[1 + exp(−(si − sj ))] over sampled occupied–unoccupied channel pairs. Superscripts B
+and Y denote the masked layer-budget and channel-share flow losses in Eq. (6); the count loss downweights zeros in
+inactive layers.
+    The retained calibration record proposes wj from training-data gradient norms. In that proposal, response,
+layer-profile, and count weights hit the lower clipping bound; the visibility weight hit the upper bound. The bounds
+apply before normalization of the weights to mean one. Appendix A records the calibration values and their provenance
+limits. A weight-sensitivity study would test whether these bounds affect shower structure.
+    Optimization proceeded through response, profile, count, support, share, and joint stages. The condition encoder
+was trained with the response head, frozen for the intermediate component stages, and unfrozen for joint training.
+Each stage inherited the preceding checkpoint; freezing the encoder kept the inputs to previously trained heads fixed
+during intermediate stages.
+    Training used AdamW with a peak learning rate of 3 × 10−4 , batches of six accumulated over four steps (effective
+batch size 24), gradient clipping at one, and seed 20260723. Epoch 90 minimizes the teacher-forced validation objective
+across 104 retained rows spanning epochs 11–114 and defines the checkpoint analyzed below. Selection used this
+objective; the free-running (fully sampled) support diagnostics were evaluated subsequently. The checkpoint need not
+minimize those free-running discrepancies.
+
+
+4     Evaluation protocol
+We compare total and ECAL/HCAL deposits, active-layer patterns, and positive-deposit channel patterns with
+Geant4. Response metrics include empty showers; eight 25 GeV bins of incident kinetic energy show the energy
+dependence of the response. Numerical checks test the generated deposits against the model’s sampled budgets.
+
+
+
+
+                                                           6
+    Hit-pattern measurements count every strictly positive stored deposit, with no detector or analysis threshold. For
+a nonempty shower, let F and L be the first and last layers containing a deposit, and Aℓ the activity indicator of
+layer ℓ. The occupied span is L − F + 1; the number of skipped layers inside it is
+                                                                 64
+                                                                 X
+                                               G=L−F +1−                Aℓ .                                        (14)
+                                                                  ℓ=0
+
+The longitudinal gap count G counts skipped layers, not gap regions; G > 0 marks an interior gap. Graph-connected
+hit groups are weak components C1 , . . . , Cm of positive-deposit channels, ignoring edge direction. In this diagnostic,
+m denotes the group count. For active set S, the largest-group fraction is maxj |Cj |/|S|. These are zero-threshold
+graph groups, not reconstructed topological clusters. Hit-pattern means use 9,907 reference and 9,858 generated
+nonempty showers, which need not share incident conditions.
+    Graph edges join channels only within a layer or between adjacent layers. Let R count contiguous active-layer
+segments, each a maximal block with deposits in consecutive layers. Empty layers block paths between segments,
+so m ≥ R. Consecutive empty layers constitute one separation; G alone does not determine R or within-segment
+disconnection. For example, layers 1, 2, 5 have G = 2, R = 2, while 1, 3, 5 have the same span and G but R = 3.
+Define Q = m − R, the extra graph-connected groups within contiguous segments (Fig. 4). If each segment forms one
+group, Q = 0; Q > 0 permits lateral splitting or failed links across adjacent active layers. Writing I = 1G>0 gives
+1 + I ≤ R ≤ G + 1: any interior gap requires at least two contiguous segments. Thus m − 1 − G ≤ Q ≤ m − 1 − f ,
+where f = I is the nonempty gap fraction. Subtracting the separate sample bounds gives
+
+                    ∆m − Ggen + fref ≤ ∆Q ≤ ∆m + Gref − fgen ,             ∆ = generator − reference.
+
+This aggregate bound is neither a confidence interval nor causal attribution. Event masks would give exact R, Q,
+but were not retained. The bound discounts empty-layer separations but does not isolate transverse splitting. These
+graph-connected groups are not detector-reconstruction clusters [22].
+    For a scalar observable, the Wasserstein-1 distance W1 is the area between the generated and reference empirical
+cumulative distributions, in the units of that observable [8]; all events enter, with empty showers at zero. As a
+finite-sample scale, we also quote W1 between two disjoint 5,000-event halves of the Geant4 sample (the reference-half
+scale); it is a descriptive comparison, not a critical value. The 95% intervals for the active-channel-count W1 ,
+zero-deposit fraction and mean normalized response use 1,000 paired bootstrap resamples stratified by energy bin.
+Intervals for the energy-bin differences, mean longitudinal profile, gaps, and graph components are unavailable. All
+quoted intervals describe resampling variation within the development bank.
+    A classifier two-sample test (C2ST) distinguishes generated from reference showers; AUROC (area under the
+receiver operating characteristic curve) has chance benchmark 0.5 and equals 1 for perfect separation [8, 23]. The
+three-seed classifier battery splits individual showers at random, not matched pairs. Members of a matched condition
+pair can enter opposite partitions despite sharing the same incident four-vector. This permits condition memorization
+to favor the opposite held-out label. The condition-only control uses incident kinetic energy alone; its AUROC of
+0.464 is a failed control consistent with such bias, though the cause is unverified. A separate pair-grouped monitor of
+the same checkpoint (dicos-f-02, epoch 90) records condition-only/high-level AUROCs 0.500/0.893. Its different
+event sample precludes a direct comparison. Appendix B gives evaluator details.
+
+
+5    Results
+Table 1 compares all-event deposits with hit-pattern statistics computed within each sample’s nonempty showers.
+Similar mean deposits and active-layer counts coexist with longer occupied spans, more gaps and more graph-connected
+groups.
+
+
+
+
+                                                           7
+Table 1: Aggregate comparison on the development bank. Deposit means and zero-deposit counts use all 10,000 matched
+conditions; support means use nonempty showers (9,907 Geant4 and 9,858 generated). Inactive layers in span is the gap
+count G of Eq. (14); weak graph components are the graph-connected hit groups m of Sec. 4. Differences are generator minus
+reference, computed before rounding; pp denotes percentage points.
+
+                   Quantity                            Geant4 reference      Generator        Gen. − ref.
+                   Zero-deposit events                       93 (0.93%)     142 (1.42%)    +49 (+0.49 pp)
+                   Mean total deposit (GeV)                        4.324           4.369          +0.045
+                   Mean ECAL deposit (GeV)                         2.100           2.275          +0.175
+                   Mean HCAL deposit (GeV)                         2.224           2.094          −0.129
+                   Mean first active layer                          0.510         0.735          +0.225
+                   Mean last active layer                           56.20         60.62            +4.42
+                   Mean active layers                               54.58         54.83            +0.25
+                   Mean occupied span                               56.69         60.88            +4.20
+                   Mean inactive layers in span                      2.10          6.05            +3.95
+                   Events with an interior gap                    52.43%        93.53%         +41.10 pp
+                   Mean active channels                            1617.6        1588.8            −28.7
+                   Mean weak graph components                       23.42         59.39          +35.97
+                   Mean largest-component fraction                94.90%        88.87%          −6.03 pp
+
+
+5.1    Deposited energy and empty showers
+The all-event mean total deposit is 4.369 GeV for generated showers and 4.324 GeV for Geant4, a difference of 0.045 GeV
+(1.0%). Both are about 3% of the 149.9 GeV mean incident kinetic energy: the stored total counts only energy
+deposited in readout channels and is neither a calibrated energy nor a sampling-fraction measurement. Opposing
+section shifts are concealed: ECAL is higher by 0.175 GeV (8.3%) and HCAL lower by 0.129 GeV (5.8%) (Table 1).
+For an illustrative linear calibration Ereco = cE EECAL + cH EHCAL , the shift is ∆Ereco ≃ (0.175cE − 0.129cH ) GeV;
+unweighted cancellation need not persist. Coefficients and reconstructed energies are unavailable. Figure 3 shows the
+mean longitudinal allocation. At the reference HCAL maximum (layer 9), the generated mean is 8.6% lower. Mean
+profiles cannot reveal individual interior gaps.
+
+
+
+
+Figure 3: Mean deposited energy over all 10,000 development-bank events. Left: ECAL and HCAL deposits expose section-
+level cancellation. Center: HCAL layers 1–30 (linear scale). Right: all layers, including ECAL at 0 (log scale). Dashed curves
+denote Geant4, solid curves the generator. Lower panels show ratios of means; uncertainty bands are unavailable. Empty
+showers are included.
+
+    Table 3 gives binwise means and widths; the pooled standard deviations are 4.759 GeV for Geant4 and 4.830 GeV for
+the generator. The mean paired residual (Tgen − Tref )/Kinc is 2.94 × 10−5 , with 95% bootstrap interval [−8.51, 9.34] ×
+10−4 , which includes zero. This tests a different, energy-normalized quantity from the 0.045 GeV mean difference. The
+latter is smaller than the 0.068 GeV standard-error scale obtained by treating the two samples as independent; the
+
+
+                                                              8
+exact paired standard error needs their unretained covariance. The total-deposit distributions have W1 = 0.073 GeV,
+below the 0.147 GeV reference-half scale. This supports descriptive agreement of the total response at this sample
+size, without constituting a matched-size significance test. In every energy bin the standard deviation of the stored
+total is comparable to its mean (Table 3), so each binwise mean has a relative standard error near 3%. On the
+same independent-sample scale, the two largest binwise mean differences (+7.74% at 125–150 GeV and −7.65% at
+150–175 GeV) are 1.8 and 2.0 standard errors; the mixed signs in Table 3 therefore do not establish an energy-dependent
+bias.
+    The model produces 142 empty showers versus 93 in Geant4, a difference of 49 events or 0.49 percentage points. The
+paired-bootstrap 95% percentile interval for this fraction difference is 0.19–0.76 percentage points. The corresponding
+nonempty samples contain 9,858 generated and 9,907 reference showers. The report’s visibility labels do not retain
+provisional V0 , so the 142 generated zeros cannot be split reliably into Bernoulli-draw (V0 = 0) and zero-clamp
+contributions.
+
+5.2    Longitudinal activity
+The mean active-layer counts are close (54.83 generated versus 54.58 reference), but the last positive deposit is farther
+downstream (Table 1; Fig. 4, bottom). This extends the zero-threshold footprint; physical shower termination is
+unmeasured. The generated mean first active layer shifts by +0.225 and last active layer by +4.42, about 0.11 m
+at the 24.9 mm median HCAL layer spacing. The nonempty fraction starting in ECAL is 92.53% for the generator
+versus 93.81% for Geant4. The occupied span grows by +4.20 layers while the count of active layers grows by only
++0.25, leaving +3.95 inactive layers inside the span. The fraction of nonempty showers with at least one skipped layer
+rises from 52.43% to 93.53% (Table 1).
+    For nonempty showers, mean energy-weighted depth, ℓ ℓBℓ / max(T, 10−9 GeV), is 14.14 for the generator and
+                                                            P
+14.15 for Geant4. Including empty events as zeros gives 13.94 and 14.02, respectively. Yet the all-event depth
+distributions have W1 = 0.971 layers, versus a 0.155-layer reference-half scale. Thus similar means hide a depth-
+distribution difference, as they do for occupied extent. The reference-half scale is descriptive, not a significance
+threshold; component energies remain unmeasured. Mean energy in layers 57–64 is 17.85 MeV for the generator and
+17.19 MeV for Geant4, about 0.4% of each total. This fixed-region average does not isolate the energy of the additional
+occupied layers or disconnected components. In Fig. 3 (right), the generator-to-reference ratio of mean layer deposits
+is 0.84 at layer 51 and exceeds one from layer 60 onward, reaching 1.23 at layer 64.
+
+
+
+
+Figure 4: Top panels are illustrations, not events: (a) active layers (filled), interior empty layers (hatched), span, gap count G
+and contiguous segments R; (b) three graph-connected groups despite four consecutive active layers (R = 1, m = 3, Q = 2).
+Bottom panels compare nonempty-sample means from the evaluation summary for last active layer, skipped layers and graph
+groups. Bar lengths use separate scales; labels give the absolute values. No uncertainty estimates for these structural means
+were retained.
+
+
+
+
+                                                                9
+5.3    Channel hit pattern and graph structure
+Generated showers have 28.7 fewer positive-deposit channels (−1.8%) but 35.97 more graph-connected hit groups
+(Fig. 4, bottom); the largest group has 88.87% of occupied channels on average, versus 94.90% in the reference.
+    The aggregate bounds give Qgen ≥ 52.34 and Qref ≤ 21.89. Hence 30.45–37.14 of the 35.97 excess groups remain
+within contiguous active-layer segments (at least 84.6%). The upper bound can exceed the total excess because the
+generator may have fewer segments than the reference. The largest-group fractions describe channel counts, not
+energy fractions; the remaining group-size and component-energy distributions are unavailable.
+    The all-event active-channel-count distribution has W1 = 58.68 channels, with a paired-bootstrap 95% interval of
+51.47–66.92 channels. This distance includes the zero-count mass, whereas the means above condition on nonempty
+showers. Two retained reference-half splits give 13.78 and 15.82 channels (5,000 events per half). These are finite-sample
+comparison scales, not critical values or matched-size significance estimates.
+    Energy-weighted transverse observables from the same evaluation summary provide a complementary comparison.
+Among nonempty showers, the mean energy-weighted centroids differ by 0.5 mm in x and 1.1 mm in y, small compared
+with the 30.3 mm ECAL pitch. The mean energy-weighted radial RMS about the centroid is 84.7 mm for the generator
+and 87.1 mm for Geant4 (the generator is 2.8% narrower); its all-event W1 is 3.34 mm, against a 0.48 mm reference-half
+scale. Energy weighting suppresses isolated low-energy channels, so these summaries and the zero-threshold group
+counts probe different aspects of the shower; neither is a reconstructed position.
+    Edge co-occupancy, the all-event mean fraction of graph edges whose two end channels are both active, is 0.1375
+for the generator and 0.1458 for Geant4. Because this fraction is not normalized to the number of active channels, we
+do not interpret its difference as a correlation effect.
+
+5.4    Classifier and numerical checks
+The original C2ST battery gives mean AUROCs of 0.775 for high-level shower summaries, 0.791 for channel energies
+and 0.856 for layer profiles across three classifier seeds. Its high-level score exceeds the recorded screening criterion
+of 0.65, whose pre-analysis status is not independently established. The failed condition-only control prevents a
+calibrated fidelity interpretation; a pair-grouped rerun on the same bank is needed. These scores and the failed
+criterion remain as provenance, not percentages of physically incorrect showers.P                           P
+    Closure residuals compare decoded deposits with the sampled budgets: | ℓi Yℓi − T | per event and | i Yℓi − Bℓ |
+                                                                                      −5            −5
+per layer. The evaluator uses a common tolerance for both: the larger of 2 × 10 GeV and 10 times the largest
+sampled event total in each batch. All 1,250 batches of eight passed, with no nonfinite/negative deposit or invalid
+support/count/mask. The zero support-mask mismatch verifies that single-precision (FP32) decoding created no
+selected-but-empty channels in this sample; such losses would bias support metrics. Maximum event and layer
+residuals were 1.14 × 10−5 and 3.05 × 10−5 GeV. The maximum layer residual exceeds the earlier fixed 2 × 10−5 GeV
+criterion; the reported pass applies specifically to the batch-dependent criterion.
+
+
+6     Discussion
+6.1    Interpretation and diagnostic tests
+The main observation is a mismatch in where positive deposits occur, even when selected global means are close. The
+generated showers reach farther downstream and contain more interior empty layers and disconnected hit groups.
+Their mean energy-weighted depth remains nearly unchanged, so the last active layer should not be interpreted as
+an energy centroid or a reconstructed shower length. The comparison illustrates why calorimeter validation needs
+complementary energy and shape observables [7, 8].
+    The component bound makes the graph result more specific. Allowing one connected group per contiguous
+active-layer segment leaves at least 30.45 of the 35.97 excess groups (84.6%) within those segments (Sec. 4). This
+establishes excess graph disconnection within contiguous active-layer segments. It need not be purely lateral: adjacent
+occupied layers may fail to connect. The bound is an algebraic statement about the separate nonempty samples,
+which need not share conditions; it is neither a significance estimate nor evidence for a particular failure mechanism.
+It concerns stored-ID connectivity on the model graph, not fragmentation into reconstructed calorimeter clusters.
+    Equation (4) assumes conditional independence of later-layer activity given (hc , T, F ): once the incident kinematics,
+sampled total deposit and first active layer are fixed, later layers are drawn independently. In a three-layer example,
+fix F = 0 and let layers 1 and 2 be both active with probability p and both inactive otherwise. Independent draws
+with the same marginals preserve the mean active-layer count but give an interior-gap probability p(1 − p) instead of
+zero and increase the mean last layer by p(1 − p). This explains a possible signature, not the measured magnitude.
+
+
+                                                            10
+Sampled T and F can still induce dependence when their values vary; the first deposited layer is not necessarily the
+first inelastic-interaction depth.
+    A direct test builds a null sample from Geant4 itself: redraw each later layer’s activity independently, with
+probabilities matched in energy, direction, T and F , and check whether the depth and gap shifts appear. A
+complementary test runs the generator with the Geant4 activity mask substituted for its own; substituting only the
+reference T and F would leave the factorization intact. L2LFlows and iCaloFlow model interlayer dependence [24, 25]
+and motivate a matched comparison.
+    The channel-placement stage offers a second hypothesis. Scores trained with binary cross entropy are not
+automatically calibrated probabilities for a channel to be selected after fixed-count Gumbel sampling. Independent
+perturbations can separate selected channels even when the scores vary smoothly in space. At matched conditions
+and layer counts, a randomized control preserving channel inclusion frequencies would help distinguish errors in
+single-channel occupancy from errors in spatial correlations. The channel flow cannot repair the selected hit pattern
+in exact arithmetic. Shared upstream random states and cross-layer attention can nevertheless correlate shower
+centroids without a common event latent; measuring those correlations would test shower-axis coherence.
+
+6.2    Limitations and robustness
+Paired sampling intervals for the headline structural means are not retained. Large descriptive differences do not
+establish robustness across training seeds, thresholds or graphs. A study with three independent generator-training
+seeds and a full-data fit is needed to separate architecture effects from training-population and optimization effects.
+The failed condition-only classifier control is a separate limitation: the quoted classifier scores cannot supply the
+missing structural significance. A rerun that keeps each matched pair in one partition is needed on the same validation
+bank.
+    The zero-threshold hit pattern describes stored simulation deposits, not electronics readout. Tiny or late deposits
+may change skipped-layer and connected-group counts; their contribution is unknown without channel-energy and
+timing data. Thresholding might remove a low-energy downstream tail or create new interior gaps; neither effect
+is measured. Threshold and timing scans are therefore necessary, together with an independently defined physical-
+neighbor graph, before interpreting this as a reconstruction defect. The cited design uses a 0.5 MeV MIP scale,
+a reconstructed-hit cut above 0.5 MIP and t < 275 ns [1]; these are design-study choices, not verified settings of
+the analyzed production. These motivate a 0.25 MeV HCAL sensitivity scan, but transferring the cuts requires the
+production segmentation and timing convention; a reference-only time cut would compare different targets.
+    The model has no explicit impact-position input. The recorded fixed gun vertex makes direction informative
+about the nominal entry point, but the production surface and event-level positions are not available here. Position-
+conditioned residuals and the joint empty-shower contingency table would test geometric acceptance; marginal empty
+fractions alone cannot answer this.
+    Response-tail studies require counts of generated draws clipped by the cap and reference deposits above it.
+Numerical sensitivity requires a solver-step study. A locked bank with verified identities and repeated generation at
+fixed conditions is also needed. These tests would distinguish sensitivity to numerical choices from a reproducible
+mismatch in the generated distributions.
+
+6.3    Detector applications and timing
+For a neutron calorimeter, the downstream questions concern reconstructed energy and direction. The cited ePIC
+design evaluates both using hit energies and positions [1]; the present stored-ID graph counts measure neither.
+Relating this raw-deposit study to detector performance requires production metadata, training-only calibration
+applied unchanged to both samples, and energy and position reconstruction. The ECAL and HCAL shifts cancel only
+in the unweighted stored-energy sum. A sampling fraction from another production cannot establish this model’s
+calibrated bias. Once the production geometry and readout definition are verified, applying the same reconstruction
+to both samples would test whether the observed hit-pattern differences affect neutron measurements.
+    The evaluation took 3,442 s for 10,000 pairs. Its nonoverlapping timed analysis stages total 1,009 s, leaving 2,433 s
+(0.243 s per matched condition) for generation, I/O and other untimed work; generation latency was not isolated. A
+matched end-to-end benchmark must include both solvers, decoding and output handling, with hardware and batch
+size specified for generator and Geant4. The present timing therefore establishes no acceleration factor.
+
+
+
+
+                                                           11
+7    Conclusion
+This pilot study of 50–250 GeV single-neutron showers shows that similar mean deposited energy, active-layer count
+and active-channel count do not imply matched longitudinal or graph structure. A difference of 0.25 active layers
+coexists with a last active layer shifted by 4.42 layers and 3.95 additional empty layers in the occupied span. At
+least 30.45 of the 35.97 extra graph-connected groups remain after accounting for contiguous active-layer segments.
+Empty-layer separations are therefore insufficient to explain the difference on this graph.
+    The result supports checking longitudinal occupancy and hit connectivity alongside energy response when evaluating
+a shower generator. It is a descriptive finding for one training seed on a reused validation bank, not a demonstrated
+loss of reconstructed neutron performance. Paired structural uncertainties, repeated fits, controlled activity and
+channel-placement tests, and threshold and graph sensitivity are needed to establish robustness and origin. Applying
+a common reconstruction after verifying the production geometry would then determine the relevance for neutron
+energy and direction.
+
+
+Code and data availability
+The project repository provides aggregate reports, geometry, training history, figure scripts and manuscript source; its
+README identifies revisions and build audits. The collaboration-owned events and checkpoint are not redistributed.
+Generation, retraining and event-level studies require those resources.
+
+
+Acknowledgments
+The author thanks Dr. Wen-Chen Chang (Institute of Physics, Academia Sinica) for his generous mentorship, guidance,
+and encouragement, and the Institute of Physics laboratory community for their welcome and support.
+
+
+Use of generative AI
+OpenAI’s GPT-5.6-Sol assisted with code and manuscript drafting, specification review, literature searches, and
+editing. The author takes responsibility for all content in this paper.
+
+
+A     Recorded settings and reproducibility limits
+The analyzed checkpoint is dicos-f-02, epoch 90, from the calibrated_lr3e4 family, with training seed 20260723.
+Its SHA-256 is
+     491284c7423f365230d34b0443f95aa4888ec770bdc673c4c979897bad8acbce
+
+and its recorded frozen-configuration SHA-256 is
+     116bc8c220b07ce54ae07196bdd6ed8e835775c8c937182a209a799dc94ae9c5
+
+The selected validation objective is 4.4837676194. A declared learning-rate restart separates epochs 70 and 71; the
+retained history covers epochs 11–114. The original runtime configuration, complete stage durations, other optimizer
+settings and exact training environment are unavailable in the paper package and cannot be inferred from aggregate
+losses.
+
+
+
+
+                                                          12
+           Table 2: Recorded gradient-calibration proposal, rounded to six decimals and ordered as in Eq. (13).
+           These values document the retained calibration record; the historical runtime configuration is unavailable
+           for an independent check of the applied weights.
+
+                                          Weight     Component                Value
+                                            wV       Visibility            2.574417
+                                            wT       Total deposit         0.160901
+                                            wF       First active layer    2.159451
+                                            wA       Layer activity        0.536770
+                                            wB       Layer-budget flow     0.160901
+                                            wK       Channel count         0.160901
+                                            wS       Support BCE           1.324108
+                                            wR       Support ranking       1.477591
+                                            wY       Channel-share flow    0.444960
+
+    For each loss, the calibration divides the geometric mean of the median training-gradient norms by that loss’s
+median norm on the shared encoder, clips the ratio to [0.25, 4], and renormalizes the weights to mean one. Thus final
+Table 2 values can lie outside the clip range. This heuristic does not establish optimal weights.
+    The diagnostic report records generation seed 20260723 (the same integer as the training seed, used for a
+separate sampling run), FP32 precision on a CUDA device, batches of eight, and eight updates for each flow. Its
+validation-manifest identity is
+      1bc3a6b21f736fc71551580a93207128c043833c6848627fb16f07475931690a
+
+The appendix tables use the same retained aggregate report as the main text; no new shower generation or test
+evaluation was performed to produce them.
+   The canonical split uses event hashes, not independent simulation jobs; this study uses validation only. Earlier
+separate studies inspected 40,000 nominal-test events and a draw containing 200 test events, with unresolved overlap.
+Those studies did not feed model decisions, but the nominal test partition is not wholly untouched. The retained
+record counts 36,100–36,300 uninspected events; their identities require recovery before use.
+
+
+B     Energy-bin results and classifier details
+Table 3 resolves the aggregate response comparison into the eight incident-energy bins. The relative mean difference is
+100(µgen /µref − 1) and the width difference is 100(σgen /σref − 1), where µ and σ are the mean and standard deviation
+of total deposited energy. Both statistics include empty showers.
+
+Table 3: Deposited-energy response by incident kinetic energy. n is the number of matched conditions; the same n applies to
+each sample. Means and population standard deviations σ are in GeV; differences are percentages. Bins are lower-inclusive and
+upper-exclusive, except that the final bin includes 250 GeV (implemented upper edge 250.0001 GeV). Exact paired intervals for
+these differences are unavailable from the aggregate summary.
+
+                  Kinc (GeV)        n     µref     µgen   Mean diff. (%)    Width diff. (%)      σref    σgen
+                       50–75    1,182    2.398   2.216             −7.59               −6.40   2.830    2.649
+                      75–100    1,270    2.892   2.908             +0.57               +2.80   3.154    3.243
+                     100–125    1,310    3.527   3.513             −0.42               −0.72   3.872    3.845
+                     125–150    1,226    3.849   4.146             +7.74               +9.58   3.921    4.297
+                     150–175    1,288    4.867   4.494             −7.65              −10.89   5.037    4.488
+                     175–200    1,268    5.030   5.320             +5.76               +8.79   4.802    5.224
+                     200–225    1,266    5.921   6.026             +1.78               −1.70   6.127    6.023
+                     225–250    1,190    6.095   6.330             +3.85               +5.24   5.827    6.133
+
+
+
+
+                                                              13
+Table 4: All recorded classifier seeds for the original development screening battery. The three seed columns vary the classifier
+and its row partition; they are not independent generator-training seeds. All three high-level AUROCs exceed the recorded
+screening criterion of 0.65.
+
+                                  Feature family        20260804     20260805     20260806      Mean
+                                  Condition only           0.4739        0.4624      0.4545    0.4636
+                                  High-level               0.7789        0.7719      0.7735    0.7748
+                                  Channel energies         0.7873        0.7943      0.7914    0.7910
+                                  Layer profile            0.8490        0.8580      0.8623    0.8564
+
+    The archived evaluator uses histogram gradient boosting (at most 100 iterations, depth four, learning rate 0.08).
+A class-stratified random split assigns 14,000 of 20,000 rows to fitting and 6,000 to scoring; library defaults may
+reserve fitting rows for early stopping. The seed controls both split and classifier. Pairs are not grouped. These folds
+lie within canonical validation, not the canonical train/test split.
+    High-level features are total deposit, active-channel count, energy-weighted depth, transverse centroids, radial
+RMS, largest-channel fraction, ECAL fraction and energy fraction in layers 48–64. Other families use all 6,790
+deposits, 65 layer sums or incident kinetic energy alone. Total-energy denominators have a 10−9 GeV floor. Remaining
+classifier options follow library defaults; the historical library version is unknown.
+    The settings come from archived source, without a verified match to the historical runtime. The retained report
+records the 0.65 criterion, but its timing relative to analysis is unverified. Under the 70/30 row split, 42% of pairs
+straddle folds in expectation. Each scored row has a 70% chance of its identically conditioned opposite-label partner
+entering fitting (about 4,200 of 6,000 scoring rows in expectation). This permits a downward condition bias but does
+not establish the cause of AUROC 0.464. Table 4 cannot replace same-bank pair-grouped evaluation.
+
+
+References
+ [1]   R. Milton et al. “Design and Simulation of a SiPM-on-Tile ZDC for the Future EIC, and Its Performance with Graph Neural Networks”.
+       In: Nuclear Instruments and Methods in Physics Research Section A 1079 (2025), p. 170613. doi: 10.1016/j.nima.2025.170613.
+       arXiv: 2406.12877.
+ [2]   C. Krause and D. Shih. “Fast and Accurate Simulations of Calorimeter Showers with Normalizing Flows”. In: Physical Review D 107
+       (2023), p. 113003. doi: 10.1103/PhysRevD.107.113003. arXiv: 2106.05285.
+ [3]   O. Amram and K. Pedro. “Denoising Diffusion Models with Geometry Adaptation for High Fidelity Calorimeter Simulation”. In:
+       Physical Review D 108 (2023), p. 072014. doi: 10.1103/PhysRevD.108.072014. arXiv: 2308.03876.
+ [4]   D. Kobylianskii et al. “Graph-Based Diffusion Model for Fast Shower Generation in Calorimeters with Irregular Geometry”. In:
+       Physical Review D 110 (2024), p. 072003. doi: 10.1103/PhysRevD.110.072003. arXiv: 2402.11575.
+ [5]   E. Buhmann et al. “CaloClouds II: Ultra-Fast Geometry-Independent Highly-Granular Calorimeter Simulation”. In: Journal of
+       Instrumentation 19.04 (2024), P04020. doi: 10.1088/1748-0221/19/04/P04020. arXiv: 2309.05704 [physics.ins-det].
+ [6]   L. Favaro et al. “CaloDREAM: Detector Response Emulation via Attentive Flow Matching”. In: SciPost Physics 18 (2025), p. 088.
+       doi: 10.21468/SciPostPhys.18.3.088. arXiv: 2405.09629.
+ [7]   C. Krause et al. “CaloChallenge 2022: A Community Challenge for Fast Calorimeter Simulation”. In: Reports on Progress in Physics
+       88.11 (2025), p. 116201. doi: 10.1088/1361-6633/ae1304. arXiv: 2410.21611.
+ [8]   R. Kansal et al. “Evaluating Generative Models in High Energy Physics”. In: Physical Review D 107 (2023), p. 076017. doi:
+       10.1103/PhysRevD.107.076017. arXiv: 2211.10295 [hep-ex].
+ [9]   J. Dubiński et al. “Machine Learning Methods for Simulating Particle Response in the Zero Degree Calorimeter at the ALICE
+       Experiment, CERN”. In: AIP Conference Proceedings 3061 (2024), p. 040001. doi: 10.1063/5.0203567. arXiv: 2306.13606 [cs.CV].
+[10]   M. Kita et al. Generative Diffusion Models for Fast Simulations of Particle Collisions at CERN. 2024. arXiv: 2406 . 03233
+       [physics.data-an].
+[11]   M. Wojnar. “Even Faster Simulations with Flow Matching: A Study of Zero Degree Calorimeter Responses”. In: Computer Physics
+       Communications 319 (2026), p. 109936. doi: 10.1016/j.cpc.2025.109936. arXiv: 2507.18811.
+[12]   P. Będkowski et al. “ExpertSim: Fast Particle Detector Simulation Using Mixture-of-Generative-Experts”. In: ECAI 2025. 2025. doi:
+       10.3233/FAIA251042. arXiv: 2508.20991 [cs.CV].
+[13]   M. Wojnar, E. Majerz, and W. Dzwinel. “Fast Simulation of the Zero Degree Calorimeter Responses with Generative Neural
+       Networks”. In: Computing and Software for Big Science 9 (2025), p. 1. doi: 10.1007/s41781-025-00130-x.
+[14]   E. Majerz, W. Dzwinel, and J. Kitowski. Inverse Autoregressive Flows for Zero Degree Calorimeter Fast Simulation. 2025. arXiv:
+       2512.20346.
+[15]   E. Majerz et al. Fine-tuned Normalizing Flows for ALICE Zero Degree Calorimeter Fast Simulation. 2026. arXiv: 2608.12795
+       [physics.ins-det].
+[16]   S. Agostinelli et al. “Geant4—a Simulation Toolkit”. In: Nuclear Instruments and Methods in Physics Research Section A 506
+       (2003), pp. 250–303. doi: 10.1016/S0168-9002(03)01368-8.
+
+
+                                                                    14
+[17]   S. J. Paul and M. Arratia. “Leveraging Staggered Tessellation for Enhanced Spatial Resolution in High-Granularity Calorimeters”.
+       In: Nuclear Instruments and Methods in Physics Research Section A 1060 (2024), p. 169044. doi: 10.1016/j.nima.2023.169044.
+       arXiv: 2308.06939.
+[18]   S. Schnake, D. Krücker, and K. Borras. CaloPointFlow II Generating Calorimeter Showers as Point Clouds. 2024. arXiv: 2403.15782.
+[19]   Y. Lipman et al. “Flow Matching for Generative Modeling”. In: International Conference on Learning Representations. 2023. arXiv:
+       2210.02747.
+[20]   X. Liu, C. Gong, and Q. Liu. “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”. In: International
+       Conference on Learning Representations. 2023. arXiv: 2209.03003.
+[21]   W. Kool, H. van Hoof, and M. Welling. “Stochastic Beams and Where to Find Them: The Gumbel-Top-k Trick for Sampling
+       Sequences Without Replacement”. In: Proceedings of the 36th International Conference on Machine Learning. Vol. 97. Proceedings
+       of Machine Learning Research. 2019, pp. 3499–3508.
+[22]   ATLAS Collaboration. “Topological Cell Clustering in the ATLAS Calorimeters and Its Performance in LHC Run 1”. In: European
+       Physical Journal C 77 (2017), p. 490. doi: 10.1140/epjc/s10052-017-5004-5. arXiv: 1603.02934 [hep-ex].
+[23]   D. Lopez-Paz and M. Oquab. “Revisiting Classifier Two-Sample Tests”. In: International Conference on Learning Representations.
+       2017. arXiv: 1610.06545.
+[24]   S. Diefenbacher et al. “L2LFlows: Generating High-Fidelity 3D Calorimeter Images”. In: Journal of Instrumentation 18 (2023),
+       P10017. doi: 10.1088/1748-0221/18/10/P10017. arXiv: 2302.11594.
+[25]   M. R. Buckley et al. “Inductive Simulation of Calorimeter Showers with Normalizing Flows”. In: Physical Review D 109 (2024),
+       p. 033006. doi: 10.1103/PhysRevD.109.033006. arXiv: 2305.11934.
+
+
+
+
+                                                                    15
+

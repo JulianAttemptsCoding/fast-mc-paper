@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-10-03T03:41:51.726298+00:00",
+  "result": "pass",
+  "manuscript_sha256": "4a414b148f234f7b8035a25f33d35c3ec8c98410c33f4de324d25ce428dca499",
+  "pdf_sha256": "6a3014496ee0815b8316b4e7ca3ef32b45a26925326deb45345971cafc1f1a6b",
+  "source_package_sha256": "489a2d8642f9a961889dbddf3d84611b648f4e9d76c4112c3c8194dcc25ce5b0",
+  "figure4_sha256": "f4b2c0ca5337161b56df5c3cc4f242ad543f02fe4437577ca0af038ae11df8fd",
+  "qa": "QA17: 22 groups passed, 14 pages; all page pixels equal directly inspected QA16 pages",
+  "corrections": [
+    "Abstract and first methods use define the classifier control as incident kinetic energy alone.",
+    "Figure 4(c1) says last active layer.",
+    "Sec. 2.3 distinguishes this validation-only analysis from earlier separate inspection of nominal-test events, documented in Appendix A.",
+    "Sec. 6.2 specifies three independent generator-training seeds; Appendix B classifier seeds remain distinct.",
+    "Sec. 5.4 and Table 4 both say recorded screening criterion of 0.65.",
+    "Abstract uses mean group count and similar aggregate means mask a hit-pattern discrepancy."
+  ],
+  "metadata": "Local PDF title, README title and CITATION.cff title/version 0.22.1 match. Public repository synchronization is recorded separately after push.",
+  "preserved": "All 14 numbered equations, four tabular bodies, data, training/checkpoint selection, figures other than the label, and numerical claims unchanged.",
+  "failures": "Three interrupted edit attempts from exact-match or line-ending assumptions and QA15 15-page overflow are retained in events and QA records; concise Sec. 6.2 wording resolved pagination. A failed optional inspection one-liner and console-encoding retry are logged.",
+  "boundary": "Document QC does not establish structural significance, detector reconstruction performance, generator speedup or physics validation."
+}

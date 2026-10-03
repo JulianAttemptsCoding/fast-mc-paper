@@ -1,0 +1,4 @@
+FULL QA iteration 10: PASS (14 pages, c45615f582dbab631b39f4e3d9ec4368328c07d7de9e8c8721366fdf5a387422)
+Built output/fast_mc_zdc_manuscript.pdf
+
+STDERR

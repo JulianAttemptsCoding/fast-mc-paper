@@ -298,9 +298,12 @@ def validate_tex_and_bib(checks: list[str]) -> None:
     bib = (ROOT / "references.bib").read_text(encoding="utf-8")
     required = [
         "Julian Juan", "Wen-Chen Chang", "Institute of Physics, Academia Sinica",
-        "These aggregate results use one training seed and a repeatedly inspected validation sample", "Hit-pattern measurements count every strictly positive stored deposit", "mean AUROCs of 0.775 for high-level shower summaries", "high-level score exceeds the recorded development-screening criterion of 0.65",
-        "50\\leq\\Kinc\\leq250\\GeV", "No nominal test event is used",
+        "These aggregate results use one training seed and a repeatedly inspected validation sample", "Hit-pattern measurements count every strictly positive stored deposit", "mean AUROCs of 0.775 for high-level shower summaries", "high-level score exceeds the recorded screening criterion of 0.65",
+        "50\\leq\\Kinc\\leq250\\GeV", "No nominal-test event enters the analyses reported here",
         "104 retained rows spanning epochs 11--114", "defines the checkpoint analyzed below",
+        "a control using incident kinetic energy alone gives 0.464", "The condition-only control uses incident kinetic energy alone",
+        "Three independent generator-training seeds", "Similar aggregate means mask a hit-pattern discrepancy",
+        "All three high-level AUROCs exceed the recorded screening criterion of 0.65",
         "selects four nearest centroids", "stored in both directions", "107,920 in total",
         r"\prod_{\ell>F}^{64}", "the two energy features carry the same physical information",
         "Intervals for the energy-bin differences, mean longitudinal profile, gaps, and graph components are unavailable", "end-to-end benchmark", "0.19--0.76 percentage points",
@@ -361,6 +364,9 @@ def validate_tex_and_bib(checks: list[str]) -> None:
 
 
 def validate_figures(checks: list[str]) -> None:
+    figure_source = (ROOT / "scripts/reader_figures.py").read_text(encoding="utf-8")
+    assert '("last active layer", report["activity"]["truth"]["mean_last_active_layer"]' in figure_source
+    assert "last hit layer" not in figure_source
     manifest = load_json(FIGURE_MANIFEST)
     assert set(manifest["figures_sha256"]) == EXPECTED_FIGURES
     assert manifest["test_events_used"] == 0

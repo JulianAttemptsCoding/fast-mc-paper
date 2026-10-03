@@ -1,0 +1,13 @@
+
+STDERR
+Traceback (most recent call last):
+  File "C:\Users\Julia\Desktop\coding\ASIoP\fast-mc-paper\scripts\full_manuscript_qa.py", line 673, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Julia\Desktop\coding\ASIoP\fast-mc-paper\scripts\full_manuscript_qa.py", line 664, in main
+    pdf, pages = validate_pdf(args.iteration, checks)
+                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Julia\Desktop\coding\ASIoP\fast-mc-paper\scripts\full_manuscript_qa.py", line 530, in validate_pdf
+    assert 6 <= pages <= 14
+           ^^^^^^^^^^^^^^^^
+AssertionError
